@@ -4,13 +4,12 @@ import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Heading } from "@/components/heading";
-import { ArrowRightLeftIcon, MessageSquare, Star, X } from "lucide-react";
+import { ArrowRightLeftIcon, DownloadIcon, MessageSquare, Star, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { MAX_FILE_SIZE, formSchema } from "./constants";
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { FileUploader } from "@/components/file-uploader";
@@ -21,11 +20,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@radix-ui/react-label";
 import { AlertCard } from "@/components/alert-card";
 import { Loader } from "@/components/loader";
-import { SongCard } from "@/components/song-card";
+import { SongInfoCard } from "@/components/song-info-card";
 import { ProgressBar } from "@/components/progress-bar";
-import { getFileName } from "@/lib/utils";
+import { cn, getFileName } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
+import { AudioCard } from "@/components/audio-card";
+import Crunker from "crunker";
+import { MAX_FILE_SIZE } from "./constants";
 
 const ConversionPage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -39,9 +41,15 @@ const ConversionPage = () => {
 
   const [uploadProgress, setUploadProgress] = useState(0);
 
+  const [started, setStarted] = useState(false);
   const [isUploading, setUploading] = useState(false);
   const [isConverting, setConverting] = useState(false);
+  const [conversionStatus, setConversionStatus] = useState("");
   const [isFinished, setFinished] = useState(false);
+  let intervalId = useRef<any>(null);
+
+  const [resultURLs, setResultURLs] = useState<string[]>([]);
+  const [mergedURL, setMergedURL] = useState<string>("");
 
   const onUpload = (e: any) => {
     try {
@@ -93,14 +101,20 @@ const ConversionPage = () => {
 
   const onSubmit = async () => {
     try {
+      setFinished(false);
+      setStarted(true);
       setLoading(true);
+      setResultURLs([]);
+      setMergedURL("");
+
       if (fileError !== "" || file === null) return;
       
       const response = await axios.get("/api/convert/upload");
-      const url = response.data.url;
-      console.log(response.data.url);
 
       if (response.status === 200) {
+        const url = response.data.url;
+        console.log(response.data.url);
+    
         setUploading(true);
         const uploadResponse = await axios.put(url, file, {
           headers: {
@@ -116,15 +130,18 @@ const ConversionPage = () => {
 
         if (uploadResponse.status === 200) {
           console.log("File upload successful");
+          setUploading(false);
 
-          // const runResponse = await axios.post("/api/convert");
-          // if (runResponse.status === 200) {
-          //   console.log("Runpod submission successful");
-          // } else {
-          //   console.log("Error in submitting job to Runpod");
-          // }
+          const runResponse = await axios.post("/api/convert", { needsSep });
+          if (runResponse.status === 200) {
+            setConverting(true);
+            setConversionStatus(runResponse.data.status);
+          } else {
+            console.log("Error in submitting job to Runpod");
+          }
         } else {
           console.log("File upload failed");
+          setUploading(false);
         }
       } else {
         console.log("Error in generating url");
@@ -137,12 +154,92 @@ const ConversionPage = () => {
           toast.error("Something went wrong.");
       }
     } finally {
-        // router.refresh();
-        setUploading(false);
-        setConverting(false);
         setLoading(false);
     }
   }
+
+  const checkConversionStatus = async () => {
+    const response = await axios.get("/api/convert/status");
+
+    if (response.status === 200) {
+      const newStatus = response.data.status;
+      setConversionStatus(newStatus);
+      
+      if (newStatus === "COMPLETED" || newStatus === "FAILED") {
+        setConverting(false);
+        setFinished(true);
+      }
+    }
+  }
+
+  const retrieveResults = async () => {
+    const resultResponse = await axios.get("/api/convert/results");
+
+    if (resultResponse.status === 200) {
+      console.log("Results retrieved");
+
+      const results = resultResponse.data.urls;
+      setResultURLs(resultResponse.data.urls);
+
+      if (results.length > 1) {
+        let crunker = new Crunker();
+        crunker
+        .fetchAudio(results[0], results[1])
+        .then((buffers) => {
+            // => [AudioBuffer, AudioBuffer]
+            return crunker.mergeAudio(buffers);
+        })
+        .then((merged) => {
+            // => AudioBuffer
+            return crunker.export(merged, 'audio/wav');
+        })
+        .then((output) => {
+            // => {blob, element, url}
+            setMergedURL(output.url);
+            console.log("Results merged.");
+        })
+        .catch((error) => {
+            // => Error Message
+        });
+      } else {
+        console.log("[RESULTS RETRIEVAL ERROR]");
+      }
+    }
+  }
+
+  const downloadFromURL = async (url, name) => {
+    await axios.get(url, { responseType: "blob" }).then((response) => {
+      // create file link in browser's memory
+      const href = URL.createObjectURL(response.data);
+
+      // create "a" HTML element with href to file & click
+      const link = document.createElement('a');
+      link.href = href;
+      link.setAttribute('download', name); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up "a" element & remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+    });
+  }
+
+  useEffect(() => {
+    if (isConverting) {
+      intervalId.current = setInterval(async () => {
+        await checkConversionStatus();
+      }, 10000);
+      
+      return () => clearInterval(intervalId.current);
+    }
+  }, [isConverting]);
+
+  useEffect(() => {
+    if (isFinished && !resultURLs?.length) {
+      retrieveResults();
+    }
+  }, [isFinished, resultURLs]);
 
   return (
     <div>
@@ -155,9 +252,9 @@ const ConversionPage = () => {
         />
         <div className="px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div id="upload-convert">
+            <div id="upload-convert" className="w-full lg:max-w-2xl">
               <div className="font-bold text-2xl">Choose a Song</div>
-              <div className="pt-4 grid w-full lg:max-w-md items-center gap-1.5">
+              <div className="pt-4 grid items-center gap-1.5">
                 <Input
                   id="song"
                   type="file"
@@ -169,10 +266,10 @@ const ConversionPage = () => {
               </div>
               <div className="text-muted-foreground mt-2 mb-4 text-sm">Accepted: MP3, WAV, FLAC, M4A</div>
               
-              <div className="w-full lg:max-w-md">
+              <div>
                 {file === null ? ""
                 : (fileError !== "" ? <AlertCard variant="destructive" title="Error" message={fileError} />
-                  : <SongCard songName={audioTitle} songDuration={audioDuration} songSize={audioSize} />
+                  : <SongInfoCard songName={audioTitle} songDuration={audioDuration} songSize={audioSize} />
                 )}
               </div>
 
@@ -190,7 +287,7 @@ const ConversionPage = () => {
                 </div>
               </div>
 
-              <div className="w-full lg:max-w-md flex items-center justify-center mt-6">
+              <div className="flex items-center justify-center mt-6">
                 <Button
                   type="submit"
                   size="lg" className="text-xl"
@@ -200,23 +297,24 @@ const ConversionPage = () => {
                   {!isLoading ? "Convert" : "Converting"}
                 </Button>
               </div>
-              <div className="mt-5 w-full lg:max-w-md">
-                <AlertCard title="Notes" variant="default" message={
-                  <>
-                    <div>
-                      Do not leave this page while the file is uploading, or
-                      you will have to resubmit the request. You will not be charged until the actual conversion begins.
-                      You can view your results in the Output panel or in the <Link href="/history">History</Link> page.
-                    </div>
-                  </>
-                }/>
+              <div className="mt-5">
+                {started ?
+                  <AlertCard title="Note" variant="default" message={
+                    <>
+                    {isUploading ?
+                      <div>Do not leave this page while the file is uploading, or you will have to resubmit the request. You will not be charged until the actual conversion finishes.</div>
+                      : <div>You can view your results in the Output panel or in the <Link href="/history">History</Link> page.</div>
+                      }
+                    </>
+                  }/> : ""
+                }
               </div>
             </div>
             
-            <div id="output-recent">
+            <div id="output-recent" className="w-full lg:max-w-2xl">
               <div className="font-bold text-2xl">Output</div>
-              <div className="pt-4 w-full lg:max-w-md">
-                {isLoading ?
+              <div className="pt-4">
+                {started ?
                   <Card className="p-4 border border-black/50">
                     <Progress value={uploadProgress} className="w-full bg-[lightgray]" />
                     <div className="text-sm text-muted-foreground mt-1">
@@ -224,6 +322,68 @@ const ConversionPage = () => {
                         : "Upload finished."}
                     </div>      
                   </Card> : <Empty label="Nothing to see here :)" />}
+              </div>
+              <div className="pt-4">
+                {started ?
+                  <Card className="p-4 border border-black/50 flex items-center justify-between">
+                    <div className="text-md font-medium mt-1">
+                        {isConverting ? "Converting..."
+                        : (isFinished ? "Conversion finished." : "Waiting for uploading to finish...")}
+                    </div>
+                    {isConverting || isFinished ? <div className={
+                      cn("text-sm text-muted-foreground rounded-full px-4 py-2 font-bold text-black", 
+                        conversionStatus === "COMPLETED" ? "bg-[#33ff66]" : 
+                          (conversionStatus === "FAILED" ? "bg-destructive" : "bg-[#6699ff]")
+                      )}
+                    >
+                      {conversionStatus}
+                    </div> : ""}
+                  </Card> : ""}
+              </div>
+              <div className="pt-4">
+                
+                {isFinished && resultURLs?.length ? 
+                  <div className="border border-black/50 rounded-md p-4">
+                    {
+                      resultURLs?.length ? 
+                        (mergedURL !== "" ? 
+                          <div>
+                            <div className="flex items-center justify-between">
+                              <div className="font-medium mb-2">Merged</div>
+                              <Button variant="ghost" size="icon" 
+                                onClick={() => downloadFromURL(mergedURL, "merged.wav")}
+                              >
+                                <DownloadIcon />
+                              </Button>
+                            </div>
+                            <AudioCard url={mergedURL} /> 
+                          </div>
+                          : 
+                            <div>
+                              <AlertCard 
+                                variant="default" title="Merging" 
+                                message="Please wait as we merge the instrumental and vocal stems." 
+                              />
+                            </div>
+                        ) : ""
+                    }
+                    {resultURLs.map((url, i) => {
+                      return (
+                        <div className="mt-4">
+                          <div className="flex items-center justify-between">
+                            <div className="font-medium mb-2">{ i == resultURLs.length - 1 ? "Vocals" : "Instrumentals" }</div>
+                            <Button variant="ghost" size="icon" 
+                              onClick={() => downloadFromURL(url, i == resultURLs.length - 1 ? "vocals.wav" : "instrumentals.wav")}
+                            >
+                              <DownloadIcon />
+                            </Button>
+                          </div>
+                          <AudioCard url={url} />
+                        </div>  
+                      )
+                    })}
+                  </div>
+                  : ""}
               </div>
             </div>
           </div>

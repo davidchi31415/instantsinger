@@ -25,10 +25,14 @@ model UserSubscription {
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 }
 
+// model TrainedModel {}
+
 model ConvertJob {
   id String @id @default(cuid())
-  userId String @unique
-  status String @default("CONVERTING") // CONVERTING, DONE
+  userId String
+  needsSep Boolean
+  runpodJobId String? // MUST be filled in after job is created
+  status String? // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -4,12 +4,16 @@ import { NextResponse } from "next/server";
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
+import { cancelConvertJob, submitConvertJob } from "@/lib/runpod";
+import prismadb from "@/lib/prismadb";
 
 export async function POST(
     req: Request
 ) {
     try {
         const { userId } = auth();
+        const body = await req.json();
+        const { needsSep } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -29,33 +33,47 @@ export async function POST(
         
         // CHECK if file upload completed
 
-        const response = await axios.post("https://api.runpod.ai/v2/9afi4omg7sdwt6/run", {
-            "input": {   
-                "arguments": {
-                    "input_uuid": userId,
-                    "model_uuid": "f28fbe70-6e39-495a-abee-022d06f7ece8",
-                    "audio_is_vocals": 0,
-                    "transpose": 0,
-                    "pitch_extraction_algorithm": "mangio-crepe",
-                    "search_feature_ratio": 0.66,
-                    "filter_radius": 3,
-                    "resample_output": 0,
-                    "volume_envelope": 0.21,
-                    "voiceless_protection": 0.33,
-                    "hop_len": 120
-                }
+        let convertJob;
+        try { // FIRST, write to database - do not want to risk creating job and losing track of it
+            convertJob = await prismadb.convertJob.create({
+                data: { userId, needsSep }
+            });
+        } catch (error) {
+            console.log("Cancelled job due to database error:", error);
+            console.log(userId, needsSep);
+
+            if (convertJob) {
+                await prismadb.convertJob.delete({
+                    where: {
+                        id: convertJob.id
+                    }
+                });
             }
-        }, {
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.RUNPOD_API_KEY}`
-            }
-        });
+
+            return new NextResponse(
+                `Cancelled job due to database error, not submitted`, 
+                { status: 500 }
+            );
+        }
+
+        const runpodResponse = await submitConvertJob({ userId, outputId: convertJob.id, needsSep });
+        const runpodJobId = runpodResponse.data.id;
+        const status = runpodResponse.data.status;
         
-        if (response.status == 200) return new NextResponse("Convert request successful.", { status: 200 });
-        else return new NextResponse("Error communicating with Runpod", { status: 500});
+        if (runpodResponse.status == 200) {
+            await prismadb.convertJob.update({
+                where: { id: convertJob.id },
+                data: { runpodJobId, status }
+            });
+
+            return new NextResponse(
+                JSON.stringify({ jobId: runpodJobId, status }),
+                { status: 200 }
+            );
+        }
+        else return new NextResponse("Error communicating with Runpod for converting", { status: 500});
     } catch (error) {
-        console.log("[CONVERT ERROR]", error);
+        console.log("[CONVERT SUBMIT ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }

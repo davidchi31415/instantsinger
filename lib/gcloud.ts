@@ -7,15 +7,28 @@ const storage = new Storage({
 const bucketName = "sainatra";
 const bucket = storage.bucket(bucketName);
 
-interface GCloudUploadProps {
+interface GCloudProps {
     directory: string;
     fileName: string;
 }
 
-export const getUploadURL = async ({directory, fileName}: GCloudUploadProps) => {
+export const getUploadURL = async ({directory, fileName}: GCloudProps) => {
     const options = {
         version: "v4",
         action: "write",
+        expires: Date.now() + 15 * 60 * 1000 // 15 minutes
+    } as any;
+
+    const file = bucket.file(`${directory}/${fileName}`);
+    const [url]: any = await file.getSignedUrl(options);
+
+    return url;
+}
+
+export const getDownloadURL = async ({directory, fileName}: GCloudProps) => {
+    const options = {
+        version: "v4",
+        action: "read",
         expires: Date.now() + 15 * 60 * 1000 // 15 minutes
     } as any;
 

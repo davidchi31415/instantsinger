@@ -35,7 +35,7 @@ export async function GET(
 
         return new NextResponse(JSON.stringify({ url: url }));
     } catch (error) {
-        console.log("[CONVERT ERROR]", error);
+        console.log("[CONVERT UPLOAD ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }

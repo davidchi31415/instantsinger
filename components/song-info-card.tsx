@@ -8,7 +8,7 @@ import {
 import { Card } from "./ui/card";
 import { getFileName } from "@/lib/utils";
 
-export function SongCard({ songName, songSize, songDuration }) {
+export function SongInfoCard({ songName, songSize, songDuration }) {
   return (
     <Card 
       className="flex justify-between items-center
