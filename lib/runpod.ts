@@ -34,7 +34,13 @@ export const submitConvertJob = async ({
                 "resample_output": 0,
                 "volume_envelope": 0.21,
                 "voiceless_protection": 0.33,
-                "hop_len": 120
+                "hop_len": 120,
+                "vr_chunks": 55,
+                "vr_shifts": 5,
+                "vr_demucs": "off",
+                "vr_mixing_algorithm": "max_mag", // [min_mag, max_mag, default] 
+                "vr_normalise": 1, 
+                "vr_denoise": 1
             }
         }
     }, {
