@@ -14,6 +14,8 @@ interface CloneData {
 
 const getUserData = async () => {
     const { userId } = auth();
+    if (userId === null) return { clones: [], currentJob: null };
+
     const clones = await getClones({ userId });
     const res: CloneData = { clones, currentJob: null };
 

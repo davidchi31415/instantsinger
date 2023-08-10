@@ -94,6 +94,7 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
         reader.onloadend = (e) => {
           const ctx = new AudioContext();
           const audioArrayBuffer = e.target?.result;
+
           ctx.decodeAudioData(audioArrayBuffer).then(
             data => {
               duration = data.duration;

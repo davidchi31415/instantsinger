@@ -13,6 +13,8 @@ interface CloneData {
 
 const getCloneNames = async () => {
     const { userId } = auth();
+    if (userId === null) return [];
+
     const clones = await getClones({ userId });
     const cloneNames = clones.map((clone) => clone.name);
 
@@ -25,7 +27,7 @@ const CloningFinishPage = async () => {
     const cloneNames = await getCloneNames();
 
     return (
-        <CloningFinishStep usedNames={["My Voice"]} />
+        <CloningFinishStep usedNames={cloneNames} />
     )
 }
 

@@ -1,8 +1,13 @@
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
 
-export const CloningStepBar = ({ title, totalSteps, step, setStep }) => {
+interface CloningStepBarProps {
+    title: string;
+    totalSteps: number;
+    step: number;
+    setStep: Function;
+}
+
+export const CloningStepBar = ({ title, totalSteps, step, setStep }: CloningStepBarProps) => {
     return (
         <div>
             <div className="text-2xl font-bold text-center w-full mb-2">{title}</div>

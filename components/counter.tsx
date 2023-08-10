@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 
-const CounterComponent = ({ started, initialCount, onFinished }) => {
+interface CounterComponentProps {
+    started: boolean;
+    initialCount: number;
+    onFinished: Function;
+}
+
+const CounterComponent = ({ started, initialCount, onFinished }: CounterComponentProps) => {
     const [count, setCount] = useState(initialCount);
 
     useEffect(() => {

@@ -5,11 +5,13 @@ import { auth } from "@clerk/nextjs";
 
 interface ConversionData {
   cloneNames: string[];
-  currentJob: any | null;
+  currentJob: any;
 }
 
 const getUserData = async () => {
   const { userId } = auth();
+  if (userId === null) return { cloneNames: [], currentJob: null };
+
   const clones = await getClones({ userId });
   const res: ConversionData = { 
     cloneNames: clones.map((clone) => clone.name),

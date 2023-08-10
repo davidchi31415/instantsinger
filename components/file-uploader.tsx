@@ -29,7 +29,12 @@ import Crunker from "crunker";
 
 const MAX_FILE_SIZE = 100_000_000;
 
-export const CloningFileUploader = ({ uploadEndpoint, stepNumber }) => {
+interface CloningFileUploaderProps {
+  uploadEndpoint: string;
+  stepNumber: number;
+}
+
+export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileUploaderProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [needsSep, setNeedsSep] = useState(true);
   const [isLoading, setLoading] = useState(false);

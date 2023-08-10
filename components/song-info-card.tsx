@@ -8,7 +8,13 @@ import {
 import { Card } from "./ui/card";
 import { getFileName } from "@/lib/utils";
 
-export function SongInfoCard({ songName, songSize, songDuration }) {
+interface SongInfoCardProps {
+  songName: string;
+  songSize: number;
+  songDuration: number;
+}
+
+export function SongInfoCard({ songName, songSize, songDuration }: SongInfoCardProps) {
   return (
     <Card 
       className="flex justify-between items-center
