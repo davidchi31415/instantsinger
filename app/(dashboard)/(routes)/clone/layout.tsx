@@ -1,4 +1,3 @@
-import { CloneInProgress } from "@/components/clone-in-progress";
 import { Heading } from "@/components/heading";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";

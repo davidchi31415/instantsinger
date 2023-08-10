@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-import { FileUploader } from "@/components/file-uploader";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Empty } from "@/components/empty";
@@ -94,8 +93,9 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
         reader.onloadend = (e) => {
           const ctx = new AudioContext();
           const audioArrayBuffer = e.target?.result;
+          if (typeof audioArrayBuffer === "string") throw Error("Couldn't get Audio Buffer");
 
-          ctx.decodeAudioData(audioArrayBuffer).then(
+          ctx.decodeAudioData(audioArrayBuffer!).then(
             data => {
               duration = data.duration;
               setFileError("");

@@ -41,7 +41,7 @@ export async function POST(
         ];
 
         // Make sure necessary files are present
-        const missingFiles = [];
+        const missingFiles: string[] = [];
         for (let i = 0; i < requiredFiles.length; i++) {
             const fileExists = await checkFileExists({
                 directory: `training_data/${userId}`, fileName: requiredFiles[i]

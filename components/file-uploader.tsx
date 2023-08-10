@@ -31,7 +31,7 @@ const MAX_FILE_SIZE = 100_000_000;
 
 interface CloningFileUploaderProps {
   uploadEndpoint: string;
-  stepNumber: number;
+  stepNumber: string | number;
 }
 
 export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileUploaderProps) => {
@@ -71,7 +71,9 @@ export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileU
         reader.onloadend = (e) => {
           const ctx = new AudioContext();
           const audioArrayBuffer = e.target?.result;
-          ctx.decodeAudioData(audioArrayBuffer).then(
+          if (typeof audioArrayBuffer === "string") throw Error("Couldn't get Audio Buffer");
+
+          ctx.decodeAudioData(audioArrayBuffer!).then(
             data => {
               duration = data.duration;
               setFileError("");
