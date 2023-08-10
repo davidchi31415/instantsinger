@@ -59,7 +59,7 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
 
     return (
         <div>
-            {true ?
+            {submitted ?
                 <div className="flex flex-col items-center gap-4">
                     <Congrats label="Congrats! Your AI voice is on its way." />
                     <Link href="/clone">
