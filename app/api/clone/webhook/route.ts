@@ -27,8 +27,14 @@ export async function POST(req: NextRequest) {
         console.log("[CLONE WEBHOOK ERROR]: No job found with id.");
         return new NextResponse("Invalid id", { status: 400 });
     }
-    if (job.status === "COMPLETED" || job.status === "FAILED") {
-        return new NextResponse("Job already completed", { status: 400 });
+    const clone = await prismadb.clone.findUnique({
+        where: {
+            id: jobId
+        }
+    });
+    if (clone) { // TODO - add check on whether customer was charged, as error may have occurred before it
+        console.log("[CLONE WEBHOOK ERROR]: Clone already initialized. Preventing double-charge/processing.");
+        return new NextResponse("Clone already present.", { status: 400 });
     }
 
     await prismadb.cloneJob.update({

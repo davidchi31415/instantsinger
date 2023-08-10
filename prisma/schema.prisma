@@ -46,7 +46,7 @@ model CloneJob {
 }
 
 model Clone {
-  id String @id
+  id String @id // provided by cloneJob.id
   userId String
   name String
   @@unique([userId, name]) // Names are unique

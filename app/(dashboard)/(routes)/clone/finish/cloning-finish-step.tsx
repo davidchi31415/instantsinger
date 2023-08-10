@@ -5,7 +5,7 @@ import { Heading } from "@/components/heading";
 import { MicIcon } from "lucide-react";
 import { pianoSteps } from "../constants";
 import { Button } from "@/components/ui/button";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ interface CloningFinishStepProps {
 
 const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const [cloneName, setCloneName] = useState<string>("");
     const [nameError, setNameError] = useState<string>("");
     const [missingFiles, setMissingFiles] = useState<number[]>([]);
@@ -25,26 +26,32 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
         usedNames.some((name: string) => cloneName === name);
 
     const onSubmit = async () => {
-        if (cloneName === "") {
-            setNameError("Clone name required.")
-            return;
-        }
-        setNameError("");
-        await axios.post("/api/clone", { cloneName }).then(
-            () => redirect("/clone")
-        ).catch(
-            err => {
-                const res = err.response;
-
-                if (res.status === 403) {
-                    console.log("Missing files:", res.data.missingFiles);
-                    setMissingFiles(res.data.missingFiles);
+        try {
+            setLoading(true);
+            if (cloneName === "") {
+                setNameError("Clone name required.")
+                return;
+            }
+            setNameError("");
+            const response = await axios.post("/api/clone", { cloneName });
+            
+            if (response.status === 200) {
+                router.push("/clone");
+            } else {
+                if (response.status === 403) {
+                    console.log("Missing files:", response.data.missingFiles);
+                    setMissingFiles(response.data.missingFiles);
                 } else {
-                    console.log("Error:", res);
+                    console.log("Error:", response);
                     // TO-DO: make toast
                 }
             }
-        );
+        } catch (err) {
+            console.log("Submission Error");
+            // TO-DO - proper error display
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -90,6 +97,7 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
             </div>
             <div className="flex justify-center items-center pt-8 pb-16">
                 <Button size="lg" className="text-xl"
+                    disabled={loading}
                     onClick={onSubmit}
                 >
                     Clone My Voice

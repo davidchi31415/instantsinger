@@ -9,12 +9,15 @@ interface ProgressCardProps {
     process: string;
     apiEndpoint: string;
     initStatus?: string;
+    onStatusChange?: Function;
     onFinish?: Function;
     onFail?: Function;
     onCancel?: Function;
 }
 
-export const ProgressCard = ({ process, apiEndpoint, initStatus, onFinish, onFail, onCancel }: ProgressCardProps) => {
+export const ProgressCard = (
+    { process, apiEndpoint, initStatus, onStatusChange, onFinish, onFail, onCancel }: ProgressCardProps
+) => {
     const [currentStatus, setStatus] = useState<string>(initStatus ? initStatus : "");
     const [isFinished, setFinished] = useState(initStatus ? isJobDone({ status: initStatus }) : false);
 
@@ -45,6 +48,7 @@ export const ProgressCard = ({ process, apiEndpoint, initStatus, onFinish, onFai
         if (response.status === 200) {
             const newStatus = response.data.status;
             setStatus(newStatus);
+            if (onStatusChange) onStatusChange(newStatus);
         }
     }
 

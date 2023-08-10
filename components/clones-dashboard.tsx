@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ProgressCard } from "./progress-card";
 import { Card } from "./ui/card";
 
@@ -13,6 +14,10 @@ interface ClonesDashboardProps {
 export const ClonesDashboard = ({ userData }: ClonesDashboardProps) => {
     const noClones = userData.clones.length === 0 && userData.currentJob === null;
 
+    const [cloningStatus, setCloningStatus] = useState<string>(
+        userData.currentJob !== null ? userData.currentJob.status : ""
+    )
+
     return (
         <div>
             {noClones ? 
@@ -22,9 +27,10 @@ export const ClonesDashboard = ({ userData }: ClonesDashboardProps) => {
             }
             {userData.currentJob !== null ?
                 <div className="w-[20rem] lg:w-[40rem] xl:w-[50rem]">
-                    <div className="text-xl">Your voice "{userData.currentJob.name}" is being cloned.</div>
+                    <div className="text-xl mb-2">Your voice "{userData.currentJob.name}" is being cloned.</div>
                     <ProgressCard process="Cloning" apiEndpoint="/api/clone/status" 
-                        initStatus={userData.currentJob.status}
+                        initStatus={cloningStatus}
+                        onStatusChange={setCloningStatus}
                     />
                 </div> : ""
             }
@@ -36,7 +42,7 @@ export const ClonesDashboard = ({ userData }: ClonesDashboardProps) => {
                 )
             })}
             {!noClones ?
-                <div className="text-xl">
+                <div className="text-xl mt-8">
                     Want another voice clone? Go to the <b>Create a Clone</b> tab.
                 </div> : ""
             }
