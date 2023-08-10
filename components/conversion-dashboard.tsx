@@ -172,6 +172,7 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
           await axios.post("/api/convert", 
             { 
               cloneName: cloneChoice, 
+              songName: audioTitle,
               needsSep
             }
           )

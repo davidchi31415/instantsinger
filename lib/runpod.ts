@@ -142,9 +142,11 @@ export const getMostRecentConvertJob = async ({ userId }: PrismadbProps) => {
 
     const jobData = {
         status: job.status,
+        songName: job.songName,
         needsSep: job.needsSep,
         createdAt: job.createdAt,
-        updatedAt: job.updatedAt
+        updatedAt: job.updatedAt,
+        cloneName: job.cloneName
     }
     
     return jobData;
@@ -161,9 +163,11 @@ export const getConversions = async ({ userId }: PrismadbProps) => {
         return (
             {
                 status: job.status,
+                songName: job.songName,
                 needsSep: job.needsSep,
                 createdAt: job.createdAt,
-                updatedAt: job.updatedAt
+                updatedAt: job.updatedAt,
+                cloneName: job.cloneName
             }
         );
     });

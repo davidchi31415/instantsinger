@@ -13,7 +13,7 @@ export async function POST(
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { cloneName, needsSep } = body;
+        const { cloneName, songName, needsSep } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -39,7 +39,7 @@ export async function POST(
         let convertJob;
         try { // FIRST, write to database - do not want to risk creating job and losing track of it
             convertJob = await prismadb.convertJob.create({
-                data: { userId, needsSep }
+                data: { userId, songName, needsSep, cloneName }
             });
         } catch (error) {
             console.log("Cancelled convert job due to database error:", error);
