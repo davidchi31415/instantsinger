@@ -3,75 +3,90 @@
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Code, ImageIcon, MessageSquare, Music, VideoIcon } from "lucide-react";
+import { ArrowLeftRightIcon, ArrowRight, Code, HistoryIcon, ImageIcon, MessageSquare, Music, SettingsIcon, VideoIcon } from "lucide-react";
+import { BsDiscord } from "react-icons/bs";
 
 export default function DashboardPage() {
   const router = useRouter();
 
   const tools = [
     {
-      label: "Conversation",
-      icon: MessageSquare,
+      label: "Convert",
+      icon: ArrowLeftRightIcon,
       color: "text-violet-500",
       bgColor: "bg-violet-500/10",
-      href: "/conversation"
+      href: "/convert",
+      message: "Convert any song into your own voice."
     },
     {
-        label: "Image Generation",
-        icon: ImageIcon,
-        href: "/image",
-        color: "text-pink-500",
-        bgColor: "bg-pink-500/10"
+      label: "Clone",
+      icon: MessageSquare,
+      color: "text-pink-500",
+      bgColor: "bg-pink-500/10",
+      href: "/clone",
+      message: "Clone your voice. Then use it to convert songs into your voice."
     },
     {
-        label: "Video Generation",
-        icon: VideoIcon,
-        href: "/video",
-        color: "text-orange-500",
-        bgColor: "bg-orange-500/10"
+      label: "History",
+      icon: HistoryIcon,
+      href: "/history",
+      message: "See (and hear) all your past conversions."
     },
     {
-        label: "Music Generation",
-        icon: Music,
-        href: "/music",
-        color: "text-emerald-500",
-        bgColor: "bg-emerald-500/10"
+      label: "Settings",
+      icon: SettingsIcon,
+      href: "/settings",
+      message: "Manage your account and subscription settings."
     },
     {
-        label: "Code Generation",
-        icon: Code,
-        href: "/code",
-        color: "text-green-500",
-        bgColor: "bg-green-500/10"
+      label: "Discord",
+      icon: BsDiscord,
+      color: "text-blue-500",
+      bgColor: "bg-blue-500/10",
+      url: "https://discord.gg/Z7RvN6JWky",
+      message: "Need help or support? Join the Discord!"
     }
   ];
 
   return (
     <div className="mb-8 space-y-4">
       <h2 className="text-2xl md:text-4xl font-bold text-center">
-        Explore the power of AI
+        Welcome to Instant Singer
       </h2>
       <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
-        Chat with the smartest AI - experience the revolution of our century.
+        Unleash your beautiful voice with AI :)
       </p>
-      <div className="px-4 md:px-20 lg:px-32 space-y-4">
+      <div className="px-4 md:px-20 lg:px-32 grid md:grid-cols-2 gap-4">
         {tools.map((tool) => {
           return (
             <Card
-              onClick={() => router.push(tool.href)}
-              key={tool.href} 
-              className="p-4 border-black/0.5 flex items-center justify-between hover:shadow-md
+              onClick={() => {
+                if (tool.href) {
+                  router.push(tool.href);
+                } else if (tool.url) {
+                  window.open(tool.url);
+                }
+              }}
+              key={tool.href ? tool.href : tool.url} 
+              className="p-4 border-black/0.5 hover:shadow-md
               transition cursor-pointer"
             >
-              <div className="flex items-center gap-x-4">
-                <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                  <tool.icon className={cn("w-8 h-8", tool.color)} />
+              <div className="h-[7rem]">
+                <div className="flex items-center justify-between gap-x-4">
+                  <div className="flex items-center gap-2">
+                    <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
+                      <tool.icon className={cn("w-8 h-8", tool.color)} />
+                    </div>
+                    <div className="font-semibold">
+                      {tool.label}
+                    </div>
+                  </div>
+                  <ArrowRight className="w-5 h-5" />
                 </div>
-                <div className="font-semibold">
-                  {tool.label}
+                <div className="px-2 my-4 text-muted-foreground">
+                  {tool.message}
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5" />
             </Card>
           )
         })}
