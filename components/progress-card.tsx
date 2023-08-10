@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Card } from "./ui/card";
 import { cn, isJobDone } from "@/lib/utils";
+import { Badge } from "./ui/badge";
 
 interface ProgressCardProps {
     process: string;
@@ -13,10 +14,11 @@ interface ProgressCardProps {
     onFinish?: Function;
     onFail?: Function;
     onCancel?: Function;
+    badgeOnly?: boolean;
 }
 
 export const ProgressCard = (
-    { process, apiEndpoint, initStatus, onStatusChange, onFinish, onFail, onCancel }: ProgressCardProps
+    { process, apiEndpoint, initStatus, onStatusChange, onFinish, onFail, onCancel, badgeOnly }: ProgressCardProps
 ) => {
     const [currentStatus, setStatus] = useState<string>(initStatus ? initStatus : "");
     const [isFinished, setFinished] = useState(initStatus ? isJobDone({ status: initStatus }) : false);
@@ -50,6 +52,20 @@ export const ProgressCard = (
             setStatus(newStatus);
             if (onStatusChange) onStatusChange(newStatus);
         }
+    }
+
+    if (badgeOnly) {
+        return (
+            <Badge
+                className={
+                    currentStatus === "COMPLETED" ? "bg-[green]" : 
+                    (currentStatus === "FAILED" || currentStatus === "CANCELLED"
+                        ? "bg-destructive" : "bg-[#6699ff]")
+                }
+            >
+                {currentStatus}
+            </Badge>
+        )
     }
 
     return (

@@ -62,11 +62,11 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
             {submitted ?
                 <div className="flex flex-col items-center gap-4">
                     <Congrats label="Congrats! Your AI voice is on its way." />
-                    <Link href="/clone">
-                        <Button className="p-4 text-xl" size="lg">
-                            Check Status
-                        </Button>
-                    </Link>
+                    <Button className="p-4 text-xl" size="lg"
+                        onClick={() => { window.location.href = "/clone" }}
+                    >
+                        Check Status
+                    </Button>
                 </div>
                 :
                 <>
