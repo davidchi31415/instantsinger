@@ -1,15 +1,13 @@
 "use client"
 
-import axios from "axios";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertCard } from "@/components/alert-card";
-import Link from "next/link";
-import { MicIcon, MoveLeftIcon, MoveRightIcon } from "lucide-react";
+import { MicIcon, MoveLeftIcon, MoveRightIcon, UploadCloudIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { AudioRecorder } from 'react-audio-voice-recorder';
+import { CloningStepBar } from "@/components/cloning-step-bar";
+import Link from "next/link";
 
 const essay = [
     `Welcome! This is an AI-powered singing tool built for the aspiring singer. 
@@ -28,109 +26,57 @@ const essay = [
 ];
 
 const CloningStep = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    useEffect(() => {
-        window.addEventListener("keydown", handleKeys);
-
-        return () => window.removeEventListener("keydown", handleKeys);
-    }, []);
-
-    const addAudioElement = (blob: Blob) => {
-        const url = URL.createObjectURL(blob);
-        const audio = document.createElement('audio');
-        audio.src = url;
-        audio.controls = true;
-        document.body.appendChild(audio);
-    };
-
-    const handleKeys = (e: any) => {
-        if (e.defaultPrevented) {
-            return; // Do nothing if the event was already processed
-          }
-      
-          switch (e.key) {
-            case "ArrowLeft":
-              setCurrentIndex(e => Math.max(0, e-1))
-              break;
-            case "ArrowRight":
-              setCurrentIndex(e => Math.min(e+1, essay.length-1))
-              break;
-            case "Enter":
-              // Start / Stop recording
-              break;
-            default:
-              return; // Quit when this doesn't handle the key event.
-          }
-      
-          // Cancel the default action to avoid it being handled twice
-          e.preventDefault();
-    }
+    const [step, setStep] = useState(0);
 
   return (
-    <div>
-        <Heading
-            title="Clone"
-            description="Clone your voice through a step-by-step, guided process."
-            icon={MicIcon}
-            iconColor="text-pink-500"
-            bgColor="bg-pink-500/10"
-        />
-        <div className="px-4 lg:px-8 flex justify-center">
-          <div className="pt-8 flex flex-col items-center justify-center">
+    <div className="px-4 lg:px-8 flex justify-center">
+        <div className="pt-2 flex flex-col items-center justify-center gap-2">
+            <CloningStepBar title="Step 1: Speaking" totalSteps={essay.length} step={step} setStep={setStep} />
             <Card className="w-full lg:max-w-3xl bg-muted mb-4 text-xl">
                 <CardHeader>
-                    <CardTitle>Step 1</CardTitle>
-                    <CardDescription>Record yourself while reading the following text.</CardDescription>
+                    <CardTitle className="text-md text-muted-foreground">
+                        Read the following text, and record yourself all the way to the last slide.
+                    </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div>
                         {
-                            essay[currentIndex]
+                            essay[step]
                         }
                     </div>
                 </CardContent>
-                <CardFooter>
-                    <div className="w-full flex flex-col items-center justify-between">
-                        <div className="mb-2 text-muted-foreground text-sm">{currentIndex+1} / {essay.length}</div>
-                        <div className="flex items-center justify-center gap-2">
-                            <Button size="icon" disabled={currentIndex <= 0}
-                                onClick={() => setCurrentIndex(e => e-1)}
-                            >
-                                <MoveLeftIcon />
-                            </Button>
-                            <Button size="icon" disabled={currentIndex >= essay.length - 1}
-                                onClick={() => setCurrentIndex(e => e+1)}
-                            >
-                                <MoveRightIcon />
-                            </Button>
-                        </div>
-                    </div>
-                </CardFooter>
             </Card>
-            <div className="flex items-center justify-center">
-                <AudioRecorder
-                    onRecordingComplete={addAudioElement}
-                    audioTrackConstraints={{
-                    noiseSuppression: true,
-                    echoCancellation: true,
-                    // autoGainControl,
-                    // channelCount,
-                    // deviceId,
-                    // groupId,
-                    // sampleRate,
-                    // sampleSize,
-                    }}
-                    onNotAllowedOrFound={(err) => console.table(err)}
-                    downloadOnSavePress={true}
-                    downloadFileExtension="webm"
-                    mediaRecorderOptions={{
-                    audioBitsPerSecond: 128000,
-                    }}
-                    // showVisualizer={true}
-                />
+            <div className="w-full flex items-center justify-between">
+                {step !== 0 ?
+                <Button
+                    disabled={step <= 0}
+                    onClick={() => setStep(e => Math.max(0, e-1))}
+                    className="gap-2 text-md"
+                    variant="outline"
+                >
+                    <MoveLeftIcon />Go Back
+                </Button>
+                : <Link href="/clone/step-1-preview">
+                    <Button 
+                        className="text-md gap-2"
+                        variant="outline"
+                    >
+                        <MoveLeftIcon />Step 1 Preview
+                    </Button>
+                </Link>}
+                {step !== essay.length - 1 ?
+                <Button
+                    onClick={() => setStep(e => Math.min(essay.length - 1, e+1))}
+                    className="gap-2 text-md"
+                >
+                    Continue<MoveRightIcon />
+                </Button> 
+                : <Link href="/clone/step-2-preview">
+                    <Button className="text-md gap-2">
+                        Step 2<MoveRightIcon />
+                    </Button>
+                </Link>}
             </div>
-          </div>
         </div>
     </div>
   )

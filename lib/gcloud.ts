@@ -1,8 +1,14 @@
 import { Storage } from "@google-cloud/storage";
 
-const storage = new Storage({
-    keyFilename: "./gcloud_key.json"
-});
+const key = JSON.parse(process.env.GCLOUD_KEY!);
+const storageOptions = {
+    projectId: key.projectId,
+    credentials: {
+          client_email: key.client_email,
+          private_key: key.private_key
+    }
+};
+const storage = new Storage(storageOptions);
 
 const bucketName = "sainatra";
 const bucket = storage.bucket(bucketName);
@@ -36,4 +42,16 @@ export const getDownloadURL = async ({directory, fileName}: GCloudProps) => {
     const [url]: any = await file.getSignedUrl(options);
 
     return url;
+}
+
+export const checkFileExists = async ({directory, fileName}: GCloudProps) => {
+    const file = bucket.file(`${directory}/${fileName}`);
+
+    let exists = false;
+
+    await file.exists().then((data) => {
+        exists = data[0];
+    });
+
+    return exists;
 }

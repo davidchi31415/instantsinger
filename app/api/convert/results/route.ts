@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
-import { checkConvertJob, getMostRecentConvertJob } from "@/lib/runpod";
+import { _getMostRecentConvertJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 import { getDownloadURL } from "@/lib/gcloud";
 
@@ -30,9 +30,7 @@ export async function GET(
         //     await increaseAPILimit();
         // }
         
-        // CHECK if file upload completed
-        
-        const convertJob = await getMostRecentConvertJob({ userId });
+        const convertJob = await _getMostRecentConvertJob({ userId });
         if (!convertJob) return new NextResponse("No jobs found", { status: 400 });
         const convertJobId = convertJob.id;
         

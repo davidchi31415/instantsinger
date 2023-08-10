@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
-import { _checkConvertJob, _getMostRecentConvertJob } from "@/lib/runpod";
+import { _checkCloneJob, _getMostRecentCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 
 export async function GET(
@@ -29,17 +29,15 @@ export async function GET(
         //     await increaseAPILimit();
         // }
         
-        // CHECK if file upload completed
-        
-        const convertJob = await _getMostRecentConvertJob({ userId });
-        if (!convertJob) return new NextResponse("No jobs found", { status: 400 });
+        const cloneJob = await _getMostRecentCloneJob({ userId });
+        if (!cloneJob) return new NextResponse("No clone job found", { status: 400 });
 
-        const runpodResponse = await _checkConvertJob({ runpodJobId: convertJob.runpodJobId! });
+        const runpodResponse = await _checkCloneJob({ runpodJobId: cloneJob.runpodJobId! });
         
         if (runpodResponse.status == 200) {
             const status = runpodResponse.data.status;
-            await prismadb.convertJob.update({
-                where: { id: convertJob.id }, 
+            await prismadb.cloneJob.update({
+                where: { id: cloneJob.id }, 
                 data: { status }
             });
             
@@ -49,7 +47,7 @@ export async function GET(
         }
         else return new NextResponse("Error communicating with Runpod for status", { status: 500});
     } catch (error) {
-        console.log("[CONVERT STATUS ERROR]", error);
+        console.log("[CLONE STATUS ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }

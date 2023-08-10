@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
-import { cancelConvertJob, submitConvertJob } from "@/lib/runpod";
+import { _getClone, _submitConvertJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 
 export async function POST(
@@ -13,11 +13,14 @@ export async function POST(
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { needsSep } = body;
+        const { cloneName, needsSep } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
+
+        const clone = await _getClone({ userId, cloneName });
+        if (!clone) return new NextResponse("No clone found with given name", { status: 400 });
 
         // Check API Limits
         // const freeTrial = await checkAPILimit();
@@ -39,7 +42,7 @@ export async function POST(
                 data: { userId, needsSep }
             });
         } catch (error) {
-            console.log("Cancelled job due to database error:", error);
+            console.log("Cancelled convert job due to database error:", error);
             console.log(userId, needsSep);
 
             if (convertJob) {
@@ -51,12 +54,17 @@ export async function POST(
             }
 
             return new NextResponse(
-                `Cancelled job due to database error, not submitted`, 
+                `Cancelled convert job due to database error, not submitted`, 
                 { status: 500 }
             );
         }
 
-        const runpodResponse = await submitConvertJob({ userId, outputId: convertJob.id, needsSep });
+        const runpodResponse = await _submitConvertJob({
+            userId,
+            modelId: clone.id,
+            needsSep,
+            jobId: convertJob.id
+        });
         const runpodJobId = runpodResponse.data.id;
         const status = runpodResponse.data.status;
         
@@ -71,7 +79,15 @@ export async function POST(
                 { status: 200 }
             );
         }
-        else return new NextResponse("Error communicating with Runpod for converting", { status: 500});
+        else {
+            await prismadb.convertJob.delete({
+                where: {
+                    id: convertJob.id
+                }
+            });
+            
+            return new NextResponse("Error communicating with Runpod for converting", { status: 500});
+        }
     } catch (error) {
         console.log("[CONVERT SUBMIT ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });

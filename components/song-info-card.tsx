@@ -12,7 +12,7 @@ export function SongInfoCard({ songName, songSize, songDuration }) {
   return (
     <Card 
       className="flex justify-between items-center
-      p-4 bg-muted border border-black/50"
+      p-4 bg-muted"
     >
         <div>
             {/* <AlertCircle className="h-4 w-4" /> */}

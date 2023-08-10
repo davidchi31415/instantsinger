@@ -25,14 +25,30 @@ model UserSubscription {
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 }
 
-// model TrainedModel {}
-
 model ConvertJob {
   id String @id @default(cuid())
   userId String
   needsSep Boolean
   runpodJobId String? // MUST be filled in after job is created
-  status String? // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
+  status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model CloneJob {
+  id String @id @default(cuid())
+  userId String
+  name String
+  runpodJobId String? // MUST be filled in after job is created
+  status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Clone {
+  id String @id
+  userId String
+  name String
+  @@unique([userId, name]) // Names are unique
+  createdAt DateTime @default(now())
 }
