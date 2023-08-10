@@ -66,7 +66,7 @@ export const _submitConvertJob = async ({
                 "vr_denoise": 1
             }
         },
-        "webhook": `${process.env.NEXT_PUBLIC_APP_URL}/convert/webhook?id=${jobId}`
+        "webhook": `${process.env.NEXT_PUBLIC_APP_URL}/api/convert/webhook?id=${jobId}`
     }, {
         "headers": {
             "Content-Type": "application/json",
@@ -191,7 +191,7 @@ export const _submitCloneJob = async ({
                 "hop_len": 128
             }
         },
-        "webhook": `${process.env.NEXT_PUBLIC_APP_URL}/clone/webhook?id=${jobId}`
+        "webhook": `${process.env.NEXT_PUBLIC_APP_URL}/api/clone/webhook?id=${jobId}`
     }, {
         "headers": {
             "Content-Type": "application/json",

@@ -13,6 +13,10 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { status } = body;
+
+    ///////////////////////////////////////////////////////
+    // Check params
+    ///////////////////////////////////////////////////////
     if (!status) {
         console.log("[CLONE WEBHOOK ERROR]: No status found.");
         return new NextResponse("Need status parameter", { status: 400 });
@@ -27,6 +31,10 @@ export async function POST(req: NextRequest) {
         console.log("[CLONE WEBHOOK ERROR]: No job found with id.");
         return new NextResponse("Invalid id", { status: 400 });
     }
+
+    ///////////////////////////////////////////////////////
+    // Check for double-requests
+    ///////////////////////////////////////////////////////
     const clone = await prismadb.clone.findUnique({
         where: {
             id: jobId
