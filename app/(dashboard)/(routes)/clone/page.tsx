@@ -12,7 +12,7 @@ interface CloneData {
     currentJob: any;
 }
 
-export const getUserData = async () => {
+const getUserData = async () => {
     const { userId } = auth();
     const clones = await getClones({ userId });
     const res: CloneData = { clones, currentJob: null };

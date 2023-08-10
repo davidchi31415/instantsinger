@@ -8,7 +8,7 @@ interface ConversionData {
   currentJob: any | null;
 }
 
-export const getUserData = async () => {
+const getUserData = async () => {
   const { userId } = auth();
   const clones = await getClones({ userId });
   const res: ConversionData = { 

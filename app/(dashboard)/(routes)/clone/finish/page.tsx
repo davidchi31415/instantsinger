@@ -11,7 +11,7 @@ interface CloneData {
     currentJob: any;
 }
 
-export const getCloneNames = async () => {
+const getCloneNames = async () => {
     const { userId } = auth();
     const clones = await getClones({ userId });
     const cloneNames = clones.map((clone) => clone.name);
