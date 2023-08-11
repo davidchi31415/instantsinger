@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
-import { _getConversion, _getConversionResults, _getMostRecentConvertJob } from "@/lib/runpod";
+import { _getConversion, _getMostRecentConvertJob, getConversionResults } from "@/lib/runpod";
 
 export async function GET(
     req: NextRequest
@@ -40,11 +40,10 @@ export async function GET(
         if (convertJob.status === "CANCELLED") return new NextResponse("Job cancelled => no result.", { status: 400 });
         if (convertJob.status !== "COMPLETED") return new NextResponse("Job not completed.", { status: 400 });
 
-        const { urls, fileNames } = await _getConversionResults({ convertJob });
+        const results = await getConversionResults({ convertJob });
+        if (!results) return new NextResponse("Internal error retrieving results", { status: 400 })
 
-        if (!urls.length) return new NextResponse("Error generating urls", { status: 400 });
-
-        return new NextResponse(JSON.stringify({ urls, fileNames, songName: convertJob.songName }), { status: 200 });
+        return new NextResponse(JSON.stringify(results), { status: 200 });
     } catch (error) {
         console.log("[CONVERT STATUS ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });

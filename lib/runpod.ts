@@ -133,20 +133,6 @@ export const _getConversions = async ({ userId }: PrismadbProps) => {
     return convertJobs;
 };
 
-export const _getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
-    if (!isJobDone({ status: convertJob.status })) return;
-    
-    const fileNames = convertJob.needsSep ? ["background.wav", "vocals.wav", "combined.wav"] : ["vocals.wav"];
-
-    const urls = await Promise.all(
-        fileNames.map(
-            async (name) => await getDownloadURL({ directory: `inference_outputs/${convertJob.id}`, fileName: name })
-        )
-    );
-
-    return { fileNames, urls: urls };
-}
-
 export const _getConversion = async ({ userId, conversionId }: GetConversionProps) => {
     const convertJob = await prismadb.convertJob.findUnique({
         where: {
@@ -212,21 +198,6 @@ export const getConversions = async ({ userId }: PrismadbProps) => {
     return convertJobsData;
 };
 
-export const getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
-    if (!isJobDone({ status: convertJob.status })) return;
-
-    const res = await _getConversionResults({ convertJob });
-    if (!res) return;
-
-    const results = {
-        urls: res.urls,
-        fileNames: res.fileNames,
-        songName: convertJob.songName
-    }
-
-    return results;
-}
-
 export const getConversion = async ({ userId, conversionId }: GetConversionProps) => {
     const convertJob = await prismadb.convertJob.findUnique({
         where: {
@@ -248,6 +219,20 @@ export const getConversion = async ({ userId, conversionId }: GetConversionProps
         };
     }
 };
+
+export const getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
+    if (!isJobDone({ status: convertJob.status })) return;
+    
+    const fileNames = convertJob.needsSep ? ["background.wav", "vocals.wav", "combined.wav"] : ["vocals.wav"];
+
+    const urls = await Promise.all(
+        fileNames.map(
+            async (name) => await getDownloadURL({ directory: `inference_outputs/${convertJob.id}`, fileName: name })
+        )
+    );
+
+    return { fileNames, urls, songName: convertJob.songName };
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Clone
