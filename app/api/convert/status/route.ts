@@ -1,21 +1,26 @@
 import { auth } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
-import { _checkConvertJob, _getMostRecentConvertJob } from "@/lib/runpod";
+import { _checkConvertJob, _getMostRecentConvertJob, getConversion } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 
 export async function GET(
-    req: Request
+    req: NextRequest
 ) {
     try {
         const { userId } = auth();
+        const conversionId = req.nextUrl.searchParams.get("id");
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
+        if (!conversionId) {
+            return new NextResponse("Id required", { status: 400});
+        }
+
 
         // Check API Limits
         // const freeTrial = await checkAPILimit();
@@ -29,10 +34,9 @@ export async function GET(
         //     await increaseAPILimit();
         // }
         
-        // CHECK if file upload completed
-        
-        const convertJob = await _getMostRecentConvertJob({ userId });
+        const convertJob = await getConversion({ userId, conversionId });
         if (!convertJob) return new NextResponse("No jobs found", { status: 400 });
+        if (convertJob.userId !== userId) return new NextResponse("Permission denied", { status: 401 });
 
         const runpodResponse = await _checkConvertJob({ runpodJobId: convertJob.runpodJobId! });
         
@@ -47,7 +51,7 @@ export async function GET(
 
             return new NextResponse(JSON.stringify({ status }), { status: 200 });
         }
-        else return new NextResponse("Error communicating with Runpod for status", { status: 500});
+        else return new NextResponse("Error communicating with GPU server for status", { status: 500});
     } catch (error) {
         console.log("[CONVERT STATUS ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });

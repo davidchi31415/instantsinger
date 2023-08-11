@@ -28,6 +28,7 @@ import { AudioCard } from "@/components/audio-card";
 import Crunker from "crunker";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProgressCard } from "@/components/progress-card";
+import { ConversionResultsComponent } from "./conversion-results";
 
 const MAX_FILE_SIZE = 100_000_000;
 
@@ -68,8 +69,7 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
     userData.currentJob !== null ? userData.currentJob.status === "COMPLETED" : false
   );
 
-  const [resultURLs, setResultURLs] = useState<string[]>([]);
-  const [mergedURL, setMergedURL] = useState<string>("");
+  const [conversionId, setConversionId] = useState("");
 
   const onFileInput = (e: any) => {
     try {
@@ -138,8 +138,7 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
     setConverting(false);
     setFinished(false);
     setSuccess(false);
-    setResultURLs([]);
-    setMergedURL("");
+    setConversionId("");
   }
 
   const onSubmit = async () => {
@@ -168,21 +167,24 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
         }).then(async () => {
           console.log("File upload successful");
           setUploading(false);
-          
-          await axios.post("/api/convert", 
+        
+          setConverting(true);
+          const convertResponse = await axios.post("/api/convert", 
             { 
               cloneName: cloneChoice, 
               songName: audioTitle,
               needsSep
             }
-          )
-          .then(() => setConverting(true))
-          .catch(() => {
+          );
+
+          if (convertResponse.status === 200) {
+            setConversionId(convertResponse.data.conversionId);
+          } else {
             console.log("Error in submitting job to Runpod");
             setPreRunPodError("Internal job submission failed.");
             setConverting(false);
             onFail();
-          });
+          }
         })
         .catch(() => {
           console.log("File upload failed");
@@ -205,46 +207,24 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
     }
   }
 
+  const [resultURLs, setResultURLs] = useState<string[]>([]);
+  const [resultNames, setResultNames] = useState([]);
+
   const retrieveResults = async () => {
-    const resultResponse = await axios.get("/api/convert/results");
+    const resultResponse = await axios.get("/api/convert/results", { params: { id: conversionId } });
 
     if (resultResponse.status === 200) {
       console.log("Results retrieved");
 
-      const results = resultResponse.data.urls;
+      // const results = resultResponse.data.urls;
       setResultURLs(resultResponse.data.urls);
-
-      if (results.length > 1) {
-        let crunker = new Crunker();
-        crunker
-        .fetchAudio(results[0], results[1])
-        .then((buffers) => {
-            // => [AudioBuffer, AudioBuffer]
-            return crunker.mergeAudio(buffers);
-        })
-        .then((merged) => {
-            // => AudioBuffer
-            return crunker.export(merged, 'audio/wav');
-        })
-        .then((output) => {
-            // => {blob, element, url}
-            setMergedURL(output.url);
-            console.log("Results merged.");
-        })
-        .catch((error) => {
-            // => Error Message
-        });
-      } else {
-        console.log("[RESULTS RETRIEVAL ERROR]");
-      }
+      setResultNames(resultResponse.data.fileNames);
     }
   }
 
   useEffect(() => {
-    if (isFinished && isSuccess && !resultURLs?.length) {
-      retrieveResults();
-    }
-  }, [isFinished, isSuccess, resultURLs]);
+    if (isFinished && isSuccess && !resultURLs.length) retrieveResults();
+  }, [isFinished, isSuccess, resultURLs, resultNames]);
 
   const conversionOngoing = isUploading || isConverting;
 
@@ -355,7 +335,7 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
                     initStatus={
                       userData.currentJob !== null ? userData.currentJob.status : ""
                     }
-                    apiEndpoint="/api/convert/status"
+                    apiEndpoint="/api/convert/status" apiParams={{ id: conversionId }}
                     onFinish={onFinish}
                     onFail={onFail}
                   />
@@ -368,48 +348,12 @@ const ConversionDashboard = ({ userData }: ConversionDashboardProps) => {
                 }
               </div>
               <div>
-                {isFinished && resultURLs?.length ? 
-                  <div className="border border-black/10 rounded-md p-4">
-                    {
-                      resultURLs?.length > 1 ? 
-                        (mergedURL !== "" ? 
-                          <div>
-                            <div className="flex items-center justify-between">
-                              <div className="font-medium mb-2">Merged</div>
-                              <Button variant="ghost" size="icon" 
-                                onClick={() => downloadFromURL(mergedURL, "merged.wav")}
-                              >
-                                <DownloadIcon />
-                              </Button>
-                            </div>
-                            <AudioCard url={mergedURL} /> 
-                          </div>
-                          : 
-                            <div>
-                              <AlertCard 
-                                variant="default" title="Merging" 
-                                message="Please wait as we merge the instrumental and vocal stems." 
-                              />
-                            </div>
-                        ) : ""
-                    }
-                    {resultURLs.map((url, i) => {
-                      return (
-                        <div className="mt-4">
-                          <div className="flex items-center justify-between">
-                            <div className="font-medium mb-2">{ i == resultURLs.length - 1 ? "Vocals" : "Instrumentals" }</div>
-                            <Button variant="ghost" size="icon" 
-                              onClick={() => downloadFromURL(url, i == resultURLs.length - 1 ? "vocals.wav" : "instrumentals.wav")}
-                            >
-                              <DownloadIcon />
-                            </Button>
-                          </div>
-                          <AudioCard url={url} />
-                        </div>  
-                      )
-                    })}
-                  </div>
-                  : ""}
+                {isFinished && isSuccess ?
+                  (resultURLs.length ?
+                    <ConversionResultsComponent resultURLs={resultURLs} fileNames={resultNames} songName={audioTitle} />
+                    : "Retrieving results...")
+                  : ""
+                }
               </div>
             </div>
           </div>

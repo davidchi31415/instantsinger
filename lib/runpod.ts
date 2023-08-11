@@ -1,5 +1,7 @@
 import axios from "axios";
 import prismadb from "./prismadb";
+import { getDownloadURL } from "./gcloud";
+import { isJobDone } from "./utils";
 
 interface RunpodConvertProps {
     userId: string;
@@ -20,6 +22,15 @@ interface RunpodOtherProps {
 
 interface PrismadbProps {
     userId: string;
+}
+
+interface GetConvertResultProps {
+    convertJob: any;
+}
+
+interface GetConversionProps {
+    userId: string;
+    conversionId: string;
 }
 
 interface GetCloneProps {
@@ -61,9 +72,9 @@ export const _submitConvertJob = async ({
                 "vr_chunks": 55,
                 "vr_shifts": 5,
                 "vr_demucs": "off",
-                "vr_mixing_algorithm": "max_mag", // [min_mag, max_mag, default] 
+                "vr_mixing_algorithm": "default", // [min_mag, max_mag, default] 
                 "vr_normalise": 1, 
-                "vr_denoise": 1
+                "vr_denoise": 0
             }
         },
         "webhook": `${process.env.NEXT_PUBLIC_APP_URL}/api/convert/webhook?id=${jobId}`
@@ -124,6 +135,25 @@ export const _getConversions = async ({ userId }: PrismadbProps) => {
     return convertJobs;
 };
 
+export const _getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
+    if (!isJobDone({ status: convertJob.status })) return { fileNames: [], urls: [] };
+    
+    let fileNames;
+    if (convertJob.needsSep) {
+        fileNames = [`${convertJob.id}.background.wav`, `${convertJob.Id}.vocals.wav`, `${convertJob.Id}.combined.wav`];
+    } else {
+        fileNames = [`${convertJob.Id}.vocals.wav`];
+    }
+
+    const urls = await Promise.all(
+        fileNames.map(
+            async (name) => await getDownloadURL({ directory: "inference_outputs", fileName: name })
+        )
+    );
+
+    return { fileNames, urls: urls };
+}
+
 //////////////////////////////////////////////
 // For User Data - mask out sensitive IDs
 //////////////////////////////////////////////
@@ -146,7 +176,8 @@ export const getMostRecentConvertJob = async ({ userId }: PrismadbProps) => {
         needsSep: job.needsSep,
         createdAt: job.createdAt,
         updatedAt: job.updatedAt,
-        cloneName: job.cloneName
+        cloneName: job.cloneName,
+        conversionId: job.id
     }
     
     return jobData;
@@ -167,12 +198,39 @@ export const getConversions = async ({ userId }: PrismadbProps) => {
                 needsSep: job.needsSep,
                 createdAt: job.createdAt,
                 updatedAt: job.updatedAt,
-                cloneName: job.cloneName
+                cloneName: job.cloneName,
+                conversionId: job.id
             }
         );
     });
 
     return convertJobsData;
+};
+
+export const getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
+    if (!isJobDone({ status: convertJob.status })) return { status: convertJob.status, urls: [], name: convertJob.songName };
+
+    const { urls, fileNames } = await _getConversionResults({ convertJob });
+
+    const results = {
+        urls,
+        fileNames,
+        name: convertJob.songName
+    }
+
+    return results;
+}
+
+export const getConversion = async ({ userId, conversionId }: GetConversionProps) => {
+    const convertJob = await prismadb.convertJob.findUnique({
+        where: {
+            id: conversionId
+        }
+    });
+
+    if (convertJob && convertJob.userId !== userId) return; // Permission denied
+
+    return convertJob;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

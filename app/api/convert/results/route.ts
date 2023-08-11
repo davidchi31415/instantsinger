@@ -1,21 +1,25 @@
 import { auth } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
-import { _getMostRecentConvertJob } from "@/lib/runpod";
+import { _getConversionResults, _getMostRecentConvertJob, getConversion } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 import { getDownloadURL } from "@/lib/gcloud";
 
 export async function GET(
-    req: Request
+    req: NextRequest
 ) {
     try {
         const { userId } = auth();
+        const conversionId = req.nextUrl.searchParams.get("id");
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
+        }
+        if (!conversionId) {
+            return new NextResponse("Id required", { status: 400});
         }
 
         // Check API Limits
@@ -30,27 +34,18 @@ export async function GET(
         //     await increaseAPILimit();
         // }
         
-        const convertJob = await _getMostRecentConvertJob({ userId });
+        const convertJob = await getConversion({ userId, conversionId });
         if (!convertJob) return new NextResponse("No jobs found", { status: 400 });
-        const convertJobId = convertJob.id;
+        if (convertJob.userId !== userId) return new NextResponse("Permission denied", { status: 401 });
         
         // Check database, not RunPod - their job IDs expire
         if (convertJob.status !== "COMPLETED") return new NextResponse("Job not completed.", { status: 400 });
 
-        let fileNames;
-        if (convertJob.needsSep) {
-            fileNames = [`${convertJobId}.instrumentals.wav`, `${convertJobId}.vocals.wav`];
-        } else {
-            fileNames = [`${convertJobId}.vocals.wav`];
-        }
+        const { urls, fileNames } = await _getConversionResults({ convertJob });
 
-        const urls = await Promise.all(
-            fileNames.map(
-                async (name) => await getDownloadURL({ directory: "inference_outputs", fileName: name })
-            )
-        );
+        if (!urls.length) return new NextResponse("Error generating urls", { status: 400 });
 
-        return new NextResponse(JSON.stringify({ urls: urls }), { status: 200 });
+        return new NextResponse(JSON.stringify({ urls: urls, fileNames: fileNames }), { status: 200 });
     } catch (error) {
         console.log("[CONVERT STATUS ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });

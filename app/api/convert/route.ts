@@ -75,7 +75,7 @@ export async function POST(
             });
 
             return new NextResponse(
-                JSON.stringify({ jobId: runpodJobId, status }),
+                JSON.stringify({ conversionId: convertJob.id, status }),
                 { status: 200 }
             );
         }

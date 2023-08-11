@@ -9,6 +9,7 @@ import { Badge } from "./ui/badge";
 interface ProgressCardProps {
     process: string;
     apiEndpoint: string;
+    apiParams?: any;
     initStatus?: string;
     onStatusChange?: Function;
     onFinish?: Function;
@@ -18,7 +19,12 @@ interface ProgressCardProps {
 }
 
 export const ProgressCard = (
-    { process, apiEndpoint, initStatus, onStatusChange, onFinish, onFail, onCancel, badgeOnly }: ProgressCardProps
+    { 
+        process, apiEndpoint, apiParams,
+        initStatus, onStatusChange, 
+        onFinish, onFail, onCancel, 
+        badgeOnly 
+    }: ProgressCardProps
 ) => {
     const [currentStatus, setStatus] = useState<string>(initStatus ? initStatus : "");
     const [isFinished, setFinished] = useState(initStatus ? isJobDone({ status: initStatus }) : false);
@@ -45,7 +51,9 @@ export const ProgressCard = (
     }, [currentStatus, isFinished]);
 
     const checkStatus = async () => {
-        const response = await axios.get(apiEndpoint);
+        let response;
+        if (apiParams) response = await axios.get(apiEndpoint, { params: apiParams });
+        else response = await axios.get(apiEndpoint);
 
         if (response.status === 200) {
             const newStatus = response.data.status;
