@@ -9,7 +9,7 @@ import { Badge } from "./ui/badge";
 interface ProgressCardProps {
     process: string;
     apiEndpoint: string;
-    apiParams?: any;
+    apiId?: string;
     initStatus?: string;
     onStatusChange?: Function;
     onFinish?: Function;
@@ -20,7 +20,7 @@ interface ProgressCardProps {
 
 export const ProgressCard = (
     { 
-        process, apiEndpoint, apiParams,
+        process, apiEndpoint, apiId,
         initStatus, onStatusChange, 
         onFinish, onFail, onCancel, 
         badgeOnly 
@@ -51,8 +51,10 @@ export const ProgressCard = (
     }, [currentStatus, isFinished]);
 
     const checkStatus = async () => {
+        // console.log(apiId);
+
         let response;
-        if (apiParams) response = await axios.get(apiEndpoint, { params: apiParams });
+        if (apiId) response = await axios.get(apiEndpoint, { params: { id: apiId } });
         else response = await axios.get(apiEndpoint);
 
         if (response.status === 200) {

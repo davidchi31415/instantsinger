@@ -3,10 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
-import axios from "axios";
-import { _getConversionResults, _getMostRecentConvertJob, getConversion } from "@/lib/runpod";
-import prismadb from "@/lib/prismadb";
-import { getDownloadURL } from "@/lib/gcloud";
+import { _getConversion, _getConversionResults, _getMostRecentConvertJob } from "@/lib/runpod";
 
 export async function GET(
     req: NextRequest
@@ -34,11 +31,13 @@ export async function GET(
         //     await increaseAPILimit();
         // }
         
-        const convertJob = await getConversion({ userId, conversionId });
+        const convertJob = await _getConversion({ userId, conversionId });
         if (!convertJob) return new NextResponse("No jobs found", { status: 400 });
         if (convertJob.userId !== userId) return new NextResponse("Permission denied", { status: 401 });
         
         // Check database, not RunPod - their job IDs expire
+        if (convertJob.status === "FAILED") return new NextResponse("Job failed => no result.", { status: 400 });
+        if (convertJob.status === "CANCELLED") return new NextResponse("Job cancelled => no result.", { status: 400 });
         if (convertJob.status !== "COMPLETED") return new NextResponse("Job not completed.", { status: 400 });
 
         const { urls, fileNames } = await _getConversionResults({ convertJob });

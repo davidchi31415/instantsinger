@@ -1,19 +1,13 @@
-import ConversionDashboard from "@/components/conversion-dashboard";
 import { ConversionResultsComponent } from "@/components/conversion-results";
 import { Empty } from "@/components/empty";
 import { ProgressCard } from "@/components/progress-card";
-import { getClones, getConversion, getConversionResults, getMostRecentConvertJob } from "@/lib/runpod";
-import { isJobDone } from "@/lib/utils";
+import { getConversion, getConversionResults } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 
-interface ResultData {
-    urls?: string[];
-    songName?: string;
-}
 
 const getResult = async ({ conversionId }: { conversionId: string }) => {
     const { userId } = auth();
-    if (userId === null) return { urls: [], names: [] };
+    if (userId === null) return { urls: [], names: [], error: "No user ID provided" };
 
     const conversion = await getConversion({ userId, conversionId });
 
@@ -22,7 +16,7 @@ const getResult = async ({ conversionId }: { conversionId: string }) => {
         res = await getConversionResults({ convertJob: conversion });
     }
 
-    return res;
+    return { urls: [], names: [], error: "Internal error retrieving results"};
 }
 
 const ConversionResultPage = async ({
@@ -31,37 +25,36 @@ const ConversionResultPage = async ({
     searchParams?: { [key: string]: string | undefined };
 }) => {
     let conversionId = searchParams?.conversionId;
-    let result;
+    if (!conversionId) return (
+        <div className="px-4 lg:px-8">
+            <Empty label="Conversion ID required." />
+        </div>
+    )
 
-    if (conversionId) result = await getResult({ conversionId });
-    else {
+    const result = await getResult({ conversionId });
+
+    if (!result) {
         return (
             <div className="px-4 lg:px-8">
                 <Empty label="No conversion found :("/> 
             </div>
         )
-    }
-
-    if (result && !result.urls?.length) {
+    } else if (result && !result.urls?.length) {
         return (
             <div className="px-4 lg:px-8">
                 <ProgressCard
                     process="Converting" initStatus={result.status}
-                    apiEndpoint="/api/convert/status" apiParams={{ id: conversionId }}
+                    apiEndpoint="/api/convert/status" apiId={conversionId}
                 />
             </div>
         )
-    } else if (result) {
+    } else {
         return (
             <div className="px-4 lg:px-8">
                 <ConversionResultsComponent resultURLs={result.urls} fileNames={result.fileNames} songName={result.name} />
             </div>
         )
-    } else return (
-        <div className="px-4 lg:px-8">
-            <Empty label="No conversion found :("/> 
-        </div>
-    )
+    }
 }
 
 export default ConversionResultPage;

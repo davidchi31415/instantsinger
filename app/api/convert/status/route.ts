@@ -42,12 +42,17 @@ export async function GET(
         
         if (runpodResponse.status == 200) {
             const status = runpodResponse.data.status;
-            await prismadb.convertJob.update({
-                where: { id: convertJob.id }, 
-                data: { status }
-            });
             
-            if (status === "FAILED") console.log("[RUNPOD FAILED]", runpodResponse.data);
+            if (status !== "COMPLETED" && status !== "FAILED") { // Webhook updates DB if job is complete
+                await prismadb.convertJob.update({
+                    where: { id: convertJob.id }, 
+                    data: { status }
+                });
+            }
+
+            if (runpodResponse.data?.output?.statusCode === 400) {
+                return new NextResponse(JSON.stringify({ status: "FAILED" }), { status: 200 });
+            }
 
             return new NextResponse(JSON.stringify({ status }), { status: 200 });
         }

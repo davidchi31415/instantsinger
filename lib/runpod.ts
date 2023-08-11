@@ -138,21 +138,28 @@ export const _getConversions = async ({ userId }: PrismadbProps) => {
 export const _getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
     if (!isJobDone({ status: convertJob.status })) return { fileNames: [], urls: [] };
     
-    let fileNames;
-    if (convertJob.needsSep) {
-        fileNames = [`${convertJob.id}.background.wav`, `${convertJob.Id}.vocals.wav`, `${convertJob.Id}.combined.wav`];
-    } else {
-        fileNames = [`${convertJob.Id}.vocals.wav`];
-    }
+    const fileNames = convertJob.needsSep ? ["background.wav", "vocals.wav", "combined.wav"] : ["vocals.wav"];
 
     const urls = await Promise.all(
         fileNames.map(
-            async (name) => await getDownloadURL({ directory: "inference_outputs", fileName: name })
+            async (name) => await getDownloadURL({ directory: `inference_outputs/${convertJob.id}`, fileName: name })
         )
     );
 
     return { fileNames, urls: urls };
 }
+
+export const _getConversion = async ({ userId, conversionId }: GetConversionProps) => {
+    const convertJob = await prismadb.convertJob.findUnique({
+        where: {
+            id: conversionId
+        }
+    });
+
+    if (convertJob && convertJob.userId !== userId) return; // Permission denied
+
+    return convertJob;
+};
 
 //////////////////////////////////////////////
 // For User Data - mask out sensitive IDs
@@ -230,7 +237,17 @@ export const getConversion = async ({ userId, conversionId }: GetConversionProps
 
     if (convertJob && convertJob.userId !== userId) return; // Permission denied
 
-    return convertJob;
+    if (convertJob) {
+        return {
+            status: convertJob.status,
+            songName: convertJob.songName,
+            needsSep: convertJob.needsSep,
+            createdAt: convertJob.createdAt,
+            updatedAt: convertJob.updatedAt,
+            cloneName: convertJob.cloneName,
+            conversionId: convertJob.id
+        };
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
