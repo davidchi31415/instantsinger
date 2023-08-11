@@ -134,7 +134,7 @@ export const _getConversions = async ({ userId }: PrismadbProps) => {
 };
 
 export const _getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
-    if (!isJobDone({ status: convertJob.status })) return { fileNames: [], urls: [] };
+    if (!isJobDone({ status: convertJob.status })) return;
     
     const fileNames = convertJob.needsSep ? ["background.wav", "vocals.wav", "combined.wav"] : ["vocals.wav"];
 
@@ -213,14 +213,15 @@ export const getConversions = async ({ userId }: PrismadbProps) => {
 };
 
 export const getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
-    if (!isJobDone({ status: convertJob.status })) return { status: convertJob.status, urls: [], name: convertJob.songName };
+    if (!isJobDone({ status: convertJob.status })) return;
 
-    const { urls, fileNames } = await _getConversionResults({ convertJob });
+    const res = await _getConversionResults({ convertJob });
+    if (!res) return;
 
     const results = {
-        urls,
-        fileNames,
-        name: convertJob.songName
+        urls: res.urls,
+        fileNames: res.fileNames,
+        songName: convertJob.songName
     }
 
     return results;
