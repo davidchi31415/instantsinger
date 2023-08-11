@@ -10,7 +10,7 @@ interface HistoryData {
 
 const getUserData = async () => {
     const { userId } = auth();
-    if (userId === null) return { conversions: [], currentJob: null };
+    if (userId === null) return { conversions: [], currentJobs: [] };
 
     const conversions = await getSubmittedConversions({ userId });
     const res: HistoryData = {
