@@ -28,10 +28,10 @@ model UserSubscription {
 model ConvertJob {
   id String @id @default(cuid())
   userId String
-  needsSep Boolean
   songName String
-  cloneName String
-  runpodJobId String? // MUST be filled in after job is created
+  cloneName String? // MUST be filled in before submitting
+  needsSep Boolean? // MUST be filled in before submitting
+  runpodJobId String? // MUST be filled in after job is submitted
   status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

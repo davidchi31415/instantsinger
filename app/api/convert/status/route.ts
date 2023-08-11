@@ -4,8 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
-import { _checkConvertJob, _getMostRecentConvertJob, getConversion } from "@/lib/runpod";
+import { _checkConvertJob, _getConversion, _getMostRecentConvertJob, getConversion } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
+import { isJobDone } from "@/lib/utils";
 
 export async function GET(
     req: NextRequest
@@ -21,7 +22,6 @@ export async function GET(
             return new NextResponse("Id required", { status: 400});
         }
 
-
         // Check API Limits
         // const freeTrial = await checkAPILimit();
         // const isPro = await checkSubscription();
@@ -34,27 +34,25 @@ export async function GET(
         //     await increaseAPILimit();
         // }
         
-        const convertJob = await getConversion({ userId, conversionId });
+        const convertJob = await _getConversion({ userId, conversionId });
         if (!convertJob) return new NextResponse("No jobs found", { status: 400 });
         if (convertJob.userId !== userId) return new NextResponse("Permission denied", { status: 401 });
 
-        const runpodResponse = await _checkConvertJob({ runpodJobId: convertJob.runpodJobId! });
-        
+        if (isJobDone({ status: convertJob.status })) // Already done 
+            return new NextResponse(JSON.stringify({ status: convertJob.status }), { status: 200 });
+            
+        const runpodResponse = await _checkConvertJob({ runpodJobId: convertJob.runpodJobId! });        
         if (runpodResponse.status == 200) {
             const status = runpodResponse.data.status;
             
-            if (status !== "COMPLETED" && status !== "FAILED") { // Webhook updates DB if job is complete
+            if (status !== "COMPLETED" && status !== "FAILED") { // /webhook, not /status, updates DB if job is complete
                 await prismadb.convertJob.update({
                     where: { id: convertJob.id }, 
                     data: { status }
                 });
+            } else {
+                return new NextResponse(JSON.stringify({ status: convertJob.status }), { status: 200 });
             }
-
-            if (runpodResponse.data?.output?.statusCode === 400) {
-                return new NextResponse(JSON.stringify({ status: "FAILED" }), { status: 200 });
-            }
-
-            return new NextResponse(JSON.stringify({ status }), { status: 200 });
         }
         else return new NextResponse("Error communicating with GPU server for status", { status: 500});
     } catch (error) {

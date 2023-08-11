@@ -1,6 +1,6 @@
 "use client";
 
-import { CloningFileUploader } from "@/components/file-uploader";
+import { FileUploader } from "@/components/file-uploader";
 import { Heading } from "@/components/heading";
 import { MicIcon } from "lucide-react";
 import { pianoSteps } from "../constants";
@@ -73,7 +73,7 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                     <div className="p-4 lg:px-8">
                         <div className="text-xl font-bold">Step 1: Speaking</div>
                         <div className="mb-4 text-sm text-muted-foreground">The whole essay in one audio file.</div>
-                        <CloningFileUploader uploadEndpoint="/api/clone/upload" stepNumber={1} 
+                        <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={1} 
                             
                         />
                         <div className="mt-8 text-xl font-bold">Step 2: Pitches</div>
@@ -87,7 +87,7 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                                         {step.up ? `${step.low} -> ${step.high}`
                                         : `${step.high} -> ${step.low}`} {step.optional ? <b>(OPTIONAL)</b> : ""}
                                     </div>
-                                    <CloningFileUploader uploadEndpoint="/api/clone/upload" stepNumber={`2.${index+1}`} />
+                                    <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={`2.${index+1}`} />
                                 </div>
                             );
                         })}

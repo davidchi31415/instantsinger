@@ -33,59 +33,36 @@ export async function POST(
         // if (!isPro) {
         //     await increaseAPILimit();
         // }
-        
-        // CHECK if file upload completed
 
-        let convertJob;
-        try { // FIRST, write to database - do not want to risk creating job and losing track of it
-            convertJob = await prismadb.convertJob.create({
-                data: { userId, songName, needsSep, cloneName }
-            });
-        } catch (error) {
-            console.log("Cancelled convert job due to database error:", error);
-            console.log(userId, needsSep);
-
-            if (convertJob) {
-                await prismadb.convertJob.delete({
-                    where: {
-                        id: convertJob.id
-                    }
-                });
-            }
-
-            return new NextResponse(
-                `Cancelled convert job due to database error, not submitted`, 
-                { status: 500 }
-            );
+        let currentJob = await prismadb.convertJob.findFirst({ 
+            where: { userId, status: "NOT_SUBMITTED" }, 
+            orderBy: { createdAt: "desc" }
+        });
+        if (!currentJob) {
+            return new NextResponse("No upload found", { status: 500 });
         }
 
         const runpodResponse = await _submitConvertJob({
-            userId,
             modelId: clone.id,
             needsSep,
-            jobId: convertJob.id
+            jobId: currentJob.id
         });
         const runpodJobId = runpodResponse.data.id;
         const status = runpodResponse.data.status;
         
         if (runpodResponse.status == 200) {
             await prismadb.convertJob.update({
-                where: { id: convertJob.id },
-                data: { runpodJobId, status }
+                where: { id: currentJob.id },
+                data: { runpodJobId, status, needsSep, cloneName }
             });
 
+            // TODO - charge the customer
+
             return new NextResponse(
-                JSON.stringify({ conversionId: convertJob.id, status }),
+                JSON.stringify({ conversionId: currentJob.id, status }),
                 { status: 200 }
             );
-        }
-        else {
-            await prismadb.convertJob.delete({
-                where: {
-                    id: convertJob.id
-                }
-            });
-            
+        } else {
             return new NextResponse("Error communicating with Runpod for converting", { status: 500});
         }
     } catch (error) {

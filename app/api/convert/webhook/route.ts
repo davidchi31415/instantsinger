@@ -26,16 +26,16 @@ export async function POST(req: NextRequest) {
             
     if (output?.statusCode === 400) { // Failed from our error return
         await prismadb.convertJob.update({ where: { id: jobId }, data: { status: "FAILED" } });
-    } else {
-        if (status === "FAILED") { // Failed from RunPod exception
-            
-        }
 
+        // TODO - REFUND the user
+    } else {
+        if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
+            // TODO - REFUND the user
+        }
         await prismadb.convertJob.update({ where: { id: jobId },  data: { status } });
     }
 
-    // TO-DO - Charge the customer
-    // TO-DO - Delete all training data / also configure Google Cloud to do this
+    // TO-DO - Delete input data / also configure Google Cloud to do this
 
     return new NextResponse(null, { status: 200 }); // IMPORTANT feedback
 }

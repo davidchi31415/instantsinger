@@ -4,7 +4,6 @@ import { getDownloadURL } from "./gcloud";
 import { isJobDone } from "./utils";
 
 interface RunpodConvertProps {
-    userId: string;
     modelId: string;
     needsSep: boolean;
     jobId: string;
@@ -49,7 +48,6 @@ interface GetClonesProps {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const _submitConvertJob = async ({
-    userId,
     modelId,
     jobId,
     needsSep,
@@ -57,7 +55,7 @@ export const _submitConvertJob = async ({
     const response = await axios.post("https://api.runpod.ai/v2/9afi4omg7sdwt6/run", {
         "input": {   
             "arguments": {
-                "input_id": userId,
+                "input_id": jobId,
                 "output_id": jobId,
                 "model_id": modelId,
                 "needs_sep": needsSep,

@@ -44,7 +44,7 @@ export async function GET(
 
         if (!urls.length) return new NextResponse("Error generating urls", { status: 400 });
 
-        return new NextResponse(JSON.stringify({ urls: urls, fileNames: fileNames }), { status: 200 });
+        return new NextResponse(JSON.stringify({ urls, fileNames, songName: convertJob.songName }), { status: 200 });
     } catch (error) {
         console.log("[CONVERT STATUS ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });

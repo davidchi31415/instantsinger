@@ -31,16 +31,15 @@ const MAX_FILE_SIZE = 100_000_000;
 
 interface CloningFileUploaderProps {
   uploadEndpoint: string;
-  stepNumber: string | number;
+  onUpload?: Function;
+  stepNumber?: string | number;
+  isConvertUpload?: boolean;
 }
 
-export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileUploaderProps) => {
+export const FileUploader = ({ uploadEndpoint, onUpload, stepNumber, isConvertUpload }: CloningFileUploaderProps) => {
   const [file, setFile] = useState<File | null>(null);
-  const [needsSep, setNeedsSep] = useState(true);
   const [isLoading, setLoading] = useState(false);
 
-  const [audioDuration, setAudioDuration] = useState(0);
-  const [audioSize, setAudioSize] = useState(0);
   const [audioTitle, setAudioTitle] = useState("");
   const [fileError, setFileError] = useState("");
 
@@ -62,7 +61,6 @@ export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileU
           setFileError("File too big. Max size: 100MB");
           return;
         }
-        setAudioSize(size);
         setAudioTitle(_file.name);
 
         let duration;
@@ -77,7 +75,6 @@ export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileU
             data => {
               duration = data.duration;
               setFileError("");
-              setAudioDuration(duration);
           }).catch(
             _ => setFileError(
               "Audio file failed to load. Possibly corrupted."
@@ -95,8 +92,6 @@ export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileU
   const onRemove = () => {
     setFile(null);
     setFileError("");
-    setAudioDuration(0);
-    setAudioSize(0);
   }
 
   const onSubmit = async () => {
@@ -106,7 +101,14 @@ export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileU
 
       if (fileError !== "" || file === null) return;
       
-      const response = await axios.post("/api/clone/upload", { stepNumber });
+      let response 
+      if (stepNumber) {
+        response = await axios.post(uploadEndpoint, { stepNumber });
+      } else if (isConvertUpload) {
+        response = await axios.post(uploadEndpoint, { songName: audioTitle });
+      } else {
+        response = await axios.post(uploadEndpoint);
+      }
 
       if (response.status === 200) {
         const url = response.data.url;
@@ -128,6 +130,7 @@ export const CloningFileUploader = ({ uploadEndpoint, stepNumber }: CloningFileU
         if (uploadResponse.status === 200) {
           console.log("File upload successful");
           setUploading(false);
+          if (onUpload) onUpload();
         } else {
           console.log("File upload failed");
           setUploading(false);
