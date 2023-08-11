@@ -32,6 +32,10 @@ interface GetConversionProps {
     conversionId: string;
 }
 
+interface GetConversionsProps {
+    userId: string;
+}
+
 interface GetCloneProps {
     userId: string;
     cloneName: string;
@@ -174,6 +178,33 @@ export const getMostRecentConvertJob = async ({ userId }: PrismadbProps) => {
     return jobData;
 }
 
+export const getSubmittedConversions = async ({ userId }: PrismadbProps) => {
+    const convertJobs = await prismadb.convertJob.findMany({
+        where: {
+            userId,
+            NOT: {
+                status: "NOT_SUBMITTED"
+            }
+        }
+    });
+
+    const convertJobsData = convertJobs.map((job) => {
+        return (
+            {
+                status: job.status,
+                songName: job.songName,
+                needsSep: job.needsSep,
+                createdAt: job.createdAt,
+                updatedAt: job.updatedAt,
+                cloneName: job.cloneName,
+                conversionId: job.id
+            }
+        );
+    });
+
+    return convertJobsData;
+};
+
 export const getConversions = async ({ userId }: PrismadbProps) => {
     const convertJobs = await prismadb.convertJob.findMany({
         where: {
@@ -196,6 +227,20 @@ export const getConversions = async ({ userId }: PrismadbProps) => {
     });
 
     return convertJobsData;
+};
+
+export const getCurrentConversions = async ({ userId }: GetConversionsProps) => {
+    const convertJobs = await prismadb.convertJob.findMany({
+        where: {
+            userId,
+            OR: [
+                { status: "IN_QUEUE" },
+                { status: "IN_PROGRESS" }
+            ]
+        }
+    });
+
+    return convertJobs;
 };
 
 export const getConversion = async ({ userId, conversionId }: GetConversionProps) => {

@@ -18,15 +18,11 @@ import Link from "next/link";
 interface HistoryTableProps {
     userData: {
         conversions: any[];
-        currentJob: any;
+        currentJobs: any[];
     }
 }
 
 export const HistoryTable = ({ userData }: HistoryTableProps) => {
-    const [conversionStatus, setConversionStatus] = useState<string>(
-        userData.currentJob !== null ? userData.currentJob.status : ""
-    )
-
     return (
         <Table>
             <TableCaption>Want to convert a song? Go to the <Link href="/convert"><b>Convert</b></Link> page.</TableCaption>
@@ -39,23 +35,21 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {userData.currentJob !== null ?
+                {userData.currentJobs.map((job) =>
                     <TableRow>
                         <TableCell className="font-medium">
-                            {format(userData.currentJob.createdAt, 'MM/dd/yyyy')}
+                            {format(job.createdAt, 'MM/dd/yyyy')}
                         </TableCell>
-                        <TableCell>{userData.currentJob.songName}</TableCell>
-                        <TableCell>{userData.currentJob.cloneName}</TableCell>
+                        <TableCell>{job.songName}</TableCell>
+                        <TableCell>{job.cloneName}</TableCell>
                         <TableCell className="text-right">
                             <ProgressCard 
                                 process="Cloning" apiEndpoint="/api/clone/status"
-                                initStatus={conversionStatus}
-                                onStatusChange={setConversionStatus}
+                                initStatus={job.status}
                                 badgeOnly={true}
                             />
                         </TableCell>   
-                    </TableRow>
-                    : ""}
+                    </TableRow>)}
                 {userData.conversions.map((conversion) =>
                     <TableRow>
                         <TableCell className="font-medium">
@@ -64,7 +58,13 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                         <TableCell>{conversion.songName}</TableCell>
                         <TableCell>{conversion.cloneName}</TableCell>
                         <TableCell className="text-right">
-                            <Badge className="bg-[green]">{conversion.status}</Badge>
+                            <Badge className={
+                                conversion.status === "COMPLETED" ? "bg-[#33ff66]" : 
+                                (conversion.status === "FAILED" || conversion.status === "CANCELLED"
+                                    ? "bg-destructive" : "bg-[#6699ff]")
+                            }>
+                                {conversion.status}
+                            </Badge>
                         </TableCell>   
                     </TableRow>
                 )}

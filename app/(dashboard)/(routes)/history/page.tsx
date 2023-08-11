@@ -1,26 +1,26 @@
 import { HistoryTable } from "@/components/history-table";
-import { getConversions, getMostRecentConvertJob } from "@/lib/runpod";
+import { getConversions, getCurrentConversions, getMostRecentConvertJob, getSubmittedConversions } from "@/lib/runpod";
 import { isJobDone } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 
 interface HistoryData {
     conversions: any[];
-    currentJob: any;
+    currentJobs: any[];
 }
 
 const getUserData = async () => {
     const { userId } = auth();
     if (userId === null) return { conversions: [], currentJob: null };
 
-    const conversions = await getConversions({ userId });
+    const conversions = await getSubmittedConversions({ userId });
     const res: HistoryData = {
         conversions,
-        currentJob: null
+        currentJobs: []
     }
 
-    const currentJob = await getMostRecentConvertJob({ userId });
-    if (currentJob && !isJobDone({ status: currentJob.status })) {
-      res.currentJob = currentJob;
+    const currentJobs = await getCurrentConversions({ userId });
+    if (currentJobs?.length) {
+      res.currentJobs = currentJobs;
     }
 
     return res;
