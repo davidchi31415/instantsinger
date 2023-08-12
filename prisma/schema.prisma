@@ -40,7 +40,7 @@ model ConvertJob {
 model CloneJob {
   id String @id @default(cuid())
   userId String
-  name String
+  name String? // MUST BE filled in before submitting
   runpodJobId String? // MUST be filled in after job is created
   status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
   createdAt DateTime @default(now())
@@ -51,6 +51,6 @@ model Clone {
   id String @id // provided by cloneJob.id
   userId String
   name String
-  @@unique([userId, name]) // Names are unique
+  // @@unique([userId, name]) // Names are unique
   createdAt DateTime @default(now())
 }

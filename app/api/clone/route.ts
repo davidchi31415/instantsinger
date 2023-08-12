@@ -93,7 +93,7 @@ export async function POST(
         if (runpodResponse.status == 200) {
             await prismadb.cloneJob.update({
                 where: { id: cloneJob.id },
-                data: { runpodJobId, status }
+                data: { runpodJobId, status, name: cloneName }
             });
 
             return new NextResponse(

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import { getUploadURL } from "@/lib/gcloud";
+import prismadb from "@/lib/prismadb";
 
 
 export async function POST(
@@ -33,9 +34,17 @@ export async function POST(
         // if (!isPro) {
         //     await increaseAPILimit();
         // }
+
+        let currentJob = await prismadb.cloneJob.findFirst({ 
+            where: { userId, status: "NOT_SUBMITTED" }, 
+            orderBy: { createdAt: "desc" }
+        });
+        if (!currentJob) {
+            currentJob = await prismadb.cloneJob.create({ data: { userId } });
+        }
         
         const url = await getUploadURL({
-            directory: `training_data/${userId}`,
+            directory: `training_data/${currentJob.id}`,
             fileName: `${stepNumber}`
         });
 

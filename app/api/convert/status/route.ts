@@ -50,9 +50,10 @@ export async function GET(
                     where: { id: convertJob.id }, 
                     data: { status }
                 });
-            } else {
-                return new NextResponse(JSON.stringify({ status: convertJob.status }), { status: 200 });
             }
+
+            // Otherwise, return old result and wait for webhook to do its job
+            return new NextResponse(JSON.stringify({ status: convertJob.status }), { status: 200 });
         }
         else return new NextResponse("Error communicating with GPU server for status", { status: 500});
     } catch (error) {

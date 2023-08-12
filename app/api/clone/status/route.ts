@@ -1,20 +1,26 @@
 import { auth } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 import axios from "axios";
 import { _checkCloneJob, _getMostRecentCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
+import { isJobDone } from "@/lib/utils";
 
 export async function GET(
-    req: Request
+    req: NextRequest
 ) {
     try {
         const { userId } = auth();
+        const cloneId = req.nextUrl.searchParams.get("id");
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
+        }
+
+        if (!cloneId) {
+            return new NextResponse("Id required", { status: 400 });
         }
 
         // Check API Limits
@@ -29,21 +35,26 @@ export async function GET(
         //     await increaseAPILimit();
         // }
         
-        const cloneJob = await _getMostRecentCloneJob({ userId });
+        const cloneJob = await prismadb.cloneJob.findUnique({ where: { id: cloneId } });
         if (!cloneJob) return new NextResponse("No clone job found", { status: 400 });
+        if (cloneJob.userId !== userId) return new NextResponse("Permission denied", { status: 401 });
 
-        const runpodResponse = await _checkCloneJob({ runpodJobId: cloneJob.runpodJobId! });
-        
+        if (isJobDone({ status: cloneJob.status })) // Already done 
+            return new NextResponse(JSON.stringify({ status: cloneJob.status }), { status: 200 });
+
+        const runpodResponse = await _checkCloneJob({ runpodJobId: cloneJob.runpodJobId! });       
         if (runpodResponse.status == 200) {
             const status = runpodResponse.data.status;
-            await prismadb.cloneJob.update({
-                where: { id: cloneJob.id }, 
-                data: { status }
-            });
             
-            if (status === "FAILED") console.log("[RUNPOD FAILED]", runpodResponse.data);
+            if (status !== "COMPLETED" && status !== "FAILED") { // /webhook, not /status, updates DB if job is complete
+                await prismadb.cloneJob.update({
+                    where: { id: cloneJob.id }, 
+                    data: { status }
+                });
+            }
 
-            return new NextResponse(JSON.stringify({ status }), { status: 200 });
+            // Otherwise, return old result and wait for webhook to do its job
+            return new NextResponse(JSON.stringify({ status: cloneJob.status }), { status: 200 });
         }
         else return new NextResponse("Error communicating with Runpod for status", { status: 500});
     } catch (error) {
