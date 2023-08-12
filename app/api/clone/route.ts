@@ -33,8 +33,17 @@ export async function POST(
         //     await increaseAPILimit();
         // }
 
+        // TO-DO: Make sure that there isn't already a job active
         // TO-DO: Check that file size is not too much
         // TO-DO: Check that each file is an audio file and can run
+
+        const currentCloneJob = await prismadb.cloneJob.findFirst({
+            where: {
+                userId,
+                status: "NOT_SUBMITTED"
+            }
+        });
+        if (!currentCloneJob) return new NextResponse("Clone job not found", { status: 400 });
 
         const requiredFiles = [
             '1', '2.4', '2.5', '2.8'
@@ -44,7 +53,7 @@ export async function POST(
         const missingFiles: string[] = [];
         for (let i = 0; i < requiredFiles.length; i++) {
             const fileExists = await checkFileExists({
-                directory: `training_data/${userId}`, fileName: requiredFiles[i]
+                directory: `training_data/${currentCloneJob.id}`, fileName: requiredFiles[i]
             });
             if (!fileExists) {
                 missingFiles.push(requiredFiles[i]);
@@ -54,46 +63,21 @@ export async function POST(
             return new NextResponse(JSON.stringify({ missingFiles }), { status: 403 })
         }
 
-        // FIRST, write to database - do not want to risk creating job and losing track of it
-        let cloneJob;
-        try {
-            cloneJob = await prismadb.cloneJob.create({
-                data: { 
-                    userId, 
-                    name: cloneName
-                }
-            });
-        } catch (error) {
-            console.log("Cancelled convert job due to database error:", error);
-            console.log(userId, cloneName);
-
-            if (cloneJob) {
-                await prismadb.cloneJob.delete({
-                    where: {
-                        id: cloneJob.id
-                    }
-                });
-            }
-
-            return new NextResponse(
-                `Cancelled clone job due to database error, not submitted`, 
-                { status: 500 }
-            );
-        }
-
         // Create RunPod job and store it
         const runpodResponse = await _submitCloneJob({
-            modelId: cloneJob.id,
-            jobId: cloneJob.id
+            modelId: currentCloneJob.id,
+            jobId: currentCloneJob.id
         });
         const runpodJobId = runpodResponse.data.id;
         const status = runpodResponse.data.status;
 
         if (runpodResponse.status == 200) {
             await prismadb.cloneJob.update({
-                where: { id: cloneJob.id },
+                where: { id: currentCloneJob.id },
                 data: { runpodJobId, status, name: cloneName }
             });
+
+            // TODO - Charge the customer
 
             return new NextResponse(
                 JSON.stringify({ jobId: runpodJobId, status }),
@@ -101,11 +85,6 @@ export async function POST(
             );
         }
         else {
-            await prismadb.cloneJob.delete({
-                where: {
-                    id: cloneJob.id
-                }
-            });
             return new NextResponse("Error communicating with Runpod for cloning", { status: 500});
         }
     } catch (error) {

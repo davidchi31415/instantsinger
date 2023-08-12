@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { AlertCard } from "@/components/alert-card";
 import { Congrats } from "@/components/congrats";
+import { toast } from "react-hot-toast";
 
 interface CloningFinishStepProps {
     usedNames: string[]
@@ -41,14 +42,15 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                 if (response.status === 403) {
                     console.log("Missing files:", response.data.missingFiles);
                     setMissingFiles(response.data.missingFiles);
+                    toast("Missing files");
                 } else {
                     console.log("Error:", response);
-                    // TO-DO: make toast
+                    toast("Something went wrong");
                 }
             }
         } catch (err) {
             console.log("Submission Error");
-            // TO-DO - proper error display
+            toast("Something went wrong");
         } finally {
             setLoading(false);
         }
@@ -102,6 +104,11 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                                         <AlertCard variant="destructive" title="Error" 
                                             message="You've already used that name." />
                                         : "")
+                                }
+                                {missingFiles?.length ? 
+                                    <AlertCard variant="destructive" title="Misisng Files" 
+                                        message={`Missing Steps ${missingFiles.toString()}`}
+                                    /> : ""
                                 }
                             </div>
                         </div>
