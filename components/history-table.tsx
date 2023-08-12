@@ -14,6 +14,7 @@ import { Badge } from "./ui/badge";
 import { ProgressCard } from "./progress-card";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface HistoryTableProps {
     userData: {
@@ -23,6 +24,8 @@ interface HistoryTableProps {
 }
 
 export const HistoryTable = ({ userData }: HistoryTableProps) => {
+    const router = useRouter();
+
     return (
         <Table>
             <TableCaption>Want to convert a song? Go to the <Link href="/convert"><b>Convert</b></Link> page.</TableCaption>
@@ -51,7 +54,10 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                         </TableCell>   
                     </TableRow>)}
                 {userData.conversions.map((conversion) =>
-                    <TableRow>
+                    <TableRow
+                        className="cursor:pointer"
+                        onClick={() => { router.push(`/convert/result?id=${conversion.conversionId}`) }}
+                    >
                         <TableCell className="font-medium">
                             {format(conversion.createdAt, 'MM/dd/yyyy')}
                         </TableCell>

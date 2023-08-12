@@ -239,7 +239,19 @@ export const getCurrentConversions = async ({ userId }: GetConversionsProps) => 
         }
     });
 
-    return convertJobs;
+    const convertJobsData = convertJobs.map((job) => {
+        return {
+            status: job.status,
+            songName: job.songName,
+            needsSep: job.needsSep,
+            createdAt: job.createdAt,
+            updatedAt: job.updatedAt,
+            cloneName: job.cloneName,
+            conversionId: job.id
+        }
+    });
+
+    return convertJobsData;
 };
 
 export const getConversion = async ({ userId, conversionId }: GetConversionProps) => {
@@ -411,3 +423,26 @@ export const getMostRecentCloneJob = async ({ userId }: PrismadbProps) => {
     
     return jobData;
 };
+
+export const getCurrentClones = async ({ userId }) => {
+    const cloneJobs = await prismadb.cloneJob.findMany({
+        where: {
+            userId,
+            OR: [
+                { status: "IN_QUEUE" },
+                { status: "IN_PROGRESS" }
+            ]
+        }
+    });
+
+    const cloneJobsData = cloneJobs.map((job) => {
+        return {
+            status: job.status,
+            name: job.name, // Model name
+            createdAt: job.createdAt,
+            updatedAt: job.updatedAt
+        }
+    });
+
+    return cloneJobsData;
+}
