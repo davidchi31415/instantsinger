@@ -1,7 +1,7 @@
 import axios from "axios";
 import prismadb from "./prismadb";
 import { getDownloadURL } from "./gcloud";
-import { isJobDone } from "./utils";
+import { exclude, isJobDone } from "./utils";
 
 interface RunpodConvertProps {
     modelId: string;
@@ -163,18 +163,8 @@ export const getMostRecentConvertJob = async ({ userId }: PrismadbProps) => {
     });
 
     if (!job) return job;
-
-    const jobData = {
-        status: job.status,
-        songName: job.songName,
-        needsSep: job.needsSep,
-        createdAt: job.createdAt,
-        updatedAt: job.updatedAt,
-        cloneName: job.cloneName,
-        conversionId: job.id
-    }
     
-    return jobData;
+    return exclude(job, ["userId"]);
 }
 
 export const getSubmittedConversions = async ({ userId }: PrismadbProps) => {
@@ -187,19 +177,7 @@ export const getSubmittedConversions = async ({ userId }: PrismadbProps) => {
         }
     });
 
-    const convertJobsData = convertJobs.map((job) => {
-        return (
-            {
-                status: job.status,
-                songName: job.songName,
-                needsSep: job.needsSep,
-                createdAt: job.createdAt,
-                updatedAt: job.updatedAt,
-                cloneName: job.cloneName,
-                conversionId: job.id
-            }
-        );
-    });
+    const convertJobsData = convertJobs.map((job) => exclude(job, ["userId"]));
 
     return convertJobsData;
 };
@@ -211,19 +189,7 @@ export const getConversions = async ({ userId }: PrismadbProps) => {
         }
     });
 
-    const convertJobsData = convertJobs.map((job) => {
-        return (
-            {
-                status: job.status,
-                songName: job.songName,
-                needsSep: job.needsSep,
-                createdAt: job.createdAt,
-                updatedAt: job.updatedAt,
-                cloneName: job.cloneName,
-                conversionId: job.id
-            }
-        );
-    });
+    const convertJobsData = convertJobs.map((job) => exclude(job, ["userId"]));
 
     return convertJobsData;
 };
@@ -239,17 +205,7 @@ export const getCurrentConversions = async ({ userId }: GetConversionsProps) => 
         }
     });
 
-    const convertJobsData = convertJobs.map((job) => {
-        return {
-            status: job.status,
-            songName: job.songName,
-            needsSep: job.needsSep,
-            createdAt: job.createdAt,
-            updatedAt: job.updatedAt,
-            cloneName: job.cloneName,
-            conversionId: job.id
-        }
-    });
+    const convertJobsData = convertJobs.map((job) => exclude(job, ["userId"]));
 
     return convertJobsData;
 };
@@ -263,17 +219,7 @@ export const getConversion = async ({ userId, conversionId }: GetConversionProps
 
     if (convertJob && convertJob.userId !== userId) return; // Permission denied
 
-    if (convertJob) {
-        return {
-            status: convertJob.status,
-            songName: convertJob.songName,
-            needsSep: convertJob.needsSep,
-            createdAt: convertJob.createdAt,
-            updatedAt: convertJob.updatedAt,
-            cloneName: convertJob.cloneName,
-            conversionId: convertJob.id
-        };
-    }
+    return exclude(convertJob, ["userId"]);
 };
 
 export const getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
@@ -392,12 +338,7 @@ export const getClones = async ({ userId }: GetClonesProps) => {
         }
     });
 
-    const clonesData = clones.map((clone) => {
-        return ({
-            name: clone.name,
-            createdAt: clone.createdAt
-        });
-    });
+    const clonesData = clones.map((clone) => exclude(clone, ["userId"]));
 
     return clonesData;
 };
@@ -413,15 +354,8 @@ export const getMostRecentCloneJob = async ({ userId }: PrismadbProps) => {
     });
 
     if (!job) return job;
-
-    const jobData = {
-        status: job.status,
-        name: job.name, // Model name
-        createdAt: job.createdAt,
-        updatedAt: job.updatedAt
-    }
     
-    return jobData;
+    return exclude(job, ["userId"]);
 };
 
 export const getCurrentClones = async ({ userId }) => {
@@ -435,14 +369,7 @@ export const getCurrentClones = async ({ userId }) => {
         }
     });
 
-    const cloneJobsData = cloneJobs.map((job) => {
-        return {
-            status: job.status,
-            name: job.name, // Model name
-            createdAt: job.createdAt,
-            updatedAt: job.updatedAt
-        }
-    });
+    const cloneJobsData = cloneJobs.map((job) => exclude(job, ["userId"]));
 
     return cloneJobsData;
 }

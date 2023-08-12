@@ -20,7 +20,7 @@ const ConversionResultPage = async ({
 }: {
     searchParams?: { [key: string]: string | undefined };
 }) => {
-    let conversionId = searchParams?.conversionId;
+    let conversionId = searchParams?.id;
     if (!conversionId) return (
         <div className="px-4 lg:px-8">
             <Empty label="Conversion ID required." />

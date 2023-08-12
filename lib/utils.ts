@@ -39,3 +39,9 @@ export async function downloadFromURL (url: string, name: string) {
 export function isJobDone ({ status }: { status: string }) {
   return (status === "COMPLETED" || status === "FAILED" || status === "CANCELLED");
 }
+
+export function exclude(data, keys) {
+  return Object.fromEntries(
+    Object.entries(data).filter(([key]) => !keys.includes(key))
+  );
+}

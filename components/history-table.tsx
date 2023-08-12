@@ -14,7 +14,7 @@ import { Badge } from "./ui/badge";
 import { ProgressCard } from "./progress-card";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface HistoryTableProps {
     userData: {
@@ -56,7 +56,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                 {userData.conversions.map((conversion) =>
                     <TableRow
                         className="cursor:pointer"
-                        onClick={() => { router.push(`/convert/result?id=${conversion.conversionId}`) }}
+                        onClick={() => { router.push(`/convert/result?id=${conversion.id}`) }}
                     >
                         <TableCell className="font-medium">
                             {format(conversion.createdAt, 'MM/dd/yyyy')}

@@ -8,6 +8,6 @@ interface AudioCardProps {
 export const AudioCard = ({ url }: AudioCardProps) => (
   <AudioPlayer
     src={url}
-    onPlay={e => console.log("onPlay")}
+    autoPlay={false}
   />
 );
