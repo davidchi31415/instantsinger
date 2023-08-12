@@ -83,7 +83,6 @@ export async function POST(
 
         // Create RunPod job and store it
         const runpodResponse = await _submitCloneJob({
-            userId,
             modelId: cloneJob.id,
             jobId: cloneJob.id
         });

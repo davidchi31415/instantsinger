@@ -13,7 +13,7 @@ export async function POST(
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { cloneName, songName, needsSep } = body;
+        const { cloneName, needsSep } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -41,6 +41,7 @@ export async function POST(
         if (!currentJob) {
             return new NextResponse("No upload found", { status: 500 });
         }
+        // TODO - actual file checking with Google Cloud
 
         const runpodResponse = await _submitConvertJob({
             modelId: clone.id,

@@ -10,7 +10,6 @@ interface RunpodConvertProps {
 }
 
 interface RunpodCloneProps {
-    userId: string;
     modelId: string;
     jobId: string;
 }
@@ -284,12 +283,12 @@ export const getConversionResults = async ({ convertJob }: GetConvertResultProps
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const _submitCloneJob = async ({
-    userId, modelId, jobId
+    modelId, jobId
 }: RunpodCloneProps) => {
     const response = await axios.post("https://api.runpod.ai/v2/7k76ez21pt9gba/run", {
         "input": {   
             "arguments": {
-                "input_id": userId,
+                "input_id": jobId,
                 "model_id": modelId,
                 "num_epoch": 1,
                 "save_every": 150,
