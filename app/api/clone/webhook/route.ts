@@ -49,12 +49,11 @@ export async function POST(req: NextRequest) {
             data: {
                 id: jobId,
                 userId: cloneJob.userId,
-                name: "Unnamed"
+                name: cloneJob.id // TODO - find a way to fix this (although it should never really matter)
             }
         })
     }
 
-    // TO-DO - Charge the customer
     // TO-DO - Delete all training data / also configure Google Cloud to do this
 
     return new NextResponse(null, { status: 200 }); // IMPORTANT feedback

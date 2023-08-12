@@ -51,6 +51,6 @@ model Clone {
   id String @id // provided by cloneJob.id
   userId String
   name String
-  // @@unique([userId, name]) // Names are unique
+  @@unique([userId, name]) // Names are unique
   createdAt DateTime @default(now())
 }
