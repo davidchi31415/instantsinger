@@ -20,7 +20,7 @@ const getUserData = async () => {
     const res: CloneData = { clones, currentJob: null };
 
     const currentJob = await getMostRecentCloneJob({ userId });
-    if (currentJob && !isJobDone({ status: currentJob.status })) {
+    if (currentJob && currentJob.status !== "NOT_SUBMITTED" && !isJobDone({ status: currentJob.status })) {
         res.currentJob = currentJob;
     }
 
