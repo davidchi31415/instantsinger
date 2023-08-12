@@ -106,7 +106,7 @@ const ConvertPage = () => {
     if (resultResponse.status === 200) {
       console.log("Results retrieved");
 
-      setResults(resultResponse.data.urls);
+      setResults(resultResponse.data);
     } else {
       setError("Could not retrieve files.");
     }
