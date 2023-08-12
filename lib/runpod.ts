@@ -162,7 +162,7 @@ export const getMostRecentConvertJob = async ({ userId }: PrismadbProps) => {
         }
     });
 
-    if (!job) return job;
+    if (!job) return;
     
     return exclude(job, ["userId"]);
 }
@@ -353,7 +353,7 @@ export const getMostRecentCloneJob = async ({ userId }: PrismadbProps) => {
         }
     });
 
-    if (!job) return job;
+    if (!job) return;
     
     return exclude(job, ["userId"]);
 };

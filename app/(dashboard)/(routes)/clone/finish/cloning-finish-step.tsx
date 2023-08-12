@@ -5,20 +5,17 @@ import { Heading } from "@/components/heading";
 import { MicIcon } from "lucide-react";
 import { pianoSteps } from "../constants";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { AlertCard } from "@/components/alert-card";
 import { Congrats } from "@/components/congrats";
-import Link from "next/link";
 
 interface CloningFinishStepProps {
     usedNames: string[]
 }
 
 const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [cloneName, setCloneName] = useState<string>("");
     const [nameError, setNameError] = useState<string>("");

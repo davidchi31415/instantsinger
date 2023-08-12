@@ -41,7 +41,7 @@ export function isJobDone ({ status }: { status: string }) {
 }
 
 export function exclude(data, keys) {
-  return Object.fromEntries(
-    Object.entries(data).filter(([key]) => !keys.includes(key))
-  );
+  for (let i=0; i < keys.length; i++) delete data[keys[i]];
+
+  return data;
 }
