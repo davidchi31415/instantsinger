@@ -95,6 +95,7 @@ const ConvertPage = () => {
       }
       setFinished(true); setSuccess(false);
     } finally {
+      setFileUploaded(false);
     }
   }
 
