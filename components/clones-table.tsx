@@ -43,7 +43,7 @@ export const ClonesTable = ({ userData, currentJobStatus, onCurrentJobUpdate }: 
                         <TableCell>{userData.currentJob.name}</TableCell>
                         <TableCell className="text-right">
                             <ProgressCard 
-                                process="Cloning" apiEndpoint="/api/clone/status"
+                                process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.currentJob.id}
                                 initStatus={currentJobStatus}
                                 onStatusChange={onCurrentJobUpdate}
                                 badgeOnly={true}

@@ -13,15 +13,13 @@ import { AudioCard } from "@/components/audio-card";
 
 const songs = [
     {
-        url: "https://cdn.discordapp.com/attachments/1140119588424667197/1140119723724521564/step_4_song_1.wav",
-        lyrics: ["O say can you see by the dawn's early light",
-        "What so proudly we hailed at the twilight's last gleaming",
-        "Whose broad stripes and bright stars through the perilous fight",
-        "O'er the ramparts we watched, were so gallantly streaming?",
-        "And the rocket's red glare, the bombs bursting in air",
-        "Gave proof through the night that our flag was still there",
-        "O say does that star-spangled banner yet wave",
-        "O'er the land of the free and the home of the brave"]
+        url: "https://www.youtube.com/watch?v=KpXDjIDnGgQ",
+    },
+    {
+        url: "https://www.youtube.com/watch?v=hLQl3WQQoQ0&pp=ygUcc29tZWJvZHkgdGhhdCBpIHVzZWQgdG8ga25vdw%3D%3D",
+    },
+    {
+        url: "https://www.youtube.com/watch?v=TMSIR210mRg&pp=ygUObG92ZSB5b3Vyc2VsZiA%3D"
     }
 ]
 
@@ -36,16 +34,18 @@ const CloningStep = () => {
                     <Card className="w-full lg:max-w-3xl bg-muted mb-4 text-xl">
                         <CardHeader>
                             <CardTitle className="text-md text-muted-foreground">
-                                Sing along with the following song, and record yourself while doing so.
+                                Sing along with any song, and record yourself while doing so.
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div>
-                                <div className="text-md mb-4"><b>Song:</b> Star Spangled Banner</div>
-                                <div className="text-md mb-4">
-                                    {songs[step].lyrics.map((line) => <p>{line}</p>)}
+                                <div className="font-bold">Song {step+1}</div>
+                                <div className="mb-4">Remember: Keep it between 3 and 5 minutes.</div>
+                                <div className="text-primary cursor-pointer"
+                                    onClick={() =>  window.open(songs[step].url)}
+                                >
+                                    Can't think of a song? Click here for a suggestion.
                                 </div>
-                                <AudioCard url={songs[step].url} />
                             </div>
                         </CardContent>
                     </Card>

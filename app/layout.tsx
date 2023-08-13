@@ -1,12 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Rubik } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ModalProvider } from '@/components/modal-provider'
 import { ToasterProvider } from '@/components/toaster-provider'
 import { CrispProvider } from '@/components/crisp-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const rubik = Rubik({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Instant Singer',
@@ -22,7 +22,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <CrispProvider />
-        <body className={inter.className}>
+        <body className={rubik.className}>
           <ModalProvider />
           <ToasterProvider />
           {children}

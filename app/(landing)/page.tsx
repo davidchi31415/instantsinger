@@ -4,10 +4,10 @@ import { LandingNavbar } from "@/components/landing-navbar";
 
 const LandingPage = () => {
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       <LandingNavbar />
       <LandingHero />
-      <LandingContent />
+      {/* <LandingContent /> */}
     </div>
   )
 }

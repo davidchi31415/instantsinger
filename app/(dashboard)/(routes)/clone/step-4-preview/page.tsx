@@ -24,14 +24,12 @@ const CloningStepPreview = () => {
                 flex flex-col gap-2
                 ">
                 <p>
-                    In the following slides, you will be provided with a recorded song. Wearing headphones, sing along to these songs{" "}
+                    In each of the following slides, you will be asked to sing a song - <b>any song</b>.{" "} 
+                    <b>Wearing headphones</b>, sing along to these songs{" "}
                     and record yourself as you do so. Do not worry about sounding good; just sing along.
                 </p>
+                <p>Make sure each song is within <b>3 to 5 minutes long</b>.</p>
                 <p>Please <b>record each slide separately</b> (i.e., not in one big audio file).</p>
-                <p>
-                    Again, <b>it is okay if you mess up</b> at any point. You do not need to match every pitch perfectly, or at all.
-                    The point is to collect audio over your vocal range.
-                </p>
                 
                 </Card>
                 <div className="w-full lg:max-w-3xl">

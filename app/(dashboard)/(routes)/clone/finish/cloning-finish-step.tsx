@@ -94,10 +94,16 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                             );
                         })}
 
-                        <div className="mt-8 text-xl font-bold">Step 4: Singing</div>
-                        <div className="mb-4 text-sm text-muted-foreground">Star Spangled Banner.</div>
-                        <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={4} />
-
+                        <div className="mt-8 mb-4 text-xl font-bold">Step 4: Singing</div>
+                        <div className="mb-8">
+                            <div>1. Song 1</div>
+                            <FileUploader uploadEndpoint="/api/clone/upload" stepNumber="4.1" />
+                        </div>
+                        <div className="mb-8">
+                            <div>2. Song 2</div>
+                            <FileUploader uploadEndpoint="/api/clone/upload" stepNumber="4.2" />
+                        </div>
+                        
                         <div className="flex flex-col items-center gap-2">
                             Choose a name for your voice clone:
                             <div className="w-[250px]">
