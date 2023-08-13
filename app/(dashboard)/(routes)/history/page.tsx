@@ -1,5 +1,5 @@
 import { HistoryTable } from "@/components/history-table";
-import { getConversions, getCurrentConversions, getMostRecentConvertJob, getSubmittedConversions } from "@/lib/runpod";
+import { getCompletedConversions, getConversions, getCurrentConversions, getMostRecentConvertJob, getSubmittedConversions } from "@/lib/runpod";
 import { isJobDone } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 
@@ -12,7 +12,7 @@ const getUserData = async () => {
     const { userId } = auth();
     if (userId === null) return { conversions: [], currentJobs: [] };
 
-    const conversions = await getSubmittedConversions({ userId });
+    const conversions = await getCompletedConversions({ userId });
     const res: HistoryData = {
         conversions,
         currentJobs: []

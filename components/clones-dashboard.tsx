@@ -24,7 +24,7 @@ export const ClonesDashboard = ({ userData }: ClonesDashboardProps) => {
 
     return (
         <Tabs defaultValue="my-clones" className="flex flex-col items-center gap-8">
-            <TabsList className="p-6 gap-2">
+            <TabsList className="py-6 gap-2 bg-primary/20">
                 <TabsTrigger value="my-clones" className="text-xl">My Clones</TabsTrigger>
                 <TabsTrigger value="create" className="text-xl">Create a Clone</TabsTrigger>
             </TabsList>

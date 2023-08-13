@@ -68,7 +68,7 @@ export const ProgressCard = (
         return (
             <Badge
                 className={
-                    currentStatus === "COMPLETED" ? "bg-[green]" : 
+                    currentStatus === "COMPLETED" ? "bg-[#33ff66] text-black" : 
                     (currentStatus === "FAILED" || currentStatus === "CANCELLED"
                         ? "bg-destructive" : "bg-[#6699ff]")
                 }

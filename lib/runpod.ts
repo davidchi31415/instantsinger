@@ -186,6 +186,31 @@ export const getConversions = async ({ userId }: PrismadbProps) => {
     const convertJobs = await prismadb.convertJob.findMany({
         where: {
             userId
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
+
+    const convertJobsData = convertJobs.map((job) => exclude(job, ["userId"]));
+
+    return convertJobsData;
+};
+
+export const getCompletedConversions = async ({ userId }: PrismadbProps) => {
+    const convertJobs = await prismadb.convertJob.findMany({
+        where: {
+            userId,
+            NOT: {
+                OR: [
+                    { status: "IN_QUEUE" },
+                    { status: "IN_PROGRESS" },
+                    { status: "NOT_SUBMITTED"}
+                ]
+            }
+        },
+        orderBy: {
+            createdAt: "desc"
         }
     });
 

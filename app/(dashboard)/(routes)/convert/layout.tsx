@@ -12,8 +12,8 @@ const CloneLayout = async ({children}: {children: React.ReactNode}) => {
             title="Convert"
             description="Convert any song into your own voice."
             icon={ArrowRightLeftIcon}
-            iconColor="text-violet-500"
-            bgColor="bg-violet-500/10"
+            iconColor="text-orange-500"
+            bgColor="bg-orange-500/10"
         />
             {children}
         </div>
