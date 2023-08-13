@@ -248,7 +248,7 @@ export const _submitCloneJob = async ({
             "arguments": {
                 "input_id": jobId,
                 "model_id": modelId,
-                "num_epoch": 75,
+                "num_epoch": 150,
                 "save_every": 150,
                 "batch_size": 16,
                 "pitch_extraction_algorithm": "mangio-crepe",
