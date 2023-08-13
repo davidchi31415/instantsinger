@@ -52,9 +52,9 @@ const CloningStep = () => {
                         >
                             Continue<MoveRightIcon />
                         </Button> 
-                        : <Link href="/clone/finish">
+                        : <Link href="/clone/step-4-preview">
                             <Button className="text-md gap-2">
-                                Finish<UploadCloudIcon />
+                                Step 4
                             </Button>
                         </Link>}
                     </div>
