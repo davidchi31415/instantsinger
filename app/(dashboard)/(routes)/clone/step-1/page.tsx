@@ -10,19 +10,22 @@ import { CloningStepBar } from "@/components/cloning-step-bar";
 import Link from "next/link";
 
 const essay = [
-    `Welcome! This is an AI-powered singing tool built for the aspiring singer. 
-    By using cutting-edge technology, we provide a cheap and easy process for cloning your singing voice and transforming any song of your choice into your own voice. 
-    That's right. You can now hear yourself sing exactly the way your favorite singer would if they had your voice - regardless of your current singing ability.`,
-    `We created this tool with the goal of providing you with the perfect audio reference to practice singing with: your own voice, mixed with professional singing ability. 
-    This will allow you to practice more effectively and more confidently. You can now, for the first time ever, hear an idealized version of your singing.
-    The process is composed of two steps: 1) voice cloning, and 2) voice conversion.`,
-    `Right now, we are in step 1. You are reading these words to provide speaking data. You will then be asked to provide your vocal range through a simple pitch exercise. 
-    This entire collection process should take around 10 minutes - you have already gone through a significant portion. We will then train our AI for you within 6 hours, 
-    although realistically, it will be much faster; we will notify you when it is done.`,
-    `Once the cloning process is complete, step 2 is as simple as uploading any song to our website and clicking a button. If you can, we recommend using pure vocal recordings, 
-    but we will automatically process full songs to separate the vocal and instrumental stems for you. `,
-    `Furthermore, you should aim for songs within your vocal range, as our AI will not be able to extend beyond the pitches you provide - i.e., your voice will strain for notes 
-    that are too high or low. That's all for the speaking part. You will now take the pitch test; keep it up, you're doing great!`
+    `Hello and welcome! You are currently reading (out loud) an essay we wrote, for the purpose of collecting voice data to create your AI clone. Take your time: don’t rush through this. As long as you can finish reading this essay in 6 minutes, you are reading fast enough. But try not to read too slowly either; keep to a normal speaking pace.`,
+    `We're thrilled to introduce you to this special tool powered by AI, designed especially for those who dream of singing. Imagine being able to transform any song you like into your own voice, sounding just like your favorite singer. Yes, it's possible, no matter how you sing right now.`,
+    `Our aim in creating this tool was to provide you with the ultimate practice aid. You can now listen to yourself singing like a professional, helping you practice better and feel more confident. This means you can hear yourself singing as perfectly as your favorite singer. Isn't that amazing?`,
+    `Using this AI tool is quite easy. Once your voice is cloned, you're all set. The data you provide helps us create a clone tailored just for you. This clone can then be used with any song you choose. To do this properly, we need a variety of voice data covering your entire vocal range.`,
+    `Here are all the steps we need you to do:
+    1) Speaking Part 1: You're already doing it by reading this essay!
+    2) Speaking Part 2: Provide further speaking data by reading our list of random sentences.
+    3) Pitch Matching: Show us your vocal range through simple pitch exercises.
+    4) Singing: Sing along to 2 short, well-known songs, just do your best!`,
+    `Completing these 4 steps takes about 20 minutes in total, and you're already well on your way. Once you're done and your recordings are uploaded, we train our AI to match your voice. This might take a few hours, but sometimes even as little as 15 minutes, depending on how many other people are doing it.`,
+    `We'll let you know when it's ready. Afterward, you can use your voice clone by using song conversion credits. We've given you 3 credits right away, just for cloning your voice. If you need more, we offer subscriptions and pay-as-you-go options. Each credit lasts forever and can be used for songs up to 10 minutes long.`,
+    `When choosing songs to convert, remember that the audio quality and style matter. Simple vocal recordings work best. Behind the scenes, your AI clone works to transform voices into your own, but it can only work on voices. Thus, if there are instruments in the song, the vocals will need to be extracted. Don’t worry, we'll handle it for you. 
+    If there's a chorus or background vocals, we will separate those too.`,
+    `Though we can handle songs with lots of instruments and background sounds, our AI does better with strong lead vocals. As an example, think of songs with just an acoustic guitar – those work great. Reducing background noise helps avoid any odd sounds from the AI.`,
+    `Lastly, try to pick songs within your singing range. The AI can't go higher or lower than the notes you provide. This is where the pitch ranges we'll give you come in handy. You've finished speaking for now. It's time for the pitch test. Keep it up – you're doing fantastic!
+    `
 ];
 
 const CloningStep = () => {
@@ -31,7 +34,7 @@ const CloningStep = () => {
   return (
     <div className="px-4 lg:px-8 flex justify-center">
         <div className="pt-2 flex flex-col items-center justify-center gap-2">
-            <CloningStepBar title="Step 1: Speaking" totalSteps={essay.length} step={step} setStep={setStep} />
+            <CloningStepBar title="Step 1: Speaking Part 1" totalSteps={essay.length} step={step} setStep={setStep} />
             <Card className="w-full lg:max-w-3xl bg-muted mb-4 text-xl">
                 <CardHeader>
                     <CardTitle className="text-md text-muted-foreground">

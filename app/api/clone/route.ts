@@ -46,7 +46,7 @@ export async function POST(
         if (!currentCloneJob) return new NextResponse("Clone job not found", { status: 400 });
 
         const requiredFiles = [
-            '1', '2.4', '2.5', '2.8'
+            '1', '2', '3.4', '3.5', '3.8'
         ];
 
         // Make sure necessary files are present

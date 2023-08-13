@@ -31,15 +31,21 @@ export const PianoCloningComponent = ({ piano, context, lowestNote, highestNote,
     const [isPlaying, setPlaying] = useState(false);
     const [activeNote, setActiveNote] = useState(startingNote);
 
+    const deltasUp = [2, 2, 1, 2, 2, 2, 1];
+    const deltasDown = [1, 2, 2, 2, 1, 2, 2];
+
     const playPiano = async () => {
         const now = context.currentTime;
         await piano.loaded().then(() => {
-            for (let i = 0; i <= 12; i++) {
-                let note = startingNote + i * (goingUp ? 1 : -1);
+            let totalDelta = 0;
+            for (let i = 0; i <= 8; i++) {
+                let note = startingNote + totalDelta;
+                totalDelta += (goingUp ? deltasUp[i] : -deltasDown[i]);
                 piano.start({ 
                     note, time: now + 2 * i, duration: 2, 
                     onEnded: (note: any) => {
-                        if (note.note !== stoppingNote) setActiveNote((active) => active + (goingUp ? 1 : -1));
+                        if (note.note !== stoppingNote) 
+                            setActiveNote((active) => active + (goingUp ? deltasUp[i] : -deltasDown[i]));
                         else stopPiano();
                     }
                 });

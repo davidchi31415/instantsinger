@@ -70,12 +70,15 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                 :
                 <>
                     <div className="p-4 lg:px-8">
-                        <div className="text-xl font-bold">Step 1: Speaking</div>
+                        <div className="text-xl font-bold">Step 1: Speaking Part 1</div>
                         <div className="mb-4 text-sm text-muted-foreground">The whole essay in one audio file.</div>
-                        <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={1} 
-                            
-                        />
-                        <div className="mt-8 text-xl font-bold">Step 2: Pitches</div>
+                        <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={1} />
+
+                        <div className="mt-8 text-xl font-bold">Step 2: Speaking Part 2</div>
+                        <div className="mb-4 text-sm text-muted-foreground">The whole list of sentences in one audio file.</div>
+                        <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={2} />
+
+                        <div className="mt-8 text-xl font-bold">Step 3: Pitches</div>
                         <div className="mb-4 text-sm text-muted-foreground">
                             Each range in its own file. Not all are required.
                         </div>
@@ -86,7 +89,7 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                                         {step.up ? `${step.low} -> ${step.high}`
                                         : `${step.high} -> ${step.low}`} {step.optional ? <b>(OPTIONAL)</b> : ""}
                                     </div>
-                                    <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={`2.${index+1}`} />
+                                    <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={`3.${index+1}`} />
                                 </div>
                             );
                         })}
@@ -106,7 +109,7 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                                         : "")
                                 }
                                 {missingFiles?.length ? 
-                                    <AlertCard variant="destructive" title="Misisng Files" 
+                                    <AlertCard variant="destructive" title="Misising Files" 
                                         message={`Missing Steps ${missingFiles.toString()}`}
                                     /> : ""
                                 }
