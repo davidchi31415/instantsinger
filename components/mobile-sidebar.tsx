@@ -6,12 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./sidebar";
 import { useEffect, useState } from "react";
 
-interface MobileSidebarProps {
-  apiLimitCount: number;
-  isPro: boolean;
-}
-
-const MobileSidebar = ({ apiLimitCount=0, isPro=false }: MobileSidebarProps) => {
+const MobileSidebar = () => {
   const [isMounted, setIsMounted] = useState(false);
   
   useEffect(() => {

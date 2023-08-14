@@ -162,7 +162,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, stepNumber, isConvertUp
           />
           <Button
             type="submit"
-            size="lg" className="text-xl"
+            size="lg" className="text-xl border-2 border-black shadow-xl"
             disabled={file === null || fileError !== "" || isLoading}
             onClick={onSubmit}
           >

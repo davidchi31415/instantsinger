@@ -49,11 +49,11 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="mb-8 space-y-8">
-      <h2 className="text-2xl md:text-4xl font-bold text-center">
+    <div className="mt-10">
+      <h2 className="mt-10 mb-4 text-2xl md:text-4xl font-bold text-center">
         Welcome to Instant Singer
       </h2>
-      <p className="text-muted-foreground font-light text-md md:text-lg text-center">
+      <p className="mb-8 text-muted-foreground font-light text-md md:text-lg text-center">
         Unleash your beautiful voice with AI :)
       </p>
       <div className="px-4 md:px-20 lg:px-32 grid md:grid-cols-2 gap-4">
@@ -68,7 +68,7 @@ export default function DashboardPage() {
                 }
               }}
               key={tool.href ? tool.href : tool.url} 
-              className="p-4 border-2 border-primary hover:scale-105
+              className="p-4 border-primary hover:scale-105 hover:border-2
               transition cursor-pointer"
             >
               <div className="h-[7rem]">

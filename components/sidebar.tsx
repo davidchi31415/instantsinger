@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { ArrowRightLeftIcon, Code, HistoryIcon, ImageIcon, LayoutDashboard, MessageSquare, Mic, MicIcon, Music, Settings, VideoIcon } from "lucide-react";
-import { FreeCounter } from "./free-counter";
 
 const font = Montserrat({weight: "600", subsets: ["latin"]});
 
@@ -16,7 +15,7 @@ const routes = [
         label: "Dashboard",
         icon: LayoutDashboard,
         href: "/dashboard",
-        color: "text-sky-500"
+        color: "text-blue-500"
     },
     {
         label: "Convert",
@@ -41,11 +40,6 @@ const routes = [
         href: "/settings"
     }
 ]
-
-interface SidebarProps {
-    apiLimitCount: number;
-    isPro: boolean;
-}
 
 const Sidebar = () => {
   const pathname = usePathname();

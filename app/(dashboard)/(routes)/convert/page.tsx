@@ -17,6 +17,9 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { ProgressCard } from "@/components/progress-card";
 import { ConversionResultsComponent } from "@/components/conversion-results";
 import { FileUploader } from "@/components/file-uploader";
+import { IconContext } from "react-icons";
+import { PiCoinVerticalFill } from "react-icons/pi";
+import { cn } from "@/lib/utils";
 
 const MAX_FILE_SIZE = 100_000_000;
 
@@ -161,15 +164,27 @@ const ConvertPage = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-center mt-6">
+              <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
+                cloneChoice === "" || !fileUploaded ? "" : "hover:scale-105")}
+              >
                 <Button
                   type="submit"
-                  size="lg" className="text-xl"
+                  size="lg" className="text-xl rounded-r-none border-2 border-black border-r-none"
                   disabled={cloneChoice === "" || !fileUploaded}
                   onClick={onSubmit}
                 >
-                  Convert
+                Convert
                 </Button>
+                <span className="px-2 py-[0.45rem] rounded-r-md text-black flex items-center bg-primary/20
+                  border-2 border-black border-l-none font-bold
+                ">
+                    1
+                    <IconContext.Provider
+                      value={{ size: "25px", color: "#E1B530" }}
+                  >
+                  <PiCoinVerticalFill />
+                  </IconContext.Provider>
+                </span>
               </div>
             </div>
             
