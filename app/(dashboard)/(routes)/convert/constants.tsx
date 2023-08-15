@@ -1,1 +1,1 @@
-export const MAX_FILE_SIZE = 100_000_000;
+export const MAX_FILE_SIZE = 100000000;

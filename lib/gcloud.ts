@@ -1,3 +1,4 @@
+import { MAX_FILE_SIZE } from "@/app/(dashboard)/(routes)/convert/constants";
 import { Storage } from "@google-cloud/storage";
 
 const key = JSON.parse(process.env.GCLOUD_KEY!);
@@ -22,7 +23,10 @@ export const getUploadURL = async ({directory, fileName}: GCloudProps) => {
     const options = {
         version: "v4",
         action: "write",
-        expires: Date.now() + 15 * 60 * 1000 // 15 minutes
+        extensionHeaders: {
+            "x-goog-content-length-range": `0,${MAX_FILE_SIZE}`,
+        },
+        expires: Date.now() + 60 * 60 * 1000 // 1 hour
     } as any;
 
     const file = bucket.file(`${directory}/${fileName}`);
@@ -35,7 +39,7 @@ export const getDownloadURL = async ({directory, fileName}: GCloudProps) => {
     const options = {
         version: "v4",
         action: "read",
-        expires: Date.now() + 15 * 60 * 1000 // 15 minutes
+        expires: Date.now() + 120 * 60 * 1000 // 2 hours
     } as any;
 
     const file = bucket.file(`${directory}/${fileName}`);

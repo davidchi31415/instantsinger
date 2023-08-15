@@ -79,7 +79,7 @@ const Sidebar = ({cloneCredits, convertCredits}) => {
                 })}
             </div>
         </div>
-        <div className="w-[10rem] mx-auto flex flex-col items-center pb-32 gap-2">
+        <div className="w-[12rem] mx-auto flex flex-col items-center pb-32 gap-2">
             <CloneCreditCounter cloneCredits={cloneCredits} />
             <ConvertCreditCounter convertCredits={convertCredits} />
         </div>

@@ -26,8 +26,7 @@ import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import { AudioCard } from "@/components/audio-card";
 import Crunker from "crunker";
-
-const MAX_FILE_SIZE = 100_000_000;
+import { MAX_FILE_SIZE } from "@/app/(dashboard)/(routes)/convert/constants";
 
 interface CloningFileUploaderProps {
   uploadEndpoint: string;
@@ -117,7 +116,8 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
         setUploading(true);
         const uploadResponse = await axios.put(url, file, {
           headers: {
-            "Content-Type": 'application/octet-stream'
+            "Content-Type": 'application/octet-stream',
+            "x-goog-content-length-range": `0,${MAX_FILE_SIZE}`
           },
           onUploadProgress: (progressEvent) => {
             const totalLength = progressEvent.total;
