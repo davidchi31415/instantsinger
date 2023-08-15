@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import { checkFileExists, getUploadURL } from "@/lib/gcloud";
+import { checkFileExists, getFileList, getUploadURL } from "@/lib/gcloud";
 import { _submitCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 import { getCredits, updateCredits } from "@/lib/credits";
@@ -41,15 +41,15 @@ export async function POST(
         if (!currentCloneJob) return new NextResponse("Clone job not found", { status: 400 });
 
         const requiredFiles = [
-            '1', '2', '3.1', '3.4', '3.5', '3.8', '4.1', '4.2'
+            '1', '2', '3.1', '3.4', '3.5', '3.8', '4.1', '4.2', '4.3'
         ];
+        const uploadedFiles = await getFileList({ directory: `training_data/${currentCloneJob.id}` });
 
         // Make sure necessary files are present
         const missingFiles: string[] = [];
         for (let i = 0; i < requiredFiles.length; i++) {
-            const fileExists = await checkFileExists({
-                directory: `training_data/${currentCloneJob.id}`, fileName: requiredFiles[i]
-            });
+            const fileExists = uploadedFiles.some((fileName) => fileName === requiredFiles[i]);
+
             if (!fileExists) {
                 missingFiles.push(requiredFiles[i]);
             }

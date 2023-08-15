@@ -107,6 +107,7 @@ const CloningFinishStep = ({ usedNames, jobId, previouslyUploadedFiles }: Clonin
                         <FileUploader uploadEndpoint="/api/clone/upload"
                             apiParams={{ cloneId: jobId, stepNumber: 1 }}
                             onUpload={() => onUpload("1")}
+                            durationLimit={8}
                         />
 
                         <div className="mt-8 text-xl font-bold flex justify-between">
@@ -120,6 +121,7 @@ const CloningFinishStep = ({ usedNames, jobId, previouslyUploadedFiles }: Clonin
                         <FileUploader uploadEndpoint="/api/clone/upload"
                             apiParams={{ cloneId: jobId, stepNumber: 2 }}
                             onUpload={() => onUpload("2")}
+                            durationLimit={8}
                         />
 
                         <div className="mt-8 text-xl font-bold">Step 3: Pitches</div>
@@ -141,6 +143,7 @@ const CloningFinishStep = ({ usedNames, jobId, previouslyUploadedFiles }: Clonin
                                     <FileUploader uploadEndpoint="/api/clone/upload" 
                                         apiParams={{ cloneId: jobId, stepNumber: `3.${index+1}` }}
                                         onUpload={() => onUpload(`3.${index+1}`)}
+                                        durationLimit={1}
                                     />
                                 </div>
                             );
@@ -158,6 +161,7 @@ const CloningFinishStep = ({ usedNames, jobId, previouslyUploadedFiles }: Clonin
                             <FileUploader uploadEndpoint="/api/clone/upload" 
                                 apiParams={{ cloneId: jobId, stepNumber: 4.1 }}
                                 onUpload={() => onUpload("4.1")}
+                                durationLimit={6}
                             />
                         </div>
                         <div className="mb-8">
@@ -171,6 +175,21 @@ const CloningFinishStep = ({ usedNames, jobId, previouslyUploadedFiles }: Clonin
                             <FileUploader uploadEndpoint="/api/clone/upload" 
                                 apiParams={{ cloneId: jobId, stepNumber: 4.2 }}
                                 onUpload={() => onUpload("4.2")}
+                                durationLimit={6}
+                            />
+                        </div>
+                        <div className="mb-8">
+                            <div className="mb-4 flex justify-between items-center">
+                                <div>3. Song 3</div>
+                                <div>{uploadedFiles.some(fileName => fileName === "4.3") ?
+                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                </Badge> : ""}</div>
+                            </div>
+                            <FileUploader uploadEndpoint="/api/clone/upload" 
+                                apiParams={{ cloneId: jobId, stepNumber: 4.3 }}
+                                onUpload={() => onUpload("4.3")}
+                                durationLimit={6}
                             />
                         </div>
                         

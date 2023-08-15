@@ -21,11 +21,11 @@ import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn } from "@/lib/utils";
 import { useProModal } from "@/hooks/use-pro-modal";
-
-const MAX_FILE_SIZE = 100_000_000;
+import { useRouter } from "next/router";
 
 
 const ConvertPage = () => {
+  const router = useRouter();
   const proModal = useProModal();
 
   const [cloneChoice, setCloneChoice] = useState<string>("");
@@ -84,7 +84,7 @@ const ConvertPage = () => {
       if (!fileUploaded) return;
         
       await axios.post("/api/convert", { cloneName: cloneChoice, needsSep })
-        .then((response) => setConversionId(response.data.conversionId))
+        .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })
         .catch((error) => {
           console.log("Error in submitting job");
           if (error?.response?.status === 403) {
@@ -96,7 +96,6 @@ const ConvertPage = () => {
         })
         .finally(() => {
           setFileUploaded(false);
-          setConverting(false);
         });
   }
 
@@ -131,6 +130,7 @@ const ConvertPage = () => {
                 onUpload={() => setFileUploaded(true)} 
                 isConvertUpload={true}
                 key={fileKey}
+                durationLimit={10}
               />
 
               <div className="mt-4 font-bold text-2xl">Voice Clone</div>

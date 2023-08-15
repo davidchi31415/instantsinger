@@ -33,9 +33,10 @@ interface CloningFileUploaderProps {
   onUpload?: Function;
   apiParams?: any;
   isConvertUpload?: boolean;
+  durationLimit?: number; // Minutes
 }
 
-export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpload }: CloningFileUploaderProps) => {
+export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpload, durationLimit }: CloningFileUploaderProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setLoading] = useState(false);
 
@@ -73,7 +74,11 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
           ctx.decodeAudioData(audioArrayBuffer!).then(
             data => {
               duration = data.duration;
-              setFileError("");
+              if (durationLimit && duration > durationLimit * 60) {
+                setFileError(`Max duration is ${durationLimit}`)
+              } else {
+                setFileError("");
+              }
           }).catch(
             _ => setFileError(
               "Audio file failed to load. Possibly corrupted."
