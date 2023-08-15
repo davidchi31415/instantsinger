@@ -1,9 +1,8 @@
 import { Heading } from "@/components/heading";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
-import { getAPILimitCount } from "@/lib/api-limit";
-import { getMostRecentCloneJob } from "@/lib/runpod";
-import { checkSubscription } from "@/lib/subscription";
+import prismadb from "@/lib/prismadb";
+import { getCurrentUnsubmittedCloneJob, getMostRecentCloneJob } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 import { MicIcon } from "lucide-react";
 

@@ -4,19 +4,15 @@ import { ConvertCreditCounter } from "./convert-credit-counter";
 import { CloneCreditCounter } from "./clone-credit-counter";
 
 interface NavbarProps {
-  convertCreditCount: number;
-  cloneCreditCount: number;
+  convertCredits: number;
+  cloneCredits: number;
 }
 
-const Navbar = ({ convertCreditCount=0, cloneCreditCount=0 }: NavbarProps) => {
+const Navbar = ({ convertCredits=0, cloneCredits=0 }: NavbarProps) => {
   return (
     <div className="flex items-center p-4">
-        <MobileSidebar />
+        <MobileSidebar convertCredits={convertCredits} cloneCredits={cloneCredits} />
         <div className="flex gap-8 w-full justify-end">
-            <div className="flex gap-2">
-              <CloneCreditCounter cloneCreditCount={cloneCreditCount} />
-              <ConvertCreditCounter convertCreditCount={convertCreditCount} />
-            </div>
             <UserButton afterSignOutUrl="/" 
               appearance={{
                 elements: {

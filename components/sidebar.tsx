@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { ArrowRightLeftIcon, Code, HistoryIcon, ImageIcon, LayoutDashboard, MessageSquare, Mic, MicIcon, Music, Settings, VideoIcon } from "lucide-react";
+import { CloneCreditCounter } from "./clone-credit-counter";
+import { ConvertCreditCounter } from "./convert-credit-counter";
 
 const font = Montserrat({weight: "600", subsets: ["latin"]});
 
@@ -41,8 +43,9 @@ const routes = [
     }
 ]
 
-const Sidebar = () => {
+const Sidebar = ({cloneCredits, convertCredits}) => {
   const pathname = usePathname();
+  
   return (
     <div className="space-y-4 py-4 flex flex-col h-full">
         <div className="px-3 py-2 flex-1">
@@ -75,6 +78,10 @@ const Sidebar = () => {
                     )
                 })}
             </div>
+        </div>
+        <div className="w-[10rem] mx-auto flex flex-col items-center pb-32 gap-2">
+            <CloneCreditCounter cloneCredits={cloneCredits} />
+            <ConvertCreditCounter convertCredits={convertCredits} />
         </div>
     </div>
   )

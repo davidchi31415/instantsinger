@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
+import { updateCredits } from "@/lib/credits";
 
 export async function POST(req: Request) {
     const body = await req.text();
@@ -23,44 +24,28 @@ export async function POST(req: Request) {
 
     const session = event.data.object as Stripe.Checkout.Session;
 
-    if (event.type === "checkout.session.completed") {
-        const subscription = await stripe.subscriptions.retrieve(
-            session.subscription as string
-        );
-
+    if (event.type === "invoice.payment_succeeded") {
         if (!session?.metadata?.userId) {
-            return new NextResponse("User is required", { status: 400 });
+            return new NextResponse("URGENT ERROR: payment successful but processing not - no userId provided", { status: 403});
         }
 
-        await prismadb.userSubscription.create({
-            data: {
-                userId: session?.metadata?.userId,
-                stripeSubscriptionId: subscription.id,
-                stripeCustomerId: subscription.customer as string,
-                stripePriceId: subscription.items.data[0].price.id,
-                stripeCurrentPeriodEnd: new Date(
-                    subscription.current_period_end * 1000
-                )
-            }
-        });
-    }
+        if (!session?.metadata?.purchasedClones) {
+            return new NextResponse("URGENT ERROR: payment successful but processing not - no purchasedClones provided", { status: 403});
+        }
 
-    if (event.type === "invoice.payment_succeeded") {
-        const subscription = await stripe.subscriptions.retrieve(
-            session.subscription as string
-        );
+        if (!session?.metadata?.purchasedSongs) {
+            return new NextResponse("URGENT ERROR: payment successful but processing not - no purchasedSongs provided", { status: 403});
+        }
 
-        await prismadb.userSubscription.update({
-            where: {
-                stripeSubscriptionId: subscription.id
-            },
-            data: {
-                stripePriceId: subscription.items.data[0].price.id,
-                stripeCurrentPeriodEnd: new Date(
-                    subscription.current_period_end * 1000
-                )
-            }
+        const purchaseSuccessful = await updateCredits({
+            userId: session.metadata.userId,
+            convertDelta: parseInt(session.metadata.purchasedSongs),
+            cloneDelta: parseInt(session.metadata.purchasedClones)
         });
+        console.log(purchaseSuccessful);
+
+        if (purchaseSuccessful) return new NextResponse(null, { status: 200 }); // IMPORTANT feedback
+        else return new NextResponse("URGENT ERROR: payment successful but processing not", { status: 403});
     }
 
     return new NextResponse(null, { status: 200 }); // IMPORTANT feedback

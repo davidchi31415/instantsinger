@@ -1,44 +1,37 @@
 import { auth, currentUser } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 
 import { absoluteUrl } from "@/lib/utils";
+import { packages } from "@/lib/packages";
 
 const settingsUrl = absoluteUrl("/settings");
 
-export async function GET() {
+export async function GET(
+    req: NextRequest
+) {
     try {
         const { userId } = auth();
         const user = await currentUser();
+        const packKey = req.nextUrl.searchParams.get("packKey");
 
         if (!userId || !user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
-
-        const userSubscription = await prismadb.userSubscription.findUnique(
-            {
-                where: {
-                    userId
-                }
-            }
-        );
-
-        if (userSubscription && userSubscription.stripeCustomerId) { // Subscription exists, go to billing page
-            const stripeSession = await stripe.billingPortal.sessions.create({
-                customer: userSubscription.stripeCustomerId,
-                return_url: settingsUrl
-            });
-
-            return new NextResponse(JSON.stringify({ url: stripeSession.url }));
+        if (!packKey) {
+            return new NextResponse("Need pack key", { status: 400 });
         }
+
+        const pack = packages.find((e) => e.packKey === packKey);
+        if (!pack) return new NextResponse("Pack not found", { status: 400 });
 
         // Else, go to checkout page
         const stripeSession = await stripe.checkout.sessions.create({
             success_url: settingsUrl,
             cancel_url: settingsUrl,
             payment_method_types: ["card"],
-            mode: "subscription",
+            mode: "payment",
             billing_address_collection: "auto",
             customer_email: user.emailAddresses[0].emailAddress,
             line_items: [
@@ -46,19 +39,20 @@ export async function GET() {
                     price_data: {
                         currency: "USD",
                         product_data: {
-                            name: "Sainatra Pro",
-                            description: "Unlimited AI Generation"
+                            name: pack.contents.label,
+                            description: 
+                                `${pack.contents.songs} Song Conversions, 
+                                ${pack.contents.clones} Voice Clone ${pack.contents.clones > 1 ? "s" : ""}`
                         },
-                        unit_amount: 2000,
-                        recurring: {
-                            interval: "month"
-                        }
+                        unit_amount: pack.contents.price * 100,
                     },
                     quantity: 1
                 }
             ],
             metadata: { // VERY IMPORTANT - need to store userId for purchase
-                userId
+                userId,
+                purchasedClones: pack.contents.clones,
+                purchasedSongs: pack.contents.songs
             }
         });
 

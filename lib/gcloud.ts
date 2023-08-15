@@ -55,3 +55,13 @@ export const checkFileExists = async ({directory, fileName}: GCloudProps) => {
 
     return exists;
 }
+
+export const getFileList = async ({ directory }) => {
+    const res = await bucket.getFiles({ prefix: directory, autoPaginate: false });
+
+    const fileNames = res[0]
+                    .filter(blob => blob && blob !== null)
+                    .map(file => file.name.split("/").at(-1));
+
+    return fileNames;
+}

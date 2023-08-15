@@ -68,8 +68,8 @@ export default function DashboardPage() {
                 }
               }}
               key={tool.href ? tool.href : tool.url} 
-              className="p-4 border-primary hover:scale-105 hover:border-2
-              transition cursor-pointer"
+              className="p-4 border-2 border-primary hover:scale-105
+              transition cursor-pointer shadow-xl"
             >
               <div className="h-[7rem]">
                 <div className="flex items-center justify-between gap-x-4">

@@ -1,9 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
-import { checkSubscription } from "@/lib/subscription";
-import axios from "axios";
+import { getCredits, updateCredits } from "@/lib/credits";
 import { _getClone, _submitConvertJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 
@@ -23,16 +21,11 @@ export async function POST(
         if (!clone) return new NextResponse("No clone found with given name", { status: 400 });
 
         // Check API Limits
-        // const freeTrial = await checkAPILimit();
-        // const isPro = await checkSubscription();
+        const { convertCredits } = await getCredits();
 
-        // if (!freeTrial && !isPro) {
-        //     return new NextResponse("Free trial has expired", { status: 403 });
-        // }
-
-        // if (!isPro) {
-        //     await increaseAPILimit();
-        // }
+        if (convertCredits <= 0) {
+            return new NextResponse("Not enough credits", { status: 403 });
+        } 
 
         let currentJob = await prismadb.convertJob.findFirst({ 
             where: { userId, status: "NOT_SUBMITTED" }, 
@@ -57,7 +50,8 @@ export async function POST(
                 data: { runpodJobId, status, needsSep, cloneName }
             });
 
-            // TODO - charge the customer
+            // Charge the customer
+            await updateCredits({ userId, convertDelta: -1 });
 
             return new NextResponse(
                 JSON.stringify({ conversionId: currentJob.id, status }),

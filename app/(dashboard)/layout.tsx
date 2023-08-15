@@ -1,10 +1,9 @@
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
-import { getAPILimitCount } from "@/lib/api-limit";
+import { getCredits } from "@/lib/credits";
 
 const DashboardLayout = async ({children}: {children: React.ReactNode}) => {
-    const convertCreditCount = await getAPILimitCount();
-    const cloneCreditCount = await getAPILimitCount();
+    const {convertCredits, cloneCredits} = await getCredits();
 
     return (
         <div className="h-full relative">
@@ -13,10 +12,10 @@ const DashboardLayout = async ({children}: {children: React.ReactNode}) => {
                 md:flex-col md:fixed md:inset-y-0
                 border-r-4 border-primary bg-primary/25"
             >
-                <Sidebar />
+                <Sidebar cloneCredits={cloneCredits} convertCredits={convertCredits} />
             </div>
             <main className="md:pl-72 pb-8">
-                <Navbar cloneCreditCount={cloneCreditCount} convertCreditCount={convertCreditCount} />
+                <Navbar cloneCredits={cloneCredits} convertCredits={convertCredits} />
                 {children}
             </main>
         </div>

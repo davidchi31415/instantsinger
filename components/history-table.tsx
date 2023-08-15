@@ -63,7 +63,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                     {jobs.slice(pageIndex * jobsPerPage, (pageIndex+1) * jobsPerPage).map((job) => {
                         if (isJobDone({ status: job.status })) {
                             return <TableRow
-                                className="cursor:pointer"
+                                className="cursor-pointer"
                                 onClick={() => { router.push(`/convert/result?id=${job.id}`) }}
                             >
                                 <TableCell className="font-medium">

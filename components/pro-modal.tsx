@@ -8,50 +8,28 @@ import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { IconContext } from "react-icons";
+import { PiCoinVerticalFill } from "react-icons/pi";
+import { packages } from "@/lib/packages";
 
-const tools = [
-    {
-      label: "Conversation",
-      icon: MessageSquare,
-      color: "text-violet-500",
-      bgColor: "bg-violet-500/10"
-    },
-    {
-        label: "Image Generation",
-        icon: ImageIcon,
-        color: "text-pink-500",
-        bgColor: "bg-pink-500/10"
-    },
-    {
-        label: "Video Generation",
-        icon: VideoIcon,
-        color: "text-orange-500",
-        bgColor: "bg-orange-500/10"
-    },
-    {
-        label: "Music Generation",
-        icon: Music,
-        color: "text-emerald-500",
-        bgColor: "bg-emerald-500/10"
-    },
-    {
-        label: "Code Generation",
-        icon: Code,
-        color: "text-green-500",
-        bgColor: "bg-green-500/10"
-    }
-  ];
 
 export const ProModal = () => {
     const proModal = useProModal();
     const [isLoading, setLoading] = useState(false);
+
+    const [isMounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!isMounted) return null;
     
-    const onSubscribe = async () => {
+    const onPurchase = async ({ packKey }) => {
         try {
             setLoading(true);
-            const response = await axios.get("/api/stripe");
+            const response = await axios.get("/api/stripe", { params: { packKey } });
 
             window.location.href = response.data.url;
         } catch (error) {
@@ -70,42 +48,44 @@ export const ProModal = () => {
                         className="flex justify-center items-center
                         flex-col gap-y-4 pb-2"
                     >
-                        <div className="flex items-center gap-x-2 font-bold py-1">
-                            Upgrade to Sainatra
-                            <Badge className="uppercase text-sm text-white py-1" variant="premium">
-                                pro
-                            </Badge>
+                        <div className="text-2xl flex items-center gap-x-2
+                            p-2 rounded-lg bg-primary/10
+                        ">
+                            <IconContext.Provider
+                                value={{ size: "25px", color: "#E1B530" }}
+                            >
+                                    <PiCoinVerticalFill />
+                            </IconContext.Provider>
+                            Need more credits?
                         </div>
                     </DialogTitle>
                     <DialogDescription
-                        className="text-center pt-2 space-y-2 text-zinc-900 font-medium"
+                        className="pt-2 space-y-2 text-zinc-900 font-medium"
                     >
-                        {tools.map((tool) => {
+                        {packages.map((pack, i) => {
                             return (
-                                <Card
-                                    key={tool.label}
-                                    className="p-3 border-black/5 flex items-center justify-between"
+                                <div className="p-4 flex items-start justify-between cursor-pointer
+                                    border-2 border-primary rounded-md shadow-lg hover:scale-105 transition"
+                                    onClick={() => onPurchase({ packKey: pack.packKey })}
+                                    key={`pack-${pack.packKey}`}
                                 >
-                                    <div className="flex items-center gap-x-4">
-                                        <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                                            <tool.icon className={cn("w-6 h-6", tool.color)} />
-                                        </div>
-                                        <div className="font-semibold text-sm">
-                                            {tool.label}
+                                    <div>
+                                        <div className="text-xl font-bold">{pack.contents.label}</div>
+                                        <div className="text-lg text-muted-foreground">{pack.contents.description}</div>
+                                        <div className="text-lg">
+                                            <b>{pack.contents.songs}</b> Song Conversions,{" "}
+                                            <b>{pack.contents.clones}</b> Voice Clone
+                                            {pack.contents.clones > 1 ? "s" : ""}
                                         </div>
                                     </div>
-                                    <Check className="text-primary w-5 h-5" />
-                                </Card>
+                                    <Button className="text-lg">
+                                        ${pack.contents.price}
+                                    </Button>
+                                </div>
                             )
                         })}
                     </DialogDescription>    
                 </DialogHeader>
-                <DialogFooter>
-                    <Button disabled={isLoading} onClick={onSubscribe}>
-                        Upgrade
-                        <Zap className="w-4 h-4 ml-2 fill-white" />
-                    </Button>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

@@ -20,11 +20,14 @@ import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn } from "@/lib/utils";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const MAX_FILE_SIZE = 100_000_000;
 
 
 const ConvertPage = () => {
+  const proModal = useProModal();
+
   const [cloneChoice, setCloneChoice] = useState<string>("");
   const [cloneNames, setCloneNames] = useState<string[]>([]);
 
@@ -42,6 +45,7 @@ const ConvertPage = () => {
     getClones();
   }, []);
 
+  const [fileKey, setFileKey] = useState(Date.now()); // For resetting file input
   const [fileUploaded, setFileUploaded] = useState(false);
   const [needsSep, setNeedsSep] = useState(true);
 
@@ -70,36 +74,30 @@ const ConvertPage = () => {
     setSuccess(false);
     setConversionId("");
     setResults(null);
+    setFileKey(Date.now());
   }
 
   const onSubmit = async () => {
-    try {
-      reset();
+      reset(); 
+      setConverting(true);
       
       if (!fileUploaded) return;
         
-      setConverting(true);
-      const convertResponse = await axios.post("/api/convert", { cloneName: cloneChoice, needsSep });
-
-      if (convertResponse.status === 200) {
-        setConversionId(convertResponse.data.conversionId);
-      } else {
-        console.log("Error in submitting job to Runpod");
-        setError("Internal job submission failed.");
-        setConverting(false);
-        onFail();
-      }
-    } catch (error: any) {
-      if (error?.response?.status === 403) {
-          // proModal.onOpen();
-      } else {
-          console.log("[SUBMIT ERROR]", error);
-          toast.error("Something went wrong.");
-      }
-      setFinished(true); setSuccess(false);
-    } finally {
-      setFileUploaded(false);
-    }
+      await axios.post("/api/convert", { cloneName: cloneChoice, needsSep })
+        .then((response) => setConversionId(response.data.conversionId))
+        .catch((error) => {
+          console.log("Error in submitting job");
+          if (error?.response?.status === 403) {
+              proModal.onOpen();
+          } else {
+              toast.error("Something went wrong.");
+              setError("Internal job submission failed.");
+          }
+        })
+        .finally(() => {
+          setFileUploaded(false);
+          setConverting(false);
+        });
   }
 
   const [results, setResults] = useState(null);
@@ -132,6 +130,7 @@ const ConvertPage = () => {
                 uploadEndpoint="/api/convert/upload" 
                 onUpload={() => setFileUploaded(true)} 
                 isConvertUpload={true}
+                key={fileKey}
               />
 
               <div className="mt-4 font-bold text-2xl">Voice Clone</div>
@@ -165,7 +164,7 @@ const ConvertPage = () => {
               </div>
 
               <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
-                cloneChoice === "" || !fileUploaded ? "" : "hover:scale-105")}
+                cloneChoice === "" || !fileUploaded ? "" : "hover:scale-105 transition")}
               >
                 <Button
                   type="submit"
@@ -197,7 +196,7 @@ const ConvertPage = () => {
                   } /> : ""}
               </div>
               <div>
-                {!isConverting && !isFinished ?<Empty label="Nothing to see here :)" /> : ""}
+                {!isConverting && !isFinished ? <Empty label="Nothing to see here :)" /> : ""}
               </div>
               <div className="mt-4">
                 {(isConverting || isFinished) && error === "" && conversionId !== "" ?

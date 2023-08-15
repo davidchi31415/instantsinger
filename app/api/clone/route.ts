@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { checkFileExists, getUploadURL } from "@/lib/gcloud";
 import { _submitCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
+import { getCredits, updateCredits } from "@/lib/credits";
 
 
 export async function POST(
@@ -12,7 +13,7 @@ export async function POST(
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { cloneName } = body;
+        const { cloneName, cloneId } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -21,26 +22,20 @@ export async function POST(
         // TO-DO: Properly check cloneName is valid
         if (!cloneName) return new NextResponse("Clone name required", { status: 400 });
         
-        // // Check API Limits
-        // const freeTrial = await checkAPILimit();
-        // const isPro = await checkSubscription();
+        // Check API Limits
+        const { cloneCredits } = await getCredits();
 
-        // if (!freeTrial && !isPro) {
-        //     return new NextResponse("Free trial has expired", { status: 403 });
-        // }
-
-        // if (!isPro) {
-        //     await increaseAPILimit();
-        // }
+        if (cloneCredits <= 0) {
+            return new NextResponse("Not enough credits", { status: 403 });
+        } 
 
         // TO-DO: Make sure that there isn't already a job active
         // TO-DO: Check that file size is not too much
         // TO-DO: Check that each file is an audio file and can run
 
-        const currentCloneJob = await prismadb.cloneJob.findFirst({
+        const currentCloneJob = await prismadb.cloneJob.findUnique({
             where: {
-                userId,
-                status: "NOT_SUBMITTED"
+                id: cloneId
             }
         });
         if (!currentCloneJob) return new NextResponse("Clone job not found", { status: 400 });
@@ -60,7 +55,7 @@ export async function POST(
             }
         }
         if (missingFiles.length) {
-            return new NextResponse(JSON.stringify({ missingFiles }), { status: 403 })
+            return new NextResponse(JSON.stringify({ missingFiles }), { status: 402 })
         }
 
         // Create RunPod job and store it
@@ -77,7 +72,8 @@ export async function POST(
                 data: { runpodJobId, status, name: cloneName }
             });
 
-            // TODO - Charge the customer
+            // Charge the customer
+            await updateCredits({ userId, cloneDelta: -1 });
 
             return new NextResponse(
                 JSON.stringify({ jobId: runpodJobId, status }),

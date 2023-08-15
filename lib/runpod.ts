@@ -398,3 +398,14 @@ export const getCurrentClones = async ({ userId }) => {
 
     return cloneJobsData;
 }
+
+export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
+    const unsubmittedCloneJob = await prismadb.cloneJob.findFirst({
+        where: {
+            userId,
+            status: "NOT_SUBMITTED"
+        }
+    });
+
+    return unsubmittedCloneJob;
+}

@@ -1,8 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import { increaseAPILimit, checkAPILimit } from "@/lib/api-limit";
-import { checkSubscription } from "@/lib/subscription";
 import { getUploadURL } from "@/lib/gcloud";
 import prismadb from "@/lib/prismadb";
 

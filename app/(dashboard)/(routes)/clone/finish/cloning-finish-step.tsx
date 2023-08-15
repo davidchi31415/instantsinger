@@ -2,7 +2,7 @@
 
 import { FileUploader } from "@/components/file-uploader";
 import { Heading } from "@/components/heading";
-import { MicIcon } from "lucide-react";
+import { CheckIcon, MicIcon } from "lucide-react";
 import { pianoSteps } from "../constants";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -11,20 +11,37 @@ import { Input } from "@/components/ui/input";
 import { AlertCard } from "@/components/alert-card";
 import { Congrats } from "@/components/congrats";
 import { toast } from "react-hot-toast";
+import { useProModal } from "@/hooks/use-pro-modal";
+import { Badge } from "@/components/ui/badge";
+import { IconContext } from "react-icons";
+import { PiCoinVerticalFill } from "react-icons/pi";
 
 interface CloningFinishStepProps {
-    usedNames: string[]
+    usedNames: string[];
+    jobId: string;
+    previouslyUploadedFiles?: any[];
 }
 
-const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
+const CloningFinishStep = ({ usedNames, jobId, previouslyUploadedFiles }: CloningFinishStepProps) => {
+    const proModal = useProModal();
+
     const [loading, setLoading] = useState(false);
     const [cloneName, setCloneName] = useState<string>("");
     const [nameError, setNameError] = useState<string>("");
+    const [uploadedFiles, setUploadedFiles] = useState(previouslyUploadedFiles ? previouslyUploadedFiles : []);
     const [missingFiles, setMissingFiles] = useState<number[]>([]);
     const [submitted, setSubmitted] = useState(false);
 
     const nameAlreadyUsed = usedNames?.length &&
         usedNames.some((name: string) => cloneName === name);
+
+
+    const [isMounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!isMounted) return null;
 
     const onSubmit = async () => {
         try {
@@ -34,20 +51,22 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                 return;
             }
             setNameError("");
-            const response = await axios.post("/api/clone", { cloneName });
-            
-            if (response.status === 200) {
-                setSubmitted(true);
-            } else {
-                if (response.status === 403) {
-                    console.log("Missing files:", response.data.missingFiles);
-                    setMissingFiles(response.data.missingFiles);
-                    toast("Missing files");
-                } else {
-                    console.log("Error:", response);
-                    toast("Something went wrong");
-                }
-            }
+
+            await axios.post("/api/clone", { cloneName, cloneId: jobId })
+                .then(() => setSubmitted(true))
+                .catch((error) => {
+                    if (error?.response?.status === 402) {
+                        console.log("Missing files:", error.response?.data.missingFiles);
+                        setMissingFiles(error.response?.data.missingFiles);
+                        toast("Missing files");
+                    } else if(error?.response?.status === 403) {
+                        console.log("Need more credits");
+                        proModal.onOpen();
+                    } else {
+                        console.log("Error:", error.response);
+                        toast("Something went wrong");
+                    }
+                });
         } catch (err) {
             console.log("Submission Error");
             toast("Something went wrong");
@@ -55,6 +74,13 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
             setLoading(false);
         }
     }
+    
+    const onUpload = (key) => {
+        if (uploadedFiles.some(e => e === key)) return;
+        setUploadedFiles(e => [...e, key]);
+    }
+
+    console.log(uploadedFiles);
 
     return (
         <div>
@@ -70,13 +96,31 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                 :
                 <>
                     <div className="p-4 lg:px-8">
-                        <div className="text-xl font-bold">Step 1: Speaking Part 1</div>
+                        <div className="text-xl font-bold flex justify-between">
+                            Step 1: Speaking Part 1
+                            {uploadedFiles.some(fileName => fileName === "1") ?
+                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                </Badge> : ""}
+                        </div>
                         <div className="mb-4 text-sm text-muted-foreground">The whole essay in one audio file.</div>
-                        <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={1} />
+                        <FileUploader uploadEndpoint="/api/clone/upload"
+                            apiParams={{ cloneId: jobId, stepNumber: 1 }}
+                            onUpload={() => onUpload("1")}
+                        />
 
-                        <div className="mt-8 text-xl font-bold">Step 2: Speaking Part 2</div>
+                        <div className="mt-8 text-xl font-bold flex justify-between">
+                            Step 2: Speaking Part 2
+                            {uploadedFiles.some(fileName => fileName === "2") ?
+                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                </Badge> : ""}
+                        </div>
                         <div className="mb-4 text-sm text-muted-foreground">The whole list of sentences in one audio file.</div>
-                        <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={2} />
+                        <FileUploader uploadEndpoint="/api/clone/upload"
+                            apiParams={{ cloneId: jobId, stepNumber: 2 }}
+                            onUpload={() => onUpload("2")}
+                        />
 
                         <div className="mt-8 text-xl font-bold">Step 3: Pitches</div>
                         <div className="mb-4 text-sm text-muted-foreground">
@@ -84,24 +128,50 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                         </div>
                         {pianoSteps.map((step, index) => {
                             return (
-                                <div className="mb-8">
-                                    <div>{index+1}. Going {step.up ? "Up" : "Down"},{" "}
+                                <div className="mb-8" key={`3.${index+1}`}>
+                                    <div className="mb-4 flex justify-between items-center">
+                                        <div>{index+1}. Going {step.up ? "Up" : "Down"},{" "}
                                         {step.up ? `${step.low} -> ${step.high}`
-                                        : `${step.high} -> ${step.low}`} {step.optional ? <b>(OPTIONAL)</b> : ""}
+                                        : `${step.high} -> ${step.low}`} {step.optional ? <b>(OPTIONAL)</b> : ""}</div>
+                                        <div>{uploadedFiles.some(fileName => fileName === `3.${index+1}`) ?
+                                        <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                            <div className="text-lg">Uploaded</div> <CheckIcon />
+                                        </Badge> : ""}</div>
                                     </div>
-                                    <FileUploader uploadEndpoint="/api/clone/upload" stepNumber={`3.${index+1}`} />
+                                    <FileUploader uploadEndpoint="/api/clone/upload" 
+                                        apiParams={{ cloneId: jobId, stepNumber: `3.${index+1}` }}
+                                        onUpload={() => onUpload(`3.${index+1}`)}
+                                    />
                                 </div>
                             );
                         })}
 
                         <div className="mt-8 mb-4 text-xl font-bold">Step 4: Singing</div>
                         <div className="mb-8">
-                            <div>1. Song 1</div>
-                            <FileUploader uploadEndpoint="/api/clone/upload" stepNumber="4.1" />
+                            <div className="mb-4 flex justify-between items-center">
+                                <div>1. Song 1</div>
+                                <div>{uploadedFiles.some(fileName => fileName === "4.1") ?
+                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                </Badge> : ""}</div>
+                            </div>
+                            <FileUploader uploadEndpoint="/api/clone/upload" 
+                                apiParams={{ cloneId: jobId, stepNumber: 4.1 }}
+                                onUpload={() => onUpload("4.1")}
+                            />
                         </div>
                         <div className="mb-8">
-                            <div>2. Song 2</div>
-                            <FileUploader uploadEndpoint="/api/clone/upload" stepNumber="4.2" />
+                            <div className="mb-4 flex justify-between items-center">
+                                <div>2. Song 2</div>
+                                <div>{uploadedFiles.some(fileName => fileName === "4.2") ?
+                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                </Badge> : ""}</div>
+                            </div>
+                            <FileUploader uploadEndpoint="/api/clone/upload" 
+                                apiParams={{ cloneId: jobId, stepNumber: 4.2 }}
+                                onUpload={() => onUpload("4.2")}
+                            />
                         </div>
                         
                         <div className="flex flex-col items-center gap-2">
@@ -127,13 +197,25 @@ const CloningFinishStep = ({ usedNames }: CloningFinishStepProps) => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center items-center pt-8 pb-16">
-                        <Button size="lg" className="text-xl"
+                    <div className="w-fit h-fit mx-auto flex justify-center items-center mt-8 mb-16 shadow-xl
+                        hover:scale-105 transition"
+                    >
+                        <Button size="lg" className="text-xl rounded-r-none border-2 border-black"
                             disabled={loading}
                             onClick={onSubmit}
                         >
                             Clone My Voice
                         </Button>
+                        <span className="px-2 py-[0.45rem] rounded-r-md text-black flex items-center bg-primary/20
+                            border-2 border-black border-l-none font-bold
+                        ">
+                            1
+                            <IconContext.Provider
+                            value={{ size: "25px", color: "#E1B530" }}
+                        >
+                            <PiCoinVerticalFill />
+                            </IconContext.Provider>
+                        </span>
                     </div>
                 </>
             }

@@ -10,10 +10,10 @@ import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 
 interface ConvertCreditCounterProps {
-    convertCreditCount: number;
+    convertCredits: number;
 }
 
-export const ConvertCreditCounter = ({ convertCreditCount=0 }: ConvertCreditCounterProps) => {
+export const ConvertCreditCounter = ({ convertCredits=0 }: ConvertCreditCounterProps) => {
     const proModal = useProModal();
     const [isMounted, setMounted] = useState(false);
     useEffect(() => {
@@ -23,22 +23,24 @@ export const ConvertCreditCounter = ({ convertCreditCount=0 }: ConvertCreditCoun
     if (!isMounted) return null;
 
     return (
-        <div className="flex items-center">
+        <div className="w-full">
             <Card className="bg-white/10 border-0">
                 <CardContent className="px-4 py-2 rounded-md bg-primary border-2 border-black 
-                    shadow-xl hover:scale-105 cursor-pointer"
+                    shadow-xl hover:scale-105 transition cursor-pointer"
+                    onClick={() => proModal.onOpen() }
                 >   
-                    <div className="text-center text-md text-white flex gap-1 items-center">
-                        <p>
-                            <span className="p-2 py-1 mx-1 bg-[#f3f3f3] text-black rounded-md">
-                                {convertCreditCount}
-                            </span> Convert
-                        </p>
-                        <IconContext.Provider
-                            value={{ size: "25px", color: "#E1B530" }}
-                        >
-                                <PiCoinVerticalFill />
-                        </IconContext.Provider>
+                    <div className="text-center text-lg text-white flex gap-2 items-center">
+                        <div className="p-2 py-1 mx-1 bg-[#f3f3f3] text-black rounded-md">
+                            {convertCredits}
+                        </div> 
+                        <div className="flex items-center gap-1">
+                            Convert
+                            <IconContext.Provider
+                                value={{ size: "25px", color: "#E1B530" }}
+                            >
+                                    <PiCoinVerticalFill />
+                            </IconContext.Provider>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

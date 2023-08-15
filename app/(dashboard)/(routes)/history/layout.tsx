@@ -1,9 +1,5 @@
 import { Heading } from "@/components/heading";
-import { getAPILimitCount } from "@/lib/api-limit";
-import { getMostRecentCloneJob } from "@/lib/runpod";
-import { checkSubscription } from "@/lib/subscription";
-import { auth } from "@clerk/nextjs";
-import { ArrowRightLeftIcon, HistoryIcon } from "lucide-react";
+import { HistoryIcon } from "lucide-react";
 
 const HistoryLayout = async ({children}: {children: React.ReactNode}) => {
     return (

@@ -1,6 +1,5 @@
 import { HistoryTable } from "@/components/history-table";
-import { getCompletedConversions, getConversions, getCurrentConversions, getMostRecentConvertJob, getSubmittedConversions } from "@/lib/runpod";
-import { isJobDone } from "@/lib/utils";
+import { getCompletedConversions, getCurrentConversions } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 
 interface HistoryData {

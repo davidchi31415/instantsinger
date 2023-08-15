@@ -32,11 +32,11 @@ const MAX_FILE_SIZE = 100_000_000;
 interface CloningFileUploaderProps {
   uploadEndpoint: string;
   onUpload?: Function;
-  stepNumber?: string | number;
+  apiParams?: any;
   isConvertUpload?: boolean;
 }
 
-export const FileUploader = ({ uploadEndpoint, onUpload, stepNumber, isConvertUpload }: CloningFileUploaderProps) => {
+export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpload }: CloningFileUploaderProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setLoading] = useState(false);
 
@@ -102,8 +102,8 @@ export const FileUploader = ({ uploadEndpoint, onUpload, stepNumber, isConvertUp
       if (fileError !== "" || file === null) return;
       
       let response 
-      if (stepNumber) {
-        response = await axios.post(uploadEndpoint, { stepNumber });
+      if (apiParams) {
+        response = await axios.post(uploadEndpoint, apiParams);
       } else if (isConvertUpload) {
         response = await axios.post(uploadEndpoint, { songName: audioTitle });
       } else {

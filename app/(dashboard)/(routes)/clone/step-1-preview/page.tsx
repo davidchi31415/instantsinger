@@ -48,7 +48,8 @@ const CloningStepPreview = () => {
                 >
                     <MoveLeftIcon />Intro
                 </Button>
-            </Link><Link href="/clone/step-1">
+            </Link>
+            <Link href="/clone/step-1">
                 <Button className="text-md gap-2">
                     Begin Step 1<MoveRightIcon />
                 </Button>

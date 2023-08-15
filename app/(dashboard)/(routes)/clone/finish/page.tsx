@@ -1,10 +1,10 @@
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
-import { getAPILimitCount } from "@/lib/api-limit";
-import { checkSubscription } from "@/lib/subscription";
 import CloningFinishStep from "./cloning-finish-step";
 import { auth } from "@clerk/nextjs";
-import { getClones, getMostRecentCloneJob } from "@/lib/runpod";
+import { getClones, getCurrentUnsubmittedCloneJob, getMostRecentCloneJob } from "@/lib/runpod";
+import prismadb from "@/lib/prismadb";
+import { getFileList } from "@/lib/gcloud";
 
 interface CloneData {
     clones: any[];
@@ -24,10 +24,24 @@ const getCloneNames = async () => {
 const CloningFinishPage = async () => {
     // const apiLimitCount = await getAPILimitCount();
     // const isPro = await checkSubscription();
+    const { userId } = auth();
+
+    if (!userId) return null;
+
+    let unsubmittedCloneJob = await getCurrentUnsubmittedCloneJob({ userId });
+    if (!unsubmittedCloneJob) {
+        unsubmittedCloneJob = await prismadb.cloneJob.create({
+            data: { userId }
+        });
+    }
+
     const cloneNames = await getCloneNames();
+    const uploadedFiles = await getFileList({ directory: `training_data/${unsubmittedCloneJob.id}` });
 
     return (
-        <CloningFinishStep usedNames={cloneNames} />
+        <CloningFinishStep usedNames={cloneNames} jobId={unsubmittedCloneJob.id} 
+            previouslyUploadedFiles={uploadedFiles} 
+        />
     )
 }
 
