@@ -2,7 +2,6 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 import { updateCredits } from "@/lib/credits";
 
@@ -24,7 +23,7 @@ export async function POST(req: Request) {
 
     const session = event.data.object as Stripe.Checkout.Session;
 
-    if (event.type === "invoice.payment_succeeded") {
+    if (event.type === "checkout.session.completed") {
         if (!session?.metadata?.userId) {
             return new NextResponse("URGENT ERROR: payment successful but processing not - no userId provided", { status: 403});
         }
