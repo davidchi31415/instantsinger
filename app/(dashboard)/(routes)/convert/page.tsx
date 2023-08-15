@@ -21,7 +21,7 @@ import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn } from "@/lib/utils";
 import { useProModal } from "@/hooks/use-pro-modal";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 const ConvertPage = () => {
