@@ -67,5 +67,17 @@ export const getFileList = async ({ directory }) => {
                     .filter(blob => blob && blob !== null)
                     .map(file => file.name.split("/").at(-1));
 
-    return fileNames;
+    return { fileNames };
+}
+
+export const deleteFile = async ({ directory, fileName }) => {
+    const file = bucket.file(`${directory}/${fileName}`);
+
+    try {
+        await file.delete();
+        return true;
+    } catch (error) {
+        console.log(`Tried to delete file ${directory}/${fileName} but failed`, error);
+        return false;
+    }
 }

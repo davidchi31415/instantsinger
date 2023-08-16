@@ -34,7 +34,7 @@ export const LandingNavbar = () => {
                 <span className="text-primary">insant</span>singer
                 </h1>
             </Link>
-            <div className="flex items-center gap-x-8 text-lg">
+            {/* <div className="flex items-center gap-x-8 text-lg">
                 <Link href="/">
                     Features
                 </Link>
@@ -44,7 +44,7 @@ export const LandingNavbar = () => {
                 <Link href="/">
                     Discord
                 </Link>
-            </div>
+            </div> */}
             <div className="flex items-center gap-x-2">
                 <Link href={isSignedIn ? "/dashboard" : "/register"}>
                     <Button variant="default" className="rounded-lg">

@@ -21,9 +21,11 @@ const getCloneNames = async () => {
     return cloneNames;
 }
 
-const CloningFinishPage = async () => {
-    // const apiLimitCount = await getAPILimitCount();
-    // const isPro = await checkSubscription();
+interface CloningFinishPageProps {
+    searchParams?: { [key: string]: string | undefined }
+}
+
+const CloningFinishPage = async ({ searchParams }: CloningFinishPageProps) => {
     const { userId } = auth();
 
     if (!userId) return null;
@@ -38,9 +40,12 @@ const CloningFinishPage = async () => {
     const cloneNames = await getCloneNames();
     const uploadedFiles = await getFileList({ directory: `training_data/${unsubmittedCloneJob.id}` });
 
+    const isManual = searchParams?.manual ? true : false;
+
     return (
         <CloningFinishStep usedNames={cloneNames} jobId={unsubmittedCloneJob.id} 
-            previouslyUploadedFiles={uploadedFiles} 
+            uploadedFilenames={uploadedFiles.fileNames}
+            isManual={isManual}
         />
     )
 }

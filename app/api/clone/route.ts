@@ -29,10 +29,6 @@ export async function POST(
             return new NextResponse("Not enough credits", { status: 403 });
         } 
 
-        // TO-DO: Make sure that there isn't already a job active
-        // TO-DO: Check that file size is not too much
-        // TO-DO: Check that each file is an audio file and can run
-
         const currentCloneJob = await prismadb.cloneJob.findUnique({
             where: {
                 id: cloneId
@@ -48,7 +44,7 @@ export async function POST(
         // Make sure necessary files are present
         const missingFiles: string[] = [];
         for (let i = 0; i < requiredFiles.length; i++) {
-            const fileExists = uploadedFiles.some((fileName) => fileName === requiredFiles[i]);
+            const fileExists = uploadedFiles.fileNames.some((fileName) => fileName === requiredFiles[i]);
 
             if (!fileExists) {
                 missingFiles.push(requiredFiles[i]);

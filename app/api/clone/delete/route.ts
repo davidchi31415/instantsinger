@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import { getUploadURL } from "@/lib/gcloud";
+import { deleteFile, getUploadURL } from "@/lib/gcloud";
 import prismadb from "@/lib/prismadb";
 
 
@@ -18,10 +18,10 @@ export async function POST(
         }
 
         if (!cloneId) {
-            return new NextResponse("Clone Job required", { status: 400 });
+            return new NextResponse("Clone Job Id required", { status: 400 });
         }
         if (!fileName) {
-            return new NextResponse("Step number required", { status: 400 });
+            return new NextResponse("File name required", { status: 400 });
         }
 
         let currentJob = await prismadb.cloneJob.findUnique({ 
@@ -31,12 +31,11 @@ export async function POST(
             return new NextResponse("No job found with given id", { status: 400 });
         }
         
-        const url = await getUploadURL({
-            directory: `training_data/${currentJob.id}`,
-            fileName
-        });
+        const deletionSuccess = await deleteFile({ directory: `training_data/${currentJob.id}`, fileName });
 
-        return new NextResponse(JSON.stringify({ url: url }));
+        if (!deletionSuccess) return new NextResponse("File couldn't be deleted", { status: 400 });
+
+        return new NextResponse("File deleted", { status: 200 });
     } catch (error) {
         console.log("[CONVERT UPLOAD ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
