@@ -18,20 +18,20 @@ export const LandingNavbar = () => {
     const { isSignedIn } = useAuth(); // useAuth for client-side
 
     return (
-        <nav className="p-4 mx-[-50vw] px-[50vw] bg-primary/25 flex items-center justify-between">
+        <nav className="p-4 px-8 w-full flex items-center justify-between sticky">
             <Link
                 href="/"
                 className="flex items-center"
             >
-                <div className="relative h-8 w-8 mr-4">
+                {/* <div className="relative h-8 w-8 mr-4">
                     <Image 
                         fill
                         alt="logo"
                         src="/logo.png"
                     />
-                </div>
+                </div> */}
                 <h1 className={cn("text-2xl font-bold", font.className)}>
-                <span className="text-primary">insant</span>singer
+                    <span className="text-primary">insant</span>singer
                 </h1>
             </Link>
             {/* <div className="flex items-center gap-x-8 text-lg">

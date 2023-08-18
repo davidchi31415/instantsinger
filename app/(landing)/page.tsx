@@ -1,14 +1,16 @@
 import { LandingContent } from "@/components/landing-content";
+import { LandingFooter } from "@/components/landing-footer";
 import { LandingHero } from "@/components/landing-hero";
 import { LandingNavbar } from "@/components/landing-navbar";
 
 const LandingPage = () => {
   return (
-    <div className="h-full w-full">
+    <>
       <LandingNavbar />
       <LandingHero />
-      {/* <LandingContent /> */}
-    </div>
+      <LandingContent />
+      <LandingFooter />
+    </>
   )
 }
 

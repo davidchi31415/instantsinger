@@ -1,5 +1,7 @@
 "use client";
 
+import { AudioCard } from "./audio-card";
+import PricingTable from "./pricing-table";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 const testimonials = [
@@ -35,41 +37,25 @@ const testimonials = [
 
 export const LandingContent = () => {
     return (
-        <div className="px-10 pb-20">
-            <h2 
-                className="text-center text-4xl text-white
-                font-extrabold mb-10">
-                Testimonials
-            </h2>
-            <div 
-                className="grid grid-cols-1 sm:grid-cols-2 
-                md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {testimonials.map((item) => 
-                    <Card
-                        key={item.description} 
-                        className="bg-[#192339] border-none text-white"
-                    >
-                        <CardHeader>
-                            <CardTitle
-                                className="flex items-center
-                                gap-x-2"
-                            >
-                                <div>
-                                    <p className="text-lg">
-                                        {item.name}
-                                    </p>
-                                    <p className="text-zinc-400 text-sm">
-                                        {item.title}
-                                    </p>
-                                </div>
-                            </CardTitle>
-                            <CardContent className="pt-4 px-0">
-                                {item.description}
-                            </CardContent>
-                        </CardHeader>
-                    </Card>
-                )}
+        <div className="my-20">
+            <div className="mb-4 flex justify-center items-center">
+                <div className="grid md:grid-cols-2 gap-4">
+                    <div className="max-w-md">
+                        <p className="mb-2 font-bold text-3xl">Powerfully Accurate</p>
+                        <p>
+                            Ever wish you could hear how your favorite singer would sound, if they had your voice?{" "}
+                            Our AI technology captures the essence of your voice and swaps out any reference audio to match it.
+                        </p>
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1140119723724521564/step_4_song_1.wav" />
+                    </div>
+                </div>
             </div>
+            <PricingTable />
         </div>
     )
 }
