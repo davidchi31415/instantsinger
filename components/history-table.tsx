@@ -90,8 +90,8 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                                 <TableCell>{job.cloneName}</TableCell>
                                 <TableCell className="text-right">
                                     <ProgressCard 
-                                        process="Cloning" apiEndpoint="/api/clone/status"
-                                        initStatus={job.status}
+                                        process="Converting" apiEndpoint="/api/convert/status"
+                                        initStatus={job.status} apiId={job.id}
                                         badgeOnly={true}
                                     />
                                 </TableCell>   
