@@ -34,17 +34,6 @@ export const LandingNavbar = () => {
                     <span className="text-primary">instant</span>singer
                 </h1>
             </Link>
-            {/* <div className="flex items-center gap-x-8 text-lg">
-                <Link href="/">
-                    Features
-                </Link>
-                <Link href="/">
-                    Pricing
-                </Link>
-                <Link href="/">
-                    Discord
-                </Link>
-            </div> */}
             {isSignedIn ?
                 <div className="flex items-center gap-x-4">
                     <Link href="/dashboard">

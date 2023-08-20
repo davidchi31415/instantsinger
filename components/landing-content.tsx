@@ -88,6 +88,9 @@ export const LandingContent = () => {
             <div className="py-16"
                 id="pricing-table"
             >
+                <div className="text-center text-3xl mt-8 mb-16">
+                    <b>No subscriptions</b>! Pay as you go.
+                </div>
                 <PricingTable />
             </div>
             <div 
