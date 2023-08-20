@@ -21,10 +21,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <head>
-          <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-        </head>
-        <CrispProvider />
+        {/* <CrispProvider /> */}
         <body className={rubik.className}>
           <ModalProvider />
           <ToasterProvider />

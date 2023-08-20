@@ -3,7 +3,7 @@
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@clerk/nextjs";
+import { UserButton, useAuth } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
@@ -31,7 +31,7 @@ export const LandingNavbar = () => {
                     />
                 </div> */}
                 <h1 className={cn("text-2xl font-bold", font.className)}>
-                    <span className="text-primary">insant</span>singer
+                    <span className="text-primary">instant</span>singer
                 </h1>
             </Link>
             {/* <div className="flex items-center gap-x-8 text-lg">
@@ -45,18 +45,30 @@ export const LandingNavbar = () => {
                     Discord
                 </Link>
             </div> */}
-            <div className="flex items-center gap-x-2">
-                <Link href={isSignedIn ? "/dashboard" : "/register"}>
-                    <Button variant="default" className="rounded-lg">
-                        Sign Up
-                    </Button>
-                </Link>
-                <Link href={isSignedIn ? "/dashboard" : "/register"}>
-                    <Button variant="outline" className="rounded-lg border border-primary">
-                        Login
-                    </Button>
-                </Link>
-            </div>
+            {isSignedIn ?
+                <div className="flex items-center gap-x-4">
+                    <Link href="/dashboard">
+                        <Button variant="default" 
+                            className="rounded-lg text-lg py-6"
+                        >
+                            Dashboard
+                        </Button>
+                    </Link>
+                </div>
+                :
+                <div className="flex items-center gap-x-2">
+                    <Link href="/register">
+                        <Button variant="default" className="rounded-lg">
+                            Sign Up
+                        </Button>
+                    </Link>
+                    <Link href="/login">
+                        <Button variant="outline" className="rounded-lg border border-primary">
+                            Login
+                        </Button>
+                    </Link>
+                </div>
+            }
         </nav>
     )
 }

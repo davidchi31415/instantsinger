@@ -9,5 +9,6 @@ export const AudioCard = ({ url }: AudioCardProps) => (
   <AudioPlayer
     src={url}
     autoPlay={false}
+    style={{ border: "solid 1px black", borderRadius: "0.5rem" }}
   />
 );

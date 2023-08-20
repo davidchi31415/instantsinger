@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Montserrat } from "next/font/google";
 import Image from "next/image"
 import Link from "next/link";
+import { Badge } from "./ui/badge";
 
 const font = Montserrat({
     weight: "600",
@@ -10,11 +11,15 @@ const font = Montserrat({
 
 export const LandingFooter = () => {
     return (
-        <div className="px-4 lg:px-8 py-8">
+        <div className="px-4 lg:px-8 py-8 bg-primary text-white font-bold grid lg:grid-cols-2 gap-8">
+            <div className="flex justify-center">
+                <div className="bg-white text-primary text-lg p-4 rounded-full w-fit flex">
+                    www.InstantSinger.com
+                </div>
+            </div>
             <div className="flex items-center justify-center gap-16">
-                <div>2023 Instant Singer</div>
-                <Link href="https://google.com">Privacy Policy</Link>
-                <Link href="https://google.com">Terms of Service</Link>
+                <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/tos">Terms of Service</Link>
             </div>
         </div>
     )

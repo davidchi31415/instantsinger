@@ -48,15 +48,13 @@ export const ProModal = () => {
                         className="flex justify-center items-center
                         flex-col gap-y-4 pb-2"
                     >
-                        <div className="text-2xl flex items-center gap-x-2
-                            p-2 rounded-lg bg-primary/10
-                        ">
+                        <div className="text-2xl flex items-center gap-x-2 p-2">
+                            Need more 
                             <IconContext.Provider
                                 value={{ size: "25px", color: "#E1B530" }}
                             >
                                     <PiCoinVerticalFill />
-                            </IconContext.Provider>
-                            Need more credits?
+                            </IconContext.Provider>?
                         </div>
                     </DialogTitle>
                     <DialogDescription
