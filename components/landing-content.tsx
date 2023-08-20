@@ -41,20 +41,23 @@ const testimonials = [
 export const LandingContent = () => {
     return (
         <div className="py-20 bg-gradient-to-r from-[#e0e0e0] to-primary/50" >
+            <div className="w-fit h-fit rounded-xl bg-[white] mx-auto">
+                    <div className="text-center text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
+                        Powerfully <b>accurate</b>, yet incredibly <b>easy</b>
+                    </div>
+                </div>
             <div className="mb-4 flex justify-center items-center">
                 <div className="p-8 rounded-xl bg-white shadow-xl">
                     <div className="lg:max-w-xl mb-8 mx-auto">
-                        <p className="mb-2 font-bold text-3xl">Powerfully accurate, incredibly easy</p>
                         <p className="mb-2 text-xl">
-                            Our AI technology captures the essence of your voice and converts any other voice to match it
-                            while keeping pitches and inflections intact.
+                            Our AI technology captures the essence of your voice and converts any other voice to match it,
+                            keeping pitches and inflections intact.
                         </p>
                         <p className="mb-2 text-xl">
-                            All it takes is a 15-minute <i>guided</i> cloning procedure. Afterwards, we will construct 
-                            a personalized AI just for you.
+                            All it takes is a <i>15-minute</i> guided cloning procedure for <i>you</i> to become an instant singer!
                         </p>
                         <p className="mb-8 text-center">
-                            P.S. I've put my own voice to the test. Give it a listen!
+                            P.S. I put my own voice to the test. Give it a listen!
                         </p>
                         <div className="max-w-md mx-auto">
                             <div className="text-lg mb-2">Sample of <b>My Voice</b> (more data needed for cloning)</div>
@@ -87,9 +90,11 @@ export const LandingContent = () => {
             </div>
             <div className="py-16"
                 id="pricing-table"
-            >
-                <div className="text-center text-3xl mt-8 mb-16">
-                    <b>No subscriptions</b>! Pay as you go.
+            >   
+                <div className="w-fit h-fit rounded-xl bg-[white] mx-auto">
+                    <div className="text-center text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
+                        <b>No subscriptions</b>! Pay as you go.
+                    </div>
                 </div>
                 <PricingTable />
             </div>

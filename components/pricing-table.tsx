@@ -34,8 +34,8 @@ const PricingTable = () => {
                         className={cn("w-[22rem] py-8 flex flex-col items-center justify-center \
                          gap-2 rounded-xl bg-white border-primary text-black shadow-2xl",
                         pack.packKey === "starter" ? 
-                        " border-2" 
-                        : " border-2")}
+                        "border-2" 
+                        : "border-0")}
                     >
                         <CardTitle 
                             className={cn("px-4 py-2 text-2xl rounded-lg border-2",

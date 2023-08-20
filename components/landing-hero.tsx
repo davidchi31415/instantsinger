@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs"
+import { SignUpButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link";
 import { Button } from "./ui/button";
 
@@ -24,26 +24,28 @@ export const LandingHero = () => {
                 regardless of your ability. Become the singer of your dreams, <b>today</b>.
             </div>
             <div className="flex items-center gap-2 w-full">
-                <Link href={isSignedIn ? "/dashboard" : "/register"} className="w-full" passHref={true}>
+            {isSignedIn ?
+                <Link href="/dashboard" className="w-full" passHref={true}>
                     <Button 
                         variant="default"
                         className="md:text-lg p-4 md:p-6 w-full
                         rounded-sm font-semibold border-2 border-black/100
-                        hover:scale-105 transition"
+                        hover:scale-105 transition shadow-xl"
                     >
                         Get Started
                     </Button>
                 </Link>
-                {/* <Link href={isSignedIn ? "/dashboard" : "/register"}>
+                :
+                <SignUpButton mode="modal">
                     <Button 
-                        variant="outline"
-                        className="md:text-lg p-4 md:p-6 
+                        variant="default"
+                        className="md:text-lg p-4 md:p-6 w-full
                         rounded-sm font-semibold border-2 border-black/100
-                        hover:scale-105 transition"
+                        hover:scale-105 transition shadow-xl"
                     >
-                        See Pricing
+                        Get Started
                     </Button>
-                </Link> */}
+                </SignUpButton>}
             </div>
         </div>
     )

@@ -19,7 +19,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={
+        {
+        layout: {
+          termsPageUrl: "https://instantsinger.com/tos",
+          
+        }
+      }}
+      localization={{ footerPageLink__terms: "By signing up you accept our terms and conditions" }}
+    >
       <html lang="en">
         {/* <CrispProvider /> */}
         <body className={rubik.className}>

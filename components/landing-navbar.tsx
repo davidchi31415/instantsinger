@@ -3,7 +3,7 @@
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { UserButton, useAuth } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
@@ -46,16 +46,16 @@ export const LandingNavbar = () => {
                 </div>
                 :
                 <div className="flex items-center gap-x-2">
-                    <Link href="/register">
+                    <SignUpButton mode="modal">
                         <Button variant="default" className="rounded-lg">
                             Sign Up
                         </Button>
-                    </Link>
-                    <Link href="/login">
+                    </SignUpButton>
+                    <SignInButton mode="modal">
                         <Button variant="outline" className="rounded-lg border border-primary">
                             Login
                         </Button>
-                    </Link>
+                    </SignInButton>
                 </div>
             }
         </nav>
