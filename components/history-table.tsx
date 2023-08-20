@@ -93,6 +93,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                                         process="Converting" apiEndpoint="/api/convert/status"
                                         initStatus={job.status} apiId={job.id}
                                         badgeOnly={true}
+                                        onFinish={() => router.refresh()}
                                     />
                                 </TableCell>   
                             </TableRow>
