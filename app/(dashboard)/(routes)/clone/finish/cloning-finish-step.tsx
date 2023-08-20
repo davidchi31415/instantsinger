@@ -37,9 +37,10 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
     const [missingFiles, setMissingFiles] = useState<number[]>([]);
     const [submitted, setSubmitted] = useState(false);
 
-    const nameAlreadyUsed = usedNames?.length &&
-        usedNames.some((name: string) => cloneName === name);
+    const nameAlreadyUsed = (usedNames?.length &&
+        usedNames.some((name: string) => cloneName === name)) ? true : false;
 
+    const nameTooLong = cloneName.length > 25 ? true : false;
 
     const [isMounted, setMounted] = useState(false);
     useEffect(() => {
@@ -50,11 +51,12 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
 
     const onSubmit = async () => {
         try {
-            setLoading(true);
-            if (cloneName === "") {
-                setNameError("Clone name required.")
+            if (cloneName === "" || cloneName.length > 25 || nameAlreadyUsed) {
                 return;
             }
+
+            setLoading(true);
+            setMissingFiles([]);
             setNameError("");
 
             await axios.post("/api/clone", { cloneName, cloneId: jobId })
@@ -325,12 +327,16 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                                     />
                                     {nameError !== "" ? <AlertCard variant="destructive" title="Error" message={nameError} />
                                         : (nameAlreadyUsed ? 
-                                            <AlertCard variant="destructive" title="Error" 
+                                            <AlertCard variant="destructive" title="Name Error" 
                                                 message="You've already used that name." />
+                                            : 
+                                            nameTooLong ? 
+                                            <AlertCard variant="destructive" title="Name Error" 
+                                                message="Name too long. Max Length: 25 characters" />
                                             : "")
                                     }
                                     {missingFiles?.length ? 
-                                        <AlertCard variant="destructive" title="Misising Files" 
+                                        <AlertCard variant="destructive" title="Missing Files" 
                                             message={`Missing Steps ${missingFiles.toString()}`}
                                         /> : ""
                                     }
@@ -341,7 +347,9 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                             hover:scale-105 transition"
                         >
                             <Button size="lg" className="text-xl rounded-r-none border-2 border-black"
-                                disabled={loading}
+                                disabled={
+                                    loading || nameTooLong || nameAlreadyUsed || cloneName === ""
+                                }
                                 onClick={onSubmit}
                             >
                                 Clone My Voice

@@ -1,7 +1,7 @@
 import { Heading } from "@/components/heading";
 import { ArrowRightLeftIcon } from "lucide-react";
 
-const CloneLayout = async ({children}: {children: React.ReactNode}) => {
+const ConvertLayout = async ({children}: {children: React.ReactNode}) => {
     return (
         <div>
             <Heading
@@ -16,4 +16,4 @@ const CloneLayout = async ({children}: {children: React.ReactNode}) => {
     )
 }
 
-export default CloneLayout;
+export default ConvertLayout;

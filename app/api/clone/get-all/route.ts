@@ -26,7 +26,6 @@ export async function GET(
         // }
         
         const clones = await getClones({ userId });
-        if (!clones.length) return new NextResponse("No clones found", { status: 400 });
 
         return new NextResponse(JSON.stringify({ clones }), { status: 200 });
     } catch (error) {

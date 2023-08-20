@@ -21,6 +21,7 @@ export async function POST(
 
         // TO-DO: Properly check cloneName is valid
         if (!cloneName) return new NextResponse("Clone name required", { status: 400 });
+        if (cloneName.length > 25) return new NextResponse("Clone name too long", { status: 400 });
         
         // Check API Limits
         const { cloneCredits } = await getCredits();
