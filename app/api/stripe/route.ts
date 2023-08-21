@@ -49,6 +49,7 @@ export async function GET(
                     quantity: 1
                 }
             ],
+            allow_promotion_codes: true,
             metadata: { // VERY IMPORTANT - need to store userId for purchase
                 userId,
                 purchasedClones: pack.contents.clones,
