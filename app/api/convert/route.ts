@@ -57,9 +57,9 @@ export async function POST(
                 data: { 
                     runpodJobId, 
                     status, 
-                    // hasInstrumentals,
-                    // hasBackingVocals,
-                    // convertBackingVocals, 
+                    hasInstrumentals,
+                    hasBackingVocals,
+                    convertBackingVocals, 
                     cloneName 
                 }
             });
