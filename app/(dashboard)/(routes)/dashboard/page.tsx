@@ -120,7 +120,7 @@ export default function DashboardPage() {
                   <ArrowRight className="w-5 h-5" />
                 </div>
                 <div className="px-2 my-4 text-muted-foreground">
-                  Purchase credits to convert more songs and/or clone more voices.
+                  Purchase credits to convert songs and clone your voice.
                 </div>
               </div>
             </Card>
