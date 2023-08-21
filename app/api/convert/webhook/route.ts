@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { status, output } = body;
+    const { status, output, error } = body;
     if (!status) {
         console.log("[CONVERT WEBHOOK ERROR]: No status found.");
         return new NextResponse("Need status parameter", { status: 400 });
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
             // TODO - REFUND the user
         }
-        await prismadb.convertJob.update({ where: { id: jobId },  data: { status } });
+        await prismadb.convertJob.update({ where: { id: jobId },  data: { status, message: error ? error : "" } });
     }
 
     // TO-DO - Delete input data / also configure Google Cloud to do this
