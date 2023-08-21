@@ -47,14 +47,14 @@ const PricingTable = () => {
                         </CardTitle>
                         <CardContent>
                             <div 
-                                className="text-7xl text-center mt-4 mb-8"
+                                className="text-5xl md:text-7xl text-center mt-4 mb-8"
                             >
                                 ${pack.contents.price}
                             </div>
-                            <div className="text-md text-center my-4">
+                            <div className="text-sm md:text-md text-center my-4">
                                 {pack.contents.description}
                             </div>
-                            <div className="text-lg mt-4 mb-8">
+                            <div className="text-md md:text-lg mt-4 mb-8">
                                 <div className="flex gap-2">
                                     <Check color="#0c0"/>
                                     <div>

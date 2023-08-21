@@ -8,7 +8,7 @@ export const LandingHero = () => {
     const { isSignedIn } = useAuth();
 
     return (
-        <div className="font-bold px-4 lg:px-8 py-20 space-y-5 w-fit md:w-[39rem] mx-auto">
+        <div className="font-bold px-4 lg:px-8 pt-48 pb-32 space-y-5 w-fit md:w-[39rem] mx-auto">
             <div 
                 className="text-5xl sm:text-6xl md:text-7xl
                 font-extra-bold"

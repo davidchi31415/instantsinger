@@ -40,23 +40,23 @@ const testimonials = [
 
 export const LandingContent = () => {
     return (
-        <div className="py-20 bg-gradient-to-r from-[#e0e0e0] to-primary/50" >
+        <div className="py-10 md:py-20 bg-gradient-to-r from-[#e0e0e0] to-primary/50" >
             <div className="w-fit h-fit rounded-xl bg-[white] mx-auto">
-                    <div className="text-center text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
+                    <div className="text-center text-xl md:text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
                         Powerfully <b>accurate</b>, yet incredibly <b>easy</b>
                     </div>
                 </div>
             <div className="mb-4 flex justify-center items-center">
                 <div className="p-8 rounded-xl bg-white shadow-xl">
                     <div className="lg:max-w-xl mb-8 mx-auto">
-                        <p className="mb-2 text-xl">
+                        <p className="mb-2 text-lg md:text-xl">
                             Our AI technology captures the essence of your voice and converts any other voice to match it,
                             keeping pitches and inflections intact.
                         </p>
-                        <p className="mb-2 text-xl">
+                        <p className="mb-2 text-lg md:text-xl">
                             All it takes is a <i>15-minute</i> guided cloning procedure for <i>you</i> to become an instant singer!
                         </p>
-                        <p className="mb-8 text-center">
+                        <p className="mb-8 text-center text-md md:text-lg">
                             P.S. I put my own voice to the test. Give it a listen!
                         </p>
                         <div className="max-w-md mx-auto">
@@ -88,26 +88,26 @@ export const LandingContent = () => {
                     </div>
                 </div>
             </div>
-            <div className="py-16"
+            <div className="pt-8 pb-12 md:py-16"
                 id="pricing-table"
             >   
                 <div className="w-fit h-fit rounded-xl bg-[white] mx-auto">
-                    <div className="text-center text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
+                    <div className="text-center text-xl md:text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
                         <b>No subscriptions</b>! Pay as you go.
                     </div>
                 </div>
                 <PricingTable />
             </div>
             <div 
-                className="w-fit py-32 md:px-16 lg:px-32 xl:px-64 rounded-xl mx-auto text-white 
+                className="w-fit py-16 md:py-32 md:px-16 lg:px-32 xl:px-64 rounded-xl mx-auto text-white 
                 border-4 border-primary bg-primary shadow-xl
-                flex flex-col items-center justify-center gap-16"
+                flex flex-col items-center justify-center gap-8 md:gap-16"
             >
-                <div className="text-3xl md:text-5xl text-center font-bold">
+                <div className="px-4 text-2xl md:text-3xl md:text-5xl text-center font-bold">
                     Questions? Concerns?
                 </div>
                 <Button 
-                    className="text-2xl py-8 px-4 text-primary gap-2" 
+                    className="text-xl md:text-2xl py-8 px-4 text-primary gap-2" 
                     variant="outline"
                     onClick={() => window.open("https://discord.com/invite/Z7RvN6JWky")}
                 >

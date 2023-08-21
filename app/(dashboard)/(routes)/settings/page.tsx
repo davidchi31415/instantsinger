@@ -1,8 +1,14 @@
-import { Heading } from "@/components/heading"
-import { SubscriptionButton } from "@/components/subscription-button";
-import { Settings } from "lucide-react"
+"use client";
 
-const SettingsPage = async () => {
+import { Heading } from "@/components/heading";
+import { UserProfile } from "@clerk/nextjs";
+import { Settings } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const SettingsPage = () => {
+    const [isMounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+    if (!isMounted) return null;
 
     return (
         <div>
@@ -14,9 +20,12 @@ const SettingsPage = async () => {
                 bgColor="bg-gray-700/10"
             />
             <div className="px-4 lg:px-8 space-y-4">
-                <div className="text-muted-foreground text-sm">
-                </div>
-                {/* <SubscriptionButton isPro={isPro} /> */}
+                <UserProfile appearance={{
+                    elements: {
+                        card: "shadow-none border-none",
+                        rootBox: "border-none"
+                    }
+                }} />
             </div>
         </div>
     )
