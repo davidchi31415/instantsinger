@@ -18,7 +18,7 @@ export const LandingFooter = () => {
                         www.InstantSinger.com
                     </div>
                 </div>
-                <div className="flex items-center justify-center gap-8">
+                <div className="flex items-center justify-center text-center gap-8">
                     <Link href="/privacy">Privacy Policy</Link>
                     <Link href="/refund">Refund Policy</Link>
                     <Link href="/tos">Terms of Service</Link>
