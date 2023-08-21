@@ -282,7 +282,7 @@ export const _submitCloneJob = async ({
                 "model_id": modelId,
                 "num_epoch": 75,
                 "save_every": 150,
-                "batch_size": 16,
+                "batch_size": 8,
                 "pitch_extraction_algorithm": "mangio-crepe",
                 "sample_rate": "40k",
                 "hop_len": 128
