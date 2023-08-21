@@ -41,8 +41,8 @@ const testimonials = [
 export const LandingContent = () => {
     return (
         <div className="py-10 md:py-20 bg-gradient-to-r from-[#e0e0e0] to-primary/50" >
-            <div className="w-fit h-fit rounded-xl bg-[white] mx-auto">
-                    <div className="text-center text-xl md:text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
+            <div className="w-fit h-fit my-8 rounded-xl bg-[white] mx-auto">
+                    <div className="text-center text-xl md:text-3xl p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
                         Powerfully <b>accurate</b>, yet incredibly <b>easy</b>
                     </div>
                 </div>
@@ -91,8 +91,8 @@ export const LandingContent = () => {
             <div className="pt-8 pb-12 md:py-16"
                 id="pricing-table"
             >   
-                <div className="w-fit h-fit rounded-xl bg-[white] mx-auto">
-                    <div className="text-center text-xl md:text-3xl my-8 p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
+                <div className="w-fit h-fit my-8 rounded-xl bg-[white] mx-auto">
+                    <div className="text-center text-xl md:text-3xl p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
                         <b>No subscriptions</b>! Pay as you go.
                     </div>
                 </div>
