@@ -65,7 +65,7 @@ export const _submitConvertJob = async ({
                 "input_id": jobId,
                 "output_id": jobId,
                 "model_id": modelId,
-                "has_instrumentals": hasInstrumentals,
+                "has_instruments": hasInstrumentals,
                 "has_backing_vocals": hasBackingVocals,
                 "convert_backing_vocals": convertBackingVocals,
                 "transpose": 0,
