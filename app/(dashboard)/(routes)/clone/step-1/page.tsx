@@ -19,7 +19,7 @@ const essay = [
     2) Speaking Part 2: Provide further speaking data by reading our list of random sentences.
     3) Pitch Matching: Show us your vocal range through simple pitch exercises.
     4) Singing: Sing along to 2 short, well-known songs, just do your best!`,
-    `Completing these 4 steps takes about 20 minutes in total, and you're already well on your way. Once you're done and your recordings are uploaded, we train our AI to match your voice. This might take a few hours, but sometimes even as little as 15 minutes, depending on how many other people are doing it.`,
+    `Completing these 4 steps should take less than 30 minutes in total, and you're already well on your way. Once you're done and your recordings are uploaded, we train our AI to match your voice. This might take a few hours, but sometimes even as little as 15 minutes, depending on how many other people are doing it.`,
     `Once your voice clone is ready, you can use your voice clone by using song conversion credits. We've given you 3 credits right away, just for cloning your voice. If you need more, we offer subscriptions and pay-as-you-go options. Each credit lasts forever and can be used for songs up to 10 minutes long.`,
     `When choosing songs to convert, remember that the audio quality and style matter. Simple vocal recordings work best. Behind the scenes, your AI clone works to transform voices into your own, but it can only work on voices. Thus, if there are instruments in the song, the vocals will need to be extracted. Don’t worry, we'll handle it for you. 
     If there's a chorus or background vocals, we will separate those too.`,

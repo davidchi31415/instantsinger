@@ -75,7 +75,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
             data => {
               duration = data.duration;
               if (durationLimit && duration > durationLimit * 60) {
-                setFileError(`Max duration is ${durationLimit}`)
+                setFileError(`Max duration is ${durationLimit} min`)
               } else {
                 setFileError("");
               }
