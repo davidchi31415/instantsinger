@@ -61,7 +61,7 @@ export const LandingContent = () => {
                         </p>
                         <div className="max-w-md mx-auto">
                             <div className="text-lg mb-2">Sample of <b>My Voice</b> (more data needed for cloning)</div>
-                            <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1142877490952540210/my_voice_sample.m4a" />
+                            <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1143004134824476792/my_voice_sample_hero.m4a" />
                         </div>
                     </div>
                     <div className="grid md:grid-cols-2 lg:w-[50rem] gap-4">
