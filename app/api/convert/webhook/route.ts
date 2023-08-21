@@ -25,7 +25,9 @@ export async function POST(req: NextRequest) {
     }
             
     if (output?.statusCode === 400) { // Failed from our error return
-        await prismadb.convertJob.update({ where: { id: jobId }, data: { status: "FAILED" } });
+        await prismadb.convertJob.update(
+            { where: { id: jobId }, data: { status: "FAILED", message: output?.body ? output.body : "" } }
+        );
 
         // TODO - REFUND the user
     } else {

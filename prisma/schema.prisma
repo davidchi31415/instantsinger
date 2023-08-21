@@ -34,6 +34,7 @@ model ConvertJob {
   needsSep Boolean? // MUST be filled in before submitting
   runpodJobId String? // MUST be filled in after job is submitted
   status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
+  message String? // Only if FAILED
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -44,6 +45,7 @@ model CloneJob {
   name String? // MUST BE filled in before submitting
   runpodJobId String? // MUST be filled in after job is created
   status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
+  message String? // Only if FAILED
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
