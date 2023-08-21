@@ -198,7 +198,7 @@ const ConvertDashboard = ({ userData }) => {
                 <Button
                   type="submit"
                   size="lg" className="text-xl rounded-r-none border-2 border-black border-r-none"
-                  disabled={cloneChoice === "" || !fileUploaded}
+                  disabled={cloneChoice === "" || !fileUploaded || isConverting}
                   onClick={onSubmit}
                 >
                 Convert
