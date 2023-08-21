@@ -48,7 +48,7 @@ export const LandingContent = () => {
                 </div>
             <div className="mb-4 flex justify-center items-center">
                 <div className="p-8 rounded-xl bg-white shadow-xl">
-                    <div className="lg:max-w-xl mb-8 mx-auto">
+                    <div className="md:max-w-xl lg:max-w-2xl xl:max-w-3xl mb-8 mx-auto">
                         <p className="mb-2 text-lg md:text-xl">
                             Our AI technology captures the essence of your voice and converts any other voice to match it,
                             keeping pitches and inflections intact.
