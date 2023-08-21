@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { status, output } = body;
+    const { status, output, error } = body;
 
     if (!status) {
         console.log("[CLONE WEBHOOK ERROR]: No status found.");
@@ -25,15 +25,18 @@ export async function POST(req: NextRequest) {
     }
             
     if (output?.statusCode === 400) { // Failed from our error return
-        await prismadb.cloneJob.update({ where: { id: jobId }, data: { status: "FAILED" } });
+        await prismadb.cloneJob.update(
+            { where: { id: jobId }, data: { status: "FAILED", message: output?.body ? output.body : "" } }
+        );
 
         // TODO - REFUND the user
     } else {
         if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
+
             // TODO - REFUND the user
         }
 
-        await prismadb.cloneJob.update({ where: { id: jobId },  data: { status } });
+        await prismadb.cloneJob.update({ where: { id: jobId },  data: { status, message: error ? error : "" } });
     }
     
     if (cloneJob.name) {
