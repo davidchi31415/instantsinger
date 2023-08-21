@@ -5,7 +5,9 @@ import { exclude, isJobDone } from "./utils";
 
 interface RunpodConvertProps {
     modelId: string;
-    needsSep: boolean;
+    hasInstrumentals: boolean;
+    hasBackingVocals: boolean;
+    convertBackingVocals: boolean;
     jobId: string;
 }
 
@@ -53,7 +55,9 @@ interface GetClonesProps {
 export const _submitConvertJob = async ({
     modelId,
     jobId,
-    needsSep,
+    hasInstrumentals,
+    hasBackingVocals,
+    convertBackingVocals
 }: RunpodConvertProps) => {
     const response = await axios.post("https://api.runpod.ai/v2/9afi4omg7sdwt6/run", {
         "input": {   
@@ -61,7 +65,9 @@ export const _submitConvertJob = async ({
                 "input_id": jobId,
                 "output_id": jobId,
                 "model_id": modelId,
-                "needs_sep": needsSep,
+                "has_instrumentals": hasInstrumentals,
+                "has_backing_vocals": hasBackingVocals,
+                "convert_backing_vocals": convertBackingVocals,
                 "transpose": 0,
                 "pitch_extraction_algorithm": "mangio-crepe",
                 "search_feature_ratio": 0.66,

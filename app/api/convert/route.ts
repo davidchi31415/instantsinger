@@ -11,7 +11,12 @@ export async function POST(
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { cloneName, needsSep } = body;
+        const { 
+            cloneName, 
+            hasInstrumentals,
+            hasBackingVocals,
+            convertBackingVocals 
+        } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -38,7 +43,9 @@ export async function POST(
 
         const runpodResponse = await _submitConvertJob({
             modelId: clone.id,
-            needsSep,
+            hasInstrumentals,
+            hasBackingVocals,
+            convertBackingVocals,
             jobId: currentJob.id
         });
         const runpodJobId = runpodResponse.data.id;
@@ -47,7 +54,14 @@ export async function POST(
         if (runpodResponse.status == 200) {
             await prismadb.convertJob.update({
                 where: { id: currentJob.id },
-                data: { runpodJobId, status, needsSep, cloneName }
+                data: { 
+                    runpodJobId, 
+                    status, 
+                    // hasInstrumentals,
+                    // hasBackingVocals,
+                    // convertBackingVocals, 
+                    cloneName 
+                }
             });
 
             // Charge the customer
@@ -58,7 +72,7 @@ export async function POST(
                 { status: 200 }
             );
         } else {
-            return new NextResponse("Error communicating with Runpod for converting", { status: 500});
+            return new NextResponse("Error communicating with GPU for converting", { status: 500});
         }
     } catch (error) {
         console.log("[CONVERT SUBMIT ERROR]", error);

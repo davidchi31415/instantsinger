@@ -32,7 +32,9 @@ const ConvertDashboard = ({ userData }) => {
 
   const [fileKey, setFileKey] = useState(Date.now()); // For resetting file input
   const [fileUploaded, setFileUploaded] = useState(false);
-  const [needsSep, setNeedsSep] = useState(true);
+  const [hasInstrumentals, setHasInstrumentals] = useState(true);
+  const [hasBackingVocals, setHasBackingVocals] = useState(false);
+  const [convertBackingVocals, setConvertBackingVocals] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -68,7 +70,12 @@ const ConvertDashboard = ({ userData }) => {
       
       if (!fileUploaded) return;
         
-      await axios.post("/api/convert", { cloneName: cloneChoice, needsSep })
+      await axios.post("/api/convert", { 
+        cloneName: cloneChoice,
+        hasInstrumentals,
+        hasBackingVocals,
+        convertBackingVocals 
+      })
         .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })
         .catch((error) => {
           console.log("Error in submitting job");
@@ -144,18 +151,45 @@ const ConvertDashboard = ({ userData }) => {
                 </Select>
               </div>
 
-              <div className="mt-4 font-bold text-2xl">Options</div>
+              <div className="mt-4 font-bold text-2xl">Conversion Settings</div>
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="has_instr"
                   className="w-6 h-6" 
-                  checked={needsSep}
-                  onCheckedChange={() => setNeedsSep(val => !val)}
+                  checked={hasInstrumentals}
+                  onCheckedChange={() => setHasInstrumentals(val => !val)}
                 />
                 <div>
-                  <div className="font-medium mt-3">Does song include instrumentals and/or backing vocals?</div>
-                  <div className="text-muted-foreground text-sm">If so, we must do extra processing to extract the lead vocals.</div>
+                  <div className="font-medium mt-3">Does this song include instrumentals?</div>
+                  <div className="text-muted-foreground text-sm">If so, we must separate vocals from instrumentals.</div>
                 </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="has_instr"
+                    className="w-6 h-6" 
+                    checked={hasBackingVocals}
+                    onCheckedChange={() => setHasBackingVocals(val => !val)}
+                  />
+                  <div>
+                    <div className="font-medium mt-3">Does this song include backing vocals/chorus?</div>
+                    <div className="text-muted-foreground text-sm">If so, we must separate the lead vocals from the chorus.</div>
+                  </div>
+                </div>
+                {hasBackingVocals ?
+                  <div className="flex items-center gap-2 ml-4">
+                    <Checkbox
+                      id="has_instr"
+                      className="w-6 h-6" 
+                      checked={convertBackingVocals}
+                      onCheckedChange={() => setConvertBackingVocals(val => !val)}
+                    />
+                    <div>
+                      <div className="font-medium mt-3">Convert the backing vocals as well?</div>
+                      <div className="text-muted-foreground text-sm">If so, we will convert all vocals to your voice.</div>
+                    </div>
+                  </div> : ""}
               </div>
 
               <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
