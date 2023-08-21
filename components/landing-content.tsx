@@ -54,7 +54,7 @@ export const LandingContent = () => {
                             keeping pitches and inflections intact.
                         </p>
                         <p className="mb-2 text-lg md:text-xl">
-                            All it takes is a <i>15-minute</i> guided cloning procedure for <i>you</i> to become an instant singer!
+                            All it takes is a <i>30-minute</i> cloning procedure for <i>you</i> to become an instant singer!
                         </p>
                         <p className="mb-8 text-center text-md md:text-lg">
                             P.S. I put my own voice to the test. Give it a listen!
