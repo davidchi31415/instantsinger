@@ -106,7 +106,10 @@ const ConvertDashboard = ({ userData }) => {
   }
 
   useEffect(() => {
-    if (isFinished && isSuccess && results === null && conversionId !== "") retrieveResults();
+    if (isFinished && isSuccess && results === null && conversionId !== "") {
+      setConverting(false);
+      retrieveResults();
+    }
   }, [isFinished, isSuccess, results, conversionId]);
 
   if (!userData?.cloneNames?.length) {
