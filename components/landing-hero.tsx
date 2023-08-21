@@ -19,7 +19,7 @@ export const LandingHero = () => {
                     <span className="text-primary">with AI</span>.
                 </div>
             </div>
-            <div className="text-sm md:text-xl font-light text-zinc-400">
+            <div className="text-md md:text-xl font-light text-zinc-400">
                 The AI-powered singing tool that lets you hear <b>any song</b> converted into <b>your own voice</b>,
                 regardless of your ability. Become the singer of your dreams, <b>today</b>.
             </div>
