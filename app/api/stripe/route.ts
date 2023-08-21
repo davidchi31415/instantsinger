@@ -44,7 +44,7 @@ export async function GET(
                                 `${pack.contents.songs} Song Conversions, 
                                 ${pack.contents.clones} Voice Clone${pack.contents.clones > 1 ? "s" : ""}`
                         },
-                        unit_amount: pack.contents.price * 100,
+                        unit_amount: Math.round(pack.contents.price * 100),
                     },
                     quantity: 1
                 }

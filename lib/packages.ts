@@ -26,8 +26,7 @@ export const packages = [
         description: "For the hardcore users :)",
         clones: 5,
         songs: 150,
-        price: 19.99,
-        key: "pro"
+        price: 19.99
       }
     }
 ];
