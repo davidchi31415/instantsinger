@@ -58,7 +58,7 @@ const PricingTable = () => {
                                 <div className="flex gap-2">
                                     <Check color="#0c0"/>
                                     <div>
-                                        <b>{pack.contents.songs}</b> Song Conversions
+                                        <b>{pack.contents.songs}</b> Song Conversion{pack.contents.songs > 1 ? "s" : ""}
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
