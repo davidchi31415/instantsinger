@@ -75,7 +75,7 @@ export default function DashboardPage() {
               className="p-4 border-2 border-primary hover:scale-105
               transition cursor-pointer shadow-xl"
             >
-              <div className="h-[7rem]">
+              <div className="h-[8rem]">
                 <div className="flex items-center justify-between gap-x-4">
                   <div className="flex items-center gap-2">
                     <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
@@ -103,7 +103,7 @@ export default function DashboardPage() {
               className="p-4 border-2 border-primary hover:scale-105
               transition cursor-pointer shadow-xl"
             >
-              <div className="h-[7rem]">
+              <div className="h-[8rem]">
                 <div className="flex items-center justify-between gap-x-4">
                   <div className="flex items-center gap-2">
                     <div className="p-2 w-fit rounded-md">
