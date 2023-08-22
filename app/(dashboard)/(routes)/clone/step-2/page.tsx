@@ -69,67 +69,7 @@ const essay = [
     March the soldiers past the next hill.
     A cup of sugar makes sweet fudge.
     Place a rosebush near the porch steps.
-    Both lost their lives in the raging storm.`,
-    `We talked of the side show in the circus.
-    Use a pencil to write the first draft.
-    He ran half way to the hardware store.
-    The clock struck to mark the third period.
-    A small creek cut across the field.
-    Cars and busses stalled in snow drifts.
-    The set of china hit the floor with a crash.
-    This is a grand season for hikes on the road.
-    The dune rose from the edge of the water.
-    Those words were the cue for the actor to leave.`,
-    `A yacht slid around the point into the bay.
-    The two met while playing on the sand.
-    The ink stain dried on the finished page.
-    The walled town was seized without a fight.
-    The lease ran out in sixteen weeks.
-    A tame squirrel makes a nice pet.
-    The horn of the car woke the sleeping cop.
-    The heart beat strongly and with firm strokes.
-    The pearl was worn in a thin silver ring.
-    The fruit peel was cut in thick slices.`,
-    `The Navy attacked the big task force.
-    See the cat glaring at the scared mouse.
-    There are more than two factors here.
-    The hat brim was wide and too droopy.
-    The lawyer tried to lose his case.
-    The grass curled around the fence post.
-    Cut the pie into large parts.
-    Men strive but seldom get rich.
-    Always close the barn door tight.
-    He lay prone and hardly moved a limb.`,
-    `The slush lay deep along the street.
-    A wisp of cloud hung in the blue air.
-    A pound of sugar costs more than eggs.
-    The fin was sharp and cut the clear water.
-    The play seems dull and quite stupid.
-    Bail the boat to stop it from sinking.
-    The term ended in late June that year.
-    A tusk is used to make costly gifts.
-    Ten pins were set in order.
-    The bill was paid every third week.`,
-    `Oak is strong and also gives shade.
-    Cats and dogs each hate the other.
-    The pipe began to rust while new.
-    Open the crate but don't break the glass.
-    Add the sum to the product of these three.
-    Thieves who rob friends deserve jail.
-    The ripe taste of cheese improves with age.
-    Act on these orders with great speed.
-    The hog crawled under the high fence.
-    Move the vat over the hot fire.`,
-    `The bark of the pine tree was shiny and dark.
-    Leaves turn brown and yellow in the fall.
-    The pennant waved when the wind blew.
-    Split the log with a quick, sharp blow.
-    Burn peat after the logs give out.
-    He ordered peach pie with ice cream.
-    Weave the carpet on the right hand side.
-    Hemp is a weed found in parts of the tropics.
-    A lame back kept his score low.
-    We find joy in the simplest things.`
+    Both lost their lives in the raging storm.`
 ];
 
 const CloningStep = () => {

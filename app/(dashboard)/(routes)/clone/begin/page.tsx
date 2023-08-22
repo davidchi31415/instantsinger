@@ -19,13 +19,12 @@ const CloningPage = () => {
             flex flex-col gap-2
           ">
             <p>
-              There are two steps you will complete in this process.
+              Before you begin, make sure you are in a quiet environment. 
+              Prepare a high-quality microphone to <b>record yourself</b> using any method/app of your choice.
+              You will be told what to record in the following steps.{" "}
+              <b>At the end of the procedure, you will upload your recordings.</b>
             </p>
-            <p>1. Speaking: you will read a passage of approximately 300 words while recording it with your microphone.</p>
-            <p>2. Pitches: you will sing a set of pitches as we play them for you. It is important that you <b>wear headphones</b>{" "}
-              during this step to prevent our audio from being picked up by your microphone.
-            </p>
-            <p>Finally, we stress that <b>it is okay if you mess up</b> at any point. 
+            <p>We stress that <b>it is okay if you mess up</b> at any point. 
               The point is to collect enough audio data of what your voice sounds like.
             </p>
             

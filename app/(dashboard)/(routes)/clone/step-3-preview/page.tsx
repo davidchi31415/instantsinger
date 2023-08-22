@@ -27,7 +27,7 @@ const CloningStepPreview = () => {
                     In each slide, you will be provided with a set of pitches. Wearing headphones, sing along to these pitches{" "}
                     and record yourself as you do so. You may use whatever syllable you prefer, such as "la" or "ah" to sing each pitch.
                 </p>
-                <p>Please <b>record each slide separately</b> (i.e., not in one big audio file).</p>
+                <p>Please <b>record each slide separately</b> (i.e., save one file per slide).</p>
                 <p>
                     There will be some slides marked <b>OPTIONAL</b>, which means you can skip them if they are out of your{" "}
                     vocal range.
@@ -41,8 +41,7 @@ const CloningStepPreview = () => {
                 <div className="w-full lg:max-w-3xl">
                 <AlertCard variant="warning" title="Important Note" 
                     message=
-                    {<div>Beware of <b>background noise</b> and poor <b>microphone quality</b>, as these will degrade the AI performance. 
-                    Try to record only your voice, with as few other noises as possible.</div>}
+                    {<div>Record using the highest quality microphone you own. Save the file and upload it at the very end.</div>}
                 />
                 </div>
                 <div className="w-full mt-4 flex items-center justify-between">

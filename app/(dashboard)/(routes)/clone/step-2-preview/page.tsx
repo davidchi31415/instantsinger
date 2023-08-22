@@ -27,27 +27,25 @@ const CloningStepPreview = () => {
               You will read aloud a series of sentences we have prepared for you. It will be split into a series of slides,
               and it should take, in total, less than 6 minutes to read.
             </p>
-            <p>Please record yourself reading these sentences and save it to <b>a single audio file.</b></p>
+            <p>Record yourself reading these sentences and save it to <b>a single audio file.</b></p>
             <p>
-              <b>It is okay if you mess up</b> at any point. The point is to hear how you sound.
+              <b>It is okay if you mess up</b> at any point.
             </p>
-            <p>What you will read will not make sense; these are random sentences, because we couldn't think of what to write :)</p>
             
           </Card>
           <div className="w-full lg:max-w-3xl">
             <AlertCard variant="warning" title="Important Note" 
               message=
-              {<div>Beware of <b>background noise</b> and poor <b>microphone quality</b>, as these will degrade the AI performance. 
-              Try to record only your voice, with as few other noises as possible.</div>}
+              {<div>Record using the highest quality microphone you own. Save the file and upload it at the very end.</div>}
             />
           </div>
           <div className="w-full mt-4 flex items-center justify-between">
-            <Link href="/clone">
+            <Link href="/clone/step-1">
                 <Button 
                     className="text-md gap-2"
                     variant="outline"
                 >
-                    <MoveLeftIcon />Intro
+                    <MoveLeftIcon />Go Back to Step 1
                 </Button>
             </Link><Link href="/clone/step-2">
                 <Button className="text-md gap-2">

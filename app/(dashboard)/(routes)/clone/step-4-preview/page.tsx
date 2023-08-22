@@ -29,14 +29,13 @@ const CloningStepPreview = () => {
                     and record yourself as you do so. Do not worry about sounding good; just sing along.
                 </p>
                 <p>Make sure each song is within <b>3 to 5 minutes long</b>.</p>
-                <p>Please <b>record each slide separately</b> (i.e., not in one big audio file).</p>
+                <p>Please <b>record each slide separately</b> (i.e., save one file per slide).</p>
                 
                 </Card>
                 <div className="w-full lg:max-w-3xl">
                 <AlertCard variant="warning" title="Important Note" 
                     message=
-                    {<div>Beware of <b>background noise</b> and poor <b>microphone quality</b>, as these will degrade the AI performance. 
-                    Try to record only your voice, with as few other noises as possible.</div>}
+                    {<div>Record using the highest quality microphone you own. Save the file and upload it at the very end.</div>}
                 />
                 </div>
                 <div className="w-full mt-4 flex items-center justify-between">
