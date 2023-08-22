@@ -28,7 +28,7 @@ const CloningStepPreview = () => {
                     <b>Wearing headphones</b>, sing along to these songs{" "}
                     and record yourself as you do so. Do not worry about sounding good; just sing along.
                 </p>
-                <p>Make sure each song is within <b>3 to 5 minutes long</b>.</p>
+                <p>Make sure each song is within <b>3 to 5 minutes long</b> with as much singing as possible.</p>
                 <p>Please <b>record each slide separately</b> (i.e., save one file per slide).</p>
                 
                 </Card>

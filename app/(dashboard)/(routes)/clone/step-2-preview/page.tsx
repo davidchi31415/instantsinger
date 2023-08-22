@@ -25,7 +25,7 @@ const CloningStepPreview = () => {
           ">
             <p>
               You will read aloud a series of sentences we have prepared for you. It will be split into a series of slides,
-              and it should take, in total, less than 6 minutes to read.
+              and it should take, in total, less than 4 minutes to read.
             </p>
             <p>Record yourself reading these sentences and save it to <b>a single audio file.</b></p>
             <p>
