@@ -2,15 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { SplendidGrandPiano } from "smplr";
-import 'react-piano/dist/styles.css';
-import '@/components/customPianoStyles.css';
-import { PianoCloningComponent } from "@/components/piano-cloning-component";
-import { CloningStepBar } from "@/components/cloning-step-bar";
 import { MicIcon, MoveLeftIcon, MoveRightIcon, UploadCloudIcon } from "lucide-react";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { pianoSteps } from "../constants";
 import { Card } from "@/components/ui/card";
 import { AlertCard } from "@/components/alert-card";
 

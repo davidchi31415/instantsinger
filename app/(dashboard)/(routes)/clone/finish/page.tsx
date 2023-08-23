@@ -11,10 +11,7 @@ interface CloneData {
     currentJob: any;
 }
 
-const getCloneNames = async () => {
-    const { userId } = auth();
-    if (userId === null) return [];
-
+const getCloneNames = async ({ userId }) => {
     const clones = await getClones({ userId });
     const cloneNames = clones.map((clone) => clone.name);
 
@@ -37,7 +34,7 @@ const CloningFinishPage = async ({ searchParams }: CloningFinishPageProps) => {
         });
     }
 
-    const cloneNames = await getCloneNames();
+    const cloneNames = await getCloneNames({ userId });
     const uploadedFiles = await getFileList({ directory: `training_data/${unsubmittedCloneJob.id}` });
 
     const isManual = searchParams?.manual ? true : false;

@@ -1,16 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { SplendidGrandPiano } from "smplr";
-import 'react-piano/dist/styles.css';
-import '@/components/customPianoStyles.css';
-import { PianoCloningComponent } from "@/components/piano-cloning-component";
-import { CloningStepBar } from "@/components/cloning-step-bar";
 import { MicIcon, MoveLeftIcon, MoveRightIcon, UploadCloudIcon } from "lucide-react";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { pianoSteps } from "../constants";
 import { Card } from "@/components/ui/card";
 import { AlertCard } from "@/components/alert-card";
 
@@ -24,18 +17,12 @@ const CloningStepPreview = () => {
                 flex flex-col gap-2
                 ">
                 <p>
-                    In each slide, you will be provided with a set of pitches. Wearing headphones, sing along to these pitches{" "}
-                    and record yourself as you do so. You may use whatever syllable you prefer, such as "la" or "ah" to sing each pitch.
+                    In each of the following slides, you will be asked to sing a song - <b>any song</b>.{" "} 
+                    <b>Wearing headphones</b>, sing along to these songs{" "}
+                    and record yourself as you do so. Do not worry about sounding good; just sing along.
                 </p>
+                <p>Make sure each song is within <b>3 to 5 minutes long</b> with as much singing as possible.</p>
                 <p>Please <b>record each slide separately</b> (i.e., save one file per slide).</p>
-                <p>
-                    There will be some slides marked <b>OPTIONAL</b>, which means you can skip them if they are out of your{" "}
-                    vocal range.
-                </p>
-                <p>
-                    Again, <b>it is okay if you mess up</b> at any point. You do not need to match every pitch perfectly, or at all.
-                    The point is to collect audio over your vocal range.
-                </p>
                 
                 </Card>
                 <div className="w-full lg:max-w-3xl">
