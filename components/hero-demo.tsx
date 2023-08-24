@@ -14,10 +14,10 @@ export const HeroDemo = () => {
     const [players, toggle] = useMultiAudio({
         urls: [
             "https://cdn.discordapp.com/attachments/1140119588424667197/1143004134824476792/my_voice_sample_hero.m4a",
+            "https://cdn.discordapp.com/attachments/1140119588424667197/1144100819931762728/male_sample_hero_final.wav",
+            "https://cdn.discordapp.com/attachments/1140119588424667197/1144087301664800918/hero_song_2_converted.wav",
             "https://cdn.discordapp.com/attachments/1140119588424667197/1142845493978857553/Ultra_Mainstream_Deep_House_Vocals_Hot_Night_124_BPM_Ebm_Bridge.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1144087069442985994/hero_song_1_converted.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1142873549506351174/male_sample_hero.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1144087301664800918/hero_song_2_converted.wav"
+            "https://cdn.discordapp.com/attachments/1140119588424667197/1144087069442985994/hero_song_1_converted.wav"
         ]
     });
 
@@ -40,7 +40,7 @@ export const HeroDemo = () => {
                             Original Song
                         </div>
                         <div className="p-4 flex items-center justify-center">
-                            <div className="text-3xl ml-2">👩🏻</div>
+                            <div className="text-3xl ml-2">👨🏽</div>
                             <Player player={players[1]} toggle={toggle(1)} />
                         </div>
                     </div>
@@ -63,7 +63,7 @@ export const HeroDemo = () => {
                             Original Song
                         </div>
                         <div className="p-4 flex items-center justify-center">
-                            <div className="text-3xl ml-2">👨🏽</div>
+                            <div className="text-3xl ml-2">👩🏻</div>
                             <Player player={players[3]} toggle={toggle(3)} />
                         </div>
                     </div>
