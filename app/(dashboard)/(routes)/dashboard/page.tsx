@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ArrowLeftRightIcon, ArrowRight, Code, HistoryIcon, ImageIcon, MessageSquare, Music, SettingsIcon, VideoIcon } from "lucide-react";
+import { ArrowLeftRightIcon, ArrowRight, Code, HistoryIcon, ImageIcon, MessageSquare, MicIcon, Music, SettingsIcon, VideoIcon } from "lucide-react";
 import { BsDiscord } from "react-icons/bs";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { IconContext } from "react-icons";
@@ -24,7 +24,7 @@ export default function DashboardPage() {
     },
     {
       label: "Clone",
-      icon: MessageSquare,
+      icon: MicIcon,
       color: "text-pink-500",
       bgColor: "bg-pink-500/10",
       href: "/clone",
