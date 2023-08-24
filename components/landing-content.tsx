@@ -6,6 +6,8 @@ import PricingTable from "./pricing-table";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { BsDiscord } from "react-icons/bs";
+import Image from "next/image";
+import { Badge } from "lucide-react";
 
 const testimonials = [
     {
@@ -42,49 +44,41 @@ export const LandingContent = () => {
     return (
         <div className="py-10 md:py-20 bg-gradient-to-r from-[#e0e0e0] to-primary/50" >
             <div className="w-fit h-fit my-8 rounded-xl bg-[white] mx-auto">
-                    <div className="text-center text-xl md:text-3xl p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
-                        Powerfully <b>accurate</b>, yet incredibly <b>easy</b>
+                    <div className="text-center text-xl md:text-3xl p-4 w-fit rounded-xl bg-[#FFF1E4] border-4 border-[#FFD7AF]/50 shadow-md">
+                        Becoming a singer has never been <b>so easy</b>.
                     </div>
                 </div>
-            <div className="mb-4 flex justify-center items-center">
-                <div className="p-8 rounded-xl bg-white shadow-xl">
-                    <div className="md:max-w-xl lg:max-w-2xl xl:max-w-3xl mb-8 mx-auto">
-                        <p className="mb-2 text-lg md:text-xl">
-                            Our AI technology captures the essence of your voice and converts any other voice to match it,
-                            keeping pitches and inflections intact.
-                        </p>
-                        <p className="mb-2 text-lg md:text-xl">
-                            All it takes is a <i>30-minute</i> cloning procedure for <i>you</i> to become an instant singer!
-                        </p>
-                        <p className="mb-8 text-center text-md md:text-lg">
-                            P.S. I put my own voice to the test. Give it a listen!
-                        </p>
-                        <div className="max-w-md mx-auto">
-                            <div className="text-lg mb-2">Sample of <b>My Voice</b> (more data needed for cloning)</div>
-                            <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1143004134824476792/my_voice_sample_hero.m4a" />
-                        </div>
+            <div className="mb-4 flex flex-col justify-center items-center gap-4 md:max-w-2xl mx-auto">
+                <div className="p-8 rounded-xl bg-white shadow-xl flex justify-between flex-wrap w-full gap-4">
+                    <div className="flex justify-center gap-2 mx-auto">
+                        <Image
+                            alt="record_step_picture"
+                            width={256} height={128}
+                            src="/record_step_picture.png"
+                        />
                     </div>
-                    <div className="grid md:grid-cols-2 lg:w-[50rem] gap-4">
-                        <div className="flex flex-col gap-4">
-                            <div>
-                                <div className="text-xl mb-2">Song 1</div>
-                                <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1142873549506351174/male_sample_hero.wav" />
-                            </div>
-                            <div>
-                                <div className="text-xl mb-2">Song 1 <b>(in my voice)</b></div>
-                                <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1142874702071726080/male_sample_hero_converted.wav" />
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-4">
-                            <div>
-                                <div className="text-xl mb-2">Song 2</div>
-                                <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1142845493978857553/Ultra_Mainstream_Deep_House_Vocals_Hot_Night_124_BPM_Ebm_Bridge.wav" />
-                            </div>
-                            <div>
-                                <div className="text-xl mb-2">Song 2 <b>(in my voice)</b></div>
-                                <AudioCard url="https://cdn.discordapp.com/attachments/1140119588424667197/1142845408096288869/default_sample_hero.wav" />
-                            </div>
-                        </div>
+                    <div className="max-w-[16rem] mx-auto">
+                        <div className="text-2xl font-bold">1. Record Yourself</div>
+                        <p>
+                            Following a step-by-step, guided procedure, record your voice using
+                            your phone (or any high-quality microphone).
+                        </p>
+                    </div>
+                </div>
+                <div className="p-8 rounded-xl bg-white shadow-xl flex justify-between flex-wrap w-full gap-4">
+                    <div className="flex justify-center gap-2 mx-auto">
+                        <Image
+                            alt="upload_step_picture"
+                            width={256} height={128}
+                            src="/hero_step_2_picture.png"
+                        />
+                    </div>
+                    <div className="max-w-[16rem] mx-auto">
+                        <div className="text-2xl font-bold">2. Upload and Wait</div>
+                        <p>
+                            Once we receive your recordings, we will construct a personal AI clone for your
+                            voice. And just like that, you're an Instant Singer!
+                        </p>
                     </div>
                 </div>
             </div>
@@ -92,7 +86,7 @@ export const LandingContent = () => {
                 id="pricing-table"
             >   
                 <div className="w-fit h-fit my-8 rounded-xl bg-[white] mx-auto">
-                    <div className="text-center text-xl md:text-3xl p-4 w-fit rounded-xl bg-[gold]/10 border-2 border-[gold] shadow-md">
+                    <div className="text-center text-xl md:text-3xl p-4 w-fit rounded-xl bg-[#FFF1E4] border-4 border-[#FFD7AF]/50 shadow-md">
                         <b>No subscriptions</b>! Pay as you go.
                     </div>
                 </div>
