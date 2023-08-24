@@ -24,7 +24,7 @@ export const packages = [
       "contents": {
         label: "Pro Pack",
         description: "For the hardcore users :)",
-        clones: 2,
+        clones: 1,
         songs: 30,
         price: 19.99
       }

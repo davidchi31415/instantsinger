@@ -40,7 +40,7 @@ const CloningStepPreview = () => {
                     className="text-md gap-2"
                     variant="outline"
                 >
-                    <MoveLeftIcon />Intro
+                    <MoveLeftIcon />Home
                 </Button>
             </Link>
             <Link href="/clone/step-1">
