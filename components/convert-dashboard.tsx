@@ -114,7 +114,7 @@ const ConvertDashboard = ({ userData }) => {
 
   if (!userData?.cloneNames?.length) {
     return (
-      <div className="text-center text-xl">
+      <div className="mt-8 text-center text-xl">
         You do not have a voice clone yet. 
         Please go to the <Link href="/clone" className="font-bold">Clone</Link> page first.
         <Empty label="Once your voice has been cloned, come back here to convert a song :)" />
