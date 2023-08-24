@@ -34,7 +34,7 @@ interface CloneHomePageProps {
 const CloneHomePage = async ({ searchParams }: CloneHomePageProps) => {
     const userData = await getUserData();
 
-    const defaultTabClone = searchParams?.newClone ? true : false;
+    const defaultTabClone = (searchParams?.newClone || (!userData.clones?.length && !userData.currentJob)) ? true : false;
 
     return (
         <div>

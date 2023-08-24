@@ -6,7 +6,8 @@ import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 import { packages } from "@/lib/packages";
 
-const settingsUrl = absoluteUrl("/settings");
+const convertUrl = absoluteUrl("/convert");
+const dashboardUrl = absoluteUrl("/dashboard");
 
 export async function GET(
     req: NextRequest
@@ -28,8 +29,8 @@ export async function GET(
 
         // Else, go to checkout page
         const stripeSession = await stripe.checkout.sessions.create({
-            success_url: settingsUrl,
-            cancel_url: settingsUrl,
+            success_url: convertUrl,
+            cancel_url: dashboardUrl,
             payment_method_types: ["card"],
             mode: "payment",
             billing_address_collection: "auto",
