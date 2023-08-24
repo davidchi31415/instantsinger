@@ -27,12 +27,18 @@ const getUserData = async () => {
     return res;
 }
 
-const CloneHomePage = async () => {
+interface CloneHomePageProps {
+    searchParams?: { [key: string]: string | undefined }
+}
+
+const CloneHomePage = async ({ searchParams }: CloneHomePageProps) => {
     const userData = await getUserData();
+
+    const defaultTabClone = searchParams?.newClone ? true : false;
 
     return (
         <div>
-            <ClonesDashboard userData={userData} />
+            <ClonesDashboard userData={userData} defaultTabClone={defaultTabClone} />
         </div>
     );
 };

@@ -35,7 +35,7 @@ const CloningStepPreview = () => {
             />
           </div>
           <div className="w-full mt-4 flex items-center justify-between">
-            <Link href="/clone">
+            <Link href="/clone?newClone=1">
                 <Button 
                     className="text-md gap-2"
                     variant="outline"

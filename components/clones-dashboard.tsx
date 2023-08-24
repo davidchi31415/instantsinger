@@ -17,15 +17,16 @@ interface ClonesDashboardProps {
         clones: any[];
         currentJob: any;
     }
+    defaultTabClone?: boolean;
 }
 
-export const ClonesDashboard = ({ userData }: ClonesDashboardProps) => {
+export const ClonesDashboard = ({ userData, defaultTabClone }: ClonesDashboardProps) => {
     const [cloningStatus, setCloningStatus] = useState<string>(
         userData.currentJob !== null ? userData.currentJob.status : ""
     )
 
     return (
-        <Tabs defaultValue="my-clones" className="flex flex-col items-center gap-8">
+        <Tabs defaultValue={defaultTabClone ? "create" : "my-clones"} className="flex flex-col items-center gap-8">
             <TabsList className="py-6 gap-2 bg-primary/20">
                 <TabsTrigger value="my-clones" className="text-xl">My Clones</TabsTrigger>
                 <TabsTrigger value="create" className="text-xl">Create a Clone</TabsTrigger>
