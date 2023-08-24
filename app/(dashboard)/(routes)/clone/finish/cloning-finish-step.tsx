@@ -165,17 +165,6 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                                         <div className="text-lg">Missing</div> <AlertCircleIcon />
                                     </Badge>}
                             </div>
-                            <div className="mt-8 mb-4 flex justify-between">
-                                <div>3. Song 3</div>
-                                {files.some(fileName => fileName === "3.3") ?
-                                    <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                        <div className="text-lg">Uploaded</div> <CheckIcon />
-                                    </Badge>
-                                    :
-                                    <Badge className="h-fit gap-2" variant="destructive">
-                                        <div className="text-lg">Missing</div> <AlertCircleIcon />
-                                    </Badge>}
-                            </div>
                         </div>
                         
                         <div className="flex flex-col items-center gap-2">

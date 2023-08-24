@@ -11,13 +11,10 @@ import { FileUploader } from "@/components/file-uploader";
 
 const songs = [
     {
-        url: "https://www.youtube.com/watch?v=KpXDjIDnGgQ",
+        url: "https://www.youtube.com/watch?v=TMSIR210mRg&pp=ygUObG92ZSB5b3Vyc2VsZiA%3D"
     },
     {
         url: "https://www.youtube.com/watch?v=hLQl3WQQoQ0&pp=ygUcc29tZWJvZHkgdGhhdCBpIHVzZWQgdG8ga25vdw%3D%3D",
-    },
-    {
-        url: "https://www.youtube.com/watch?v=TMSIR210mRg&pp=ygUObG92ZSB5b3Vyc2VsZiA%3D"
     }
 ]
 
@@ -69,7 +66,7 @@ const CloningStep3Slides = ({ jobId }) => {
                                 className="text-md gap-2"
                                 variant="outline"
                             >
-                                <MoveLeftIcon />Step 4 Preview
+                                <MoveLeftIcon />Step 3 Preview
                             </Button>
                         </Link>}
                         {step !== songs.length - 1 ?
