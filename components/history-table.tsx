@@ -63,7 +63,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                     {jobs.slice(pageIndex * jobsPerPage, (pageIndex+1) * jobsPerPage).map((job) => {
                         if (isJobDone({ status: job.status })) {
                             return <TableRow
-                                className="cursor-pointer"
+                                className={job.status === "COMPLETED" ? "cursor-pointer" : ""}
                                 onClick={() => { router.push(`/convert/result?id=${job.id}`) }}
                             >
                                 <TableCell className="font-medium">
@@ -93,7 +93,27 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                                         process="Converting" apiEndpoint="/api/convert/status"
                                         initStatus={job.status} apiId={job.id}
                                         badgeOnly={true}
-                                        onFinish={() => router.refresh()}
+                                        onFinish={() => {
+                                            const updatedJob = {...job, status: "COMPLETED"}
+                                            const newJobs = [
+                                                ...jobs.filter(e => e.id !== job.id), updatedJob
+                                            ];
+                                            setJobs(newJobs);
+                                        }}
+                                        onFail={() => {
+                                            const updatedJob = {...job, status: "FAILED"}
+                                            const newJobs = [
+                                                ...jobs.filter(e => e.id !== job.id), updatedJob
+                                            ];
+                                            setJobs(newJobs);
+                                        }}
+                                        onCancel={() => {
+                                            const updatedJob = {...job, status: "CANCELLED"}
+                                            const newJobs = [
+                                                ...jobs.filter(e => e.id !== job.id), updatedJob
+                                            ];
+                                            setJobs(newJobs);
+                                        }}
                                     />
                                 </TableCell>   
                             </TableRow>
