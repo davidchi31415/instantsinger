@@ -96,7 +96,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                                         onFinish={() => {
                                             const updatedJob = {...job, status: "COMPLETED"}
                                             const newJobs = [
-                                                ...jobs.filter(e => e.id !== job.id), updatedJob
+                                                updatedJob, ...jobs.filter(e => e.id !== job.id)
                                             ];
                                             setJobs(newJobs);
                                         }}
