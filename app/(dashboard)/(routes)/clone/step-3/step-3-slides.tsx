@@ -45,7 +45,7 @@ const CloningStep3Slides = ({ jobId }) => {
                             <div className="mt-4 bg-white p-4 rounded-md border border-black">
                                 <div className="mb-2">Upload your recording for Song {step+1}.</div>
                                 <FileUploader uploadEndpoint="/api/clone/upload"
-                                    apiParams={{ cloneId: jobId, fileName: `3.${step+1}` }}
+                                    apiParams={{ cloneId: jobId, fileName: `3_${step+1}` }}
                                     durationLimit={6}
                                 />
                             </div>
