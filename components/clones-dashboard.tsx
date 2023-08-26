@@ -61,12 +61,6 @@ export const ClonesDashboard = ({ userData, defaultTabClone }: ClonesDashboardPr
                             </li>
                         </ul>
                     </div>
-                    <p>
-                        3) Set your phone <b>2 feet away</b> from your face.
-                    </p>
-                    <p>
-                        4) Have <b>headphones</b>, connected to your laptop, ready for later steps.
-                    </p>
                     <div className="mt-4 flex justify-center">
                         <Image
                             alt="cloning setup"
@@ -74,6 +68,15 @@ export const ClonesDashboard = ({ userData, defaultTabClone }: ClonesDashboardPr
                             src="/cloning_setup.jpeg"
                         />
                     </div>
+                    <p>
+                        3) Set your phone within <b>1 foot away</b> from your face. Keep it close to you to prevent <b>room echo/reverb</b> from your surroundings.
+                        You can even put a blanket over your setup <a target="_blank" href="https://www.youtube.com/watch?v=sq2yoVwpRs8" rel="noopener noreferrer">
+                            <span className="text-primary cursor-pointer">as shown in this video</span>
+                        </a> for further echo-reduction.
+                    </p>
+                    <p>
+                        4) Have <b>headphones</b>, connected to your laptop, ready for later steps.
+                    </p>
                     <div className="mt-4">
                         If you have a studio microphone setup, you may use it instead of your phone.
                     </div>
