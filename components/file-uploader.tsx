@@ -42,6 +42,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
 
   const [audioTitle, setAudioTitle] = useState("");
   const [fileError, setFileError] = useState("");
+  const [fileValid, setFileValid] = useState(false);
 
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -50,6 +51,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
 
   const onFileInput = (e: any) => {
     try {
+      setFileValid(false);
       e.preventDefault();
 
       if (e.target?.files[0]) {
@@ -78,6 +80,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
                 setFileError(`Max duration is ${durationLimit} min`)
               } else {
                 setFileError("");
+                setFileValid(true);
               }
           }).catch(
             _ => setFileError(
@@ -96,6 +99,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
   const onRemove = () => {
     setFile(null);
     setFileError("");
+    setFileValid(false);
   }
 
   const onSubmit = async () => {
@@ -103,6 +107,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
       setStarted(true);
       setLoading(true);
 
+      if (!fileValid) return;
       if (fileError !== "" || file === null) return;
       
       let response 
@@ -168,7 +173,7 @@ export const FileUploader = ({ uploadEndpoint, onUpload, apiParams, isConvertUpl
           <Button
             type="submit"
             size="lg" className="text-xl border-2 border-black shadow-xl"
-            disabled={file === null || fileError !== "" || isLoading}
+            disabled={!fileValid || file === null || fileError !== "" || isLoading}
             onClick={onSubmit}
           >
             {!isLoading ? "Upload" : "Uploading"}

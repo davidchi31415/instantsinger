@@ -28,12 +28,6 @@ const CloningStepPreview = () => {
             </p>
             
           </Card>
-          <div className="w-full lg:max-w-3xl">
-            <AlertCard variant="warning" title="Important Note" 
-              message=
-              {<div>Record using the highest quality microphone you own. Save the file and upload it at the very end.</div>}
-            />
-          </div>
           <div className="w-full mt-4 flex items-center justify-between">
             <Link href="/clone?newClone=1">
                 <Button 

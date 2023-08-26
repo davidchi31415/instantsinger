@@ -131,40 +131,23 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                                 </Badge>}
                         </div>
                         
-                        <div className="mt-8 mb-4 text-xl">
+                        <div className="mt-8 text-xl flex justify-between">
                             <div className="flex gap-2 items-center">
                                 <div><b>Step 3:</b> Singing</div>
-                                <Link href="/clone/step-3-preview" passHref={true}>
+                                <Link href="/clone/step-3" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
                                     </Button>
                                 </Link>
                             </div>
-                        </div>
-
-                        <div className="mb-8">
-                            <div className="mt-8 mb-4 flex justify-between">
-                                <div>1. Song 1</div>
-                                {files.some(fileName => fileName === "3_1") ?
-                                    <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                        <div className="text-lg">Uploaded</div> <CheckIcon />
-                                    </Badge>
-                                    :
-                                    <Badge className="h-fit gap-2" variant="destructive">
-                                        <div className="text-lg">Missing</div> <AlertCircleIcon />
-                                    </Badge>}
-                            </div>
-                            <div className="mt-8 mb-4 flex justify-between">
-                                <div>2. Song 2</div>
-                                {files.some(fileName => fileName === "3_2") ?
-                                    <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                        <div className="text-lg">Uploaded</div> <CheckIcon />
-                                    </Badge>
-                                    :
-                                    <Badge className="h-fit gap-2" variant="destructive">
-                                        <div className="text-lg">Missing</div> <AlertCircleIcon />
-                                    </Badge>}
-                            </div>
+                            {files.some(fileName => fileName === "3") ?
+                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                </Badge>
+                                :
+                                <Badge className="h-fit gap-2" variant="destructive">
+                                    <div className="text-lg">Missing</div> <AlertCircleIcon />
+                                </Badge>}
                         </div>
                         
                         <div className="flex flex-col items-center gap-2">

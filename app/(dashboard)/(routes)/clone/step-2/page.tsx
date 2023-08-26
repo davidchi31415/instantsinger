@@ -63,7 +63,7 @@ const CloningStep2Page = async () => {
                                 <MoveLeftIcon />Step 2 Preview
                             </Button>
                         </Link>
-                        <Link href="/clone/step-3-preview">
+                        <Link href="/clone/step-3">
                             <Button className="text-md gap-2">
                                 Step 3 <MoveRightIcon />
                             </Button>

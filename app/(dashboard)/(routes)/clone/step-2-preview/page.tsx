@@ -17,7 +17,7 @@ const CloningStepPreview = () => {
                 flex flex-col gap-2
                 ">
                 <p>
-                    You will be provided with pitches to sing along with. Wear headphones as you sing along, to prevent
+                    You will be provided with pitches to sing along with. <b>Wear headphones</b> as you sing along, to prevent
                     our audio from being picked up by your microphone. 
                 </p>
                 <p>
@@ -25,16 +25,10 @@ const CloningStepPreview = () => {
                 </p>
                 <p>Please record yourself singing and save it to <b>a single audio file.</b></p>
                 <p>
-                    <b>It is okay if you cannot match every pitch</b>. Our goal is to collect audio over your vocal range.
+                    <b>It is okay if you cannot match every pitch</b>.
                 </p>
                 
                 </Card>
-                <div className="w-full lg:max-w-3xl">
-                <AlertCard variant="warning" title="Important Note" 
-                    message=
-                    {<div>Record using the highest quality microphone you own. Save the file and upload it at the very end.</div>}
-                />
-                </div>
                 <div className="w-full mt-4 flex items-center justify-between">
                     <Link href="/clone/step-1">
                         <Button 
