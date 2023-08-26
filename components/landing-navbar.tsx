@@ -18,7 +18,7 @@ export const LandingNavbar = () => {
     const { isSignedIn } = useAuth(); // useAuth for client-side
 
     return (
-        <nav className="p-4 lg:px-8 w-full flex items-center justify-between fixed
+        <nav className="p-4 lg:px-8 w-full flex items-center justify-between md:fixed
             bg-[white] z-[9999]
         ">
             <Link
