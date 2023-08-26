@@ -19,7 +19,7 @@ export const LandingNavbar = () => {
 
     return (
         <nav className="p-4 lg:px-8 w-full flex items-center justify-between fixed
-            bg-[white]
+            bg-[white] z-[9999]
         ">
             <Link
                 href="/"
