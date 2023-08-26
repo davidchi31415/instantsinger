@@ -6,6 +6,7 @@ import { FileUploader } from "@/components/file-uploader";
 import { auth } from "@clerk/nextjs";
 import { getCurrentUnsubmittedCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
+import Iframe from 'react-iframe';
 
 const getCloneJobId = async ({ userId }) => {
     let unsubmittedCloneJob = await getCurrentUnsubmittedCloneJob({ userId });
@@ -36,7 +37,14 @@ const CloningStep2Page = async () => {
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col items-center justify-center gap-4">
-                            <video controls src={"/cloning_step_2.mp4"} style={{ width: "400px", height: "250px" }} />
+                            <Iframe url="https://www.youtube.com/embed/_tVSazDrYuA"
+                                width="640px"
+                                height="320px"
+                                id=""
+                                className=""
+                                display="block"
+                                position="relative"
+                            />
                             <div className="bg-white p-4 rounded-md border border-black">
                                 <div className="mb-2">Upload your recording for Step 2.</div>
                                 <FileUploader uploadEndpoint="/api/clone/upload"

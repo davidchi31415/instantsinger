@@ -32,7 +32,7 @@ const CloningStep1Slides = ({ jobId }) => {
   return (
     <div className="px-4 lg:px-8 flex justify-center">
         <div className="pt-2 flex flex-col items-center justify-center gap-2">
-            <CloningStepBar title="Step 1: Speaking Part 1" step={step} setStep={setStep} steps={contents} />
+            <CloningStepBar title="Step 1: Speaking" step={step} setStep={setStep} steps={contents} />
             <Card className="w-full lg:max-w-3xl bg-muted mb-4 text-xl">
                 <CardHeader>
                     <CardTitle className="text-md text-muted-foreground">

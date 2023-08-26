@@ -46,41 +46,40 @@ export const ClonesDashboard = ({ userData, defaultTabClone }: ClonesDashboardPr
                 <Card className="w-full lg:max-w-3xl bg-muted mb-4 p-4 text-xl
                     flex flex-col gap-2
                 ">
+                    <p>The following is an <b>IMPORTANT</b> checklist before you begin:</p>
                     <p>
-                    Before you begin, make sure you are in a quiet environment. 
-                    Prepare a high-quality microphone to <b>record yourself</b> (e.g., your phone).
-                    You will be told what to record in the following steps.
+                        1) Find a <b>quiet</b> environment, with no background noise.
+                    </p>
+                    <div>
+                        <div>2) Prepare <b>2 devices:</b></div>
+                        <ul className="list-disc p-0 ml-6">
+                            <li>
+                                one for following along with this procedure (e.g., a laptop or tablet)
+                            </li>
+                            <li>
+                                your phone, for recording yourself
+                            </li>
+                        </ul>
+                    </div>
+                    <p>
+                        3) Set your phone <b>2 feet away</b> from your face.
                     </p>
                     <p>
-                    At the end of the procedure, you will <b>upload your recordings.</b>
+                        4) Have <b>headphones</b>, connected to your laptop, ready for later steps.
                     </p>
-                    <div className="mt-2 flex justify-center gap-8 flex-wrap">
-                    <div className="flex justify-center gap-2">
-                        <div className="w-[2rem] h-[2rem] rounded-full text-center text-white
-                        flex items-center justify-center bg-primary">
-                        1
-                        </div>
+                    <div className="mt-4 flex justify-center">
                         <Image
-                            alt="record_step_picture"
-                            width={256} height={128}
-                            src="/record_step_picture.png"
+                            alt="cloning setup"
+                            width={500} height={500}
+                            src="/cloning_setup.jpeg"
                         />
                     </div>
-                    <div className="flex justify-center gap-2">
-                        <div className="w-[2rem] h-[2rem] rounded-full text-center text-white
-                        flex items-center justify-center bg-primary">
-                        2
-                        </div>
-                        <Image
-                            alt="upload_step_picture"
-                            width={128} height={128}
-                            src="/upload_step_picture.png"
-                        />
-                    </div>
+                    <div className="mt-4">
+                        If you have a studio microphone setup, you may use it instead of your phone.
                     </div>
                 </Card>
                 <div className="w-full lg:max-w-3xl">
-                    <AlertCard variant="warning" title="Important Note" 
+                    <AlertCard variant="warning" title="Caution" 
                     message=
                     {<div>Beware of <b>background noise</b> and poor <b>microphone quality</b>, as these will degrade the quality of the AI. 
                     Try to record only your voice, with as few other noises as possible.</div>}
