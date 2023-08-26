@@ -145,7 +145,7 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                         <div className="mb-8">
                             <div className="mt-8 mb-4 flex justify-between">
                                 <div>1. Song 1</div>
-                                {files.some(fileName => fileName === "3.1") ?
+                                {files.some(fileName => fileName === "3_1") ?
                                     <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
                                         <div className="text-lg">Uploaded</div> <CheckIcon />
                                     </Badge>
@@ -156,7 +156,7 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                             </div>
                             <div className="mt-8 mb-4 flex justify-between">
                                 <div>2. Song 2</div>
-                                {files.some(fileName => fileName === "3.2") ?
+                                {files.some(fileName => fileName === "3_2") ?
                                     <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
                                         <div className="text-lg">Uploaded</div> <CheckIcon />
                                     </Badge>
