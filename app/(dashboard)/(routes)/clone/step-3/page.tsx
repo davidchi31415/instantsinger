@@ -48,7 +48,7 @@ const CloningStepPage = async () => {
                     <div>Criteria:</div>
                     <ul className="list-disc p-0 ml-6">
                         <li>
-                            ideally <b>3 to 5 minutes</b> in length (max: 6 minutes)
+                            ideally at least ~<b>4</b> minutes, at most <b>7</b> minutes
                         </li>
                         <li>
                             cover the type of songs you are most interested in singing
@@ -57,13 +57,15 @@ const CloningStepPage = async () => {
                 </div>
                 <p>Please record yourself singing and save it to <b>a single audio file.</b></p>
                 <div>
-                    If you cannot think of a song, here is a list of suggestions:
+                    If you cannot think of a song, <a target="_blank" href="https://youtube.com/playlist?list=PLeYTmRef46dWKVQeUXTDY1bsSHvxtSDmK&si=bvSXdQXasZOhuGy1" rel="noopener noreferrer">
+                        <span className="text-primary cursor-pointer">click here for a list of suggestions.</span>
+                    </a>
                 </div>
                 <div className="mt-4 bg-white p-4 rounded-md border border-black">
                     <div className="mb-2">Upload your recording for Step 3.</div>
                     <FileUploader uploadEndpoint="/api/clone/upload"
                         apiParams={{ cloneId: jobId, fileName: "3" }}
-                        durationLimit={6}
+                        durationLimit={7}
                     />
                 </div>
                 </Card>

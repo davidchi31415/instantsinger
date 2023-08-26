@@ -10,7 +10,7 @@ import Link from "next/link";
 import { FileUploader } from "@/components/file-uploader";
 
 const contents = [
-    {isUpload: false, content: `Hello and welcome! You are currently reading (out loud) an essay we wrote, for the purpose of collecting voice data to create your AI clone. Take your time: don’t rush through this. As long as you can finish reading this essay in 6 minutes, you are reading fast enough. But try not to read too slowly either; keep to a normal speaking pace.`},
+    {isUpload: false, content: `[START RECORDING] Hello and welcome! You are currently reading (out loud) an essay we wrote, for the purpose of collecting voice data to create your AI clone. Take your time: don’t rush through this. As long as you can finish reading this essay in 6 minutes, you are reading fast enough. But try not to read too slowly either; keep to a normal speaking pace.`},
     {isUpload: false, content: `We're thrilled to introduce you to this special tool powered by AI, designed especially for those who dream of singing. Imagine being able to transform any song you like into your own voice, sounding just like your favorite singer. Yes, it's possible, no matter how you sing right now.`},
     {isUpload: false, content: `Our aim in creating this tool was to provide you with the ultimate practice aid. You can now listen to yourself singing like a professional, helping you practice better and feel more confident. This means you can hear yourself singing as perfectly as your favorite singer. Isn't that amazing?`},
     {isUpload: false, content: `Using this AI tool is quite easy. Once your voice is cloned, you're all set. The data you provide helps us create a clone tailored just for you. This clone can then be used with any song you choose. To do this properly, we need a variety of voice data covering your entire vocal range.`},
@@ -23,7 +23,7 @@ const contents = [
     {isUpload: false, content: `When choosing songs to convert, remember that the audio quality and style matter. Simple vocal recordings work best. Behind the scenes, your AI clone works to transform voices into your own, but it can only work on voices. Thus, if there are instruments in the song, the vocals will need to be extracted. Don’t worry, we'll handle it for you. 
     If there's a chorus or background vocals, we will separate those too.`},
     {isUpload: false, content: `Though we can handle songs with lots of instruments and background sounds, our AI does better with strong lead vocals. As an example, think of songs with just an acoustic guitar – those work great. Reducing background noise helps avoid any odd sounds from the AI.`},
-    {isUpload: true, content: `Lastly, try to pick songs within your singing range. The AI can't go higher or lower than the notes you provide. This is where the following step, Step 2: Pitches, comes in handy. We'll give you a series of pitches to sing along with to cover your vocal range. You've finished speaking for now. It's time for the pitch test. Keep it up – you're doing fantastic! [STOP]`},
+    {isUpload: true, content: `Lastly, try to pick songs within your singing range. The AI can't go higher or lower than the notes you provide. This is where the following step, Step 2: Pitches, comes in handy. We'll give you a series of pitches to sing along with to cover your vocal range. You've finished speaking for now. It's time for the pitch test. Keep it up – you're doing fantastic! [STOP RECORDING]`},
 ];
 
 const CloningStep1Slides = ({ jobId }) => {
