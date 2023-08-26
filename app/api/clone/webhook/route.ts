@@ -34,30 +34,30 @@ export async function POST(req: NextRequest) {
         if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
 
             // TODO - REFUND the user
+        } else {
+            if (cloneJob.name) {
+                await prismadb.clone.create({
+                    data: { 
+                        id: jobId,
+                        userId: cloneJob.userId, 
+                        name: cloneJob.name
+                    }
+                });
+            } else {
+                await prismadb.clone.create({
+                    data: {
+                        id: jobId,
+                        userId: cloneJob.userId,
+                        name: cloneJob.id // TODO - find a way to fix this (although it should never really matter)
+                    }
+                })
+            }
+        
+            // TO-DO - Delete all training data / also configure Google Cloud to do this        
         }
 
         await prismadb.cloneJob.update({ where: { id: jobId },  data: { status, message: error ? error : "" } });
     }
     
-    if (cloneJob.name) {
-        await prismadb.clone.create({
-            data: { 
-                id: jobId,
-                userId: cloneJob.userId, 
-                name: cloneJob.name
-            }
-        });
-    } else {
-        await prismadb.clone.create({
-            data: {
-                id: jobId,
-                userId: cloneJob.userId,
-                name: cloneJob.id // TODO - find a way to fix this (although it should never really matter)
-            }
-        })
-    }
-
-    // TO-DO - Delete all training data / also configure Google Cloud to do this
-
     return new NextResponse(null, { status: 200 }); // IMPORTANT feedback
 }
