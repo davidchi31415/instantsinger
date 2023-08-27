@@ -1,11 +1,7 @@
-import { AudioCard } from "@/components/audio-card";
-import { ConversionResultsComponent } from "@/components/conversion-results";
+import { CloneResultsComponent } from "@/components/clone-results";
 import { Empty } from "@/components/empty";
-import { Button } from "@/components/ui/button";
-import { getCloneResults, getConversion, getConversionResults } from "@/lib/runpod";
-import { downloadFromURL, getFileName } from "@/lib/utils";
+import { getClone, getCloneResults } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
-import { DownloadIcon } from "lucide-react";
 
 
 const getResults = async ({ cloneId }: { cloneId: string }) => {
@@ -28,9 +24,10 @@ const CloneResultsPage = async ({
         </div>
     )
 
+    const clone = await getClone({ cloneId });
     const results = await getResults({ cloneId });
 
-    if (!results) {
+    if (!clone || !results) {
         return (
             <div className="px-4 lg:px-8">
                 <Empty label="Either the clone does not exist, or results are not ready. :("/> 
@@ -39,30 +36,7 @@ const CloneResultsPage = async ({
     } else {
         return (
             <div className="px-4 lg:px-8">
-                <div className="mb-2 text-xl">Results for </div>
-                {results?.urls?.length ? 
-                    <div className="border border-black/10 rounded-md p-4">
-                        {results?.urls?.map((url, i) => {
-                            return (
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <div className="font-medium mb-2">
-                                            Sample {i+1}
-                                        </div>
-                                        <Button variant="ghost" size="icon" 
-                                            onClick={() => downloadFromURL(url, `sample_${i+1}.wav`)}
-                                        >
-                                            <DownloadIcon />
-                                        </Button>
-                                    </div>
-                                    <div>
-                                        <AudioCard url={url} />
-                                    </div>
-                                </div>  
-                            )
-                        })}
-                    </div>
-                    : ""}
+                <CloneResultsComponent results={results} clone={clone} />
             </div>
         )
     }
