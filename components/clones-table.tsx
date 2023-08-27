@@ -16,6 +16,7 @@ import { useState } from "react";
 import { isJobDone } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
+import Link from "next/link";
 
 interface ClonesTableProps {
     userData: {
@@ -45,6 +46,7 @@ export const ClonesTable = ({ userData, currentJobStatus, onCurrentJobUpdate }: 
                     <TableRow>
                         <TableHead className="w-[8em]">Date</TableHead>
                         <TableHead>Name</TableHead>
+                        <TableHead></TableHead>
                         <TableHead className="text-right"><div className="pr-2">Status</div></TableHead>
                     </TableRow>
                 </TableHeader>
@@ -56,6 +58,13 @@ export const ClonesTable = ({ userData, currentJobStatus, onCurrentJobUpdate }: 
                                     {format(job.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
                                 <TableCell>{job.name}</TableCell>
+                                <TableCell className="text-right">
+                                    <Link href={`/clone/result?id=${job.id}`}>
+                                        <Button>
+                                            Demo
+                                        </Button>
+                                    </Link>
+                                </TableCell>
                                 <TableCell className="text-right">
                                     <Badge className="bg-[#33ff66] text-black">
                                         READY

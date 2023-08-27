@@ -281,7 +281,7 @@ export const _submitCloneJob = async ({
             "arguments": {
                 "input_id": jobId,
                 "model_id": modelId,
-                "num_epoch": 1,
+                "num_epoch": 100,
                 "save_every": 150,
                 "batch_size": 8,
                 "pitch_extraction_algorithm": "mangio-crepe",
@@ -416,4 +416,16 @@ export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
     });
 
     return unsubmittedCloneJob;
+}
+
+export const getCloneResults = async ({ cloneId }) => {
+    const fileNames = [`${cloneId}_sample_1`, `${cloneId}_sample_2`];
+
+    const urls = await Promise.all(
+        fileNames.map(
+            async (name) => await getDownloadURL({ directory: "inference_outputs", fileName: name })
+        )
+    );
+
+    return { fileNames, urls };
 }

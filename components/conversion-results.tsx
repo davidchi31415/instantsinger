@@ -27,7 +27,7 @@ export const ConversionResultsComponent = ({ results }: ConversionResultsCompone
                                         { getFileName(`converted_${results.songName}`) }
                                     </div>
                                     <Button variant="ghost" size="icon" 
-                                        onClick={() => downloadFromURL(url, `converted_${results.songName}`)}
+                                        onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
                                     >
                                         <DownloadIcon />
                                     </Button>
