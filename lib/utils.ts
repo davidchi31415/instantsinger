@@ -45,3 +45,9 @@ export function exclude(data, keys) {
 
   return data;
 }
+
+export function parseYoutubeLink(url: string) {
+  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  var match = url.match(regExp);
+  return (match&&match[7].length==11)? match[7] : false;
+}

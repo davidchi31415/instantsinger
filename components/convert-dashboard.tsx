@@ -19,16 +19,25 @@ import { ConversionResultsComponent } from "@/components/conversion-results";
 import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
-import { cn } from "@/lib/utils";
+import { cn, parseYoutubeLink } from "@/lib/utils";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { useRouter } from "next/navigation";
+import YouTube, { YouTubeProps } from 'react-youtube';
 
 
 const ConvertDashboard = ({ userData }) => {
   const router = useRouter();
   const proModal = useProModal();
 
-  const [cloneChoice, setCloneChoice] = useState<string>("");
+  const [inputChoice, setInputChoice] = useState("youtube");
+  const [cloneChoice, setCloneChoice] = useState<string>(
+    userData?.cloneNames?.length === 1 ? userData.cloneNames[0] : ""
+  );
+
+  const [youtubeLink, setYoutubeLink] = useState("");
+  const [youtubeLinkValid, setYoutubeLinkValid] = useState(false);
+  const [youtubeError, setYoutubeError] = useState("");
+  const youtubeId = parseYoutubeLink(youtubeLink);
 
   const [fileKey, setFileKey] = useState(Date.now()); // For resetting file input
   const [fileUploaded, setFileUploaded] = useState(false);
@@ -64,18 +73,40 @@ const ConvertDashboard = ({ userData }) => {
     setFileKey(Date.now());
   }
 
+  const onPlayerReady: YouTubeProps['onReady'] = async (event) => {
+    // access to player in all event handlers via event.target
+    const duration = await event.target.getDuration();
+    if (duration / 60 > 10) {
+      setYoutubeError("Song exceeds 10 minutes");
+    }
+    setYoutubeLinkValid(true);
+  }
+
+  const opts: YouTubeProps['opts'] = {
+    height: '200',
+    width: '400',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      // autoplay: 1,
+    },
+  };
+
   const onSubmit = async () => {
       reset(); 
       setConverting(true);
       
-      if (!fileUploaded) return;
+      if (inputChoice === "upload" && !fileUploaded) return;
+      if (inputChoice === "youtube" && (youtubeError !== "" || youtubeLink === "" || !youtubeId)) return;
         
-      await axios.post("/api/convert", { 
+      const params = { 
         cloneName: cloneChoice,
         hasInstrumentals,
         hasBackingVocals,
-        convertBackingVocals 
-      })
+        convertBackingVocals,
+      };
+      if (inputChoice === "youtube") params["youtubeLink"] = youtubeLink;
+
+      await axios.post("/api/convert", params)
         .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })
         .catch((error) => {
           console.log("Error in submitting job");
@@ -122,6 +153,9 @@ const ConvertDashboard = ({ userData }) => {
     )
   }
 
+  const inputNotReady = ((inputChoice === "upload" && !fileUploaded) ||
+  (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
+
   return (
     <div>
         <div className="p-4 lg:px-8">
@@ -129,32 +163,86 @@ const ConvertDashboard = ({ userData }) => {
             <div id="upload-convert" 
               className="w-full lg:max-w-2xl relative"
             >
-              <div className="mb-4 font-bold text-2xl">Upload a Song</div>
-              <FileUploader 
-                uploadEndpoint="/api/convert/upload" 
-                onUpload={() => setFileUploaded(true)} 
-                isConvertUpload={true}
-                key={fileKey}
-                durationLimit={10}
-              />
-
-              <div className="mt-4 font-bold text-2xl">Choose Your Voice</div>
-              <div className="mt-4 grid items-center gap-1.5">
-                <Select onValueChange={(val) => setCloneChoice(val)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a Voice Clone" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {userData?.cloneNames?.map((name) =>
-                        <SelectItem value={name} className="cursor-pointer">{name}</SelectItem>)
-                      }
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+              <div className="mb-4 font-bold text-2xl">1. Song</div>
+              <div className="my-4 flex items-center gap-4">
+                <div>Input Method:</div>
+                <div className="w-[10rem]">
+                  <Select onValueChange={(val) => setInputChoice(val)}
+                    defaultValue={inputChoice}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose input method"/>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="youtube" className="cursor-pointer">YouTube</SelectItem>
+                        <SelectItem value="upload" className="cursor-pointer">Upload</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <div className="mt-4 font-bold text-2xl">Conversion Settings</div>
+              {inputChoice === "youtube" ?
+                <div>
+                  <div className="my-4 flex items-center gap-4">
+                    <div>Song URL:</div>
+                    <div className="w-[25rem]">
+                      <Input 
+                        placeholder="ex: https://youtube.com/watch?v=0yW7w8F2TVA"
+                        onChange={(e) => {
+                          setYoutubeLink(e.target.value);
+                          setYoutubeError("");
+                          setYoutubeLinkValid(false);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  {youtubeId ?
+                    <div className="my-4 flex justify-center">
+                      <YouTube videoId={youtubeId}
+                        opts={opts} onReady={onPlayerReady} 
+                        onError={() => setYoutubeError("YouTube video not found")}
+                      />
+                    </div>
+                    : ""
+                  }
+                  {youtubeLink !== "" && (!youtubeId || youtubeError !== "") ?
+                    <AlertCard variant="destructive" title="Error" 
+                      message={youtubeError !== "" ? youtubeError : "YouTube video not found"} /> 
+                      : ""
+                  }
+                </div>
+                :
+                <FileUploader 
+                  uploadEndpoint="/api/convert/upload" 
+                  onUpload={() => setFileUploaded(true)} 
+                  isConvertUpload={true}
+                  key={fileKey}
+                  durationLimit={10}
+                />
+              }
+
+              <div className="mt-8 font-bold text-2xl">2. Settings</div>
+              <div className="mt-4 flex items-center gap-4">
+                <div>Voice Clone:</div>
+                <div className="w-[15rem]">
+                  <Select onValueChange={(val) => setCloneChoice(val)}
+                    {...(cloneChoice !== "" ? {defaultValue: cloneChoice} : {})}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a Voice Clone" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {userData?.cloneNames?.map((name) =>
+                          <SelectItem value={name} className="cursor-pointer">{name}</SelectItem>)
+                        }
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
               <div className="my-4 flex items-center gap-2">
                 <Checkbox
                   id="has_instr"
@@ -199,7 +287,7 @@ const ConvertDashboard = ({ userData }) => {
                 <Button
                   type="submit"
                   size="lg" className="text-xl rounded-r-none border-2 border-black border-r-none"
-                  disabled={cloneChoice === "" || !fileUploaded || isConverting}
+                  disabled={cloneChoice === "" || inputNotReady || isConverting}
                   onClick={onSubmit}
                 >
                 Convert

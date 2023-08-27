@@ -15,7 +15,8 @@ export async function POST(
             cloneName, 
             hasInstrumentals,
             hasBackingVocals,
-            convertBackingVocals 
+            convertBackingVocals ,
+            youtubeLink
         } = body;
 
         if (!userId) {
@@ -39,15 +40,17 @@ export async function POST(
         if (!currentJob) {
             return new NextResponse("No upload found", { status: 500 });
         }
-        // TODO - actual file checking with Google Cloud
 
-        const runpodResponse = await _submitConvertJob({
+        const params = {
             modelId: clone.id,
             hasInstrumentals,
             hasBackingVocals,
             convertBackingVocals,
             jobId: currentJob.id
-        });
+        };
+        if (youtubeLink) params["youtubeLink"] = youtubeLink;
+
+        const runpodResponse = await _submitConvertJob(params);
         const runpodJobId = runpodResponse.data.id;
         const status = runpodResponse.data.status;
         
