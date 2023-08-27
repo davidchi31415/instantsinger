@@ -368,6 +368,9 @@ export const getClones = async ({ userId }: GetClonesProps) => {
     const clones = await prismadb.clone.findMany({
         where: {
             userId
+        },
+        orderBy: {
+            createdAt: "desc"
         }
     });
 
