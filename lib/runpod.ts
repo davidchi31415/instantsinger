@@ -9,7 +9,7 @@ interface RunpodConvertProps {
     hasBackingVocals: boolean;
     convertBackingVocals: boolean;
     jobId: string;
-    youtubeLink?: string;
+    youtubeId?: string;
 }
 
 interface RunpodCloneProps {
@@ -59,7 +59,7 @@ export const _submitConvertJob = async ({
     hasInstrumentals,
     hasBackingVocals,
     convertBackingVocals,
-    youtubeLink
+    youtubeId
 }: RunpodConvertProps) => {
     const response = await axios.post("https://api.runpod.ai/v2/9afi4omg7sdwt6/run", {
         "input": {   
@@ -67,7 +67,7 @@ export const _submitConvertJob = async ({
                 "input_id": jobId,
                 "output_id": jobId,
                 "model_id": modelId,
-                "youtube_link": youtubeLink ? youtubeLink : "",
+                "youtube_id": youtubeId ? youtubeId : "",
                 "has_instruments": hasInstrumentals,
                 "has_backing_vocals": hasBackingVocals,
                 "convert_backing_vocals": convertBackingVocals,

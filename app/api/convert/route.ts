@@ -16,7 +16,7 @@ export async function POST(
             hasInstrumentals,
             hasBackingVocals,
             convertBackingVocals ,
-            youtubeLink
+            youtubeId
         } = body;
 
         if (!userId) {
@@ -48,7 +48,7 @@ export async function POST(
             convertBackingVocals,
             jobId: currentJob.id
         };
-        if (youtubeLink) params["youtubeLink"] = youtubeLink;
+        if (youtubeId) params["youtubeId"] = youtubeId;
 
         const runpodResponse = await _submitConvertJob(params);
         const runpodJobId = runpodResponse.data.id;

@@ -104,7 +104,7 @@ const ConvertDashboard = ({ userData }) => {
         hasBackingVocals,
         convertBackingVocals,
       };
-      if (inputChoice === "youtube") params["youtubeLink"] = youtubeLink;
+      if (inputChoice === "youtube") params["youtubeId"] = youtubeId;
 
       await axios.post("/api/convert", params)
         .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })
