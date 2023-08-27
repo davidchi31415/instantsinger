@@ -11,8 +11,8 @@ export function absoluteUrl(path: string) {
 }
 
 export function getFileName (str: string) {
-  if (str.length > 20) {
-    return str.substring(0, 10) + '...' + str.substring(str.length - 10, str.length);
+  if (str.length > 50) {
+    return str.substring(0, 25) + '...' + str.substring(str.length - 25, str.length);
   }
 
   return str;
