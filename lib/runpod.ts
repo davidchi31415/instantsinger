@@ -61,31 +61,34 @@ export const _submitConvertJob = async ({
     convertBackingVocals,
     youtubeId
 }: RunpodConvertProps) => {
+    const params = {
+        "output_id": jobId,
+        "model_id": modelId,
+        "youtube_id": youtubeId ? youtubeId : "",
+        "has_instruments": hasInstrumentals,
+        "has_backing_vocals": hasBackingVocals,
+        "convert_backing_vocals": convertBackingVocals,
+        "transpose": 0,
+        "pitch_extraction_algorithm": "mangio-crepe",
+        "search_feature_ratio": 0.66,
+        "filter_radius": 3,
+        "resample_output": 0,
+        "volume_envelope": 0.21,
+        "voiceless_protection": 0.33,
+        "hop_len": 120,
+        "vr_chunks": 55,
+        "vr_shifts": 5,
+        "vr_demucs": "off",
+        "vr_mixing_algorithm": "default", // [min_mag, max_mag, default] 
+        "vr_normalise": 1, 
+        "vr_denoise": 0
+    };
+
+    if (!youtubeId) params["input_id"] = jobId;
+
     const response = await axios.post("https://api.runpod.ai/v2/9afi4omg7sdwt6/run", {
         "input": {   
-            "arguments": {
-                "input_id": jobId,
-                "output_id": jobId,
-                "model_id": modelId,
-                "youtube_id": youtubeId ? youtubeId : "",
-                "has_instruments": hasInstrumentals,
-                "has_backing_vocals": hasBackingVocals,
-                "convert_backing_vocals": convertBackingVocals,
-                "transpose": 0,
-                "pitch_extraction_algorithm": "mangio-crepe",
-                "search_feature_ratio": 0.66,
-                "filter_radius": 3,
-                "resample_output": 0,
-                "volume_envelope": 0.21,
-                "voiceless_protection": 0.33,
-                "hop_len": 120,
-                "vr_chunks": 55,
-                "vr_shifts": 5,
-                "vr_demucs": "off",
-                "vr_mixing_algorithm": "default", // [min_mag, max_mag, default] 
-                "vr_normalise": 1, 
-                "vr_denoise": 0
-            }
+            "arguments": params
         },
         "webhook": `${process.env.NEXT_PUBLIC_APP_URL}/api/convert/webhook?id=${jobId}`
     }, {
