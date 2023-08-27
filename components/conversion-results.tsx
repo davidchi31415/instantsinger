@@ -43,8 +43,12 @@ export const ConversionResultsComponent = ({ results }) => {
                 <AlertCard variant="destructive" title="Internal Error"
                 message={results.message} />
                 <p className="pt-4">
-                    You have been refunded your conversion credit. 
+                    You have been <b>refunded</b> your conversion credit. 
                     Please contact us for assistance!
+                </p>
+                <p>
+                    Note: If the reason for error was due to the YouTube link,
+                    please try a different link or upload a file instead.
                 </p>
             </div>
         )

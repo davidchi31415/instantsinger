@@ -15,7 +15,7 @@ import { ProgressCard } from "./progress-card";
 import { useState } from "react";
 import { isJobDone } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, HelpCircleIcon, PlayIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -48,30 +48,33 @@ export const ClonesTable = ({ userData }: ClonesTableProps) => {
                     <TableRow>
                         <TableHead className="w-[8em]">Date</TableHead>
                         <TableHead>Name</TableHead>
-                        <TableHead></TableHead>
                         <TableHead className="text-right"><div className="pr-2">Status</div></TableHead>
+                        <TableHead></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {rows.slice(pageIndex * rowsPerPage, (pageIndex+1) * rowsPerPage).map((row) => {
                         if (!row?.status) {
-                            return <TableRow>
+                            return <TableRow
+                                    className="cursor-pointer"
+                                    onClick={() => { router.push(`/clone/result?id=${row.id}`) }}
+                                >
                                 <TableCell className="font-medium">
                                     {format(row.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell className="text-right">
-                                    <Link href={`/clone/result?id=${row.id}`}>
-                                        <Button>
-                                            Demo
-                                        </Button>
-                                    </Link>
-                                </TableCell>
-                                <TableCell className="text-right">
                                     <Badge className="bg-[#33ff66] text-black">
                                         READY
                                     </Badge>
-                                </TableCell>   
+                                </TableCell>
+                                <TableCell>
+                                    <Link href={`/clone/result?id=${row.id}`}>
+                                        <Button variant="ghost" size="icon">
+                                            <PlayIcon />
+                                        </Button>
+                                    </Link>
+                                </TableCell>
                             </TableRow>
                         } else {
                             return <TableRow>
@@ -80,20 +83,20 @@ export const ClonesTable = ({ userData }: ClonesTableProps) => {
                                 </TableCell>
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell className="text-right">
-                                    <Link href={`/clone/result?id=${row.id}`}>
-                                        {row.status === "FAILED" ?
-                                            <Button>Reason</Button>
-                                            : ""}
-                                    </Link>
-                                </TableCell>
-                                <TableCell className="text-right">
                                     <ProgressCard 
                                         process="Cloning" apiEndpoint="/api/clone/status" apiId={row.id}
                                         onStatusChange={() => router.refresh()}
                                         badgeOnly={true}
                                         initStatus={row.status}
                                     />
-                                </TableCell>   
+                                </TableCell>
+                                <TableCell>
+                                    <Link href={`/clone/result?id=${row.id}`}>
+                                        <Button variant="ghost" size="icon">
+                                            <HelpCircleIcon />
+                                        </Button>
+                                    </Link>
+                                </TableCell>
                             </TableRow>
                         }
                         })}

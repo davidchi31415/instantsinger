@@ -17,7 +17,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
-import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, HelpCircle, HelpCircleIcon, PlayIcon } from "lucide-react";
 import { isJobDone } from "@/lib/utils";
 
 type ConvertJob = {
@@ -57,6 +57,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                         <TableHead>Song Name</TableHead>
                         <TableHead>Clone Name</TableHead>
                         <TableHead className="text-right"><div className="pr-2">Status</div></TableHead>
+                        <TableHead></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -79,7 +80,14 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                                     }>
                                         {job.status}
                                     </Badge>
-                                </TableCell>   
+                                </TableCell>
+                                <TableCell>
+                                    <Link href={`/convert/result?id=${job.id}`}>
+                                        <Button variant="ghost" size="icon">
+                                            {job.status === "COMPLETED" ? <PlayIcon /> : <HelpCircleIcon />}
+                                        </Button>
+                                    </Link>
+                                </TableCell>
                             </TableRow>
                         } else {
                             return <TableRow>

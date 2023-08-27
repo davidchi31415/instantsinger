@@ -10,7 +10,7 @@ export const CloneResultsComponent = ({ results, cloneJob }) => {
     if (results?.urls) {
         return (
             <div>
-                <div className="mb-2 text-xl">Results for {cloneJob.name}</div>
+                <div className="mb-2 text-xl">Sample Conversions for {cloneJob.name}</div>
                 {results?.urls?.length ? 
                     <div className="border border-black/10 rounded-md p-4">
                         {results?.urls?.map((url, i) => {
@@ -43,8 +43,8 @@ export const CloneResultsComponent = ({ results, cloneJob }) => {
                 <AlertCard variant="destructive" title="Internal Error"
                 message={results.message} />
                 <p className="pt-4">
-                    You have been refunded your cloning credit. 
-                    Please contact us for assistance!
+                    You have been <b>refunded</b> your cloning credit. 
+                    <b>Please contact us for assistance</b> before retrying!
                 </p>
             </div>
         )
