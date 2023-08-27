@@ -37,6 +37,7 @@ model ConvertJob {
   runpodJobId String? // MUST be filled in after job is submitted
   status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
   message String? // Only if FAILED
+  userMessage String? // only if FAILED and message needed to relay to user
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

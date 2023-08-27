@@ -1,14 +1,14 @@
 import { CloneResultsComponent } from "@/components/clone-results";
 import { Empty } from "@/components/empty";
-import { getClone, getCloneResults } from "@/lib/runpod";
+import { getClone, getCloneJob, getCloneResults } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 
 
-const getResults = async ({ clone }) => {
+const getResults = async ({ cloneJob }) => {
     const { userId } = auth();
     if (userId === null) return;
 
-    const res = await getCloneResults({ clone });
+    const res = await getCloneResults({ cloneJob });
     return res;
 }
 
@@ -24,26 +24,26 @@ const CloneResultsPage = async ({
         </div>
     )
 
-    const clone = await getClone({ cloneId });
-    if (!clone) {
+    const cloneJob = await getCloneJob({ cloneJobId: cloneId });
+    if (!cloneJob) {
         return (
             <div className="px-4 lg:px-8">
-                <Empty label="Either the clone does not exist, or results are not ready. :("/> 
+                <Empty label="Could not find clone. :("/> 
             </div>
         )
     }
 
-    const results = await getResults({ clone });
+    const results = await getResults({ cloneJob });
     if (!results) {
         return (
             <div className="px-4 lg:px-8">
-                <Empty label="Either the clone does not exist, or results are not ready. :("/> 
+                <Empty label="Cloning results are not ready. :("/> 
             </div>
         )
     } else {
         return (
             <div className="px-4 lg:px-8">
-                <CloneResultsComponent results={results} clone={clone} />
+                <CloneResultsComponent results={results} cloneJob={cloneJob} />
             </div>
         )
     }

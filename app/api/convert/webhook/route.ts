@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
+import { updateCredits } from "@/lib/credits";
 
 // TO-DO - Make sure CORS is activated
 
@@ -29,10 +30,20 @@ export async function POST(req: NextRequest) {
             { where: { id: jobId }, data: { status: "FAILED", message: output?.body ? output.body : "" } }
         );
 
-        // TODO - REFUND the user
+        // REFUND the user
+        await updateCredits({ userId: job.userId, convertDelta: 1 });
+    } else if (output?.statusCode === 403) {
+        await prismadb.convertJob.update(
+            { where: { id: jobId }, data: { status: "FAILED", message: output?.body, 
+            userMessage: "Issue downloading song from YouTube. Try another link." } }
+        );
+
+        // REFUND the user
+        await updateCredits({ userId: job.userId, convertDelta: 1 });
     } else {
         if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
             // TODO - REFUND the user
+            await updateCredits({ userId: job.userId, convertDelta: 1 });
         }
         await prismadb.convertJob.update({ where: { id: jobId },  data: { status, message: error ? error : "" } });
     }

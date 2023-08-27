@@ -261,6 +261,10 @@ export const getConversion = async ({ userId, conversionId }: GetConversionProps
 
 export const getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
     if (!isJobDone({ status: convertJob.status })) return;
+
+    if (convertJob.status === "FAILED") {
+        return exclude(convertJob, ["userId"]);
+    }
     
     const fileNames = (convertJob.hasInstrumentals || convertJob.hasBackingVocals) ?
         ["combined.wav"] // , "background.wav", "vocals.wav"] 
@@ -411,6 +415,18 @@ export const getMostRecentCloneJob = async ({ userId }: PrismadbProps) => {
     return exclude(job, ["userId"]);
 };
 
+export const getCloneJob = async ({ cloneJobId }) => {
+    const job = await prismadb.cloneJob.findUnique({
+        where: {
+            id: cloneJobId,
+        }
+    });
+
+    if (!job) return;
+    
+    return exclude(job, ["userId"]);
+}
+
 export const getCurrentClones = async ({ userId }) => {
     const cloneJobs = await prismadb.cloneJob.findMany({
         where: {
@@ -438,8 +454,14 @@ export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
     return unsubmittedCloneJob;
 }
 
-export const getCloneResults = async ({ clone }) => {
-    const fileNames = [`${clone.id}_sample_1`, `${clone.id}_sample_2`];
+export const getCloneResults = async ({ cloneJob }) => {
+    if (!isJobDone({ status: cloneJob.status })) return;
+
+    if (cloneJob.status === "FAILED") {
+        return exclude(cloneJob, ["userId"]);
+    }
+
+    const fileNames = [`${cloneJob.id}_sample_1`, `${cloneJob.id}_sample_2`];
 
     const urls = await Promise.all(
         fileNames.map(

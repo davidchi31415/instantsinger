@@ -6,10 +6,11 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ClonesDashboard } from "@/components/clones-dashboard";
 import { isJobDone } from "@/lib/utils";
+import prismadb from "@/lib/prismadb";
 
 interface CloneData {
     clones: any[];
-    currentJob: any;
+    jobs: any[];
 }
 
 const getUserData = async () => {
@@ -17,12 +18,18 @@ const getUserData = async () => {
     if (userId === null) return { clones: [], currentJob: null };
 
     const clones = await getClones({ userId });
-    const res: CloneData = { clones, currentJob: null };
-
-    const currentJob = await getMostRecentCloneJob({ userId });
-    if (currentJob && currentJob.status !== "NOT_SUBMITTED" && !isJobDone({ status: currentJob.status })) {
-        res.currentJob = currentJob;
-    }
+    const jobs = await prismadb.cloneJob.findMany({ 
+        where: { 
+            userId, 
+            NOT: { 
+                OR: [ 
+                    { status: "COMPLETED" }, 
+                    { status: "NOT_SUBMITTED" }
+                ] 
+            }
+        }
+    });
+    const res: CloneData = { clones, jobs };
 
     return res;
 }

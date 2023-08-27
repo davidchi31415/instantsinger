@@ -15,16 +15,12 @@ import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
 interface ClonesDashboardProps {
     userData: {
         clones: any[];
-        currentJob: any;
+        jobs: any[];
     }
     defaultTabClone?: boolean;
 }
 
 export const ClonesDashboard = ({ userData, defaultTabClone }: ClonesDashboardProps) => {
-    const [cloningStatus, setCloningStatus] = useState<string>(
-        userData.currentJob !== null ? userData.currentJob.status : ""
-    )
-
     return (
         <Tabs defaultValue={defaultTabClone ? "create" : "my-clones"} className="flex flex-col items-center gap-8">
             <TabsList className="py-6 gap-2 bg-primary/20">
@@ -34,10 +30,7 @@ export const ClonesDashboard = ({ userData, defaultTabClone }: ClonesDashboardPr
 
             <TabsContent value="my-clones">
                 <div className="w-[20rem] lg:w-[40rem] xl:w-[50rem]">
-                    <ClonesTable userData={userData} 
-                        currentJobStatus={cloningStatus}
-                        onCurrentJobUpdate={setCloningStatus} 
-                    />
+                    <ClonesTable userData={userData} />
                 </div>
             </TabsContent>
 

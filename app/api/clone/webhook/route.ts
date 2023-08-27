@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
+import { updateCredits } from "@/lib/credits";
 
 // TO-DO - Make sure CORS is activated
 
@@ -29,11 +30,13 @@ export async function POST(req: NextRequest) {
             { where: { id: jobId }, data: { status: "FAILED", message: output?.body ? output.body : "" } }
         );
 
-        // TODO - REFUND the user
+        // REFUND the user
+        await updateCredits({ userId: cloneJob.userId, convertDelta: 1 });
     } else {
         if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
 
-            // TODO - REFUND the user
+            // REFUND the user
+            await updateCredits({ userId: cloneJob.userId, convertDelta: 1 });
         } else {
             if (cloneJob.name) {
                 await prismadb.clone.create({

@@ -17,25 +17,27 @@ import { isJobDone } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface ClonesTableProps {
     userData: {
         clones: any[];
-        currentJob: any;
+        jobs: any[];
     }
-    currentJobStatus: string;
-    onCurrentJobUpdate: Function;
 }
 
-export const ClonesTable = ({ userData, currentJobStatus, onCurrentJobUpdate }: ClonesTableProps) => {
+export const ClonesTable = ({ userData }: ClonesTableProps) => {
+    const router = useRouter();
     const [pageIndex, setPageIndex] = useState(0);
-    const jobsPerPage = 12;
+    const rowsPerPage = 12;
 
-    const [jobs, setJobs] = useState(userData.currentJob ? [userData.currentJob, ...userData.clones] : userData.clones);
-    const numPages = Math.ceil(jobs.length / jobsPerPage);
+    const rows = userData.jobs ? 
+        [...userData.jobs, ...userData.clones].sort((a, b) => b.createdAt - a.createdAt)
+        : userData.clones;
+    const numPages = Math.ceil(rows.length / rowsPerPage);
+
+    console.log(rows);
  
-    console.log(jobs)
-
     return (
         <>
             <div className="text-center mb-4 text-muted-foreground">
@@ -51,15 +53,15 @@ export const ClonesTable = ({ userData, currentJobStatus, onCurrentJobUpdate }: 
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {jobs.slice(pageIndex * jobsPerPage, (pageIndex+1) * jobsPerPage).map((job) => {
-                        if (!job?.status) {
+                    {rows.slice(pageIndex * rowsPerPage, (pageIndex+1) * rowsPerPage).map((row) => {
+                        if (!row?.status) {
                             return <TableRow>
                                 <TableCell className="font-medium">
-                                    {format(job.createdAt, 'MM/dd/yyyy')}
+                                    {format(row.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
-                                <TableCell>{job.name}</TableCell>
+                                <TableCell>{row.name}</TableCell>
                                 <TableCell className="text-right">
-                                    <Link href={`/clone/result?id=${job.id}`}>
+                                    <Link href={`/clone/result?id=${row.id}`}>
                                         <Button>
                                             Demo
                                         </Button>
@@ -74,15 +76,22 @@ export const ClonesTable = ({ userData, currentJobStatus, onCurrentJobUpdate }: 
                         } else {
                             return <TableRow>
                                 <TableCell className="font-medium">
-                                    {format(job.createdAt, 'MM/dd/yyyy')}
+                                    {format(row.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
-                                <TableCell>{job.name}</TableCell>
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell className="text-right">
+                                    <Link href={`/clone/result?id=${row.id}`}>
+                                        {row.status === "FAILED" ?
+                                            <Button>Reason</Button>
+                                            : ""}
+                                    </Link>
+                                </TableCell>
                                 <TableCell className="text-right">
                                     <ProgressCard 
-                                        process="Cloning" apiEndpoint="/api/clone/status" apiId={job.id}
-                                        initStatus={currentJobStatus}
-                                        onStatusChange={onCurrentJobUpdate}
+                                        process="Cloning" apiEndpoint="/api/clone/status" apiId={row.id}
+                                        onStatusChange={() => router.refresh()}
                                         badgeOnly={true}
+                                        initStatus={row.status}
                                     />
                                 </TableCell>   
                             </TableRow>
