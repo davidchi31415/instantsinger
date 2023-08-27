@@ -32,7 +32,9 @@ export const ConversionResultsComponent = ({ results }: ConversionResultsCompone
                                             <DownloadIcon />
                                         </Button>
                                 </div>
-                                <AudioCard url={url} />
+                                <div className={i === 0 ? "border-4 border-primary/50 rounded-xl" : ""}>
+                                    <AudioCard url={url} />
+                                </div>
                             </div>  
                         )
                     })}

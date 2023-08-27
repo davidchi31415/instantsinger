@@ -129,7 +129,7 @@ const ConvertDashboard = ({ userData }) => {
             <div id="upload-convert" 
               className="w-full lg:max-w-2xl relative"
             >
-              <div className="mb-4 font-bold text-2xl">Input</div>
+              <div className="mb-4 font-bold text-2xl">Upload a Song</div>
               <FileUploader 
                 uploadEndpoint="/api/convert/upload" 
                 onUpload={() => setFileUploaded(true)} 
@@ -138,7 +138,7 @@ const ConvertDashboard = ({ userData }) => {
                 durationLimit={10}
               />
 
-              <div className="mt-4 font-bold text-2xl">Voice Clone</div>
+              <div className="mt-4 font-bold text-2xl">Choose Your Voice</div>
               <div className="mt-4 grid items-center gap-1.5">
                 <Select onValueChange={(val) => setCloneChoice(val)}>
                   <SelectTrigger>
@@ -155,7 +155,7 @@ const ConvertDashboard = ({ userData }) => {
               </div>
 
               <div className="mt-4 font-bold text-2xl">Conversion Settings</div>
-              <div className="flex items-center gap-2">
+              <div className="my-4 flex items-center gap-2">
                 <Checkbox
                   id="has_instr"
                   className="w-6 h-6" 
@@ -163,8 +163,7 @@ const ConvertDashboard = ({ userData }) => {
                   onCheckedChange={() => setHasInstrumentals(val => !val)}
                 />
                 <div>
-                  <div className="font-medium mt-3">Does this song include instrumentals?</div>
-                  <div className="text-muted-foreground text-sm">If so, we must separate vocals from instrumentals.</div>
+                  <div className="font-medium">Does this song have instrumentals/background sounds?</div>
                 </div>
               </div>
               <div>
@@ -176,8 +175,7 @@ const ConvertDashboard = ({ userData }) => {
                     onCheckedChange={() => setHasBackingVocals(val => !val)}
                   />
                   <div>
-                    <div className="font-medium mt-3">Does this song include backing vocals/chorus?</div>
-                    <div className="text-muted-foreground text-sm">If so, we must separate the lead vocals from the chorus.</div>
+                    <div className="font-medium">Does this song have multiple voices/backing vocals?</div>
                   </div>
                 </div>
                 {hasBackingVocals ?
@@ -189,8 +187,8 @@ const ConvertDashboard = ({ userData }) => {
                       onCheckedChange={() => setConvertBackingVocals(val => !val)}
                     />
                     <div>
-                      <div className="font-medium mt-3">Convert the backing vocals as well?</div>
-                      <div className="text-muted-foreground text-sm">If so, we will convert all vocals to your voice.</div>
+                      <div className="font-medium mt-3">Would you like to convert the backing vocals as well?</div>
+                      <div className="text-sm text-muted-foreground">This could get messy if there are many layers.</div>
                     </div>
                   </div> : ""}
               </div>
