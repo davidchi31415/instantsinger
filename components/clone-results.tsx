@@ -1,3 +1,5 @@
+"use client";
+
 import { downloadFromURL } from "@/lib/utils"
 import { Button } from "./ui/button"
 import { DownloadIcon } from "lucide-react"

@@ -4,11 +4,11 @@ import { getClone, getCloneResults } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 
 
-const getResults = async ({ cloneId }: { cloneId: string }) => {
+const getResults = async ({ clone }) => {
     const { userId } = auth();
     if (userId === null) return;
 
-    const res = await getCloneResults({ cloneId });
+    const res = await getCloneResults({ clone });
     return res;
 }
 
@@ -25,9 +25,16 @@ const CloneResultsPage = async ({
     )
 
     const clone = await getClone({ cloneId });
-    const results = await getResults({ cloneId });
+    if (!clone) {
+        return (
+            <div className="px-4 lg:px-8">
+                <Empty label="Either the clone does not exist, or results are not ready. :("/> 
+            </div>
+        )
+    }
 
-    if (!clone || !results) {
+    const results = await getResults({ clone });
+    if (!results) {
         return (
             <div className="px-4 lg:px-8">
                 <Empty label="Either the clone does not exist, or results are not ready. :("/> 
