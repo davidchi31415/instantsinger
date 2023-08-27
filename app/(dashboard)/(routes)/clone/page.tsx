@@ -15,7 +15,7 @@ interface CloneData {
 
 const getUserData = async () => {
     const { userId } = auth();
-    if (userId === null) return { clones: [], currentJob: null };
+    if (userId === null) return { clones: [], jobs: [] };
 
     const clones = await getClones({ userId });
     const jobs = await prismadb.cloneJob.findMany({ 
@@ -41,7 +41,7 @@ interface CloneHomePageProps {
 const CloneHomePage = async ({ searchParams }: CloneHomePageProps) => {
     const userData = await getUserData();
 
-    const defaultTabClone = (searchParams?.newClone || (!userData.clones?.length && !userData.currentJob)) ? true : false;
+    const defaultTabClone = (searchParams?.newClone || (!userData.clones?.length && !userData.jobs?.length)) ? true : false;
 
     return (
         <div>
