@@ -34,6 +34,7 @@ const ConvertDashboard = ({ userData }) => {
     userData?.cloneNames?.length === 1 ? userData.cloneNames[0] : ""
   );
 
+  const [youtubeKey, setYoutubeKey] = useState(Date.now()); // For resetting component
   const [youtubeLink, setYoutubeLink] = useState("");
   const [youtubeLinkValid, setYoutubeLinkValid] = useState(false);
   const [youtubeError, setYoutubeError] = useState("");
@@ -72,6 +73,7 @@ const ConvertDashboard = ({ userData }) => {
     setConversionId("");
     setResults(null);
     setFileKey(Date.now());
+    setYoutubeKey(Date.now());
   }
 
   const onPlayerReady: YouTubeProps['onReady'] = async (event) => {
@@ -126,6 +128,9 @@ const ConvertDashboard = ({ userData }) => {
         })
         .finally(() => {
           setFileUploaded(false);
+          setYoutubeLink("");
+          setYoutubeLinkValid(false);
+          setYoutubeName("");
         });
   }
 
@@ -208,6 +213,7 @@ const ConvertDashboard = ({ userData }) => {
                   {youtubeId ?
                     <div className="my-4 flex justify-center">
                       <YouTube videoId={youtubeId}
+                        key={youtubeKey}
                         opts={opts} onReady={onPlayerReady} 
                         onError={() => setYoutubeError("YouTube video not found")}
                       />
