@@ -257,7 +257,8 @@ export const getConversionResults = async ({ convertJob }: GetConvertResultProps
     if (!isJobDone({ status: convertJob.status })) return;
     
     const fileNames = (convertJob.hasInstrumentals || convertJob.hasBackingVocals) ?
-        ["combined.wav", "background.wav", "vocals.wav"] : ["vocals.wav"];
+        ["combined.wav"] // , "background.wav", "vocals.wav"] 
+        : ["vocals.wav"];
 
     const urls = await Promise.all(
         fileNames.map(

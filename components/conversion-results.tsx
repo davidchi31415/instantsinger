@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "./ui/button";
-import { downloadFromURL } from "@/lib/utils";
+import { downloadFromURL, getFileName } from "@/lib/utils";
 import { DownloadIcon } from "lucide-react";
 import { AudioCard } from "./audio-card";
 
@@ -24,15 +24,15 @@ export const ConversionResultsComponent = ({ results }: ConversionResultsCompone
                             <div className="mt-4">
                                 <div className="flex items-center justify-between">
                                     <div className="font-medium mb-2">
-                                        { results?.fileNames?.[i] }
+                                        { getFileName(`converted_${results.songName}`) }
                                     </div>
-                                        <Button variant="ghost" size="icon" 
-                                        onClick={() => downloadFromURL(url, results?.fileNames?.[i])}
-                                        >
-                                            <DownloadIcon />
-                                        </Button>
+                                    <Button variant="ghost" size="icon" 
+                                        onClick={() => downloadFromURL(url, `converted_${results.songName}`)}
+                                    >
+                                        <DownloadIcon />
+                                    </Button>
                                 </div>
-                                <div className={i === 0 ? "border-4 border-primary/50 rounded-xl" : ""}>
+                                <div>
                                     <AudioCard url={url} />
                                 </div>
                             </div>  
