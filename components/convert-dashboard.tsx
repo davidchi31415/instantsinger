@@ -37,6 +37,7 @@ const ConvertDashboard = ({ userData }) => {
   const [youtubeLink, setYoutubeLink] = useState("");
   const [youtubeLinkValid, setYoutubeLinkValid] = useState(false);
   const [youtubeError, setYoutubeError] = useState("");
+  const [youtubeName, setYoutubeName] = useState("");
   const youtubeId = parseYoutubeLink(youtubeLink);
 
   const [fileKey, setFileKey] = useState(Date.now()); // For resetting file input
@@ -79,7 +80,10 @@ const ConvertDashboard = ({ userData }) => {
     if (duration / 60 > 10) {
       setYoutubeError("Song exceeds 10 minutes");
     }
-    setYoutubeLinkValid(true);
+
+    const title = await (event.target as any).getVideoData()?.title;
+    setYoutubeName(title);
+    setYoutubeLinkValid(true); // Even if duration exceeded
   }
 
   const opts: YouTubeProps['opts'] = {
@@ -104,7 +108,10 @@ const ConvertDashboard = ({ userData }) => {
         hasBackingVocals,
         convertBackingVocals,
       };
-      if (inputChoice === "youtube") params["youtubeId"] = youtubeId;
+      if (inputChoice === "youtube") {
+        params["youtubeId"] = youtubeId;
+        params["youtubeName"] = youtubeName;
+      }
 
       await axios.post("/api/convert", params)
         .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })

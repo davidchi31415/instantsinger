@@ -15,8 +15,9 @@ export async function POST(
             cloneName, 
             hasInstrumentals,
             hasBackingVocals,
-            convertBackingVocals ,
-            youtubeId
+            convertBackingVocals,
+            youtubeId,
+            youtubeName
         } = body;
 
         if (!userId) {
@@ -33,12 +34,17 @@ export async function POST(
             return new NextResponse("Not enough credits", { status: 403 });
         } 
 
-        let currentJob = await prismadb.convertJob.findFirst({ 
-            where: { userId, status: "NOT_SUBMITTED" }, 
-            orderBy: { createdAt: "desc" }
-        });
-        if (!currentJob) {
-            return new NextResponse("No upload found", { status: 500 });
+        let currentJob;
+        if (youtubeId) {
+            currentJob = await prismadb.convertJob.create({ data: { userId, songName: youtubeName ? youtubeName : "Untitled" } })
+        } else {
+            currentJob = await prismadb.convertJob.findFirst({ 
+                where: { userId, status: "NOT_SUBMITTED" }, 
+                orderBy: { createdAt: "desc" }
+            });
+            if (!currentJob) {
+                return new NextResponse("No upload found", { status: 500 });
+            }
         }
 
         const params = {
