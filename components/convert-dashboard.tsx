@@ -83,8 +83,9 @@ const ConvertDashboard = ({ userData }) => {
       setYoutubeError("Song exceeds 10 minutes");
     }
 
-    const title = await (event.target as any).getVideoData()?.title;
-    setYoutubeName(title);
+    const data = await (event.target as any).getVideoData();
+    console.log(event.target)
+    setYoutubeName(data?.title);
     setYoutubeLinkValid(true); // Even if duration exceeded
   }
 
@@ -264,7 +265,7 @@ const ConvertDashboard = ({ userData }) => {
                   onCheckedChange={() => setHasInstrumentals(val => !val)}
                 />
                 <div>
-                  <div className="font-medium">Does this song have instrumentals/background sounds?</div>
+                  <div className="font-medium">Does this song have instrumentals (background sounds)?</div>
                 </div>
               </div>
               <div>
@@ -276,7 +277,7 @@ const ConvertDashboard = ({ userData }) => {
                     onCheckedChange={() => setHasBackingVocals(val => !val)}
                   />
                   <div>
-                    <div className="font-medium">Does this song have multiple voices/backing vocals?</div>
+                    <div className="font-medium">Does this song have multiple voices (backing vocals)?</div>
                   </div>
                 </div>
                 {hasBackingVocals ?
@@ -292,6 +293,14 @@ const ConvertDashboard = ({ userData }) => {
                       <div className="text-sm text-muted-foreground">This could get messy if there are many layers.</div>
                     </div>
                   </div> : ""}
+                  {hasBackingVocals ?
+                    <div className="mt-4">
+                      <AlertCard variant="warning" title="Important!"
+                        message="Songs with layers of voices singing at once are more
+                        difficult for our AI to handle. Our AI performs better when
+                        there is a single voice." />
+                    </div>
+                    : ""}
               </div>
 
               <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
