@@ -39,40 +39,48 @@ export const ClonesDashboard = ({ userData, defaultTabClone }: ClonesDashboardPr
                 <Card className="w-full lg:max-w-3xl bg-muted mb-4 p-4 text-xl
                     flex flex-col gap-2
                 ">
+                    <p>
+                        In this procedure, you will record yourself following along, using a device such
+                        as your laptop or phone. Record using an <b>external app</b> and save the files locally.
+                        You will be told when to upload them to our website.
+                    </p>
+                    <p>
+                        NOTE: In the instructions below, we <i>suggest</i> using your phone to record, but if your
+                        laptop or other device has better microphone quality, use that instead.
+                    </p>
+                    <hr className="my-2" />
                     <p>The following is an <b>IMPORTANT</b> checklist before you begin:</p>
                     <p>
                         1) Find a <b>quiet</b> environment, with no background noise.
                     </p>
                     <div>
-                        <div>2) Prepare <b>2 devices:</b></div>
+                        <div>2) Prepare the following devices:</div>
                         <ul className="list-disc p-0 ml-6">
                             <li>
-                                one for following along with this procedure (e.g., a laptop or tablet)
+                                a laptop or tablet to follow along with this procedure
                             </li>
                             <li>
-                                your phone, for recording yourself
+                                a microphone for recording yourself (e.g., your phone, or your laptop)
                             </li>
                         </ul>
                     </div>
-                    <div className="mt-4 flex justify-center">
+                    <div className="my-4 flex flex-col justify-center items-center">
                         <Image
                             alt="cloning setup"
                             width={500} height={500}
                             src="/cloning_setup.jpeg"
                         />
+                        <div className="mt-2 text-muted-foreground text-sm">Example setup, with a phone for recording</div>
                     </div>
                     <p>
-                        3) Set your phone within <b>1 foot away</b> from your face. Keep it close to you to prevent <b>room echo/reverb</b> from your surroundings.
+                        3) Set your microphone <b>close to your face</b>. This is to prevent <b>room echo/reverb</b> from your surroundings.
                         You can even put a blanket over your setup <a target="_blank" href="https://www.youtube.com/watch?v=sq2yoVwpRs8" rel="noopener noreferrer">
                             <span className="text-primary cursor-pointer">as shown in this video</span>
                         </a> for further echo-reduction.
                     </p>
                     <p>
-                        4) Have <b>headphones</b>, connected to your laptop, ready for later steps.
+                        4) Have <b>headphones</b>, connected to your laptop, ready for steps where you will need to sing along with a recording. This is to prevent audio other than your voice from being recorded.
                     </p>
-                    <div className="mt-4">
-                        If you have a studio microphone setup, you may use it instead of your phone.
-                    </div>
                 </Card>
                 <div className="w-full lg:max-w-3xl">
                     <AlertCard variant="warning" title="Caution" 

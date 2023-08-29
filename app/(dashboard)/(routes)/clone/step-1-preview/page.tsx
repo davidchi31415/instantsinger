@@ -23,6 +23,7 @@ const CloningStepPreview = () => {
               and it should take, in total, less than 6 minutes to read.
             </p>
             <p>Please record yourself reading it and save it to <b>a single audio file.</b></p>
+            <p>You will upload the file at the end of the step.</p>
             <p>
               <b>It is okay if you mess up</b> at any point. The point is to hear how you sound.
             </p>
