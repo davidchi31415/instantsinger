@@ -15,20 +15,20 @@ export default function DashboardPage() {
 
   const tools = [
     {
-      label: "Convert",
-      icon: ArrowLeftRightIcon,
-      color: "text-orange-500",
-      bgColor: "bg-orange-500/10",
-      href: "/convert",
-      message: "Convert any song into your own voice."
-    },
-    {
       label: "Clone",
       icon: MicIcon,
       color: "text-pink-500",
       bgColor: "bg-pink-500/10",
       href: "/clone",
       message: "Clone your voice. Then use it to convert songs into your voice."
+    },
+    {
+      label: "Convert",
+      icon: ArrowLeftRightIcon,
+      color: "text-orange-500",
+      bgColor: "bg-orange-500/10",
+      href: "/convert",
+      message: "Convert any song into your own voice."
     },
     {
       label: "History",

@@ -41,7 +41,17 @@ export const ClonesTable = ({ userData }: ClonesTableProps) => {
     return (
         <>
             <div className="text-center mb-4 text-muted-foreground">
-                Need a voice clone? Go to the <b>Create a Clone</b> tab.
+                {!rows?.length ? <>Need a voice clone? Go to the <b>Create a Clone</b> tab.</>
+                    : 
+                    <>
+                        <div className="flex items-center justify-center gap-2">
+                            When your clone is ready, click the 
+                            <div className="inline-block"><PlayIcon /></div> icon to hear sample audios. 
+                        </div>
+                        <p>Then go to the <Link href="/convert" className="font-bold">
+                            Convert</Link> page to convert songs.
+                        </p>
+                    </>}
             </div>
             <Table>
                 <TableHeader>
