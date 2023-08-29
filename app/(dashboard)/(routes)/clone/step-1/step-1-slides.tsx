@@ -17,7 +17,7 @@ const contents = [
     {isUpload: false, content: `Here are all the steps we need you to do:
     1) Part 1: You're already doing it by reading this essay!
     2) Part 2: Show us your vocal range through simple pitch exercises.
-    4) Part 3: Sing along to a song of your choice!`},
+    3) Part 3: Sing along to a song of your choice, preferrably one that covers the type of songs you wish to convert.`},
     {isUpload: false, content: `Completing these 3 steps should take less than 15 minutes in total, and you're already well on your way. Once you're done and your recordings are uploaded, we train our AI to match your voice. This might take a few hours, but sometimes even as little as 15 minutes, depending on how many other people are doing it.`},
     {isUpload: false, content: `Once your voice clone is ready, you can use your voice clone by using song conversion credits. If you need more, we offer multiple pay-as-you-go options. Each credit lasts forever and can be used for songs up to 10 minutes long.`},
     {isUpload: false, content: `When choosing songs to convert, remember that the audio quality and style matter. Simple vocal recordings work best. Behind the scenes, your AI clone works to transform voices into your own, but it can only work on voices. Thus, if there are instruments in the song, the vocals will need to be extracted. Don’t worry, we'll handle it for you. 
