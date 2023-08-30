@@ -15,7 +15,7 @@ export const packages = [
         label: "Artist Pack",
         description: "More bang for your buck.",
         clones: 1,
-        songs: 10,
+        songs: 5,
         price: 9.99,
       }
     },
