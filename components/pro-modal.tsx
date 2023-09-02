@@ -1,6 +1,6 @@
 "use client";
 
-import { useProModal } from "@/hooks/use-pro-modal";
+import { useProModal } from "@/hooks/use-modal";
 import { Dialog, DialogHeader, DialogContent, DialogTitle, DialogDescription, DialogFooter } from "./ui/dialog";
 import { Badge } from "./ui/badge";
 import { Check, Code, ImageIcon, MessageSquare, Music, VideoIcon, Zap } from "lucide-react";

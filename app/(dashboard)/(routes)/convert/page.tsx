@@ -18,7 +18,7 @@ import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn } from "@/lib/utils";
-import { useProModal } from "@/hooks/use-pro-modal";
+import { useProModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import { auth } from "@clerk/nextjs";
 import { getClones } from "@/lib/runpod";

@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { AlertCard } from "@/components/alert-card";
 import { Congrats } from "@/components/congrats";
 import { toast } from "react-hot-toast";
-import { useProModal } from "@/hooks/use-pro-modal";
+import { useProModal } from "@/hooks/use-modal";
 import { Badge } from "@/components/ui/badge";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";

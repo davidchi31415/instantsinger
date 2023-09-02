@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ProModal } from "./pro-modal";
+import { MicModal } from "./mic-modal";
 
 export const ModalProvider = () => {
     const [isMounted, setMounted] = useState(false);
@@ -14,6 +15,7 @@ export const ModalProvider = () => {
     return (
         <>
             <ProModal />
+            <MicModal />
         </>
     )
 }

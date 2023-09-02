@@ -7,7 +7,7 @@ import { ArrowLeftRightIcon, ArrowRight, Code, HistoryIcon, ImageIcon, MessageSq
 import { BsDiscord } from "react-icons/bs";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { IconContext } from "react-icons";
-import { useProModal } from "@/hooks/use-pro-modal";
+import { useProModal } from "@/hooks/use-modal";
 
 export default function DashboardPage() {
   const router = useRouter();
