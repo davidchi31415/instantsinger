@@ -64,7 +64,7 @@ export const ProgressCard = (
             setStatus(newStatus);
             if (onStatusChange) onStatusChange(newStatus);
 
-            if (response.data?.userMessage) setMessage(response.data?.userMessage);
+            if (response.data?.message) setMessage(response.data?.message);
         }
     }
 

@@ -66,11 +66,13 @@ const ConvertDashboard = ({ userData }) => {
   const onFinish = () => {
     setFinished(true);
     setSuccess(true);
+    router.refresh();
   }
 
   const onFail = () => {
     setFinished(true);
     setSuccess(false);
+    router.refresh();
   }
 
   const reset = () => {

@@ -185,6 +185,9 @@ export const getSubmittedConversions = async ({ userId }: PrismadbProps) => {
             NOT: {
                 status: "NOT_SUBMITTED"
             }
+        },
+        orderBy: {
+            createdAt: "desc"
         }
     });
 
