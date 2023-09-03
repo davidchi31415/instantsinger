@@ -289,12 +289,6 @@ const ConvertDashboard = ({ userData }) => {
                         <div className="text-sm text-muted-foreground">This could get messy if there are many layers.</div>
                       </div>
                     </div> : ""}
-                    <div className="mt-4">
-                      <AlertCard variant="warning" title="Important!"
-                        message="Songs with layers of voices singing at once are more
-                        difficult for our AI to handle. Our AI performs better when
-                        there is a single voice." />
-                    </div>
                 </div>
 
                 <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
@@ -319,6 +313,12 @@ const ConvertDashboard = ({ userData }) => {
                     </IconContext.Provider>
                   </span>
                 </div>
+              </div>
+              <div className="mt-2">
+                <AlertCard variant="warning" title="Important!"
+                  message="Songs with layers of voices singing at once are more
+                  difficult for our AI to handle. Our AI performs better when
+                  there is a single voice." />
               </div>
             </div>
             
