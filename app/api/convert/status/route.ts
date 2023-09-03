@@ -18,25 +18,16 @@ export async function GET(
         if (!conversionId) {
             return new NextResponse("Id required", { status: 400});
         }
-
-        // Check API Limits
-        // const freeTrial = await checkAPILimit();
-        // const isPro = await checkSubscription();
-
-        // if (!freeTrial && !isPro) {
-        //     return new NextResponse("Free trial has expired", { status: 403 });
-        // }
-
-        // if (!isPro) {
-        //     await increaseAPILimit();
-        // }
         
         const convertJob = await _getConversion({ userId, conversionId });
         if (!convertJob) return new NextResponse("No jobs found", { status: 400 });
         if (convertJob.userId !== userId) return new NextResponse("Permission denied", { status: 401 });
 
-        if (isJobDone({ status: convertJob.status })) // Already done 
-            return new NextResponse(JSON.stringify({ status: convertJob.status }), { status: 200 });
+        if (isJobDone({ status: convertJob.status })) { // Already done
+            let output = { status: convertJob.status };
+            if (convertJob.userMessage) output["message"] = convertJob.userMessage;
+            return new NextResponse(JSON.stringify(output), { status: 200 });
+        }
             
         const runpodResponse = await _checkConvertJob({ runpodJobId: convertJob.runpodJobId! });        
         if (runpodResponse.status == 200) {
