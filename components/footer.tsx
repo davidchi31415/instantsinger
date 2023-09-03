@@ -9,7 +9,7 @@ const font = Montserrat({
     subsets: ["latin"]
 });
 
-export const LandingFooter = () => {
+export const Footer = () => {
     return (
         <div className="py-8 bg-primary text-white font-bold">
             <div className="px-4 lg:px-8 grid lg:grid-cols-2 gap-8">

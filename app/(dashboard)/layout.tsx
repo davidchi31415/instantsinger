@@ -1,4 +1,4 @@
-import { LandingNavbar } from "@/components/landing-navbar";
+import { Navbar } from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
 
 import { AlertCard } from "@/components/alert-card";
@@ -12,6 +12,7 @@ import { isJobDone } from "@/lib/utils";
 import prismadb from "@/lib/prismadb";
 import { getCredits } from "@/lib/credits";
 import { Dashboard } from "@/components/dashboard";
+import { Footer } from "@/components/footer";
 
 interface UserData {
     clone: any;
@@ -45,14 +46,15 @@ const DashboardLayout = async ({children}: {children: React.ReactNode}) => {
 
     return (
         <div className="h-full relative">
-            <LandingNavbar 
-                convertCredits={userData.convertCredits} cloneCredits={userData.convertCredits} 
+            <Navbar 
+                convertCredits={userData.convertCredits} 
             />
-            <main className="pb-8">
+            <main className="h-full">
                 <div className="pt-24">
                     {children}
                 </div>
             </main>
+            <Footer />
         </div>
     )
 }

@@ -15,7 +15,7 @@ const CloningStepPreview = () => {
       <div className="px-4 lg:px-8 flex justify-center">
         <div className="pt-8 flex flex-col items-center justify-center">
           <div className="text-2xl font-bold text-center w-full mb-2">Step 1 Preview</div>
-          <Card className="w-full lg:max-w-3xl bg-muted mb-4 p-4 text-xl
+          <Card className="w-full lg:max-w-3xl mb-4 p-4 text-xl
             flex flex-col gap-2
           ">
             <p>
@@ -30,15 +30,15 @@ const CloningStepPreview = () => {
             
           </Card>
           <div className="w-full mt-4 flex items-center justify-between">
-            <Link href="/clone?newClone=1">
+            <Link href="/dashboard">
                 <Button 
                     className="text-md gap-2"
                     variant="outline"
                 >
-                    <MoveLeftIcon />Home
+                    <MoveLeftIcon />Intro
                 </Button>
             </Link>
-            <Link href="/clone/step-1">
+            <Link href="/dashboard/clone/step-1">
                 <Button className="text-md gap-2">
                     Begin Step 1<MoveRightIcon />
                 </Button>

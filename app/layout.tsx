@@ -4,7 +4,9 @@ import { Rubik } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ModalProvider } from '@/components/modal-provider'
 import { ToasterProvider } from '@/components/toaster-provider'
-import { CrispProvider } from '@/components/crisp-provider'
+import { Navbar } from '@/components/navbar'
+import { Footer } from '@/components/footer'
+import { getCredits } from '@/lib/credits'
 
 const rubik = Rubik({ subsets: ['latin'] })
 
@@ -13,11 +15,17 @@ export const metadata: Metadata = {
   description: 'Become a singer in less than 30 minutes, using cutting-edge AI technology.',
 }
 
-export default function RootLayout({
+const getUserData = async () => {
+  return await getCredits();
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const { convertCredits } = await getUserData();
+
   return (
     <ClerkProvider>
       <html lang="en">
@@ -25,7 +33,11 @@ export default function RootLayout({
         <body className={rubik.className}>
           <ModalProvider />
           <ToasterProvider />
-          {children}
+          <main className="h-full w-full bg-[white] overflow-auto">
+            <Navbar convertCredits={convertCredits} />
+            {children}
+            <Footer />
+          </main>
         </body>
       </html>
     </ClerkProvider>

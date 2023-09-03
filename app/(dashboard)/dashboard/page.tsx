@@ -1,15 +1,5 @@
-import { LandingNavbar } from "@/components/landing-navbar";
-import Sidebar from "@/components/sidebar";
-
-import { AlertCard } from "@/components/alert-card";
-import { Button } from "@/components/ui/button";
-import { getClone, getConversions, getMostRecentCloneJob, getSubmittedConversions } from "@/lib/runpod";
+import { getClone, getConversions, getCurrentUnsubmittedCloneJob, getMostRecentCloneJob, getSubmittedConversions } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
-import Link from "next/link";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CloneDashboard } from "@/components/clone-dashboard";
-import { isJobDone } from "@/lib/utils";
-import prismadb from "@/lib/prismadb";
 import { getCredits } from "@/lib/credits";
 import { Dashboard } from "@/components/dashboard";
 
@@ -23,13 +13,16 @@ interface UserData {
 
 const getUserData = async () => {
     const { userId } = auth();
-    if (userId === null) return { 
+    if (userId === null) return {
         clone: null, cloneJob: null, convertJobs: [],
         cloneCredits: 0, convertCredits: 0
     };
 
     const clone = await getClone({ userId });
-    const cloneJob = await getMostRecentCloneJob({ userId });
+    let cloneJob = await getMostRecentCloneJob({ userId });
+    if (!cloneJob) {
+        cloneJob = await getCurrentUnsubmittedCloneJob({ userId });
+    }
     const convertJobs = await getSubmittedConversions({ userId });
     const { cloneCredits, convertCredits } = await getCredits();
     const res: UserData = { 

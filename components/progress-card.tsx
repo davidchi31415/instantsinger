@@ -85,7 +85,7 @@ export const ProgressCard = (
     return (
         <div>
             <Card className="p-4 flex items-center justify-between">
-                <div className="text-md font-medium mt-1">
+                <div className="text-md font-normal mt-1">
                     {isFinished ? `${process} finished.` : `${process} in progress...`}
                 </div>
                 <div className={

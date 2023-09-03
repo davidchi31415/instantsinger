@@ -1,6 +1,6 @@
 const PrivacyPage = () => {
     return (
-        <div>
+        <div className="pt-20 h-full">
             Instant Singer Privacy Policy.
 Last updated: Aug. 19, 2023
 

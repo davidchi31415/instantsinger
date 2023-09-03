@@ -33,7 +33,7 @@ const CloningStep1Slides = ({ jobId }) => {
     <div className="px-4 lg:px-8 flex justify-center">
         <div className="pt-2 flex flex-col items-center justify-center gap-2">
             <CloningStepBar title="Step 1: Speaking" step={step} setStep={setStep} steps={contents} />
-            <Card className="w-full lg:max-w-3xl bg-muted mb-4 text-xl">
+            <Card className="w-full lg:max-w-3xl mb-4 text-xl">
                 <CardHeader>
                     <CardTitle className="text-md text-muted-foreground">
                         Read the following text, and record yourself all the way to the last slide.
@@ -66,7 +66,7 @@ const CloningStep1Slides = ({ jobId }) => {
                 >
                     <MoveLeftIcon />Go Back
                 </Button>
-                : <Link href="/clone/step-1-preview">
+                : <Link href="/dashboard/clone/step-1-preview">
                     <Button 
                         className="text-md gap-2"
                         variant="outline"
@@ -81,7 +81,7 @@ const CloningStep1Slides = ({ jobId }) => {
                 >
                     Continue<MoveRightIcon />
                 </Button> 
-                : <Link href="/clone/step-2-preview">
+                : <Link href="/dashboard/clone/step-2-preview">
                     <Button className="text-md gap-2">
                         Step 2<MoveRightIcon />
                     </Button>

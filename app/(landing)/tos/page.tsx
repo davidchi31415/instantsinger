@@ -1,6 +1,6 @@
 const TOSPage = () => {
     return (
-        <div>
+        <div className="pt-20 h-full">
             TERMS OF SERVICE
 
 ----

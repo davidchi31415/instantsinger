@@ -1,4 +1,4 @@
-import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
+import { CloudIcon, MoveLeftIcon, MoveRightIcon, UploadCloudIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +30,7 @@ const CloningStep2Page = async () => {
             <div className="pt-8 flex flex-col items-center justify-center">
                 <div className="pt-2 flex flex-col items-center justify-center gap-2">
                     <div className="text-2xl font-bold text-center w-full mb-2">Step 2: Pitches</div>
-                    <Card className="w-full lg:max-w-3xl bg-muted mb-4 text-xl">
+                    <Card className="w-full lg:max-w-3xl mb-4 text-xl">
                         <CardHeader>
                             <CardTitle className="text-md text-muted-foreground">
                                 Sing along with the following video. Try your best to match each pitch.
@@ -55,7 +55,7 @@ const CloningStep2Page = async () => {
                         </CardContent>
                     </Card>
                     <div className="w-full flex items-center justify-between">
-                        <Link href="/clone/step-2-preview">
+                        <Link href="/dashboard/clone/step-2-preview">
                             <Button 
                                 className="text-md gap-2"
                                 variant="outline"
@@ -63,9 +63,9 @@ const CloningStep2Page = async () => {
                                 <MoveLeftIcon />Step 2 Preview
                             </Button>
                         </Link>
-                        <Link href="/clone/step-3">
+                        <Link href="/dashboard/clone/finish">
                             <Button className="text-md gap-2">
-                                Step 3 <MoveRightIcon />
+                                Finish <UploadCloudIcon />
                             </Button>
                         </Link>
                     </div>

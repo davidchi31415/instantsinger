@@ -15,29 +15,22 @@ import { Badge } from "@/components/ui/badge";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 interface CloningFinishStepProps {
-    usedNames: string[];
     jobId: string;
     uploadedFilenames?: any[];
     uploadedUrls?: any[];
     isManual?: boolean;
 }
 
-const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false }: CloningFinishStepProps) => {
+const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: CloningFinishStepProps) => {
     const proModal = useProModal();
 
     const [loading, setLoading] = useState(false);
-    const [cloneName, setCloneName] = useState<string>("");
-    const [nameError, setNameError] = useState<string>("");
     const [files, setFiles] = useState(uploadedFilenames ? uploadedFilenames : []);
     const [missingFiles, setMissingFiles] = useState<number[]>([]);
     const [submitted, setSubmitted] = useState(false);
-
-    const nameAlreadyUsed = (usedNames?.length &&
-        usedNames.some((name: string) => cloneName === name)) ? true : false;
-
-    const nameTooLong = cloneName.length > 25 ? true : false;
 
     const [isMounted, setMounted] = useState(false);
     useEffect(() => {
@@ -48,15 +41,10 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
 
     const onSubmit = async () => {
         try {
-            if (cloneName === "" || cloneName.length > 25 || nameAlreadyUsed) {
-                return;
-            }
-
             setLoading(true);
             setMissingFiles([]);
-            setNameError("");
 
-            await axios.post("/api/clone", { cloneName, cloneId: jobId })
+            await axios.post("/api/clone", { cloneId: jobId })
                 .then(() => setSubmitted(true))
                 .catch((error) => {
                     if (error?.response?.status === 402) {
@@ -82,14 +70,7 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
     return (
         <div>
             {submitted ?
-                <div className="flex flex-col items-center gap-4">
-                    <Congrats label="Congrats! Your AI voice is on its way." />
-                    <Button className="p-4 text-xl" size="lg"
-                        onClick={() => { window.location.href = "/clone" }}
-                    >
-                        Check Status
-                    </Button>
-                </div>
+                redirect("/dashboard")
                 :
                 <>
                     <div className="p-4 lg:px-8">
@@ -131,50 +112,12 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                                 </Badge>}
                         </div>
                         
-                        <div className="mt-8 text-xl flex justify-between">
-                            <div className="flex gap-2 items-center">
-                                <div><b>Step 3:</b> Singing</div>
-                                <Link href="/clone/step-3" passHref={true}>
-                                    <Button size="icon" variant="ghost" className="text-primary">
-                                        <CornerDownLeftIcon />
-                                    </Button>
-                                </Link>
-                            </div>
-                            {files.some(fileName => fileName === "3") ?
-                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                    <div className="text-lg">Uploaded</div> <CheckIcon />
-                                </Badge>
-                                :
-                                <Badge className="h-fit gap-2" variant="destructive">
-                                    <div className="text-lg">Missing</div> <AlertCircleIcon />
-                                </Badge>}
-                        </div>
-                        
-                        <div className="flex flex-col items-center gap-2">
-                            Choose a name for your voice clone:
-                            <div className="w-[250px]">
-                                <Input onChange={(e) => {
-                                        setCloneName(e.target.value);
-                                        setNameError("");
-                                    }}
-                                    className="mb-2" 
-                                />
-                                {nameError !== "" ? <AlertCard variant="destructive" title="Error" message={nameError} />
-                                    : (nameAlreadyUsed ? 
-                                        <AlertCard variant="destructive" title="Name Error" 
-                                            message="You've already used that name." />
-                                        : 
-                                        nameTooLong ? 
-                                        <AlertCard variant="destructive" title="Name Error" 
-                                            message="Name too long. Max Length: 25 characters" />
-                                        : "")
-                                }
-                                {missingFiles?.length ? 
-                                    <AlertCard variant="destructive" title="Missing Files" 
-                                        message={`Missing Steps ${missingFiles.toString()}`}
-                                    /> : ""
-                                }
-                            </div>
+                        <div className="w-[250px] mx-auto">
+                            {missingFiles?.length ? 
+                                <AlertCard variant="destructive" title="Missing Files" 
+                                    message={`Missing Steps ${missingFiles.toString()}`}
+                                /> : ""
+                            }
                         </div>
                     </div>
                     <div className="w-fit h-fit mx-auto flex justify-center items-center mt-8 mb-16 shadow-xl
@@ -182,7 +125,7 @@ const CloningFinishStep = ({ usedNames, jobId, uploadedFilenames, isManual=false
                     >
                         <Button size="lg" className="text-xl rounded-r-none border-2 border-black"
                             disabled={
-                                loading || nameTooLong || nameAlreadyUsed || cloneName === ""
+                                loading
                             }
                             onClick={onSubmit}
                         >

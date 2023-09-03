@@ -1,21 +1,11 @@
-import Navbar from "@/components/navbar";
-import Sidebar from "@/components/sidebar";
 import CloningFinishStep from "./cloning-finish-step";
 import { auth } from "@clerk/nextjs";
-import { getClones, getCurrentUnsubmittedCloneJob, getMostRecentCloneJob } from "@/lib/runpod";
+import { getCurrentUnsubmittedCloneJob, getMostRecentCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 import { getFileList } from "@/lib/gcloud";
 
 interface CloneData {
-    clones: any[];
     currentJob: any;
-}
-
-const getCloneNames = async ({ userId }) => {
-    const clones = await getClones({ userId });
-    const cloneNames = clones.map((clone) => clone.name);
-
-    return cloneNames;
 }
 
 interface CloningFinishPageProps {
@@ -34,13 +24,12 @@ const CloningFinishPage = async ({ searchParams }: CloningFinishPageProps) => {
         });
     }
 
-    const cloneNames = await getCloneNames({ userId });
     const uploadedFiles = await getFileList({ directory: `training_data/${unsubmittedCloneJob.id}` });
 
     const isManual = searchParams?.manual ? true : false;
 
     return (
-        <CloningFinishStep usedNames={cloneNames} jobId={unsubmittedCloneJob.id} 
+        <CloningFinishStep jobId={unsubmittedCloneJob.id} 
             uploadedFilenames={uploadedFiles.fileNames}
             isManual={isManual}
         />
