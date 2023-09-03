@@ -30,10 +30,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "./ui/badge";
-import { HistoryIcon } from "lucide-react";
+import { HistoryIcon, PauseIcon, PlayIcon } from "lucide-react";
 import { HistoryModal } from "./history-modal";
 import { HistoryTable } from "./history-table";
+import { useMultiAudio } from "@/hooks/use-multi-audio";
 
+const Player = ({ player, toggle }) => {
+  return (
+      <Button variant="ghost" className="text-primary" onClick={toggle}>
+          {player.playing ? <PauseIcon size={32} /> : <PlayIcon size={32} />}
+      </Button>
+  )
+}
 
 const ConvertDashboard = ({ userData }) => {
   const router = useRouter();
@@ -66,12 +74,14 @@ const ConvertDashboard = ({ userData }) => {
   const onFinish = () => {
     setFinished(true);
     setSuccess(true);
+    setConverting(false);
     router.refresh();
   }
 
   const onFail = () => {
     setFinished(true);
     setSuccess(false);
+    setConverting(false);
     router.refresh();
   }
 
@@ -168,22 +178,21 @@ const ConvertDashboard = ({ userData }) => {
   const inputNotReady = ((inputChoice === "upload" && !fileUploaded) ||
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
 
+  const [players, toggle] = useMultiAudio({
+    urls: userData.cloneResultUrls?.length ? userData.cloneResultUrls : []
+  });
+
   return (
     <div>
         <HistoryModal userData={userData} />
         <div className="p-4 lg:px-8">
-          <Accordion type="single" collapsible
-            className="mb-4 border-2 bg-white rounded-sm px-4"
-          >
-            <AccordionItem value="clone">
-              <AccordionTrigger className="text-xl">
-                <div className="font-normal">Your Voice Clone</div>
-              </AccordionTrigger>
-              <AccordionContent className="text-md">
-                Your clone is ready to use. Have a listen:
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <div className="flex justify-center items-center mb-4 p-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
+            Your Voice Clone:
+            {players?.length ? players.map((player, i) => {
+              return (
+                <Player player={player} toggle={toggle(i)} />
+              )}) : ""}
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div id="upload-convert" 
               className="w-full lg:max-w-2xl"

@@ -1,4 +1,4 @@
-import { getClone, getConversions, getCurrentUnsubmittedCloneJob, getMostRecentCloneJob, getSubmittedConversions } from "@/lib/runpod";
+import { getClone, getCloneResults, getConversions, getCurrentUnsubmittedCloneJob, getMostRecentCloneJob, getSubmittedConversions } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 import { getCredits } from "@/lib/credits";
 import { Dashboard } from "@/components/dashboard";
@@ -6,6 +6,7 @@ import { Dashboard } from "@/components/dashboard";
 interface UserData {
     clone: any;
     cloneJob: any;
+    cloneResultUrls: any[];
     convertJobs: any[];
     convertCredits: number;
     cloneCredits: number;
@@ -14,11 +15,16 @@ interface UserData {
 const getUserData = async () => {
     const { userId } = auth();
     if (userId === null) return {
-        clone: null, cloneJob: null, convertJobs: [],
+        clone: null, cloneJob: null, cloneResultUrls: [], convertJobs: [],
         cloneCredits: 0, convertCredits: 0
     };
 
     const clone = await getClone({ userId });
+    let cloneResultUrls:any[] = [];
+    if (clone) {
+        const { urls } = await getCloneResults({ clone });
+        cloneResultUrls = urls;
+    }
     let cloneJob = await getMostRecentCloneJob({ userId });
     if (!cloneJob) {
         cloneJob = await getCurrentUnsubmittedCloneJob({ userId });
@@ -26,7 +32,7 @@ const getUserData = async () => {
     const convertJobs = await getSubmittedConversions({ userId });
     const { cloneCredits, convertCredits } = await getCredits();
     const res: UserData = { 
-        clone, cloneJob, convertJobs,
+        clone, cloneJob, cloneResultUrls, convertJobs,
         cloneCredits, convertCredits
     };
 

@@ -412,14 +412,8 @@ export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
     return unsubmittedCloneJob;
 }
 
-export const getCloneResults = async ({ cloneJob }) => {
-    if (!isJobDone({ status: cloneJob.status })) return null;
-
-    if (cloneJob.status === "FAILED") {
-        return exclude(cloneJob, ["userId"]);
-    }
-
-    const fileNames = [`${cloneJob.id}_sample_1`, `${cloneJob.id}_sample_2`];
+export const getCloneResults = async ({ clone }) => {
+    const fileNames = [`${clone.id}_sample_1`, `${clone.id}_sample_2`];
 
     const urls = await Promise.all(
         fileNames.map(
