@@ -1,3 +1,5 @@
+import { Footer } from "@/components/footer";
+
 const TOSPage = () => {
     return (
         <div className="pt-20 h-full">

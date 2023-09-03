@@ -173,7 +173,7 @@ const ConvertDashboard = ({ userData }) => {
         <HistoryModal userData={userData} />
         <div className="p-4 lg:px-8">
           <Accordion type="single" collapsible
-            className="mb-8 border-2 bg-white rounded-sm px-4"
+            className="mb-4 border-2 bg-white rounded-sm px-4"
           >
             <AccordionItem value="clone">
               <AccordionTrigger className="text-xl">
@@ -184,7 +184,7 @@ const ConvertDashboard = ({ userData }) => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div id="upload-convert" 
               className="w-full lg:max-w-2xl"
             >

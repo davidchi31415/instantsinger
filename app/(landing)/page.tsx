@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import { LandingContent } from "@/components/landing-content";
 import { LandingHero } from "@/components/landing-hero";
 

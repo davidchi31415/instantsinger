@@ -1,12 +1,12 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Rubik } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
-import { ModalProvider } from '@/components/modal-provider'
-import { ToasterProvider } from '@/components/toaster-provider'
-import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
-import { getCredits } from '@/lib/credits'
+import './globals.css';
+import type { Metadata } from 'next';
+import { Rubik } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
+import { ModalProvider } from '@/components/modal-provider';
+import { ToasterProvider } from '@/components/toaster-provider';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { getCredits } from '@/lib/credits';
 
 const rubik = Rubik({ subsets: ['latin'] })
 
@@ -36,7 +36,6 @@ export default async function RootLayout({
           <main className="h-full w-full bg-[white] overflow-auto">
             <Navbar convertCredits={convertCredits} />
             {children}
-            <Footer />
           </main>
         </body>
       </html>

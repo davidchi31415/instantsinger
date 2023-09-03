@@ -1,6 +1,6 @@
 const RefundPage = () => {
     return (
-        <div className="pt-20 h-full">
+        <div className="pt-20">
             REFUND POLICY
 
 ----

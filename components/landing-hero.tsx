@@ -3,11 +3,6 @@
 import { SignUpButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { AudioCard } from "./audio-card";
-import PricingTable from "./pricing-table";
-import { BsDiscord } from "react-icons/bs";
-import { Card } from "./ui/card";
-import { ArrowDownIcon, ArrowRightIcon, Volume2Icon } from "lucide-react";
 import { HeroDemo } from "./hero-demo";
 
 export const LandingHero = () => {

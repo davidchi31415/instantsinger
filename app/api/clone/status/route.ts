@@ -24,8 +24,11 @@ export async function GET(
         if (!cloneJob) return new NextResponse("No clone job found", { status: 400 });
         if (cloneJob.userId !== userId) return new NextResponse("Permission denied", { status: 401 });
 
-        if (isJobDone({ status: cloneJob.status })) // Already done 
-            return new NextResponse(JSON.stringify({ status: cloneJob.status }), { status: 200 });
+        if (isJobDone({ status: cloneJob.status })) { // Already done
+            let output = { status: cloneJob.status };
+            if (cloneJob.message) output["message"] = cloneJob.message;
+            return new NextResponse(JSON.stringify(output), { status: 200 });
+        }
 
         const runpodResponse = await _checkCloneJob({ runpodJobId: cloneJob.runpodJobId! });       
         if (runpodResponse.status == 200) {
