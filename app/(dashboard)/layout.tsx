@@ -1,22 +1,21 @@
-import Navbar from "@/components/navbar";
+import { LandingNavbar } from "@/components/landing-navbar";
 import Sidebar from "@/components/sidebar";
-import { getCredits } from "@/lib/credits";
 
 const DashboardLayout = async ({children}: {children: React.ReactNode}) => {
-    const {convertCredits, cloneCredits} = await getCredits();
-
     return (
         <div className="h-full relative">
+            <LandingNavbar />
             <div 
                 className="hidden h-full md:flex md:w-72
                 md:flex-col md:fixed md:inset-y-0
-                border-r-4 border-primary bg-primary/25"
+                border-r-4 border-primary"
             >
-                <Sidebar cloneCredits={cloneCredits} convertCredits={convertCredits} />
+                <Sidebar />
             </div>
             <main className="md:pl-72 pb-8">
-                <Navbar cloneCredits={cloneCredits} convertCredits={convertCredits} />
-                {children}
+                <div className="pt-32">
+                    {children}
+                </div>
             </main>
         </div>
     )

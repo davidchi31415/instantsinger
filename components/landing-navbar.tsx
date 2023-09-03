@@ -8,6 +8,7 @@ import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { BsDiscord } from "react-icons/bs";
+import { usePathname } from "next/navigation";
 
 const font = Montserrat({
     weight: "600",
@@ -15,11 +16,12 @@ const font = Montserrat({
 });
 
 export const LandingNavbar = () => {
+    const pathname = usePathname();
     const { isSignedIn } = useAuth(); // useAuth for client-side
 
     return (
         <nav className="p-4 lg:px-8 w-full flex items-center justify-between md:fixed
-            bg-[white] z-[9999]
+            bg-[white] border-b-2 z-[9999]
         ">
             <Link
                 href="/"
@@ -29,15 +31,35 @@ export const LandingNavbar = () => {
                     <span className="text-primary">instant</span>singer
                 </h1>
             </Link>
+            <div className="flex justify-between items-center text-xl gap-6">
+                <Link href="/dashboard" className={pathname === "/dashboard" ? 
+                    "text-primary" : ""
+                }>
+                    Dashboard
+                </Link>
+                <Link href="/pricing" className={pathname === "/pricing" ? 
+                    "text-primary" : ""
+                }>
+                    Pricing
+                </Link>
+                <Link href="/contact" className={pathname === "/contact" ? 
+                    "text-primary" : ""
+                }>
+                    Contact
+                </Link>
+            </div> 
             {isSignedIn ?
-                <div className="flex items-center gap-x-4">
-                    <Link href="/dashboard">
-                        <Button variant="default" 
-                            className="rounded-lg md:text-lg py-6"
-                        >
-                            Dashboard
-                        </Button>
-                    </Link>
+                <div className="flex justify-end">
+                    <UserButton afterSignOutUrl="/" 
+                    appearance={{
+                        elements: {
+                        userButtonAvatarBox: {
+                            width: 48,
+                            height: 48
+                        }
+                        }
+                    }}
+                    />
                 </div>
                 :
                 <div className="flex items-center gap-x-2">

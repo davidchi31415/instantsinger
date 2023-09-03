@@ -53,8 +53,8 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="mt-10">
-      <h2 className="mt-10 mb-4 text-2xl md:text-4xl font-bold text-center">
+    <div>
+      <h2 className="mb-4 text-2xl md:text-4xl font-bold text-center">
         Welcome to Instant Singer
       </h2>
       <p className="mb-8 text-muted-foreground font-light text-md md:text-lg text-center">

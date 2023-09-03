@@ -43,24 +43,14 @@ const routes = [
     }
 ]
 
-const Sidebar = ({cloneCredits, convertCredits}) => {
+const Sidebar = () => {
   const pathname = usePathname();
   
   return (
     <div className="space-y-4 py-4 flex flex-col h-full">
-        <div className="px-4">
-            <Link
-                href="/"
-                className="flex items-center"
-            >
-                <h1 className={cn("text-2xl font-bold", font.className)}>
-                    <span className="text-primary">instant</span>singer
-                </h1>
-            </Link>
-        </div>
         <div className="px-3 py-2 flex-1">
             <Link href="/dashboard" className="flex items-center pl-3 mb-14">
-                <div className="relative w-8 h-8 mr-4">
+                <div className="relative w-8 h-24 mr-4">
                     {/* <Image
                         fill
                         alt="logo"
@@ -88,10 +78,6 @@ const Sidebar = ({cloneCredits, convertCredits}) => {
                     )
                 })}
             </div>
-        </div>
-        <div className="w-[12rem] mx-auto flex flex-col items-center pb-32 gap-2">
-            <CloneCreditCounter cloneCredits={cloneCredits} />
-            <ConvertCreditCounter convertCredits={convertCredits} />
         </div>
     </div>
   )

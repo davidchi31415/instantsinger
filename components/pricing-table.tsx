@@ -1,3 +1,5 @@
+"use client";
+
 import { packages } from "@/lib/packages";
 import { SignUpButton, useAuth } from "@clerk/nextjs";
 import axios from "axios";
@@ -33,14 +35,14 @@ const PricingTable = () => {
                     <Card key={pack.packKey} 
                         className={cn("w-[22rem] py-8 flex flex-col items-center justify-center \
                          gap-2 rounded-xl bg-white border-primary text-black shadow-2xl",
-                        pack.packKey === "starter" ? 
+                        pack.packKey === "pro" ? 
                         "border-2" 
                         : "border-0")}
                     >
                         <CardTitle 
                             className={cn("px-4 py-2 text-2xl rounded-lg border-2",
-                            pack.packKey === "starter" ? 
-                            "border-primary/50 bg-white text-primary" 
+                            pack.packKey === "pro" ? 
+                            "border-primary/50 bg-white bg-[#FFF1E4] text-primary" 
                             : "border-black/25 text-white bg-primary/75")}
                         >
                             {pack.contents.label}
@@ -59,12 +61,6 @@ const PricingTable = () => {
                                     <Check color="#0c0"/>
                                     <div>
                                         <b>{pack.contents.songs}</b> Song Conversion{pack.contents.songs > 1 ? "s" : ""}
-                                    </div>
-                                </div>
-                                <div className="flex gap-2">
-                                    <Check color="#0c0"/>
-                                    <div>
-                                        <b>{pack.contents.clones}</b> Voice Clone{pack.contents.clones > 1 ? "s" : ""}
                                     </div>
                                 </div>
                                 <div className="flex gap-2">

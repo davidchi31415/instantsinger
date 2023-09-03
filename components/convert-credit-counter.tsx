@@ -23,27 +23,20 @@ export const ConvertCreditCounter = ({ convertCredits=0 }: ConvertCreditCounterP
     if (!isMounted) return null;
 
     return (
-        <div className="w-full">
-            <Card className="bg-white/10 border-0">
-                <CardContent className="px-4 py-2 rounded-md bg-primary border-2 border-black 
-                    shadow-xl hover:scale-105 transition cursor-pointer"
-                    onClick={() => proModal.onOpen() }
-                >   
-                    <div className="text-center text-lg text-white flex gap-2 items-center">
-                        <div className="p-2 py-1 mx-1 bg-[#f3f3f3] text-black rounded-md">
-                            {convertCredits}
-                        </div> 
-                        <div className="flex items-center gap-1">
-                            Convert
-                            <IconContext.Provider
-                                value={{ size: "25px", color: "#E1B530" }}
-                            >
-                                    <PiCoinVerticalFill />
-                            </IconContext.Provider>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
+        <Card className="bg-white border-2 border-primary shadow-xl rounded-md">
+            <CardContent className="px-4 py-2
+                 hover:scale-105 transition cursor-pointer"
+                onClick={() => proModal.onOpen() }
+            >   
+                <div className="text-center text-lg flex gap-2 items-center p-2 py-1 mx-1 text-black rounded-md">
+                    {convertCredits}
+                    <IconContext.Provider
+                        value={{ size: "25px", color: "#E1B530" }}
+                    >
+                            <PiCoinVerticalFill />
+                    </IconContext.Provider>
+                </div>
+            </CardContent>
+        </Card>
     )
 }

@@ -42,8 +42,7 @@ export async function GET(
                         product_data: {
                             name: pack.contents.label,
                             description: 
-                                `${pack.contents.songs} Song Conversions, 
-                                ${pack.contents.clones} Voice Clone${pack.contents.clones > 1 ? "s" : ""}`
+                                `${pack.contents.songs} Song Conversion${pack.contents.songs > 1 ? "s" : ""}`
                         },
                         unit_amount: Math.round(pack.contents.price * 100),
                     },
@@ -53,7 +52,6 @@ export async function GET(
             allow_promotion_codes: true,
             metadata: { // VERY IMPORTANT - need to store userId for purchase
                 userId,
-                purchasedClones: pack.contents.clones,
                 purchasedSongs: pack.contents.songs
             }
         });

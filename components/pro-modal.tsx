@@ -71,9 +71,7 @@ export const ProModal = () => {
                                         <div className="text-lg md:text-xl font-bold">{pack.contents.label}</div>
                                         <div className="md:text-lg text-muted-foreground">{pack.contents.description}</div>
                                         <div className="md:text-lg">
-                                            <b>{pack.contents.songs}</b> Song Conversion{pack.contents.songs > 1 ? "s" : ""},{" "}
-                                            <b>{pack.contents.clones}</b> Voice Clone
-                                            {pack.contents.clones > 1 ? "s" : ""}
+                                            <b>{pack.contents.songs}</b> Song Conversion{pack.contents.songs > 1 ? "s" : ""}
                                         </div>
                                     </div>
                                     <Button className="md:text-lg">

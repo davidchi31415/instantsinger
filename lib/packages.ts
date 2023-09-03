@@ -4,9 +4,8 @@ export const packages = [
       "contents": {
         label: "Starter Pack",
         description: "Just wanna try it out? This is for you.",
-        clones: 1,
         songs: 1,
-        price: 3.99
+        price: 1.49
       }
     },
     {
@@ -14,19 +13,17 @@ export const packages = [
       "contents": {
         label: "Artist Pack",
         description: "More bang for your buck.",
-        clones: 1,
         songs: 5,
-        price: 9.99,
+        price: 4.99,
       }
     },
     {
       "packKey": "pro",
       "contents": {
         label: "Pro Pack",
-        description: "For the hardcore users :)",
-        clones: 1,
-        songs: 30,
-        price: 19.99
+        description: "Best value :)",
+        songs: 20,
+        price: 9.99
       }
     }
 ];

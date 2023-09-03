@@ -22,8 +22,9 @@ export const HeroDemo = () => {
     });
 
     return (
-        <div className="py-4 px-8 rounded-xl bg-[#FFF1E4] shadow-xl border-4 border-[#FFD7AF]/50">
+        <div className="py-4 px-4 md:px-8 rounded-xl bg-[#FFF1E4] shadow-xl border-4 border-[#FFD7AF]/50">
             <div className="flex flex-col items-center justify-center gap-4">
+                <div className="text-xl">Listen to this!</div>
                 <div className="border-2 border-primary shadow-md rounded-md bg-white flex items-center justify-center">
                     <div className="p-2 text-2xl bg-primary/25 font-bold">
                         My Voice

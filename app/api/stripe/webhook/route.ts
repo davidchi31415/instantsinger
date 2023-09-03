@@ -28,18 +28,13 @@ export async function POST(req: Request) {
             return new NextResponse("URGENT ERROR: payment successful but processing not - no userId provided", { status: 403});
         }
 
-        if (!session?.metadata?.purchasedClones) {
-            return new NextResponse("URGENT ERROR: payment successful but processing not - no purchasedClones provided", { status: 403});
-        }
-
         if (!session?.metadata?.purchasedSongs) {
             return new NextResponse("URGENT ERROR: payment successful but processing not - no purchasedSongs provided", { status: 403});
         }
 
         const purchaseSuccessful = await updateCredits({
             userId: session.metadata.userId,
-            convertDelta: parseInt(session.metadata.purchasedSongs),
-            cloneDelta: parseInt(session.metadata.purchasedClones)
+            convertDelta: parseInt(session.metadata.purchasedSongs)
         });
         console.log(purchaseSuccessful);
 
