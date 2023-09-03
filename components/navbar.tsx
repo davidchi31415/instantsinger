@@ -65,19 +65,17 @@ export const Navbar = ({ convertCredits }) => {
                     />
                 </div>
                 :
-                <div className="flex items-center gap-x-2">
+                <div className="hidden md:flex items-center gap-x-2">
                     <SignUpButton mode="modal">
                         <Button variant="default" className="rounded-lg">
                             Sign Up
                         </Button>
                     </SignUpButton>
-                    <div className="hidden md:block">
-                        <SignInButton mode="modal">
-                            <Button variant="outline" className="rounded-lg border border-primary">
-                                Login
-                            </Button>
-                        </SignInButton>
-                    </div>
+                    <SignInButton mode="modal">
+                        <Button variant="outline" className="rounded-lg border border-primary">
+                            Login
+                        </Button>
+                    </SignInButton>
                 </div>
             }
             <div className="md:hidden">

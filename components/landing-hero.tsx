@@ -9,7 +9,7 @@ export const LandingHero = () => {
     const { isSignedIn } = useAuth();
 
     return (
-        <div className="px-4 md:px-8 pt-32 md:pt-48 pb-32 space-y-5 mx-auto">
+        <div className="px-4 md:px-8 pb-32 space-y-5 mx-auto">
             <div className="flex justify-center items-center gap-12 flex-wrap-reverse">
                 <div className="max-w-lg font-bold">
                     <div 

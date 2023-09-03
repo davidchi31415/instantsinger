@@ -1,6 +1,6 @@
 "use client";
 
-import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
 import { ConvertCreditCounter } from "./convert-credit-counter";
 import { CloneCreditCounter } from "./clone-credit-counter";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
@@ -33,54 +33,52 @@ export const MobileNavbar = ({ convertCredits=0 }: NavbarProps) => {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side='right' className='p-4 pt-14'>
+      <SheetContent side='right' className='p-4 pt-36'>
         {isSignedIn ?
-          <div className="mt-4 flex gap-2">
-            <UserButton afterSignOutUrl="/" 
-              appearance={{
-                  elements: {
-                  userButtonAvatarBox: {
-                      width: 48,
-                      height: 48
-                  }
-                  }
-              }}
-            />
+          <div className="w-fit mx-auto">
             <ConvertCreditCounter convertCredits={convertCredits} />
           </div>
+          : ""
+        }
+        <div className="mt-8 flex flex-col text-xl gap-4 text-center">
+          <Link href="/dashboard" className={pathname.startsWith("/dashboard") ? 
+              "text-primary" : ""
+          }>
+              Dashboard
+          </Link>
+          <Link href="/pricing" className={pathname === "/pricing" ? 
+              "text-primary" : ""
+          }>
+              Pricing
+          </Link>
+          <Link href="/contact" className={pathname === "/contact" ? 
+              "text-primary" : ""
+          }>
+              Contact
+          </Link>
+        </div>
+        {isSignedIn ?
+          <div className="flex justify-center mt-6">
+            <SignOutButton>
+                <Button variant="outline" className="rounded-lg border border-primary text-xl">
+                    Sign Out
+                </Button>
+            </SignOutButton>
+          </div>
           :
-          <div className="flex items-center gap-x-2">
+          <div className="flex justify-center items-center gap-2 mt-6">
               <SignUpButton mode="modal">
-                  <Button variant="default" className="rounded-lg">
+                  <Button variant="default" className="rounded-lg text-xl">
                       Sign Up
                   </Button>
               </SignUpButton>
-              <div className="hidden md:block">
-                  <SignInButton mode="modal">
-                      <Button variant="outline" className="rounded-lg border border-primary">
-                          Login
-                      </Button>
-                  </SignInButton>
-              </div>
+              <SignInButton mode="modal">
+                  <Button variant="outline" className="rounded-lg border border-primary text-xl">
+                      Login
+                  </Button>
+              </SignInButton>
           </div>
         }
-        <div className="mt-8 flex flex-col text-xl gap-4">
-            <Link href="/dashboard" className={pathname.startsWith("/dashboard") ? 
-                "text-primary" : ""
-            }>
-                Dashboard
-            </Link>
-            <Link href="/pricing" className={pathname === "/pricing" ? 
-                "text-primary" : ""
-            }>
-                Pricing
-            </Link>
-            <Link href="/contact" className={pathname === "/contact" ? 
-                "text-primary" : ""
-            }>
-                Contact
-            </Link>
-          </div>
       </SheetContent>
     </Sheet>
   )
