@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import { updateCredits } from "@/lib/credits";
+import prismadb from "@/lib/prismadb";
 
 export async function POST(req: Request) {
     const body = await req.text();
@@ -28,15 +29,15 @@ export async function POST(req: Request) {
             return new NextResponse("URGENT ERROR: payment successful but processing not - no userId provided", { status: 403});
         }
 
-        if (!session?.metadata?.purchasedSongs) {
-            return new NextResponse("URGENT ERROR: payment successful but processing not - no purchasedSongs provided", { status: 403});
+        const params = { userId: session.metadata.userId };
+        if (session.metadata.purchasedSongs) {
+            params["convertDelta"] = parseInt(session.metadata.purchasedSongs);
+        }
+        if (session.metadata.purchasedClones) {
+            params["cloneDelta"] = parseInt(session.metadata.purchasedClones);
         }
 
-        const purchaseSuccessful = await updateCredits({
-            userId: session.metadata.userId,
-            convertDelta: parseInt(session.metadata.purchasedSongs)
-        });
-        console.log(purchaseSuccessful);
+        const purchaseSuccessful = await updateCredits(params);
 
         if (purchaseSuccessful) return new NextResponse(null, { status: 200 }); // IMPORTANT feedback
         else return new NextResponse("URGENT ERROR: payment successful but processing not", { status: 403});

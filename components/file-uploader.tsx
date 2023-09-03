@@ -26,7 +26,7 @@ import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import { AudioCard } from "@/components/audio-card";
 import Crunker from "crunker";
-import { MAX_FILE_SIZE } from "@/app/(dashboard)/(routes)/convert/constants";
+import { MAX_FILE_SIZE } from "@/lib/constants";
 
 interface CloningFileUploaderProps {
   uploadEndpoint: string;

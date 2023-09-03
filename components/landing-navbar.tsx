@@ -9,13 +9,15 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { BsDiscord } from "react-icons/bs";
 import { usePathname } from "next/navigation";
+import { getCredits } from "@/lib/credits";
+import { ConvertCreditCounter } from "./convert-credit-counter";
 
 const font = Montserrat({
     weight: "600",
     subsets: ["latin"]
 });
 
-export const LandingNavbar = () => {
+export const LandingNavbar = ({ cloneCredits, convertCredits }) => {
     const pathname = usePathname();
     const { isSignedIn } = useAuth(); // useAuth for client-side
 
@@ -49,7 +51,8 @@ export const LandingNavbar = () => {
                 </Link>
             </div> 
             {isSignedIn ?
-                <div className="flex justify-end">
+                <div className="flex justify-end items-center gap-2">
+                    <ConvertCreditCounter convertCredits={convertCredits} />
                     <UserButton afterSignOutUrl="/" 
                     appearance={{
                         elements: {

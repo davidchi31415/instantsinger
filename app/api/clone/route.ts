@@ -13,15 +13,11 @@ export async function POST(
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { cloneName, cloneId } = body;
+        const { cloneId } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
-
-        // TO-DO: Properly check cloneName is valid
-        if (!cloneName) return new NextResponse("Clone name required", { status: 400 });
-        if (cloneName.length > 25) return new NextResponse("Clone name too long", { status: 400 });
         
         // Check API Limits
         const { cloneCredits } = await getCredits();
@@ -66,7 +62,7 @@ export async function POST(
         if (runpodResponse.status == 200) {
             await prismadb.cloneJob.update({
                 where: { id: currentCloneJob.id },
-                data: { runpodJobId, status, name: cloneName }
+                data: { runpodJobId, status }
             });
 
             // Charge the customer

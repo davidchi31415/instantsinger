@@ -18,60 +18,47 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, HelpCircle, HelpCircleIcon, PlayIcon } from "lucide-react";
-import { isJobDone } from "@/lib/utils";
-
-type ConvertJob = {
-    id: string
-    date: Date
-    songName: string
-    cloneName: string
-    status: "pending" | "processing" | "success" | "failed"
-}
-  
+import { cn, getFileName, isJobDone } from "@/lib/utils";
 
 interface HistoryTableProps {
     userData: {
-        conversions: any[];
-        currentJobs: any[];
+        convertJobs: any[];
     }
+    mini?: boolean;
 }
 
-export const HistoryTable = ({ userData }: HistoryTableProps) => {
+export const HistoryTable = ({ userData, mini=false }: HistoryTableProps) => {
     const router = useRouter();
 
     const [pageIndex, setPageIndex] = useState(0);
-    const jobsPerPage = 12;
+    const jobsPerPage = mini ? 1 : 5;
 
-    const [jobs, setJobs] = useState([...userData.currentJobs, ...userData.conversions]);
+    const [jobs, setJobs] = useState([...userData.convertJobs]);
     const numPages = Math.ceil(jobs.length / jobsPerPage);
  
     return (
         <>
-            <div className="text-center mb-4 text-muted-foreground">
-                Want to convert a song? Go to the <Link href="/convert"><b>Convert</b></Link> page.
-            </div>
             <Table>
+                {mini ? "" :
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[8em]">Date</TableHead>
+                        <TableHead className={cn("w-[8em]", !mini ? "hidden md:visible" : "")}>Date</TableHead>
                         <TableHead>Song Name</TableHead>
-                        <TableHead>Clone Name</TableHead>
                         <TableHead className="text-right"><div className="pr-2">Status</div></TableHead>
                         <TableHead></TableHead>
                     </TableRow>
-                </TableHeader>
+                </TableHeader>}
                 <TableBody>
                     {jobs.slice(pageIndex * jobsPerPage, (pageIndex+1) * jobsPerPage).map((job) => {
                         if (isJobDone({ status: job.status })) {
                             return <TableRow
                                 className="cursor-pointer"
-                                onClick={() => { router.push(`/convert/result?id=${job.id}`) }}
+                                onClick={() => { router.push(`/result?id=${job.id}`) }}
                             >
-                                <TableCell className="font-medium">
+                                <TableCell className={cn("font-medium", !mini ? "hidden md:visible" : "")}>
                                     {format(job.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
-                                <TableCell>{job.songName}</TableCell>
-                                <TableCell>{job.cloneName}</TableCell>
+                                <TableCell>{getFileName(job.songName)}</TableCell>
                                 <TableCell className="text-right">
                                     <Badge className={
                                         job.status === "COMPLETED" ? "bg-[#33ff66] text-black" : 
@@ -82,7 +69,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                                     </Badge>
                                 </TableCell>
                                 <TableCell>
-                                    <Link href={`/convert/result?id=${job.id}`}>
+                                    <Link href={`/result?id=${job.id}`}>
                                         <Button variant="ghost" size="icon">
                                             {job.status === "COMPLETED" ? <PlayIcon /> : <HelpCircleIcon />}
                                         </Button>
@@ -91,11 +78,10 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                             </TableRow>
                         } else {
                             return <TableRow>
-                                <TableCell className="font-medium">
+                                <TableCell className={cn("font-medium", !mini ? "hidden md:visible" : "")}>
                                     {format(job.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
-                                <TableCell>{job.songName}</TableCell>
-                                <TableCell>{job.cloneName}</TableCell>
+                                <TableCell>{getFileName(job.songName)}</TableCell>
                                 <TableCell className="text-right">
                                     <ProgressCard 
                                         process="Converting" apiEndpoint="/api/convert/status"
@@ -129,6 +115,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                         })}
                 </TableBody>
             </Table>
+            {mini ? "" :
             <div className="mt-8 flex items-center justify-center">
                 <Button size="icon" className="mr-2"
                     onClick={() => setPageIndex(0)}
@@ -154,7 +141,7 @@ export const HistoryTable = ({ userData }: HistoryTableProps) => {
                 >
                     <ChevronsRightIcon />
                 </Button>
-            </div>
+            </div>}
         </>
     )
 }

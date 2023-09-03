@@ -7,8 +7,6 @@ import { auth } from "@clerk/nextjs";
 import { MicIcon } from "lucide-react";
 
 const CloneLayout = async ({children}: {children: React.ReactNode}) => {
-    // TODO - Get current clone jobs, get past clones, get credits
-
     return (
         <div className="w-full">
             <Heading

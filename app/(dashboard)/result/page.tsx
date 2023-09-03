@@ -32,7 +32,7 @@ const ConversionResultPage = async ({
     if (!results) {
         return (
             <div className="px-4 lg:px-8">
-                <Empty label="Either the conversion does not exist, or results are not ready. :("/> 
+                <Empty label="Either the results does not exist, or they are not ready. :("/> 
             </div>
         )
     } else {

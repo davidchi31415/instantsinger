@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ProModal } from "./pro-modal";
+import { HistoryModal } from "./history-modal";
 
 export const ModalProvider = () => {
     const [isMounted, setMounted] = useState(false);

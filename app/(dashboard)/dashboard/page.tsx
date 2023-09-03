@@ -33,28 +33,19 @@ const getUserData = async () => {
     const convertJobs = await getSubmittedConversions({ userId });
     const { cloneCredits, convertCredits } = await getCredits();
     const res: UserData = { 
-        clone, cloneJob: cloneJob, convertJobs: convertJobs,
+        clone, cloneJob, convertJobs,
         cloneCredits, convertCredits
     };
 
     return res;
 }
 
-const DashboardLayout = async ({children}: {children: React.ReactNode}) => {
+const DashboardPage = async () => {
     const userData = await getUserData();
 
     return (
-        <div className="h-full relative">
-            <LandingNavbar 
-                convertCredits={userData.convertCredits} cloneCredits={userData.convertCredits} 
-            />
-            <main className="pb-8">
-                <div className="pt-24">
-                    {children}
-                </div>
-            </main>
-        </div>
+        <Dashboard userData={userData} />
     )
 }
 
-export default DashboardLayout;
+export default DashboardPage;

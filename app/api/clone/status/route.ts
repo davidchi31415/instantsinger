@@ -19,18 +19,6 @@ export async function GET(
         if (!cloneId) {
             return new NextResponse("Id required", { status: 400 });
         }
-
-        // Check API Limits
-        // const freeTrial = await checkAPILimit();
-        // const isPro = await checkSubscription();
-
-        // if (!freeTrial && !isPro) {
-        //     return new NextResponse("Free trial has expired", { status: 403 });
-        // }
-
-        // if (!isPro) {
-        //     await increaseAPILimit();
-        // }
         
         const cloneJob = await prismadb.cloneJob.findUnique({ where: { id: cloneId } });
         if (!cloneJob) return new NextResponse("No clone job found", { status: 400 });

@@ -5,7 +5,7 @@ import { Card, CardContent } from "./ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Zap } from "lucide-react";
-import { useProModal } from "@/hooks/use-pro-modal";
+import { useProModal } from "@/hooks/use-modal";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 
@@ -23,8 +23,8 @@ export const ConvertCreditCounter = ({ convertCredits=0 }: ConvertCreditCounterP
     if (!isMounted) return null;
 
     return (
-        <Card className="bg-white border-2 border-primary shadow-xl rounded-md">
-            <CardContent className="px-4 py-2
+        <Card className="bg-white border-2 border-primary bg-primary/5 shadow-md rounded-md">
+            <CardContent className="px-2 py-1
                  hover:scale-105 transition cursor-pointer"
                 onClick={() => proModal.onOpen() }
             >   

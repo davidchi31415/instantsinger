@@ -12,7 +12,6 @@ export async function POST(
         const { userId } = auth();
         const body = await req.json();
         const { 
-            cloneName, 
             hasInstrumentals,
             hasBackingVocals,
             convertBackingVocals,
@@ -24,8 +23,8 @@ export async function POST(
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const clone = await _getClone({ userId, cloneName });
-        if (!clone) return new NextResponse("No clone found with given name", { status: 400 });
+        const clone = await _getClone({ userId });
+        if (!clone) return new NextResponse("You don't have a voice clone", { status: 400 });
 
         // Check API Limits
         const { convertCredits } = await getCredits();
@@ -68,8 +67,7 @@ export async function POST(
                     status, 
                     hasInstrumentals,
                     hasBackingVocals,
-                    convertBackingVocals, 
-                    cloneName 
+                    convertBackingVocals
                 }
             });
 

@@ -23,7 +23,7 @@ export const updateCredits = async ({ userId, convertDelta=0, cloneDelta=0 }: In
 
     if (!user) {
         await prismadb.userAccount.create({
-            data: { userId: userId, convertCredits: convertDelta, cloneCredits: cloneDelta }
+            data: { userId: userId, convertCredits: convertDelta }
         });
     } else {
         await prismadb.userAccount.update({

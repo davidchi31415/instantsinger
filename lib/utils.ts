@@ -41,6 +41,7 @@ export function isJobDone ({ status }: { status: string }) {
 }
 
 export function exclude(data, keys) {
+  if (!data) return data;
   for (let i=0; i < keys.length; i++) delete data[keys[i]];
 
   return data;

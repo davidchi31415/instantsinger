@@ -40,7 +40,6 @@ interface GetConversionsProps {
 
 interface GetCloneProps {
     userId: string;
-    cloneName: string;
 }
 
 interface GetClonesProps {
@@ -155,7 +154,7 @@ export const _getConversion = async ({ userId, conversionId }: GetConversionProp
         }
     });
 
-    if (convertJob && convertJob.userId !== userId) return; // Permission denied
+    if (convertJob && convertJob.userId !== userId) return null; // Permission denied
 
     return convertJob;
 };
@@ -174,7 +173,7 @@ export const getMostRecentConvertJob = async ({ userId }: PrismadbProps) => {
         }
     });
 
-    if (!job) return;
+    if (!job) return null;
     
     return exclude(job, ["userId"]);
 }
@@ -254,13 +253,13 @@ export const getConversion = async ({ userId, conversionId }: GetConversionProps
         }
     });
 
-    if (convertJob && convertJob.userId !== userId) return; // Permission denied
+    if (convertJob && convertJob.userId !== userId) return null; // Permission denied
 
     return exclude(convertJob, ["userId"]);
 };
 
 export const getConversionResults = async ({ convertJob }: GetConvertResultProps) => {
-    if (!isJobDone({ status: convertJob.status })) return;
+    if (!isJobDone({ status: convertJob.status })) return null;
 
     if (convertJob.status === "FAILED") {
         return exclude(convertJob, ["userId"]);
@@ -347,52 +346,24 @@ export const _getMostRecentCloneJob = async ({ userId }: PrismadbProps) => {
     return job;
 }
 
-export const _getClone = async ({ userId, cloneName }: GetCloneProps) => {
+export const _getClone = async ({ userId }: GetCloneProps) => {
     const clone = await prismadb.clone.findUnique({
         where: {
-            userId_name: {
-                userId,
-                name: cloneName
-            }
+            userId
         }
     });
 
     return clone;
 }
 
-export const _getClones = async ({ userId }: GetClonesProps) => {
-    const clones = await prismadb.clone.findMany({
-        where: {
-            userId
-        }
-    });
-
-    return clones;
-};
-
 //////////////////////////////////////////////
 // For User Data - mask out sensitive IDs
 //////////////////////////////////////////////
 
-export const getClones = async ({ userId }: GetClonesProps) => {
-    const clones = await prismadb.clone.findMany({
-        where: {
-            userId
-        },
-        orderBy: {
-            createdAt: "desc"
-        }
-    });
-
-    const clonesData = clones.map((clone) => exclude(clone, ["userId"]));
-
-    return clonesData;
-};
-
-export const getClone = async ({ cloneId }) => {
+export const getClone = async ({ userId }) => {
     const clone = await prismadb.clone.findUnique({
         where: {
-            id: cloneId
+            userId
         }
     });
 
@@ -410,7 +381,7 @@ export const getMostRecentCloneJob = async ({ userId }: PrismadbProps) => {
         }
     });
 
-    if (!job) return;
+    if (!job) return null;
     
     return exclude(job, ["userId"]);
 };
@@ -422,25 +393,9 @@ export const getCloneJob = async ({ cloneJobId }) => {
         }
     });
 
-    if (!job) return;
+    if (!job) return null;
     
     return exclude(job, ["userId"]);
-}
-
-export const getCurrentClones = async ({ userId }) => {
-    const cloneJobs = await prismadb.cloneJob.findMany({
-        where: {
-            userId,
-            OR: [
-                { status: "IN_QUEUE" },
-                { status: "IN_PROGRESS" }
-            ]
-        }
-    });
-
-    const cloneJobsData = cloneJobs.map((job) => exclude(job, ["userId"]));
-
-    return cloneJobsData;
 }
 
 export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
@@ -455,7 +410,7 @@ export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
 }
 
 export const getCloneResults = async ({ cloneJob }) => {
-    if (!isJobDone({ status: cloneJob.status })) return;
+    if (!isJobDone({ status: cloneJob.status })) return null;
 
     if (cloneJob.status === "FAILED") {
         return exclude(cloneJob, ["userId"]);

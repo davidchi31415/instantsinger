@@ -1,4 +1,4 @@
-import { MAX_FILE_SIZE } from "@/app/(dashboard)/(routes)/convert/constants";
+import { MAX_FILE_SIZE } from "@/lib/constants";
 import { Storage } from "@google-cloud/storage";
 
 const key = JSON.parse(process.env.GCLOUD_KEY!);

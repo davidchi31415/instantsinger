@@ -9,42 +9,39 @@ import { cn } from "@/lib/utils";
 import { ArrowRightLeftIcon, Code, HistoryIcon, ImageIcon, LayoutDashboard, MessageSquare, Mic, MicIcon, Music, Settings, VideoIcon } from "lucide-react";
 import { CloneCreditCounter } from "./clone-credit-counter";
 import { ConvertCreditCounter } from "./convert-credit-counter";
+import { Button } from "./ui/button";
+import { useState } from "react";
 
 const font = Montserrat({weight: "600", subsets: ["latin"]});
 
 const routes = [
     {
-        label: "Dashboard",
-        icon: LayoutDashboard,
-        href: "/dashboard",
-        color: "text-blue-500"
-    },
-    {
         label: "Clone",
         icon: MicIcon,
-        href: "/clone",
+        key: "clone",
         color: "text-pink-500"
     },
     {
         label: "Convert",
         icon: ArrowRightLeftIcon,
-        href: "/convert",
+        key: "convert",
         color: "text-orange-500"
     },
     {
         label: "History",
         icon: HistoryIcon,
-        href: "/history"
+        key: "history",
     },
     {
         label: "Settings",
         icon: Settings,
-        href: "/settings"
+        key: "settings",
     }
 ]
 
-const Sidebar = () => {
-  const pathname = usePathname();
+const Sidebar = ({ initTab }) => {
+
+    const [tab, setTab] = useState(initTab);
   
   return (
     <div className="space-y-4 py-4 flex flex-col h-full">
@@ -61,20 +58,22 @@ const Sidebar = () => {
             <div className="space-y-1">
                 {routes.map((route) => {
                     return (
-                        <Link 
-                            href={route.href} key={route.href} 
+                        <Button
+                            variant="ghost"
+                            key={route.key} 
                             className={cn("text-md group flex p-3 w-full justify-start \
                             font-medium cursor-pointer text-black hover:bg-[#f0f0f0] \
                             rounded-md",
-                            pathname === route.href ? 
+                            initTab === route.key ? 
                                 "border-2 border-primary bg-[#f3f3f3]" : ""
                             )}
+                            onClick={() => setTab}
                         >
                             <div className="flex items-center flex-1">
                                 <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
                                 {route.label}
                             </div>
-                        </Link>
+                        </Button>
                     )
                 })}
             </div>

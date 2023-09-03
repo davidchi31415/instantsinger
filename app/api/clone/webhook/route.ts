@@ -38,20 +38,12 @@ export async function POST(req: NextRequest) {
             // REFUND the user
             await updateCredits({ userId: cloneJob.userId, convertDelta: 1 });
         } else {
-            if (cloneJob.name) {
-                await prismadb.clone.create({
-                    data: { 
-                        id: jobId,
-                        userId: cloneJob.userId, 
-                        name: cloneJob.name
-                    }
-                });
-            } else {
+            const prevClone = await prismadb.clone.findUnique({ where: { userId: cloneJob.userId }});
+            if (!prevClone) {
                 await prismadb.clone.create({
                     data: {
                         id: jobId,
-                        userId: cloneJob.userId,
-                        name: cloneJob.id // TODO - find a way to fix this (although it should never really matter)
+                        userId: cloneJob.userId
                     }
                 })
             }

@@ -5,7 +5,7 @@ import { Card, CardContent } from "./ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Zap } from "lucide-react";
-import { useProModal } from "@/hooks/use-pro-modal";
+import { useProModal } from "@/hooks/use-modal";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { IconContext } from "react-icons";
 
