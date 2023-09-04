@@ -74,7 +74,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                 :
                 <>
                     <div className="p-4 lg:px-8">
-                        <div className="text-xl flex justify-between">
+                        <div className="text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
                                 <div><b>Step 1:</b> Speaking</div>
                                 <Link href="/clone/step-1-preview" passHref={true}>
@@ -93,7 +93,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                                 </Badge>}
                         </div>
 
-                        <div className="mt-8 text-xl flex justify-between">
+                        <div className="mt-8 text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
                                 <div><b>Step 2:</b> Pitches</div>
                                 <Link href="/clone/step-2-preview" passHref={true}>
@@ -103,6 +103,25 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                                 </Link>
                             </div>
                             {files.some(fileName => fileName === "2") ?
+                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
+                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                </Badge>
+                                :
+                                <Badge className="h-fit gap-2" variant="destructive">
+                                    <div className="text-lg">Missing</div> <AlertCircleIcon />
+                                </Badge>}
+                        </div>
+
+                        <div className="mt-8 text-xl flex justify-between lg:max-w-md mx-auto">
+                            <div className="flex gap-2 items-center">
+                                <div><b>Step 3:</b> Singing</div>
+                                <Link href="/clone/step-3" passHref={true}>
+                                    <Button size="icon" variant="ghost" className="text-primary">
+                                        <CornerDownLeftIcon />
+                                    </Button>
+                                </Link>
+                            </div>
+                            {files.some(fileName => fileName === "3") ?
                                 <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
                                     <div className="text-lg">Uploaded</div> <CheckIcon />
                                 </Badge>

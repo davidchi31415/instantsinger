@@ -38,8 +38,8 @@ const CloningStep2Page = async () => {
                         </CardHeader>
                         <CardContent className="flex flex-col items-center justify-center gap-4">
                             <Iframe url="https://www.youtube.com/embed/_tVSazDrYuA"
-                                width="640px"
-                                height="320px"
+                                width="320"
+                                height="160px"
                                 id=""
                                 className=""
                                 display="block"
@@ -60,12 +60,12 @@ const CloningStep2Page = async () => {
                                 className="text-md gap-2"
                                 variant="outline"
                             >
-                                <MoveLeftIcon />Step 2 Preview
+                                <MoveLeftIcon />Preview
                             </Button>
                         </Link>
-                        <Link href="/dashboard/clone/finish">
+                        <Link href="/dashboard/clone/step-3">
                             <Button className="text-md gap-2">
-                                Finish <UploadCloudIcon />
+                                Step 3
                             </Button>
                         </Link>
                     </div>

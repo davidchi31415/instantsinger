@@ -17,7 +17,10 @@ const CloningStepPreview = () => {
                 flex flex-col gap-2
                 ">
                 <p>
-                    You will be provided with pitches to sing along with. <b>Wear headphones</b> as you sing along, to prevent
+                    You will be provided with pitches to sing along with. 
+                </p>
+                <p>
+                    We recommend <b>wearing headphones</b> as you sing along, to prevent
                     our audio from being picked up by your microphone. 
                 </p>
                 <p>
@@ -35,7 +38,7 @@ const CloningStepPreview = () => {
                             className="text-md gap-2"
                             variant="outline"
                         >
-                            <MoveLeftIcon />Go Back to Step 1
+                            <MoveLeftIcon />Step 1
                         </Button>
                     </Link><Link href="/dashboard/clone/step-2">
                         <Button className="text-md gap-2">

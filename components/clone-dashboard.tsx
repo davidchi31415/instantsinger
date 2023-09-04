@@ -10,6 +10,7 @@ import Image from "next/image";
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
 import { Empty } from "./empty";
 import { useRouter } from "next/navigation";
+import { isJobDone } from "@/lib/utils";
 
 interface ClonesDashboardProps {
     userData: {
@@ -24,18 +25,18 @@ interface ClonesDashboardProps {
 export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
     const router = useRouter();
 
-    if (!userData.clone && userData.cloneJob) {
-        return <div className="flex flex-col items-center gap-2 text-xl">
-            <Empty label="Congrats! Your AI Voice is on its way." />
-            <div className="w-[25rem] mt-2">
-                <ProgressCard 
-                    process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
-                    onStatusChange={() => router.refresh()}
-                    initStatus="IN_QUEUE"
-                />
-            </div>
-        </div>
-    }
+    // if (!userData.clone && userData.cloneJob) {
+    //     return <div className="flex flex-col items-center gap-2 text-xl">
+    //         <Empty label="Congrats! Your AI Voice is on its way." />
+    //         <div className="w-[25rem] mt-2">
+    //             <ProgressCard 
+    //                 process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
+    //                 onStatusChange={() => router.refresh()}
+    //                 initStatus="IN_QUEUE"
+    //             />
+    //         </div>
+    //     </div>
+    // }
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -50,6 +51,7 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
                 <p>
                     2) Have your phone (or microphone) ready. Keep it <b>close to your face</b> to <b>prevent echo</b> from your surroundings.
                 </p>
+                <p>Record yourself using an <b>external app</b> and upload your files when instructed.</p>
                 <p>
                     Try to record only your voice, with as few other noises as possible.
                 </p>

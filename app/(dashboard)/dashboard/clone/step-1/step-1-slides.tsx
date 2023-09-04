@@ -64,14 +64,14 @@ const CloningStep1Slides = ({ jobId }) => {
                     className="gap-2 text-md"
                     variant="outline"
                 >
-                    <MoveLeftIcon />Go Back
+                    <MoveLeftIcon />Back
                 </Button>
                 : <Link href="/dashboard/clone/step-1-preview">
                     <Button 
                         className="text-md gap-2"
                         variant="outline"
                     >
-                        <MoveLeftIcon />Step 1 Preview
+                        <MoveLeftIcon />Preview
                     </Button>
                 </Link>}
                 {step !== contents.length - 1 ?
