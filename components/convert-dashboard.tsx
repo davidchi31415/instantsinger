@@ -187,7 +187,7 @@ const ConvertDashboard = ({ userData }) => {
   return (
     <div>
         <HistoryModal userData={userData} />
-        <SettingsModal />
+        <SettingsModal userData={userData} />
         <div className="p-4 lg:px-8">
           <div className="flex justify-center items-center mb-4 px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
             Your Voice Clone:
