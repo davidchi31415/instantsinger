@@ -25,17 +25,20 @@ interface ClonesDashboardProps {
 export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
     const router = useRouter();
 
-    if (!userData.clone && userData.cloneJob?.status !== "NOT_SUBMITTED") {
-        return <div className="flex flex-col items-center gap-2 text-xl">
-            <Empty label="Congrats! Your AI Voice is on its way." />
-            <div className="w-[25rem] mt-2">
-                <ProgressCard 
-                    process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
-                    onStatusChange={() => router.refresh()}
-                    initStatus="IN_QUEUE"
-                />
+    if (!userData.clone) {
+        const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
+        if (cloningInProgress) {
+            return <div className="flex flex-col items-center gap-2 text-xl">
+                <Empty label="Congrats! Your AI Voice is on its way." />
+                <div className="w-[25rem] mt-2">
+                    <ProgressCard 
+                        process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
+                        onStatusChange={() => router.refresh()}
+                        initStatus={userData.cloneJob.}
+                    />
+                </div>
             </div>
-        </div>
+        }
     }
 
     return (
