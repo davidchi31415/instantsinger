@@ -25,18 +25,18 @@ interface ClonesDashboardProps {
 export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
     const router = useRouter();
 
-    // if (!userData.clone && userData.cloneJob) {
-    //     return <div className="flex flex-col items-center gap-2 text-xl">
-    //         <Empty label="Congrats! Your AI Voice is on its way." />
-    //         <div className="w-[25rem] mt-2">
-    //             <ProgressCard 
-    //                 process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
-    //                 onStatusChange={() => router.refresh()}
-    //                 initStatus="IN_QUEUE"
-    //             />
-    //         </div>
-    //     </div>
-    // }
+    if (!userData.clone && userData.cloneJob) {
+        return <div className="flex flex-col items-center gap-2 text-xl">
+            <Empty label="Congrats! Your AI Voice is on its way." />
+            <div className="w-[25rem] mt-2">
+                <ProgressCard 
+                    process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
+                    onStatusChange={() => router.refresh()}
+                    initStatus="IN_QUEUE"
+                />
+            </div>
+        </div>
+    }
 
     return (
         <div className="flex flex-col justify-center items-center">
