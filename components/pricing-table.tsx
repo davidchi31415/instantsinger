@@ -10,6 +10,12 @@ import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { Roboto_Slab } from "next/font/google";
+
+const font = Roboto_Slab({
+    weight: "600",
+    subsets: ["latin"]
+});
 
 const PricingTable = () => {
     const { isSignedIn } = useAuth(); // useAuth for client-side
@@ -45,7 +51,7 @@ const PricingTable = () => {
                 </CardTitle>
                 <CardContent>
                     <div 
-                        className="text-5xl md:text-7xl text-center mt-4 mb-8"
+                        className={cn("text-5xl md:text-7xl text-center mt-4 mb-8", font.className)}
                     >
                         FREE*
                     </div>
@@ -103,7 +109,7 @@ const PricingTable = () => {
                             </CardTitle>
                             <CardContent>
                                 <div 
-                                    className="text-5xl md:text-7xl text-center mt-4 mb-8"
+                                    className={cn("text-5xl md:text-7xl text-center mt-4 mb-8", font.className)}
                                 >
                                     ${pack.contents.price * quantities[i]}
                                 </div>

@@ -4,6 +4,13 @@ import { SignUpButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { HeroDemo } from "./hero-demo";
+import { Roboto_Slab } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const font = Roboto_Slab({
+    weight: "600",
+    subsets: ["latin"]
+});
 
 export const LandingHero = () => {
     const { isSignedIn } = useAuth();
@@ -13,18 +20,16 @@ export const LandingHero = () => {
             <div className="flex justify-center items-center gap-12 flex-wrap-reverse">
                 <div className="max-w-lg font-bold">
                     <div 
-                        className="text-5xl sm:text-6xl md:text-7xl
-                        font-extra-bold"
+                        className={cn("text-5xl sm:text-6xl md:text-6xl \
+                        font-extra-bold", font.className)}
                     >
-                        <h1>Unleash</h1>
-                        <h1>your voice</h1>
-                        <div>
+                        <h1>Become a singer in 10 minutes</h1>
+                        <h1>
                             <span className="text-primary">with AI</span>.
-                        </div>
+                        </h1>
                     </div>
-                    <div className="text-md md:text-xl font-light text-zinc-400 mb-4">
-                        The AI-powered singing tool that lets you hear <b>any song</b> converted into <b>your own voice</b>,
-                        regardless of your ability. Become the singer of your dreams, <b>today</b>.
+                    <div className="text-md md:text-xl font-light text-zinc-400 my-4">
+                        Convert any song into your own voice, while keeping the same pitches and inflections of the original singer - all with the click of a button.
                     </div>
                     <div className="flex items-center gap-2 w-full">
                     {isSignedIn ?
@@ -35,7 +40,7 @@ export const LandingHero = () => {
                                 rounded-sm font-semibold border-2 border-black/100
                                 hover:scale-105 transition shadow-xl"
                             >
-                                Get Started
+                                Get Started for FREE
                             </Button>
                         </Link>
                         :
@@ -46,7 +51,7 @@ export const LandingHero = () => {
                                 rounded-sm font-semibold border-2 border-black/100
                                 hover:scale-105 transition shadow-xl"
                             >
-                                Get Started
+                                Get Started for FREE
                             </Button>
                         </SignUpButton>}
                     </div>

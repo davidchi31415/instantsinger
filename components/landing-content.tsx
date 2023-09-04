@@ -9,37 +9,13 @@ import { BsDiscord } from "react-icons/bs";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import { Check, MicIcon } from "lucide-react";
+import { Roboto_Slab } from "next/font/google";
+import { cn } from "@/lib/utils";
 
-const testimonials = [
-    {
-        name: "Antonio",
-        avatar: "A",
-        title: "Novice Singer",
-        description: "I've never felt more confident about my singing voice, \
-        now that I know what is possible."
-    },
-    {
-        name: "Antonio",
-        avatar: "A",
-        title: "Novice Singer",
-        description: "I've never felt more confident about my singing voice, \
-        now that I know what is possible."
-    },
-    {
-        name: "Antonio",
-        avatar: "A",
-        title: "Novice Singer",
-        description: "I've never felt more confident about my singing voice, \
-        now that I know what is possible."
-    },
-    {
-        name: "Antonio",
-        avatar: "A",
-        title: "Novice Singer",
-        description: "I've never felt more confident about my singing voice, \
-        now that I know what is possible."
-    }
-]
+const font = Roboto_Slab({
+    weight: "600",
+    subsets: ["latin"]
+});
 
 export const LandingContent = () => {
     return (
@@ -55,9 +31,9 @@ export const LandingContent = () => {
                                 <div className="w-fit mx-auto">
                                     <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-white bg-red-500 rounded-full shadow">1</span>
                                 </div>
-                                <h3 className="mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center flex items-center justify-center gap-2">Clone your voice</h3>
+                                <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center flex items-center justify-center gap-2", font.className)}>Clone your voice</h3>
                                 <p className="mt-2 text-lg">
-                                    Using just your phone, clone your singing voice in 10 minutes by following our step-by-step procedure.
+                                    Using just your phone, follow our step-by-step procedure to clone your singing voice in 10 minutes.
                                 </p>
                             </div>
                         </div>
@@ -68,9 +44,9 @@ export const LandingContent = () => {
                                 <div className="w-fit mx-auto">
                                     <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-white bg-primary rounded-full shadow">2</span>
                                 </div>
-                                <h3 className="mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center">Convert any song</h3>
+                                <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center", font.className)}>Convert any song</h3>
                                 <p className="mt-2 text-lg">
-                                    Convert any song into your own voice, while keeping all the pitches and inflections of the original singer intact.
+                                    Once your voice is cloned, converting a song is as easy as pasting a YouTube link or uploading a file!
                                 </p>
                             </div>
                         </div>

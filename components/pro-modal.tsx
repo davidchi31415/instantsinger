@@ -18,7 +18,7 @@ import { packages } from "@/lib/packages";
 export const ProModal = () => {
     const proModal = useProModal();
     const [isLoading, setLoading] = useState(false);
-
+    const [quantities, setQuantities] = useState(packages.map(pack => 1));
     const [isMounted, setMounted] = useState(false);
     useEffect(() => {
         setMounted(true);
@@ -26,10 +26,10 @@ export const ProModal = () => {
 
     if (!isMounted) return null;
     
-    const onPurchase = async ({ packKey }) => {
+    const onPurchase = async ({ packKey, quantity }) => {
         try {
             setLoading(true);
-            const response = await axios.get("/api/stripe", { params: { packKey } });
+            const response = await axios.get("/api/stripe", { params: { packKey, quantity } });
 
             window.location.href = response.data.url;
         } catch (error) {
@@ -62,9 +62,8 @@ export const ProModal = () => {
                     >
                         {packages.map((pack, i) => {
                             return (
-                                <div className="p-4 flex items-start justify-between cursor-pointer
-                                    border-2 border-primary rounded-md shadow-lg hover:scale-105 transition"
-                                    onClick={() => onPurchase({ packKey: pack.packKey })}
+                                <div className="p-4 flex items-start justify-between
+                                    border-2 border-primary rounded-md shadow-lg"
                                     key={`pack-${pack.packKey}`}
                                 >
                                     <div>
@@ -74,9 +73,18 @@ export const ProModal = () => {
                                             <b>{pack.contents.songs}</b> Song Conversion{pack.contents.songs > 1 ? "s" : ""}
                                         </div>
                                     </div>
-                                    <Button className="md:text-lg">
-                                        ${pack.contents.price}
-                                    </Button>
+                                    <div>
+                                        <Button className="w-full mb-2 text-xl" onClick={() => onPurchase({ packKey: pack.packKey, quantity: quantities[i] })}>
+                                            ${pack.contents.price * quantities[i]}
+                                        </Button>
+                                        <div className="flex items-center justify-center gap-2">
+                                            <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
+                                            <div className="text-center text-xl w-[2rem]">
+                                                {quantities[i]}
+                                            </div>
+                                            <Button onClick={() => setQuantities(e => { let h = [...e]; h[i] += 1; return h; })}>+</Button>
+                                        </div>
+                                    </div>
                                 </div>
                             )
                         })}
