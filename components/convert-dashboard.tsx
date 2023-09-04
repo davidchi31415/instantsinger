@@ -20,7 +20,7 @@ import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn, parseYoutubeLink } from "@/lib/utils";
-import { useHistoryModal, useProModal } from "@/hooks/use-modal";
+import { useHistoryModal, useProModal, useSettingsModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
 import {
@@ -34,6 +34,7 @@ import { CogIcon, HistoryIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-
 import { HistoryModal } from "./history-modal";
 import { HistoryTable } from "./history-table";
 import { useMultiAudio } from "@/hooks/use-multi-audio";
+import { SettingsModal } from "./settings-modal";
 
 const Player = ({ player, toggle }) => {
   return (
@@ -46,6 +47,7 @@ const Player = ({ player, toggle }) => {
 const ConvertDashboard = ({ userData }) => {
   const router = useRouter();
   const proModal = useProModal();
+  const settingsModal = useSettingsModal();
   const historyModal = useHistoryModal();
 
   const [inputChoice, setInputChoice] = useState("youtube");
@@ -185,6 +187,7 @@ const ConvertDashboard = ({ userData }) => {
   return (
     <div>
         <HistoryModal userData={userData} />
+        <SettingsModal />
         <div className="p-4 lg:px-8">
           <div className="flex justify-center items-center mb-4 px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
             Your Voice Clone:
@@ -192,7 +195,9 @@ const ConvertDashboard = ({ userData }) => {
               return (
                 <Player player={player} toggle={toggle(i)} />
               )}) : ""}
-            <SettingsIcon />
+            <Button variant="ghost" onClick={() => settingsModal.onOpen()}>
+              <SettingsIcon />
+            </Button>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div id="upload-convert" 
