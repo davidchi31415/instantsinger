@@ -60,8 +60,8 @@ export const LandingContent = () => {
                 <div className="mb-20 pt-8 pb-12 md:py-16 bg-[#FFF1E4] border-4 border-[#FFD7AF]/50 rounded-xl"
                     id="pricing-table"
                 >   
-                    <div className="w-fit mx-auto mb-8 text-3xl">
-                        Did we mention, FREE?
+                    <div className="w-fit mx-auto text-center mb-8 text-3xl">
+                        Did we mention, <i>FREE?</i>
                     </div>
                     <PricingTable />
                 </div>

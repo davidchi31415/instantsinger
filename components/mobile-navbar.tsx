@@ -67,12 +67,12 @@ export const MobileNavbar = ({ convertCredits=0 }: NavbarProps) => {
           </div>
           :
           <div className="flex justify-center items-center gap-2 mt-6">
-              <SignUpButton mode="modal">
+              <SignUpButton>
                   <Button variant="default" className="rounded-lg text-xl">
                       Sign Up
                   </Button>
               </SignUpButton>
-              <SignInButton mode="modal">
+              <SignInButton>
                   <Button variant="outline" className="rounded-lg border border-primary text-xl">
                       Login
                   </Button>
