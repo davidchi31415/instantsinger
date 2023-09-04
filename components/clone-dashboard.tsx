@@ -34,10 +34,19 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
                     <ProgressCard 
                         process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
                         onStatusChange={() => router.refresh()}
-                        initStatus={userData.cloneJob.}
+                        initStatus={userData.cloneJob.status}
                     />
                 </div>
             </div>
+        } else if (userData.cloneJob && isJobDone({ status: userData.cloneJob?.status })) {
+            if (userData.cloneJob?.status !== "COMPLETED") {
+                return <div className="flex flex-col items-center gap-2 text-xl">
+                    <Empty label="Cloning job could not complete." />
+                    <div className="w-[25rem] mt-2">
+                        Contact assistance.
+                    </div>
+                </div>
+            }
         }
     }
 
