@@ -1,4 +1,4 @@
-import { getClone, getCloneResults, getConversions, getCurrentUnsubmittedCloneJob, getMostRecentCloneJob, getSubmittedConversions } from "@/lib/runpod";
+import { getClone, getCloneResults, getConversions, getCurrentCloneJob, getCurrentUnsubmittedCloneJob, getMostRecentCloneJob, getSubmittedConversions } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 import { getCredits } from "@/lib/credits";
 import { Dashboard } from "@/components/dashboard";
@@ -25,7 +25,7 @@ const getUserData = async () => {
         const { urls } = await getCloneResults({ clone });
         cloneResultUrls = urls;
     }
-    let cloneJob = await getMostRecentCloneJob({ userId });
+    let cloneJob = await getCurrentCloneJob({ userId });
     if (!cloneJob) {
         cloneJob = await getCurrentUnsubmittedCloneJob({ userId });
     }

@@ -374,6 +374,24 @@ export const getClone = async ({ userId }) => {
     return cloneData;
 }
 
+export const getCurrentCloneJob = async ({ userId }: PrismadbProps) => {
+    const job = await prismadb.cloneJob.findFirst({
+        where: {
+            userId,
+            NOT: {
+                status: "NOT_SUBMITTED"
+            }
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
+
+    if (!job) return null;
+    
+    return exclude(job, ["userId"]);
+}
+
 export const getMostRecentCloneJob = async ({ userId }: PrismadbProps) => {
     const job = await prismadb.cloneJob.findFirst({
         where: {
