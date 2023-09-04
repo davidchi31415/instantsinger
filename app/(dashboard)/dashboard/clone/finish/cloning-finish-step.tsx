@@ -10,12 +10,13 @@ import { Input } from "@/components/ui/input";
 import { AlertCard } from "@/components/alert-card";
 import { Congrats } from "@/components/congrats";
 import { toast } from "react-hot-toast";
-import { useProModal } from "@/hooks/use-modal";
+import { useCloneModal, useProModal } from "@/hooks/use-modal";
 import { Badge } from "@/components/ui/badge";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { CloneModal } from "@/components/clone-modal";
 
 interface CloningFinishStepProps {
     jobId: string;
@@ -25,7 +26,7 @@ interface CloningFinishStepProps {
 }
 
 const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: CloningFinishStepProps) => {
-    const proModal = useProModal();
+    const cloneModal = useCloneModal();
 
     const [loading, setLoading] = useState(false);
     const [files, setFiles] = useState(uploadedFilenames ? uploadedFilenames : []);
@@ -53,7 +54,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                         toast("Missing files");
                     } else if(error?.response?.status === 403) {
                         console.log("Need more credits");
-                        proModal.onOpen();
+                        cloneModal.onOpen();
                     } else {
                         console.log("Error:", error.response);
                         toast("Something went wrong");
@@ -69,6 +70,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
 
     return (
         <div>
+            <CloneModal />
             {submitted ?
                 redirect("/dashboard")
                 :
@@ -142,7 +144,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                     <div className="w-fit h-fit mx-auto flex justify-center items-center mt-8 mb-16 shadow-xl
                         hover:scale-105 transition"
                     >
-                        <Button size="lg" className="text-xl rounded-r-none border-2 border-black"
+                        <Button size="lg" className="text-xl border-2 border-black"
                             disabled={
                                 loading
                             }
@@ -150,16 +152,6 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                         >
                             Clone My Voice
                         </Button>
-                        <span className="px-2 py-[0.45rem] rounded-r-md text-black flex items-center bg-primary/20
-                            border-2 border-black border-l-none font-bold
-                        ">
-                            1
-                            <IconContext.Provider
-                            value={{ size: "25px", color: "#E1B530" }}
-                        >
-                            <PiCoinVerticalFill />
-                            </IconContext.Provider>
-                        </span>
                     </div>
                 </>
             }

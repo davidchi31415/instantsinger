@@ -7,6 +7,7 @@ import { absoluteUrl } from "@/lib/utils";
 import { packages } from "@/lib/packages";
 
 const pricingUrl = absoluteUrl("/pricing");
+const cloningFinishUrl = absoluteUrl("/dashboard/clone/finish");
 const dashboardUrl = absoluteUrl("/dashboard");
 
 export async function GET(
@@ -27,38 +28,69 @@ export async function GET(
         if (!quantity || !(parseInt(quantity) >= 1)) {
             return new NextResponse("Need valid quantity", { status: 400 });
         }
-
-        const pack = packages.find((e) => e.packKey === packKey);
-        if (!pack) return new NextResponse("Pack not found", { status: 400 });
-
-        // Else, go to checkout page
-        const stripeSession = await stripe.checkout.sessions.create({
-            success_url: dashboardUrl,
-            cancel_url: pricingUrl,
-            payment_method_types: ["card"],
-            mode: "payment",
-            billing_address_collection: "auto",
-            customer_email: user.emailAddresses[0].emailAddress,
-            line_items: [
-                {
-                    price_data: {
-                        currency: "USD",
-                        product_data: {
-                            name: pack.contents.label,
-                            description: 
-                                `${pack.contents.songs} Song Conversion${pack.contents.songs > 1 ? "s" : ""}`
+        
+        let stripeSession;
+        if (packKey === "clone") {
+            stripeSession = await stripe.checkout.sessions.create({
+                success_url: cloningFinishUrl,
+                cancel_url: cloningFinishUrl,
+                payment_method_types: ["card"],
+                mode: "payment",
+                billing_address_collection: "auto",
+                customer_email: user.emailAddresses[0].emailAddress,
+                line_items: [
+                    {
+                        price_data: {
+                            currency: "USD",
+                            product_data: {
+                                name: "Voice Clone Pack",
+                                description: 
+                                    `${quantity} Voice Clone${parseInt(quantity) > 1 ? "s" : ""}`
+                            },
+                            unit_amount: 99,
                         },
-                        unit_amount: Math.round(pack.contents.price * 100),
-                    },
-                    quantity: parseInt(quantity)
+                        quantity: parseInt(quantity)
+                    }
+                ],
+                allow_promotion_codes: true,
+                metadata: { // VERY IMPORTANT - need to store userId for purchase
+                    userId,
+                    purchasedClones: quantity
                 }
-            ],
-            allow_promotion_codes: true,
-            metadata: { // VERY IMPORTANT - need to store userId for purchase
-                userId,
-                purchasedSongs: pack.contents.songs * parseInt(quantity)
-            }
-        });
+            });
+        } else {
+            const pack = packages.find((e) => e.packKey === packKey);
+            if (!pack) return new NextResponse("Pack not found", { status: 400 });
+
+            // Else, go to checkout page
+            stripeSession = await stripe.checkout.sessions.create({
+                success_url: dashboardUrl,
+                cancel_url: pricingUrl,
+                payment_method_types: ["card"],
+                mode: "payment",
+                billing_address_collection: "auto",
+                customer_email: user.emailAddresses[0].emailAddress,
+                line_items: [
+                    {
+                        price_data: {
+                            currency: "USD",
+                            product_data: {
+                                name: pack.contents.label,
+                                description: 
+                                    `${pack.contents.songs} Song Conversion${pack.contents.songs > 1 ? "s" : ""}`
+                            },
+                            unit_amount: Math.round(pack.contents.price * 100),
+                        },
+                        quantity: parseInt(quantity)
+                    }
+                ],
+                allow_promotion_codes: true,
+                metadata: { // VERY IMPORTANT - need to store userId for purchase
+                    userId,
+                    purchasedSongs: pack.contents.songs * parseInt(quantity)
+                }
+            });
+        }
 
         return new NextResponse(JSON.stringify({ url: stripeSession.url }));
     } catch (error) {

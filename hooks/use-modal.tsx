@@ -12,6 +12,12 @@ export const useProModal = create<useProModalStore>((set) => ({
     onClose: () => set({ isOpen: false })
 }));
 
+export const useCloneModal = create<useProModalStore>((set) => ({
+    isOpen: false,
+    onOpen: () => set({ isOpen: true }),
+    onClose: () => set({ isOpen: false })
+}));
+
 export const useHistoryModal = create<useProModalStore>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
