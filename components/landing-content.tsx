@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { BsDiscord } from "react-icons/bs";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
-import { MicIcon } from "lucide-react";
+import { Check, MicIcon } from "lucide-react";
 
 const testimonials = [
     {
@@ -85,10 +85,9 @@ export const LandingContent = () => {
                     id="pricing-table"
                 >   
                     <div className="w-fit mx-auto mb-8 text-3xl">
-                        <b>FREE</b> voice clone, with any pack*
+                        Did we mention, FREE?
                     </div>
                     <PricingTable />
-                    <div className="w-fit mx-auto mt-8 text-sm">*Valid for first purchase. Extra clones cost $0.99 each - but 1 clone is all you need anyway.</div>
                 </div>
                 <div 
                     className="w-fit py-16 md:py-32 md:px-16 lg:px-32 xl:px-64 rounded-xl mx-auto text-white 

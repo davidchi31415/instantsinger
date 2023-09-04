@@ -2,19 +2,10 @@ export const packages = [
     {
       "packKey": "starter",
       "contents": {
-        label: "Starter Pack",
-        description: "Just wanna try it out? This is for you.",
+        label: "Lite Pack",
+        description: "If you like your voice clone...",
         songs: 1,
         price: 1.49
-      }
-    },
-    {
-      "packKey": "artist",
-      "contents": {
-        label: "Artist Pack",
-        description: "More bang for your buck.",
-        songs: 5,
-        price: 4.99,
       }
     },
     {

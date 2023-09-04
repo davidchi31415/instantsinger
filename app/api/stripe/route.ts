@@ -16,12 +16,16 @@ export async function GET(
         const { userId } = auth();
         const user = await currentUser();
         const packKey = req.nextUrl.searchParams.get("packKey");
+        const quantity = req.nextUrl.searchParams.get("quantity");
 
         if (!userId || !user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
         if (!packKey) {
             return new NextResponse("Need pack key", { status: 400 });
+        }
+        if (!quantity || !(parseInt(quantity) >= 1)) {
+            return new NextResponse("Need valid quantity", { status: 400 });
         }
 
         const pack = packages.find((e) => e.packKey === packKey);
@@ -46,13 +50,13 @@ export async function GET(
                         },
                         unit_amount: Math.round(pack.contents.price * 100),
                     },
-                    quantity: 1
+                    quantity: parseInt(quantity)
                 }
             ],
             allow_promotion_codes: true,
             metadata: { // VERY IMPORTANT - need to store userId for purchase
                 userId,
-                purchasedSongs: pack.contents.songs
+                purchasedSongs: pack.contents.songs * parseInt(quantity)
             }
         });
 
