@@ -30,7 +30,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "./ui/badge";
-import { HistoryIcon, PauseIcon, PlayIcon } from "lucide-react";
+import { CogIcon, HistoryIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
 import { HistoryModal } from "./history-modal";
 import { HistoryTable } from "./history-table";
 import { useMultiAudio } from "@/hooks/use-multi-audio";
@@ -186,12 +186,13 @@ const ConvertDashboard = ({ userData }) => {
     <div>
         <HistoryModal userData={userData} />
         <div className="p-4 lg:px-8">
-          <div className="flex justify-center items-center mb-4 p-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
+          <div className="flex justify-center items-center mb-4 px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
             Your Voice Clone:
             {players?.length ? players.map((player, i) => {
               return (
                 <Player player={player} toggle={toggle(i)} />
               )}) : ""}
+            <SettingsIcon />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div id="upload-convert" 
