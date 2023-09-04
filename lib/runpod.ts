@@ -378,9 +378,10 @@ export const getCurrentCloneJob = async ({ userId }: PrismadbProps) => {
     const job = await prismadb.cloneJob.findFirst({
         where: {
             userId,
-            NOT: {
-                status: "NOT_SUBMITTED"
-            }
+            OR: [
+                { status: "IN_QUEUE" },
+                { status: "IN_PROGRESS" }
+            ]
         },
         orderBy: {
             createdAt: "desc"
