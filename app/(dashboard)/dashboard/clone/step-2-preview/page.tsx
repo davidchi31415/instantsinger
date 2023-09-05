@@ -41,7 +41,7 @@ const CloningStepPreview = () => {
                             <MoveLeftIcon />Step 1
                         </Button>
                     </Link><Link href="/dashboard/clone/step-2">
-                        <Button className="text-md gap-2">
+                        <Button className="text-md gap-2 border-2 border-black hover:scale-105">
                             Begin Step 2<MoveRightIcon />
                         </Button>
                     </Link>

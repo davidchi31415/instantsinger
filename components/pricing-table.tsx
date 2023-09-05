@@ -56,7 +56,7 @@ const PricingTable = () => {
                         FREE*
                     </div>
                     <div className="text-sm md:text-md text-center my-8">
-                        Test the waters with 2 song samples.
+                        Clone your voice and get 2 samples.
                     </div>
                     <div className="text-md md:text-lg mt-4 mb-8">
                         <div className="flex gap-2">

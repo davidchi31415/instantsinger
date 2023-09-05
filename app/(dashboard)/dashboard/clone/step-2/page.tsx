@@ -1,4 +1,4 @@
-import { CloudIcon, MoveLeftIcon, MoveRightIcon, UploadCloudIcon } from "lucide-react";
+import { CloudIcon, MoveLeftIcon, MoveRight, MoveRightIcon, UploadCloudIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -64,8 +64,8 @@ const CloningStep2Page = async () => {
                             </Button>
                         </Link>
                         <Link href="/dashboard/clone/step-3">
-                            <Button className="text-md gap-2">
-                                Step 3
+                            <Button className="text-md gap-2 border-2 border-black hover:scale-105">
+                                Step 3 <MoveRight />
                             </Button>
                         </Link>
                     </div>

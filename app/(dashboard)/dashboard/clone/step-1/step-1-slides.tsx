@@ -77,12 +77,12 @@ const CloningStep1Slides = ({ jobId }) => {
                 {step !== contents.length - 1 ?
                 <Button
                     onClick={() => setStep(e => Math.min(contents.length - 1, e+1))}
-                    className="gap-2 text-md"
+                   className="text-md gap-2 border-2 border-black hover:scale-105"
                 >
                     Continue<MoveRightIcon />
                 </Button> 
                 : <Link href="/dashboard/clone/step-2-preview">
-                    <Button className="text-md gap-2">
+                <Button className="text-md gap-2 border-2 border-black hover:scale-105">
                         Step 2<MoveRightIcon />
                     </Button>
                 </Link>}

@@ -70,18 +70,19 @@ const CloningStepPage = async () => {
                 </div>
                 </Card>
                 <div className="w-full mt-4 flex items-center justify-between">
-                    <Link href="/clone/step-2">
+                    <Link href="/dashboard/clone/step-2">
                         <Button 
                             className="text-md gap-2"
                             variant="outline"
                         >
                             <MoveLeftIcon />Step 2
                         </Button>
-                    </Link><Link href="/dashboard/clone/finish">
-                        <Button className="text-md gap-2">
+                    </Link>
+                    <a href="/dashboard/clone/finish">
+                        <Button className="text-md gap-2 border-2 border-black hover:scale-105">
                             Finish<UploadCloudIcon />
                         </Button>
-                    </Link>
+                    </a>
                 </div>
             </div>
         </div>

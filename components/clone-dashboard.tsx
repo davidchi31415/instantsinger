@@ -10,7 +10,13 @@ import Image from "next/image";
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
 import { Empty } from "./empty";
 import { useRouter } from "next/navigation";
-import { isJobDone } from "@/lib/utils";
+import { cn, isJobDone } from "@/lib/utils";
+import { Roboto_Slab } from "next/font/google";
+
+const font = Roboto_Slab({
+    weight: "600",
+    subsets: ["latin"]
+});
 
 interface ClonesDashboardProps {
     userData: {
@@ -51,26 +57,45 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <div className="text-2xl font-bold text-center w-full mt-8 mb-2">Guided Voice Cloning Process</div>
-            <Card className="w-full lg:max-w-3xl mb-4 p-4 text-xl flex flex-col gap-2">
-                <p>
-                    Before we can begin,
-                </p>
-                <p>
-                    1) Find a <b>quiet</b> environment, with no background noise.
-                </p>
-                <p>
-                    2) Have your phone (or microphone) ready. Keep it <b>close to your face</b> to <b>prevent echo</b> from your surroundings.
-                </p>
-                <p>Record yourself using an <b>external app</b> and upload your files when instructed.</p>
-                <p>
-                    Try to record only your voice, with as few other noises as possible.
-                </p>
-            </Card>
-            <div className="w-full mt-2 flex items-center justify-center">
+        <div>
+            <div className="w-fit mx-auto mb-8 text-center text-xl md:text-3xl">
+                Becoming a singer has never been <b>so easy</b>.
+            </div>
+            <div className="pt-6 flex justify-center items-center gap-6 flex-wrap">
+                <div>
+                    <div className="rounded-3xl relative flow-root max-w-sm h-[14rem] px-6 lg:pb-6 mx-auto border-4 border-primary/25 bg-white">
+                        <div className="-mt-5">
+                            <div className="w-fit mx-auto">
+                                <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-white bg-primary rounded-full shadow">1</span>
+                            </div>
+                            <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center flex items-center justify-center gap-2", font.className)}>Clone your voice</h3>
+                            <p className="mt-2 text-lg">
+                                Follow our step-by-step procedure in roughly 10 minutes.
+                                We will then create your voice clone - and provide <b>2 sample songs</b> to hear how it sounds.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="rounded-3xl relative flow-root max-w-sm h-[14rem] px-6 lg:pb-6 mx-auto border-4 bg-white">
+                        <div className="-mt-5">
+                            <div className="w-fit mx-auto">
+                                <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-muted-foreground bg-[white] border-2 rounded-full shadow">2</span>
+                            </div>
+                            <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center", font.className)}>Convert any song</h3>
+                            <p className="mt-2 text-lg">
+                                Once your voice is cloned, converting a song is as easy as pasting a YouTube link or uploading a file.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="w-fit mx-auto mt-8 text-center text-xl md:text-3xl">
+                Let's get your voice cloned!
+            </div>
+            <div className="w-full mt-4 flex items-center justify-center">
                 <Link href="/dashboard/clone/step-1-preview">
-                    <Button className="text-xl gap-2 p-4 border-2 border-black hover:scale-105">
+                    <Button className="text-xl gap-2 p-6 border-2 border-black hover:scale-105">
                         Begin<MoveRightIcon />
                     </Button>
                 </Link>
