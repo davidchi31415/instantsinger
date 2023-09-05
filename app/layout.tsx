@@ -12,7 +12,7 @@ const rubik = Rubik({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Instant Singer',
-  description: 'Become a singer in less than 30 minutes, using cutting-edge AI technology.',
+  description: 'Become a singer in 10 minutes, using cutting-edge AI technology.',
 }
 
 const getUserData = async () => {
