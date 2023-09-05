@@ -56,7 +56,7 @@ const PricingTable = () => {
                         FREE*
                     </div>
                     <div className="text-sm md:text-md text-center my-8">
-                        Just want to try it out? This is for you.
+                        Test the waters with 2 song samples.
                     </div>
                     <div className="text-md md:text-lg mt-4 mb-8">
                         <div className="flex gap-2">
@@ -124,7 +124,7 @@ const PricingTable = () => {
                                     <div className="flex gap-2">
                                         <Check color="#0c0"/>
                                         <div>
-                                            <b>{pack.contents.songs * quantities[i]}</b> Song Conversion{pack.contents.songs * quantities[i] > 1 ? "s" : ""}
+                                            <b>{pack.contents.songs * quantities[i]}</b> Full Song Conversion{pack.contents.songs * quantities[i] > 1 ? "s" : ""}
                                         </div>
                                     </div>
                                     <div className="flex gap-2">

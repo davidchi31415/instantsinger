@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { HeroDemo } from "./hero-demo";
 import { Roboto_Slab } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { ArrowDown, ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
 const font = Roboto_Slab({
     weight: "600",
@@ -16,8 +17,8 @@ export const LandingHero = () => {
     const { isSignedIn } = useAuth();
 
     return (
-        <div className="px-4 md:px-8 pb-32 space-y-5 mx-auto">
-            <div className="flex justify-center items-center gap-12 flex-wrap-reverse">
+        <div className="px-4 md:px-8 pb-20 space-y-5 mx-auto">
+            <div className="flex justify-center items-center gap-12">
                 <div className="max-w-lg font-bold">
                     <div 
                         className={cn("text-5xl sm:text-6xl md:text-6xl \
@@ -31,32 +32,41 @@ export const LandingHero = () => {
                     <div className="text-md md:text-xl font-light text-zinc-400 my-4">
                         Convert any song into your own voice, while keeping the same pitches and inflections of the original singer - all with the click of a button.
                     </div>
-                    <div className="flex items-center gap-2 w-full">
-                    {isSignedIn ?
-                        <Link href="/dashboard" className="w-full" passHref={true}>
-                            <Button 
-                                variant="default"
-                                className="md:text-lg p-4 md:p-6 w-full
-                                rounded-sm font-semibold border-2 border-black/100
-                                hover:scale-105 transition shadow-xl"
-                            >
-                                Get Started for FREE
-                            </Button>
-                        </Link>
-                        :
-                        <SignUpButton mode="modal">
-                            <Button 
-                                variant="default"
-                                className="md:text-lg p-4 md:p-6 w-full
-                                rounded-sm font-semibold border-2 border-black/100
-                                hover:scale-105 transition shadow-xl"
-                            >
-                                Get Started for FREE
-                            </Button>
-                        </SignUpButton>}
-                    </div>
                 </div>
-                <HeroDemo />
+            </div>
+            <HeroDemo />
+            <div className="py-8 flex flex-col items-center gap-2 md:max-w-lg mx-auto">
+            <div className="text-xl">You could be a singer too, in 10 minutes*.</div>
+            {isSignedIn ?
+                <Link href="/dashboard" className="w-full" passHref={true}>
+                    <Button 
+                        variant="default"
+                        className="text-md md:text-lg p-6 w-full
+                        rounded-sm font-semibold border-2 border-black/100
+                        hover:scale-105 transition shadow-xl"
+                    >
+                        Get Started for FREE
+                    </Button>
+                </Link>
+                :
+                <SignUpButton mode="modal">
+                    <Button 
+                        variant="default"
+                        className="md:text-lg p-4 md:p-6 w-full
+                        rounded-sm font-semibold border-2 border-black/100
+                        hover:scale-105 transition shadow-xl"
+                    >
+                        Get Started for FREE
+                    </Button>
+                </SignUpButton>}
+                <div className="flex justify-center gap-2">
+                    <ArrowUpIcon fill="black" />
+                    <ArrowUpIcon fill="black" />
+                    <ArrowUpIcon fill="black" />
+                    <ArrowUpIcon fill="black" />
+                    <ArrowUpIcon fill="black" />
+                </div>
+                <div className=" mt-2 text-sm text-muted-foreground">*Not including processing time.</div>
             </div>
         </div>
     )

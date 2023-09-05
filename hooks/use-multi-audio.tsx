@@ -22,12 +22,14 @@ export const useMultiAudio = ({ urls }) => {
   const toggle = targetIndex => () => {
     const newPlayers = [...players]
     const currentIndex = players.findIndex(p => p.playing === true)
-    if (currentIndex !== -1 && currentIndex !== targetIndex) {
+    if (currentIndex !== -1 && targetIndex === -1) {
+      newPlayers[currentIndex].playing = false
+    } else if (currentIndex !== -1 && currentIndex !== targetIndex) {
       newPlayers[currentIndex].playing = false
       newPlayers[targetIndex].playing = true
     } else if (currentIndex !== -1) {
       newPlayers[targetIndex].playing = false
-    } else {
+    } else if (targetIndex !== -1) {
       newPlayers[targetIndex].playing = true
     }
     setPlayers(newPlayers)
