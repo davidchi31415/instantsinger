@@ -29,8 +29,10 @@ export const LandingHero = () => {
                             <span className="text-primary">with AI</span>.
                         </h1>
                     </div>
-                    <div className="text-md md:text-xl font-light text-zinc-400 my-4">
-                        Convert any song into your own voice, while keeping the same pitches and inflections of the original singer - all with the click of a button.
+                    <div className="text-lg md:text-xl font-normal text-zinc-400 my-4">
+                        <p>
+                            Convert any song into your own voice, while keeping the same pitches and inflections of the original singer.
+                        </p>
                     </div>
                 </div>
             </div>
