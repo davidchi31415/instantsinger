@@ -21,10 +21,11 @@ export const LandingHero = () => {
             <div className="flex justify-center items-center gap-12">
                 <div className="max-w-lg font-bold">
                     <div 
-                        className={cn("text-5xl sm:text-6xl md:text-6xl \
+                        className={cn("text-5xl sm:text-6xl md:text-7xl \
                         font-extra-bold", font.className)}
                     >
-                        <h1>Become a singer in 10 minutes</h1>
+                        <h1>Unleash</h1>
+                        <h1>your voice</h1>
                         <h1>
                             <span className="text-primary">with AI</span>.
                         </h1>
