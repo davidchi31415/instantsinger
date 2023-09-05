@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card"
 import { MoveRightIcon } from "lucide-react"
 import Link from "next/link"
 
-export const ClonePage = () => {
+const ClonePage = () => {
     return (
         <div className="flex flex-col justify-center items-center">
             <div className="text-2xl font-bold text-center w-full mt-8 mb-2">Guided Voice Cloning Process</div>
@@ -32,3 +32,5 @@ export const ClonePage = () => {
         </div>
     )
 }
+
+export default ClonePage;
