@@ -47,9 +47,13 @@ export const getCredits = async () => {
     });
 
     if (!user) {
-        await prismadb.userAccount.create({
-            data: { userId }
-        });
+        try {
+            await prismadb.userAccount.create({
+                data: { userId }
+            });
+        } catch (e) {
+            console.log("Error creating account in database; probably a synchronous request.");
+        }
         return { cloneCredits: 0, convertCredits: 0};
     }
 
