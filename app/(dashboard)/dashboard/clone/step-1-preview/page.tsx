@@ -22,8 +22,8 @@ const CloningStepPreview = () => {
               You will read aloud a short essay we have prepared for you. It will be split into a series of slides,
               and it should take, in total, less than 6 minutes to read.
             </p>
-            <p>Please record yourself reading it and save it to <b>a single audio file.</b></p>
-            <p>You will upload the file at the end of the step.</p>
+            <p>Please record yourself reading it, using <b>an external app</b>.</p>
+            <p>Save it to <b>a single audio file</b>. You will upload it at the end of the step.</p>
             <p>
               <b>It is okay if you mess up</b> at any point. The point is to hear how you sound.
             </p>
