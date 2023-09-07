@@ -37,7 +37,7 @@ export async function downloadFromURL (url: string, name: string) {
 }
 
 export function isJobDone ({ status }: { status: string }) {
-  return (status === "COMPLETED" || status === "FAILED" || status === "CANCELLED");
+  return (status === "COMPLETED" || status === "FAILED" || status === "CANCELLED" || status === "TIMED_OUT");
 }
 
 export function exclude(data, keys) {
