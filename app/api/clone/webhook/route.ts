@@ -31,12 +31,12 @@ export async function POST(req: NextRequest) {
         );
 
         // REFUND the user
-        await updateCredits({ userId: cloneJob.userId, convertDelta: 1 });
+        await updateCredits({ userId: cloneJob.userId, cloneDelta: 1 });
     } else {
         if (status === "FAILED" || status === "CANCELLED" || status === "TIMED_OUT") { // Failed from RunPod exception
 
             // REFUND the user
-            await updateCredits({ userId: cloneJob.userId, convertDelta: 1 });
+            await updateCredits({ userId: cloneJob.userId, cloneDelta: 1 });
         } else {
             const prevClone = await prismadb.clone.findUnique({ where: { userId: cloneJob.userId }});
             if (!prevClone) {
