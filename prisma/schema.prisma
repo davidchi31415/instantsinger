@@ -25,7 +25,7 @@ model ConvertJob {
   hasBackingVocals Boolean? // MUST be filled in before submitting
   convertBackingVocals Boolean? // MUST be filled in before submitting
   runpodJobId String? // MUST be filled in after job is submitted
-  status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
+  status String @default("NOT_SUBMITTED") // IN_PROGRESS, COMPLETED, FAILED
   message String? // Only if FAILED
   userMessage String? // only if FAILED and message needed to relay to user
   createdAt DateTime @default(now())
@@ -36,7 +36,7 @@ model CloneJob {
   id String @id @default(cuid())
   userId String
   runpodJobId String? // MUST be filled in after job is created
-  status String @default("NOT_SUBMITTED") // IN_QUEUE, IN_PROGRESS, COMPLETED, FAILED, FAILED_LOCALLY
+  status String @default("NOT_SUBMITTED") // IN_PROGRESS, COMPLETED, FAILED
   message String? // Only if FAILED
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

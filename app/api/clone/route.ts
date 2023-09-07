@@ -57,7 +57,7 @@ export async function POST(
             jobId: currentCloneJob.id
         });
         const runpodJobId = runpodResponse.data.id;
-        const status = runpodResponse.data.status;
+        const status = "IN_PROGRESS";
 
         if (runpodResponse.status == 200) {
             await prismadb.cloneJob.update({

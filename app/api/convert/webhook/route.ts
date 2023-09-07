@@ -41,11 +41,13 @@ export async function POST(req: NextRequest) {
         // REFUND the user
         await updateCredits({ userId: job.userId, convertDelta: 1 });
     } else {
-        if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
-            // TODO - REFUND the user
+        if (status === "FAILED" || status === "CANCELLED" || status === "TIMED_OUT") { // Failed from RunPod exception
             await updateCredits({ userId: job.userId, convertDelta: 1 });
         }
-        await prismadb.convertJob.update({ where: { id: jobId },  data: { status, message: error ? error : "" } });
+
+        const finalStatus = (status === "COMPLETED") ? "COMPLETED"
+            : "FAILED";
+        await prismadb.convertJob.update({ where: { id: jobId },  data: { status: finalStatus, message: error ? error : "" } });
     }
 
     // TO-DO - Delete input data / also configure Google Cloud to do this

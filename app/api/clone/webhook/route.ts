@@ -51,7 +51,9 @@ export async function POST(req: NextRequest) {
             // TO-DO - Delete all training data / also configure Google Cloud to do this        
         }
 
-        await prismadb.cloneJob.update({ where: { id: jobId },  data: { status, message: error ? error : "" } });
+        const finalStatus = (status === "COMPLETED") ? "COMPLETED"
+            : "FAILED";
+        await prismadb.cloneJob.update({ where: { id: jobId },  data: { status: finalStatus, message: error ? error : "" } });
     }
     
     return new NextResponse(null, { status: 200 }); // IMPORTANT feedback

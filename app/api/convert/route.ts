@@ -57,7 +57,7 @@ export async function POST(
 
         const runpodResponse = await _submitConvertJob(params);
         const runpodJobId = runpodResponse.data.id;
-        const status = runpodResponse.data.status;
+        const status = "IN_PROGRESS";
         
         if (runpodResponse.status == 200) {
             await prismadb.convertJob.update({
