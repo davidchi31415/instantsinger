@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
         // REFUND the user
         await updateCredits({ userId: cloneJob.userId, convertDelta: 1 });
     } else {
-        if (status === "FAILED" || status === "CANCELLED") { // Failed from RunPod exception
+        if (status === "FAILED" || status === "CANCELLED" || status === "TIMED_OUT") { // Failed from RunPod exception
 
             // REFUND the user
             await updateCredits({ userId: cloneJob.userId, convertDelta: 1 });
