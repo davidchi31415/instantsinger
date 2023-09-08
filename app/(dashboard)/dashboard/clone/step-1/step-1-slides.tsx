@@ -8,87 +8,127 @@ import { useEffect, useState } from "react";
 import { CloningStepBar } from "@/components/cloning-step-bar";
 import Link from "next/link";
 import { FileUploader } from "@/components/file-uploader";
+import { RecorderComponent } from "@/components/recorder";
 
 const contents = [
-    {isUpload: false, content: `[START RECORDING] Hello and welcome! You are currently reading (out loud) an essay we wrote, for the purpose of collecting voice data to create your AI clone. Take your time: don’t rush through this. As long as you can finish reading this essay in 6 minutes, you are reading fast enough. But try not to read too slowly either; keep to a normal speaking pace.`},
-    {isUpload: false, content: `We're thrilled to introduce you to this special tool powered by AI, designed especially for those who dream of singing. Imagine being able to transform any song you like into your own voice, sounding just like your favorite singer. Yes, it's possible, no matter how you sing right now.`},
-    {isUpload: false, content: `Our aim in creating this tool was to provide you with the ultimate practice aid. You can now listen to yourself singing like a professional, helping you practice better and feel more confident. This means you can hear yourself singing as perfectly as your favorite singer. Isn't that amazing?`},
-    {isUpload: false, content: `Using this AI tool is quite easy. Once your voice is cloned, you're all set. The data you provide helps us create a clone tailored just for you. This clone can then be used with any song you choose. To do this properly, we need a variety of voice data covering your entire vocal range.`},
-    {isUpload: false, content: `Here are all the steps we need you to do:
-    1) Part 1: You're already doing it by reading this essay!
-    2) Part 2: Show us your vocal range through simple pitch exercises.
-    3) Part 3: Sing along to a song of your choice, preferrably one that covers the type of songs you wish to convert.`},
-    {isUpload: false, content: `Completing these 3 steps should take less than 15 minutes in total, and you're already well on your way. Once you're done and your recordings are uploaded, we train our AI to match your voice. This might take a few hours, but sometimes even as little as 15 minutes, depending on how many other people are doing it.`},
-    {isUpload: false, content: `Once your voice clone is ready, you can use your voice clone by using song conversion credits. If you need more, we offer multiple pay-as-you-go options. Each credit lasts forever and can be used for songs up to 10 minutes long.`},
-    {isUpload: false, content: `When choosing songs to convert, remember that the audio quality and style matter. Simple vocal recordings work best. Behind the scenes, your AI clone works to transform voices into your own, but it can only work on voices. Thus, if there are instruments in the song, the vocals will need to be extracted. Don’t worry, we'll handle it for you. 
-    If there's a chorus or background vocals, we will separate those too.`},
-    {isUpload: false, content: `Though we can handle songs with lots of instruments and background sounds, our AI does better with strong lead vocals. As an example, think of songs with just an acoustic guitar – those work great. Reducing background noise helps avoid any odd sounds from the AI.`},
-    {isUpload: true, content: `Lastly, try to pick songs within your singing range. The AI can't go higher or lower than the notes you provide. This is where the following step, Step 2: Pitches, comes in handy. We'll give you a series of pitches to sing along with to cover your vocal range. You've finished speaking for now. It's time for the pitch test. Keep it up – you're doing fantastic! [STOP RECORDING]`},
+    `The birch canoe slid on the smooth planks.
+    Glue the sheet to the dark blue background.
+    It's easy to tell the depth of a well.
+    These days a chicken leg is a rare dish.`,
+    `Rice is often served in round bowls.
+    The juice of lemons makes fine punch.
+    The box was thrown beside the parked truck.
+    The hogs were fed chopped corn and garbage.`,
+    `Four hours of steady work faced us.
+    A large size in stockings is hard to sell.
+    The boy was there when the sun rose.
+    A rod is used to catch pink salmon.`,
+    `The source of the huge river is the clear spring.
+    Kick the ball straight and follow through.
+    Help the woman get back to her feet.
+    A pot of tea helps to pass the evening.`,
+    `Smoky fires lack flame and heat.
+    The soft cushion broke the man's fall.
+    The salt breeze came across from the sea.
+    The girl at the booth sold fifty bonds.`,
+    `The small pup gnawed a hole in the sock.
+    The fish twisted and turned on the bent hook.
+    Press the pants and sew a button on the vest.
+    The swan dive was far short of perfect.`,
+    `The beauty of the view stunned the young boy.
+    Two blue fish swam in the tank.
+    Her purse was full of useless trash.
+    The colt reared and threw the tall rider.`,
+    `It snowed, rained, and hailed the same morning.
+    Read verse out loud for pleasure.
+    Hoist the load to your left shoulder.
+    Take the winding path to reach the lake.`,
+    `Note closely the size of the gas tank.
+    Wipe the grease off his dirty face.
+    Mend the coat before you go out.
+    The wrist was badly strained and hung limp.`,
+    `The stray cat gave birth to kittens.
+    The young girl gave no clear response.
+    The meal was cooked before the bell rang.
+    What joy there is in living.`,
+    `A king ruled the state in the early days.
+    The ship was torn apart on the sharp reef.
+    Sickness kept him home the third week.
+    The wide road shimmered in the hot sun.`,
+    `The lazy cow lay in the cool grass.
+    Lift the square stone over the fence.
+    The rope will bind the seven books at once.
+    Hop over the fence and plunge in.`,
+    `The friendly gang left the drug store.
+    Mesh wire keeps chicks inside.
+    The frosty air passed through the coat.
+    The crooked maze failed to fool the mouse.`,
+    `Adding fast leads to wrong sums.
+    The show was a flop from the very start.
+    A saw is a tool used for making boards.
+    The wagon moved on well oiled wheels.`,
+    `The ink stain dried on the finished page.
+    The walled town was seized without a fight.
+    The lease ran out in sixteen weeks.
+    A tame squirrel makes a nice pet.`,
+    `There are more than two factors here.
+    The hat brim was wide and too droopy.
+    The lawyer tried to lose his case.
+    The grass curled around the fence post.`,
+    `Oak is strong and also gives shade.
+    Cats and dogs each hate the other.
+    The pipe began to rust while new.
+    Open the crate but don't break the glass.`,
+    `Add the sum to the product of these three.
+    Thieves who rob friends deserve jail.
+    The ripe taste of cheese improves with age.
+    Act on these orders with great speed.`,
+    `The hog crawled under the high fence.
+    Move the vat over the hot fire.
+    The bark of the pine tree was shiny and dark.
+    Leaves turn brown and yellow in the fall.`,
+    `The pennant waved when the wind blew.
+    Split the log with a quick, sharp blow.
+    Burn peat after the logs give out.
+    He ordered peach pie with ice cream. The end!`
 ];
 
-const CloningStep1Slides = ({ jobId }) => {
+const CloningStep1Slides = () => {
     const [step, setStep] = useState(0);
 
   return (
-    <div className="px-4 lg:px-8 flex justify-center">
-        <div className="pt-2 flex flex-col items-center justify-center gap-2">
-            <CloningStepBar title="Step 1: Speaking" step={step} setStep={setStep} steps={contents} />
-            <Card className="w-full lg:max-w-3xl mb-4 text-xl">
+    <>
+        <div className="px-4 lg:px-8 md:max-w-lg mx-auto flex justify-center">
+            <Card className="w-full lg:max-w-3xl text-xl">
                 <CardHeader>
-                    <CardTitle className="text-md text-muted-foreground">
-                        Read the following text, and record yourself all the way to the last slide.
-                    </CardTitle>
+                    <div className="w-full flex items-center justify-between">
+                        <Button
+                            disabled={step <= 0}
+                            onClick={() => setStep(e => Math.max(0, e-1))}
+                            className="gap-2 text-md"
+                            variant="outline"
+                        >
+                            <MoveLeftIcon />
+                        </Button>
+                        <div>{step+1}/{contents.length}</div>
+                        <Button
+                            disabled={step >= contents.length - 1}
+                            onClick={() => setStep(e => Math.min(contents.length - 1, e+1))}
+                            className="text-md gap-2 border-2 border-black hover:scale-105"
+                        >
+                            <MoveRightIcon />
+                        </Button>
+                    </div>
                 </CardHeader>
                 <CardContent>
                     <div>
-                        {contents[step].content}
-                    </div>
-                    <div className="mt-4">
-                        {!contents[step].isUpload ? ""
-                            :
-                            <div className="bg-white p-4 rounded-md border border-black">
-                                <div className="mb-2">Upload your recording for Step 1.</div>
-                                <FileUploader uploadEndpoint="/api/clone/upload"
-                                    apiParams={{ cloneId: jobId, fileName: "1" }}
-                                    durationLimit={7}
-                                />
-                            </div>}
+                        {contents[step]}
                     </div>
                 </CardContent>
             </Card>
-            <div className="w-full flex items-center justify-between">
-                {step !== 0 ?
-                <Button
-                    disabled={step <= 0}
-                    onClick={() => setStep(e => Math.max(0, e-1))}
-                    className="gap-2 text-md"
-                    variant="outline"
-                >
-                    <MoveLeftIcon />Back
-                </Button>
-                : <Link href="/dashboard/clone/step-1-preview">
-                    <Button 
-                        className="text-md gap-2"
-                        variant="outline"
-                    >
-                        <MoveLeftIcon />Preview
-                    </Button>
-                </Link>}
-                {step !== contents.length - 1 ?
-                <Button
-                    onClick={() => setStep(e => Math.min(contents.length - 1, e+1))}
-                   className="text-md gap-2 border-2 border-black hover:scale-105"
-                >
-                    Continue<MoveRightIcon />
-                </Button> 
-                : <Link href="/dashboard/clone/step-2-preview">
-                <Button className="text-md gap-2 border-2 border-black hover:scale-105">
-                        Step 2<MoveRightIcon />
-                    </Button>
-                </Link>}
-            </div>
         </div>
-    </div>
+        <RecorderComponent onLastStep={step === contents.length - 1} />
+    </>
   )
 }
 

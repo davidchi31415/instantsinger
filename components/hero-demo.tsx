@@ -97,20 +97,6 @@ const people = [
             "https://cdn.discordapp.com/attachments/1140119588424667197/1148059484997042177/converted_Oliver_Anthony_-_Rich_Men_North_Of_Richmond.wav",
             "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
         ]
-    },
-    {
-        emoji: "👨🏽",
-        sampleUrl: "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-        maleUrls: [
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148059484997042177/converted_Oliver_Anthony_-_Rich_Men_North_Of_Richmond.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-        ],
-        femaleUrls: [
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148059484997042177/converted_Oliver_Anthony_-_Rich_Men_North_Of_Richmond.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-        ]
     }
 ]
 
@@ -120,15 +106,12 @@ export const HeroDemo = () => {
     const urls = [
         people[0].sampleUrl,
         people[1].sampleUrl,
-        people[2].sampleUrl,
         ...maleUrls,
         ...femaleUrls,
         ...people[0].maleUrls,
         ...people[0].femaleUrls,
         ...people[1].maleUrls,
-        ...people[1].femaleUrls,
-        ...people[2].maleUrls,
-        ...people[2].femaleUrls,
+        ...people[1].femaleUrls
     ];
     const [players, toggle] = useMultiAudio({ urls });
 
@@ -145,7 +128,7 @@ export const HeroDemo = () => {
             >
                 <ArrowDownIcon /> Give it a listen! <ArrowDownIcon />
             </div>
-            <div className="w-fit mx-auto py-4 px-4 md:px-8 rounded-xl bg-[#FFF1E4] shadow-xl border-4 border-[#FFD7AF]/50">
+            <div className="w-fit mx-auto py-4 px-2 sm:px-4 md:px-8 rounded-xl bg-[#FFF1E4] shadow-xl border-4 border-[#FFD7AF]/50">
                 <div className="w-fit mx-auto mb-2 border-2 shadow-md rounded-md bg-white flex items-center justify-center">
                     <div className="flex justify-center items-center gap-2 p-2">
                         <Button variant="outline"
@@ -160,21 +143,15 @@ export const HeroDemo = () => {
                         >
                             {people[1].emoji}
                         </Button>
-                        <Button variant="outline"
-                            className={cn("border-2 text-3xl", emojiIndex === 2 ? "border-primary" : "")}
-                            onClick={() => switchPerson(2)}
-                        >
-                            {people[2].emoji}
-                        </Button>
                     </div>
                     <Player player={players[emojiIndex]} toggle={toggle(emojiIndex)} />
                 </div>
                 <div className="flex justify-center items-center gap-4 flex-wrap">
-                    <SamplesCard inputEmoji="👨🏻" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={3} 
-                        startIndex={9 + 6 * emojiIndex} 
+                    <SamplesCard inputEmoji="👨🏻" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={2} 
+                        startIndex={8 + 6 * emojiIndex} 
                     />
-                    <SamplesCard inputEmoji="👩🏼" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={6} 
-                        startIndex={12+ 6 * emojiIndex} 
+                    <SamplesCard inputEmoji="👩🏼" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={5} 
+                        startIndex={11 + 6 * emojiIndex} 
                     />
                 </div>
             </div>

@@ -350,7 +350,7 @@ const ConvertDashboard = ({ userData }) => {
                     <div className="mt-4">
                       {(isConverting || isFinished) && error === "" && conversionId !== "" ?
                         <ProgressCard process="Conversion"
-                          initStatus="IN_QUEUE"
+                          initStatus="IN_PROGRESS"
                           apiEndpoint="/api/convert/status" apiId={conversionId}
                           onFinish={onFinish}
                           onFail={onFail}
