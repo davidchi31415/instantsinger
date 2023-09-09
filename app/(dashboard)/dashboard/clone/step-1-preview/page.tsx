@@ -14,7 +14,7 @@ const CloningStepPreview = () => {
     return (
       <div className="px-4 lg:px-8 flex justify-center">
         <div className="pt-8 flex flex-col items-center justify-center">
-          <div className="text-2xl font-bold text-center w-full mb-2">Step 1 Preview</div>
+          <div className="text-2xl text-center w-full mb-2">Voice Cloning: Step 1</div>
           <Card className="w-full lg:max-w-3xl mb-4 p-4 text-xl
             flex flex-col gap-2
           ">

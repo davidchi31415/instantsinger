@@ -58,33 +58,31 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
 
     return (
         <div>
-            <div className="w-fit mx-auto mb-8 text-center text-xl md:text-3xl">
-                Becoming a singer has never been <b>so easy</b>.
-            </div>
             <div className="pt-6 flex justify-center items-center gap-6 flex-wrap">
                 <div>
-                    <div className="rounded-3xl relative flow-root max-w-sm h-[14rem] px-6 lg:pb-6 mx-auto border-4 border-primary/25 bg-white">
+                    <div className="rounded-3xl relative flow-root max-w-sm h-[15rem] px-6 lg:pb-6 mx-auto border-4 border-primary/25 bg-white">
                         <div className="-mt-5">
                             <div className="w-fit mx-auto">
                                 <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-white bg-primary rounded-full shadow">1</span>
                             </div>
                             <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center flex items-center justify-center gap-2", font.className)}>Clone your voice</h3>
                             <p className="mt-2 text-lg">
-                                Follow our step-by-step procedure in roughly 10 minutes.
-                                We will then create your voice clone - and provide <b>2 sample songs</b> to hear how it sounds.
+                                Complete a guided procedure to clone your voice in less than 10 minutes.
+                                We will give you <b>samples</b> to hear how it sounds.
                             </p>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <div className="rounded-3xl relative flow-root max-w-sm h-[14rem] px-6 lg:pb-6 mx-auto border-4 bg-white">
+                    <div className="rounded-3xl relative flow-root max-w-sm h-[15rem] px-6 lg:pb-6 mx-auto border-4 bg-white">
                         <div className="-mt-5">
                             <div className="w-fit mx-auto">
                                 <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-muted-foreground bg-[white] border-2 rounded-full shadow">2</span>
                             </div>
                             <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center", font.className)}>Convert any song</h3>
                             <p className="mt-2 text-lg">
-                                Once your voice is cloned, converting a song is as easy as pasting a YouTube link or uploading a file.
+                                Once your voice is cloned, you can convert any song into your voice
+                                by pasting a YouTube link or uploading an audio file.
                             </p>
                         </div>
                     </div>
@@ -95,7 +93,7 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
             </div>
             <div className="w-full mt-4 flex items-center justify-center">
                 <Link href="/dashboard/clone/step-1-preview">
-                    <Button className="text-xl gap-2 p-6 border-2 border-black hover:scale-105">
+                    <Button className="text-3xl gap-2 p-8 border-2 border-black hover:scale-105">
                         Begin<MoveRightIcon />
                     </Button>
                 </Link>
