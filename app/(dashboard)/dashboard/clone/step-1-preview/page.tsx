@@ -19,28 +19,17 @@ const CloningStepPreview = () => {
             flex flex-col gap-2
           ">
             <p>
-              You will read aloud a short essay we have prepared for you. It will be split into a series of slides,
-              and it should take, in total, less than 6 minutes to read.
+              In this step, you will read a series of (non-sensical) sentences <b>out loud</b>, while recording yourself.
             </p>
-            <p>Please record yourself reading it, using <b>an external app</b>.</p>
-            <p>Save it to <b>a single audio file</b>. You will upload it at the end of the step.</p>
             <p>
-              <b>It is okay if you mess up</b> at any point. The point is to hear how you sound.
+              <b>It is okay if you mess up</b>. The point is to hear how you sound.
             </p>
             
           </Card>
-          <div className="w-full mt-4 flex items-center justify-between">
-            <Link href="/dashboard">
-                <Button 
-                    className="text-md gap-2"
-                    variant="outline"
-                >
-                    <MoveLeftIcon />Intro
-                </Button>
-            </Link>
+          <div className="w-fit mx-auto mt-4">
             <Link href="/dashboard/clone/step-1">
-                <Button className="text-md gap-2 border-2 border-black hover:scale-105">
-                    Begin Step 1<MoveRightIcon />
+                <Button className="text-3xl gap-2 p-8 border-2 border-black hover:scale-105">
+                    Begin<MoveRightIcon />
                 </Button>
             </Link>
           </div>

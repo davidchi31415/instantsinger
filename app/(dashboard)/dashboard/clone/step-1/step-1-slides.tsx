@@ -11,7 +11,7 @@ import { FileUploader } from "@/components/file-uploader";
 import { RecorderComponent } from "@/components/recorder";
 
 const contents = [
-    `The birch canoe slid on the smooth planks.
+    `[START] The birch canoe slid on the smooth planks.
     Glue the sheet to the dark blue background.
     It's easy to tell the depth of a well.
     These days a chicken leg is a rare dish.`,
@@ -90,10 +90,10 @@ const contents = [
     `The pennant waved when the wind blew.
     Split the log with a quick, sharp blow.
     Burn peat after the logs give out.
-    He ordered peach pie with ice cream. The end!`
+    He ordered peach pie with ice cream. [END]`
 ];
 
-const CloningStep1Slides = () => {
+const CloningStep1Slides = ({ jobId }) => {
     const [step, setStep] = useState(0);
 
   return (
@@ -127,7 +127,7 @@ const CloningStep1Slides = () => {
                 </CardContent>
             </Card>
         </div>
-        <RecorderComponent onLastStep={step === contents.length - 1} />
+        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={2} maxDuration={6} />
     </>
   )
 }

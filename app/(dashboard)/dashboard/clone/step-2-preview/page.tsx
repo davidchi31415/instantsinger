@@ -17,32 +17,16 @@ const CloningStepPreview = () => {
                 flex flex-col gap-2
                 ">
                 <p>
-                    You will be provided with pitches to sing along with. 
+                    In this step, you will sing some easy nursery songs (such as "Happy Birthday") while recording yourself.
                 </p>
                 <p>
-                    We recommend <b>wearing headphones</b> as you sing along, to prevent
-                    our audio from being picked up by your microphone. 
+                    <b>It is okay if you mess up</b>. The point is to hear how you sound.
                 </p>
-                <p>
-                    You may use any syllable you prefer, such as "la" or "ah," to sing each pitch.
-                </p>
-                <p>Please record yourself singing and save it to <b>a single audio file.</b></p>
-                <p>
-                    <b>It is okay if you cannot match every pitch</b>.
-                </p>
-                
                 </Card>
-                <div className="w-full mt-4 flex items-center justify-between">
-                    <Link href="/dashboard/clone/step-1">
-                        <Button 
-                            className="text-md gap-2"
-                            variant="outline"
-                        >
-                            <MoveLeftIcon />Step 1
-                        </Button>
-                    </Link><Link href="/dashboard/clone/step-2">
-                        <Button className="text-md gap-2 border-2 border-black hover:scale-105">
-                            Begin Step 2<MoveRightIcon />
+                <div className="w-fit mx-auto mt-4">
+                    <Link href="/dashboard/clone/step-2">
+                        <Button className="text-3xl gap-2 p-8 border-2 border-black hover:scale-105">
+                            Begin<MoveRightIcon />
                         </Button>
                     </Link>
                 </div>

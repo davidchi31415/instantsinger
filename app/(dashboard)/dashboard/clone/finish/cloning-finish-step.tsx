@@ -78,7 +78,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                     <div className="p-4 lg:px-8">
                         <div className="text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
-                                <div><b>Step 1:</b> Speaking</div>
+                                <div><b>Step 1</b></div>
                                 <Link href="/clone/step-1-preview" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
@@ -87,7 +87,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                             </div>
                             {files.some(fileName => fileName === "1") ?
                                 <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                    <div className="text-lg">Complete</div> <CheckIcon />
                                 </Badge>
                                 :
                                 <Badge className="h-fit gap-2" variant="destructive">
@@ -97,7 +97,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
 
                         <div className="mt-8 text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
-                                <div><b>Step 2:</b> Pitches</div>
+                                <div><b>Step 2</b></div>
                                 <Link href="/clone/step-2-preview" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
@@ -106,26 +106,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                             </div>
                             {files.some(fileName => fileName === "2") ?
                                 <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                    <div className="text-lg">Uploaded</div> <CheckIcon />
-                                </Badge>
-                                :
-                                <Badge className="h-fit gap-2" variant="destructive">
-                                    <div className="text-lg">Missing</div> <AlertCircleIcon />
-                                </Badge>}
-                        </div>
-
-                        <div className="mt-8 text-xl flex justify-between lg:max-w-md mx-auto">
-                            <div className="flex gap-2 items-center">
-                                <div><b>Step 3:</b> Singing</div>
-                                <Link href="/clone/step-3" passHref={true}>
-                                    <Button size="icon" variant="ghost" className="text-primary">
-                                        <CornerDownLeftIcon />
-                                    </Button>
-                                </Link>
-                            </div>
-                            {files.some(fileName => fileName === "3") ?
-                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                    <div className="text-lg">Uploaded</div> <CheckIcon />
+                                    <div className="text-lg">Complete</div> <CheckIcon />
                                 </Badge>
                                 :
                                 <Badge className="h-fit gap-2" variant="destructive">
@@ -133,7 +114,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                                 </Badge>}
                         </div>
                         
-                        <div className="w-[250px] mx-auto">
+                        <div className="w-[250px] mx-auto mt-4">
                             {missingFiles?.length ? 
                                 <AlertCard variant="destructive" title="Missing Files" 
                                     message={`Missing Steps ${missingFiles.toString()}`}
@@ -141,10 +122,11 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                             }
                         </div>
                     </div>
-                    <div className="w-fit h-fit mx-auto flex justify-center items-center mt-8 mb-16 shadow-xl
-                        hover:scale-105 transition"
+                    <div className="w-fit h-fit mx-auto flex justify-center items-center mt-8 mb-16"
                     >
-                        <Button size="lg" className="text-xl border-2 border-black"
+                        <Button 
+                            size="lg" 
+                            className="text-3xl border-2 border-black shadow-xl hover:scale-105 transition p-8"
                             disabled={
                                 loading
                             }

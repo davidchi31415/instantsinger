@@ -23,7 +23,7 @@ const CloningStep1Page = async () => {
 
   return (
     <>
-      <CloningStep1Slides />
+      <CloningStep1Slides jobId={jobId} />
     </>
   )
 }
