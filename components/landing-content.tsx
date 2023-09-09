@@ -21,13 +21,8 @@ const font = Roboto_Slab({
 export const LandingContent = () => {
     return (
         <>
-            <div className="py-10 md:py-24 px-12 bg-primary/50" >
-                <div className="mb-20 pt-8 pb-12 md:py-16 bg-[#FFF1E4] border-4 border-[#FFD7AF]/50 rounded-xl"
-                    id="pricing-table"
-                >   
-                    <div className="w-fit mx-auto text-center mb-8 text-3xl">
-                        Did we mention, <i>FREE?</i>
-                    </div>
+            <div className="py-10 md:py-24 px-6 md:px-12 bg-primary/50">
+                <div className="pb-8">
                     <PricingTable />
                 </div>
                 <div 

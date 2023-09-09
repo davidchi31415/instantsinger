@@ -38,8 +38,7 @@ const PricingTable = () => {
     }
 
     return (
-        <div className="px-8 flex flex-col items-center gap-4">
-            <div className="px-8 flex justify-center gap-4 flex-wrap">
+        <div className="flex justify-center gap-4 flex-wrap">
             <Card
                 className="w-[22rem] py-8 flex flex-col items-center justify-center \
                     gap-2 rounded-xl bg-white text-black shadow-2xl"
@@ -88,6 +87,9 @@ const PricingTable = () => {
                                 Get Started
                             </Button>
                         </SignUpButton>}
+                    <div className="mt-4 text-center">
+                        *One starter pack per account
+                    </div>
                 </CardContent>
             </Card>
                 {packages.map((pack, i) => {
@@ -157,10 +159,6 @@ const PricingTable = () => {
                         </Card>
                     )
                 })}
-            </div>
-            <div className="mt-4">
-                *One free voice clone per account
-            </div>
         </div>
     )
 }
