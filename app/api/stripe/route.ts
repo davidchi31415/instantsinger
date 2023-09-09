@@ -62,6 +62,9 @@ export async function GET(
             const pack = packages.find((e) => e.packKey === packKey);
             if (!pack) return new NextResponse("Pack not found", { status: 400 });
 
+            const numPacks = parseInt(quantity);
+            const packPrice = pack.contents.pricePerSong * pack.contents.songs;
+
             // Else, go to checkout page
             stripeSession = await stripe.checkout.sessions.create({
                 success_url: dashboardUrl,
@@ -79,15 +82,15 @@ export async function GET(
                                 description: 
                                     `${pack.contents.songs} Song Conversion${pack.contents.songs > 1 ? "s" : ""}`
                             },
-                            unit_amount: Math.round(pack.contents.price * 100),
+                            unit_amount: Math.round(packPrice * 100),
                         },
-                        quantity: parseInt(quantity)
+                        quantity: numPacks
                     }
                 ],
                 allow_promotion_codes: true,
                 metadata: { // VERY IMPORTANT - need to store userId for purchase
                     userId,
-                    purchasedSongs: pack.contents.songs * parseInt(quantity)
+                    purchasedSongs: pack.contents.songs * numPacks
                 }
             });
         }

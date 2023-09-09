@@ -52,7 +52,7 @@ const PricingTable = () => {
                     <div 
                         className={cn("text-5xl md:text-7xl text-center mt-4 mb-8", font.className)}
                     >
-                        FREE*
+                        FREE
                     </div>
                     <div className="text-sm md:text-md text-center my-8">
                         Clone your voice and get 2 samples.
@@ -87,9 +87,6 @@ const PricingTable = () => {
                                 Get Started
                             </Button>
                         </SignUpButton>}
-                    <div className="mt-4 text-center">
-                        *One starter pack per account
-                    </div>
                 </CardContent>
             </Card>
                 {packages.map((pack, i) => {
@@ -110,15 +107,17 @@ const PricingTable = () => {
                                 {pack.contents.label}
                             </CardTitle>
                             <CardContent>
-                                <div 
-                                    className={cn("text-5xl md:text-7xl text-center mt-4 mb-8", font.className)}
-                                >
-                                    ${pack.contents.price * quantities[i]}
+                                <div className="w-fit mx-auto mt-4 mb-8">
+                                    <span 
+                                        className={cn("text-5xl md:text-7xl text-center", font.className)}
+                                    >
+                                        ${pack.contents.pricePerSong}
+                                    </span>/song
                                 </div>
                                 <div className="flex items-center justify-center gap-4">
                                     <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
-                                    <div className="text-center text-xl w-[2rem]">
-                                        {quantities[i]}
+                                    <div className="text-center text-xl w-[6rem]">
+                                        {quantities[i] * pack.contents.songs} songs
                                     </div>
                                     <Button onClick={() => setQuantities(e => { let h = [...e]; h[i] += 1; return h; })}>+</Button>
                                 </div>
@@ -126,7 +125,7 @@ const PricingTable = () => {
                                     <div className="flex gap-2">
                                         <Check color="#0c0"/>
                                         <div>
-                                            <b>{pack.contents.songs * quantities[i]}</b> Full Song Conversion{pack.contents.songs * quantities[i] > 1 ? "s" : ""}
+                                            Convert <b>any</b> song
                                         </div>
                                     </div>
                                     <div className="flex gap-2">

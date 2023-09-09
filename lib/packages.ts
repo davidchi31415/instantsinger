@@ -4,8 +4,8 @@ export const packages = [
       "contents": {
         label: "Lite Pack",
         description: "If you like your voice clone...",
-        songs: 1,
-        price: 1.49
+        songs: 2,
+        pricePerSong: 1.99
       }
     },
     {
@@ -13,8 +13,8 @@ export const packages = [
       "contents": {
         label: "Pro Pack",
         description: "Best value :)",
-        songs: 20,
-        price: 9.99
+        songs: 8,
+        pricePerSong: 1.49
       }
     }
 ];
