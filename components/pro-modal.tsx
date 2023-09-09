@@ -62,28 +62,22 @@ export const ProModal = () => {
                     >
                         {packages.map((pack, i) => {
                             return (
-                                <div className="p-4 flex items-start justify-between
+                                <div className="p-4 flex flex-col gap-2
                                     border-2 border-primary rounded-md shadow-lg"
                                     key={`pack-${pack.packKey}`}
                                 >
-                                    <div>
+                                    <div className="flex justify-center items-center gap-6">
                                         <div className="text-lg md:text-xl font-bold">{pack.contents.label}</div>
-                                        <div className="md:text-lg text-muted-foreground">{pack.contents.description}</div>
-                                        <div className="md:text-lg">
-                                            <b>{pack.contents.songs}</b> Song Conversion{pack.contents.songs > 1 ? "s" : ""}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <Button className="w-full mb-2 text-xl" onClick={() => onPurchase({ packKey: pack.packKey, quantity: quantities[i] })}>
-                                            ${pack.contents.price * quantities[i]}
+                                        <Button className="w-fit border-2 border-black hover:scale-105" onClick={() => onPurchase({ packKey: pack.packKey, quantity: quantities[i] })}>
+                                            Buy Now
                                         </Button>
-                                        <div className="flex items-center justify-center gap-2">
-                                            <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
-                                            <div className="text-center text-xl w-[2rem]">
-                                                {quantities[i]}
-                                            </div>
-                                            <Button onClick={() => setQuantities(e => { let h = [...e]; h[i] += 1; return h; })}>+</Button>
+                                    </div>
+                                    <div className="flex items-center justify-center gap-2">
+                                        <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
+                                        <div className="text-center text-xl w-[6rem]">
+                                            {quantities[i] * pack.contents.songs} songs
                                         </div>
+                                        <Button onClick={() => setQuantities(e => { let h = [...e]; h[i] += 1; return h; })}>+</Button>
                                     </div>
                                 </div>
                             )
