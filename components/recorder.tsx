@@ -85,7 +85,7 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
             w-full md:max-w-lg flex justify-center items-center rounded-t-3xl
             bg-[#f0f0f0] transition-[height] ease-in-out border shadow-xl"
         >
-            <div className="fixed bottom-8
+            <div className="fixed bottom-4
                 md:static md:bottom-0
                 flex flex-col items-center"
             >
