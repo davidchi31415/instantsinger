@@ -35,10 +35,10 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
         try {
             setError("");
             if (duration >= maxDuration * 60) {
-                setError(`Time limit is ${maxDuration} min. Please try to be a little faster.`);
+                setError(`Time limit is ${maxDuration} min.`);
                 return;
             } else if (duration <= minDuration * 60) {
-                setError(`Need at least ${minDuration} min. Are you sure you finished?`);
+                setError(`Need at least ${minDuration} min.`);
                 return;
             }
           
@@ -124,7 +124,7 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                         :
                             error !== "" ?
                                 <div className="flex flex-col items-center gap-4 mb-2 md:mb-0">
-                                    <div className="text-xl text-center px-4 text-wrap">
+                                    <div className="text-xl text-center px-4 text-wrap text-destructive">
                                         {error}
                                     </div>
                                     <div className="flex items-center gap-2">
