@@ -80,25 +80,15 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
       }
 
     return (
-        <div className={cn("fixed bottom-0 left-0 right-0 mx-auto h-[30vh] \
+        <div className={cn("fixed bottom-0 left-0 right-0 mx-auto h-[30%] \
             w-full md:max-w-lg flex justify-center rounded-t-3xl \
-            bg-[#fafafa] transition-[height] ease-in-out border shadow-xl", 
-            isRecording || finished ? "h-[42vh]" : "")}
+            bg-[#f0f0f0] transition-[height] ease-in-out border shadow-xl", 
+            isRecording || finished ? "h-[40%]" : "")}
         >
-            <div className="fixed bottom-10 xl:bottom-18 2xl:bottom-22 flex flex-col items-center gap-2">
+            <div className="fixed bottom-4 flex flex-col items-center">
                 {(mediaRecorder) ?
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="w-fit mx-auto text-center text-3xl">
-                            {Math.floor(recordingTime/60)}
-                            :
-                            {
-                                (recordingTime - Math.floor(recordingTime/60)*60).toLocaleString('en-US', {
-                                    minimumIntegerDigits: 2,
-                                    useGrouping: false
-                                })
-                            }
-                        </div>
-                        <div className="w-[300px] my-[-50px] scale-y-50 overflow-x-hidden">
+                    <div className="flex flex-col items-center">
+                        <div className="w-[275px] my-[-50px] md:my-0 scale-y-50 overflow-x-hidden">
                             <LiveAudioVisualizer
                                 mediaRecorder={mediaRecorder}
                                 width={600}

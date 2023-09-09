@@ -11,14 +11,14 @@ import { FileUploader } from "@/components/file-uploader";
 import { RecorderComponent } from "@/components/recorder";
 
 const contents = [
-    `[START] The birch canoe slid on the smooth planks.
+    `The birch canoe slid on the smooth planks.
     Glue the sheet to the dark blue background.
     It's easy to tell the depth of a well.
     These days a chicken leg is a rare dish.`,
     `Rice is often served in round bowls.
     The juice of lemons makes fine punch.
     The box was thrown beside the parked truck.
-    The hogs were fed chopped corn and garbage.`,
+    The hogs were fed chopped corn.`,
     `Four hours of steady work faced us.
     A large size in stockings is hard to sell.
     The boy was there when the sun rose.
@@ -34,7 +34,7 @@ const contents = [
     `The small pup gnawed a hole in the sock.
     The fish twisted and turned on the bent hook.
     Press the pants and sew a button on the vest.
-    The swan dive was far short of perfect.`,
+    The swan dive was perfect.`,
     `The beauty of the view stunned the young boy.
     Two blue fish swam in the tank.
     Her purse was full of useless trash.
@@ -90,7 +90,7 @@ const contents = [
     `The pennant waved when the wind blew.
     Split the log with a quick, sharp blow.
     Burn peat after the logs give out.
-    He ordered peach pie with ice cream. [END]`
+    He ordered peach pie with ice cream.`
 ];
 
 const CloningStep1Slides = ({ jobId }) => {
@@ -127,7 +127,7 @@ const CloningStep1Slides = ({ jobId }) => {
                 </CardContent>
             </Card>
         </div>
-        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={2} maxDuration={6} />
+        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={2} maxDuration={8} />
     </>
   )
 }
