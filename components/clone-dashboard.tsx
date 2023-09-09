@@ -91,7 +91,7 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
             <div className="w-fit mx-auto mt-8 text-center text-xl md:text-3xl">
                 Let's get your voice cloned!
             </div>
-            <div className="w-full mt-4 flex items-center justify-center">
+            <div className="w-full mt-4 pb-8 flex items-center justify-center">
                 <Link href="/dashboard/clone/step-1-preview">
                     <Button className="text-3xl gap-2 p-8 border-2 border-black hover:scale-105">
                         Begin<MoveRightIcon />
