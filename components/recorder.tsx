@@ -80,42 +80,27 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
       }
 
     return (
-        <div className={cn("fixed bottom-0 left-0 right-0 mx-auto h-[30%] \
-            w-full md:max-w-lg flex justify-center rounded-t-3xl \
-            bg-[#f0f0f0] transition-[height] ease-in-out border shadow-xl", 
-            isRecording || finished ? "h-[40%]" : "")}
+        <div className="fixed bottom-0 left-0 right-0 mx-auto h-[36%]
+            md:static md:mt-4
+            w-full md:max-w-lg flex justify-center items-center rounded-t-3xl
+            bg-[#f0f0f0] transition-[height] ease-in-out border shadow-xl"
         >
-            <div className="fixed bottom-4 flex flex-col items-center">
-                {(mediaRecorder) ?
-                    <div className="flex flex-col items-center">
-                        <div className="w-[275px] my-[-50px] md:my-0 scale-y-50 overflow-x-hidden">
-                            <LiveAudioVisualizer
-                                mediaRecorder={mediaRecorder}
-                                width={600}
-                                height={200}
-                                barWidth={5}
-                                gap={1}
-                                barColor='#f76565'
-                            />
-                        </div>
-                    </div> : ""
-                }
-                {!isRecording ?
-                    finished ?
+            <div className="fixed bottom-12
+                md:static md:bottom-0
+                flex flex-col items-center"
+            >
+                {finished ?
                         uploading || uploadComplete ?
-                            <div className="flex flex-col items-center gap-2 mb-8">
-                                <div className="flex flex-col items-center gap-4">
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="flex flex-col items-center">
                                     {!uploadComplete ?
                                         <div className="text-3xl">Uploading...</div>
                                         :
-                                        <div className="flex items-center gap-2 text-3xl px-4 rounded-xl border-2 bg-[white]">
-                                            Step {stepNumber}
-                                            <div className="w-fit h-fit p-2 rounded-full ">
-                                                <CheckIcon 
-                                                    size={50}
-                                                    color="darkgreen"
-                                                />
-                                            </div>
+                                        <div className="w-fit h-fit p-2 rounded-full ">
+                                            <CheckIcon 
+                                                size={50}
+                                                color="darkgreen"
+                                            />
                                         </div>
                                     }
                                     <div className="p-4 w-[20rem] md:w-[30rem]">
@@ -138,9 +123,10 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                             </div>
                         :
                             error !== "" ?
-                                <div className="flex flex-col items-center gap-4 mb-16">
-                                    <XCircleIcon color="red" fill="white" size={50} />
-                                    <div className="text-xl text-center px-4 text-wrap">{error}</div>
+                                <div className="flex flex-col items-center gap-4 mb-2 md:mb-0">
+                                    <div className="text-xl text-center px-4 text-wrap">
+                                        {error}
+                                    </div>
                                     <div className="flex items-center gap-2">
                                         <Button onClick={() => { setFinished(false); setError("") }}
                                             variant="outline"
@@ -151,43 +137,51 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                                     </div>
                                 </div>
                                 :
-                                <div className="flex flex-col items-center gap-6 mb-20">
-                                    <div className="text-3xl">Finished?</div>
-                                    <div className="flex items-center gap-2">
-                                        <Button onClick={() => setFinished(false)}
-                                            variant="outline"
-                                            className="text-2xl p-8 gap-2 border-2 border-black hover:scale-105"
-                                        >
-                                            <Undo2Icon />
-                                        </Button>
-                                        <Button onClick={() => onSubmit()}
-                                            className="text-2xl p-8 border-2 border-black hover:scale-105"
-                                        >
-                                            Yes
-                                        </Button>
-                                    </div>
+                                <div className="flex items-center gap-2 mb-10 mb:md-0">
+                                    <Button onClick={() => setFinished(false)}
+                                        variant="outline"
+                                        className="text-2xl p-8 gap-2 border-2 border-black hover:scale-105"
+                                    >
+                                        <Undo2Icon />
+                                    </Button>
+                                    <Button onClick={() => onSubmit()}
+                                        className="text-2xl p-8 border-2 border-black hover:scale-105"
+                                    >
+                                        Submit
+                                    </Button>
                                 </div>
                     :
-                        <div className="flex flex-col items-center">
-                            <div className="w-fit mx-auto text-center text-3xl">Press to Begin</div>
-                            <Button variant="ghost" onClick={() => { setDuration(0); startRecording(); }}
-                                className="h-fit"
-                            >
-                                <CircleIcon fill="red" 
-                                    size={100}
-                                />
-                            </Button>
-                        </div>
-                :
-                    <div className="flex items-center">
-                        <Button variant="ghost" onClick={() => { setDuration(recordingTime); stopRecording(); setFinished(true); }}
-                            className="h-fit"
-                        >
-                            <StopCircleIcon fill="red" 
-                                size={100}
-                            />
-                        </Button>
-                    </div>
+                        isRecording ?
+                            (mediaRecorder) ?
+                                <div className="flex items-center mb-6 md:mb-0">
+                                    <Button variant="ghost" onClick={() => { setDuration(recordingTime); stopRecording(); setFinished(true); }}
+                                        className="h-fit pl-0"
+                                    >
+                                        <StopCircleIcon fill="red" 
+                                            size={75}
+                                        />
+                                    </Button>
+                                    <div className="w-[175px] my-[-50px] md:my-0 scale-y-50 overflow-x-hidden">
+                                        <LiveAudioVisualizer
+                                            mediaRecorder={mediaRecorder}
+                                            width={350}
+                                            height={200}
+                                            barWidth={5}
+                                            gap={1}
+                                            barColor='#f76565'
+                                        />
+                                    </div>
+                                </div> : ""
+                        :
+                            <div className="flex flex-col items-center">
+                                <Button variant="ghost" onClick={() => { setDuration(0); startRecording(); }}
+                                    className="h-fit"
+                                >
+                                    <CircleIcon fill="red" 
+                                        size={100}
+                                    />
+                                </Button>
+                            </div>
                 }
             </div>
         </div>
