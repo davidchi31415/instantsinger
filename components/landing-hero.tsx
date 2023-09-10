@@ -39,13 +39,13 @@ export const LandingHero = () => {
             </div>
             <HeroDemo />
             <div className="py-8 flex flex-col items-center gap-2 md:max-w-lg mx-auto">
-            <div className="text-xl">You could be a singer too, in 10 minutes*.</div>
+            <div className="text-2xl text-center">You could be a singer too, in 10 minutes*.</div>
             {isSignedIn ?
                 <Link href="/dashboard" className="w-full" passHref={true}>
                     <Button 
                         variant="default"
-                        className="text-md md:text-lg p-6 w-full
-                        rounded-sm font-semibold border-2 border-black/100
+                        className="text-xl md:text-3xl p-8 w-full
+                        rounded-sm font-normal border-2 border-black/100
                         hover:scale-105 transition shadow-xl"
                     >
                         Get Started for FREE
@@ -55,8 +55,8 @@ export const LandingHero = () => {
                 <SignUpButton mode="modal">
                     <Button 
                         variant="default"
-                        className="md:text-lg p-4 md:p-6 w-full
-                        rounded-sm font-semibold border-2 border-black/100
+                        className="text-xl md:text-3xl p-8 w-full
+                        rounded-sm font-normal border-2 border-black/100
                         hover:scale-105 transition shadow-xl"
                     >
                         Get Started for FREE

@@ -24,7 +24,7 @@ export const Navbar = ({ convertCredits }) => {
     return (
         <nav className="px-4 lg:px-8 py-2 md:py-4 w-full
             flex items-center justify-between fixed
-            bg-[white] border-b-2"
+            bg-[white] border-b-2 z-[9999]"
         >
             <Link
                 href="/"
