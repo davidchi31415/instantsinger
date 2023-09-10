@@ -30,7 +30,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "./ui/badge";
-import { CogIcon, HistoryIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
+import { ArrowDownIcon, CogIcon, HistoryIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
 import { HistoryModal } from "./history-modal";
 import { HistoryTable } from "./history-table";
 import { useMultiAudio } from "@/hooks/use-multi-audio";
@@ -189,15 +189,21 @@ const ConvertDashboard = ({ userData }) => {
         <HistoryModal userData={userData} />
         <SettingsModal userData={userData} />
         <div className="p-4 lg:px-8">
-          <div className="flex justify-center items-center mb-4 px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
-            Your Voice Clone:
-            {players?.length ? players.map((player, i) => {
-              return (
-                <Player player={player} toggle={toggle(i)} />
-              )}) : ""}
-            <Button variant="ghost" onClick={() => settingsModal.onOpen()}>
-              <SettingsIcon />
-            </Button>
+          <div>
+            <div className="w-fit mx-auto text-center flex gap-2 text-xl items-center
+                px-4 pt-2 rounded-t-sm bg-primary/25 border-2 border-b-0 pb-1 border-primary"
+            >
+                <ArrowDownIcon /> Your voice! <ArrowDownIcon />
+            </div>
+            <div className="flex justify-center items-center mb-4 px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
+              {players?.length ? players.map((player, i) => {
+                return (
+                  <Player player={player} toggle={toggle(i)} />
+                )}) : ""}
+              <Button variant="ghost" onClick={() => settingsModal.onOpen()}>
+                <SettingsIcon />
+              </Button>
+            </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div id="upload-convert" 
