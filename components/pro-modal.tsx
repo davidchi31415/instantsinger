@@ -66,15 +66,18 @@ export const ProModal = () => {
                                     border-2 border-primary rounded-md shadow-lg"
                                     key={`pack-${pack.packKey}`}
                                 >
-                                    <div className="flex justify-center items-center gap-6">
-                                        <div className="text-lg md:text-xl font-bold">{pack.contents.label}</div>
-                                        <Button className="w-fit border-2 border-black hover:scale-105" onClick={() => onPurchase({ packKey: pack.packKey, quantity: quantities[i] })}>
-                                            Buy Now
+                                    <div className="flex justify-between items-center gap-6">
+                                        <div className="text-lg md:text-xl font-bold">
+                                            {pack.contents.label.split(" ")[0]}
+                                        </div>
+                                        <div className="md:text-xl">${pack.contents.pricePerSong}/song</div>
+                                        <Button className="w-fit border-2 border-black hover:scale-105 md:text-xl" onClick={() => onPurchase({ packKey: pack.packKey, quantity: quantities[i] })}>
+                                            Buy
                                         </Button>
                                     </div>
-                                    <div className="flex items-center justify-center gap-2">
+                                    <div className="flex items-center justify-between gap-2">
                                         <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
-                                        <div className="text-center text-xl w-[6rem]">
+                                        <div className="text-center text-xl w-[6rem] text-wrap">
                                             {quantities[i] * pack.contents.songs} songs
                                         </div>
                                         <Button onClick={() => setQuantities(e => { let h = [...e]; h[i] += 1; return h; })}>+</Button>

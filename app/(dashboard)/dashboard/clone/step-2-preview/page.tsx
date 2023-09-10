@@ -19,7 +19,7 @@ const CloningStepPreview = () => {
                 <p>
                     In this step, you will sing some easy nursery songs (such as "Happy Birthday") while recording yourself.
                 </p>
-                <p>Try to finish within <b>2</b> to <b>6</b> minutes.</p>
+                <p>Finish within <b>2</b> to <b>5</b> minutes. Take your time.</p>
                 <p>
                     <b>It is okay if you mess up</b>. The point is to hear how you sound.
                 </p>

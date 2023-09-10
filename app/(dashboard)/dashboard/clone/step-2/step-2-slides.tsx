@@ -12,7 +12,7 @@ import { RecorderComponent } from "@/components/recorder";
 
 const contents = [
     <div>
-        <p>Sing as <b>LOW</b> as you can.</p>
+        <p>Sing as <b>DEEP</b> as you can.</p>
         <p className="text-center text-sm mt-2 text-muted-foreground">"The Happy Birthday Song"</p>
         <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Happy birthday to you</p>
@@ -42,7 +42,7 @@ const contents = [
         </div>
     </div>,
     <div>
-        <p>Sing as <b>LOW</b> as you can.</p>
+        <p>Sing as <b>DEEP</b> as you can.</p>
         <p className="text-center text-sm mt-2 text-muted-foreground">"Twinkle, Twinkle, Little Star"</p>
         <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Twinkle, twinkle, little star</p>
@@ -78,7 +78,7 @@ const contents = [
         </div>
     </div>,
     <div>
-        <p>Sing as <b>LOW</b> as you can.</p>
+        <p>Sing as <b>DEEP</b> as you can.</p>
         <p className="text-center text-sm mt-2 text-muted-foreground">"Row, Row, Row Your Boat"</p>
         <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Row, row, row your boat</p>
@@ -155,7 +155,7 @@ const CloningStep2Slides = ({ jobId }) => {
                 </CardContent>
             </Card>
         </div>
-        <RecorderComponent jobId={jobId} stepNumber={2} minDuration={2} maxDuration={6} onRecordChange={setRecording} />
+        <RecorderComponent jobId={jobId} stepNumber={2} minDuration={2} maxDuration={5} onRecordChange={setRecording} />
     </>
   )
 }
