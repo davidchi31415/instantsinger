@@ -12,7 +12,7 @@ import { MAX_FILE_SIZE } from '@/lib/constants';
 import { Progress } from './ui/progress';
 import { useRouter } from 'next/navigation';
 
-export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration }) => {
+export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration, onRecordChange }) => {
     const router = useRouter();
 
     const {
@@ -181,7 +181,7 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                                     </div>
                                     :
                                     <div className="flex items-center mb-6 md:mb-0">
-                                        <Button variant="ghost" onClick={ () => { setDuration(recordingTime); stopRecording(); setFinished(true); }}
+                                        <Button variant="ghost" onClick={ () => { setDuration(recordingTime); stopRecording(); onRecordChange(false); setFinished(true); }}
                                             className="h-fit pl-0"
                                         >
                                             <StopCircleIcon fill="red" 
@@ -200,7 +200,7 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                         :
                             <div className="flex flex-col items-center">
                                 <div className="text-base text-primary">Press to Begin</div>
-                                <Button variant="ghost" onClick={() => { setDuration(0); startRecording(); }}
+                                <Button variant="ghost" onClick={() => { setDuration(0); startRecording(); onRecordChange(true); }}
                                     className="h-fit"
                                 >
                                     <CircleIcon fill="red" 

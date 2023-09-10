@@ -95,6 +95,7 @@ const contents = [
 
 const CloningStep1Slides = ({ jobId }) => {
     const [step, setStep] = useState(0);
+    const [isRecording, setRecording] = useState(false);
 
   return (
     <>
@@ -124,19 +125,21 @@ const CloningStep1Slides = ({ jobId }) => {
                     <div>
                         {contents[step]}
                     </div>
-                    {step !== contents.length - 1 ?
-                        <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
-                            Do not stop recording.
-                        </div>
-                        :
-                        <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
-                            Stop recording here.
-                        </div>
+                    {isRecording ?
+                        step !== contents.length - 1 ?
+                            <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
+                                Keep on recording.
+                            </div>
+                            :
+                            <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
+                                Stop recording here.
+                            </div>
+                        : ""
                     }
                 </CardContent>
             </Card>
         </div>
-        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={2} maxDuration={8} />
+        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={3} maxDuration={7} onRecordChange={setRecording} />
     </>
   )
 }

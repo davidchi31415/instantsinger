@@ -112,7 +112,8 @@ const PricingTable = () => {
                                         className={cn("text-5xl md:text-7xl text-center", font.className)}
                                     >
                                         ${pack.contents.pricePerSong}
-                                    </span>/song
+                                    </span>
+                                    <span className="text-2xl">/song</span>
                                 </div>
                                 <div className="flex items-center justify-center gap-4">
                                     <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
