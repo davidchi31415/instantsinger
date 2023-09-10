@@ -13,37 +13,38 @@ import { RecorderComponent } from "@/components/recorder";
 const contents = [
     <div>
         <p>Sing as <b>LOW</b> as you can.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
+        <p className="text-center text-sm mt-2 text-muted-foreground">"The Happy Birthday Song"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Happy birthday to you</p>
             <p>Happy birthday to you</p>
             <p>Happy birthday dear Someone</p>
             <p>Happy birthday to you</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"The Happy Birthday Song"</p>
     </div>,
     <div>
         <p>Now, sing as <b>NORMAL</b>.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
+        <p className="text-center text-sm mt-2 text-muted-foreground">"The Happy Birthday Song"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Happy birthday to you</p>
             <p>Happy birthday to you</p>
             <p>Happy birthday dear Someone</p>
             <p>Happy birthday to you</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"The Happy Birthday Song"</p>
     </div>,
     <div>
         <p>Now, as <b>HIGH</b> as you can.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
+        <p className="text-center text-sm mt-2 text-muted-foreground">"The Happy Birthday Song"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Happy birthday to you</p>
             <p>Happy birthday to you</p>
             <p>Happy birthday dear Someone</p>
             <p>Happy birthday to you</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"The Happy Birthday Song"</p>
     </div>,
     <div>
         <p>Sing as <b>LOW</b> as you can.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
+        <p className="text-center text-sm mt-2 text-muted-foreground">"Twinkle, Twinkle, Little Star"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Twinkle, twinkle, little star</p>
             <p>How I wonder what you are!</p>
             <p>Up above the world so high</p>
@@ -51,11 +52,11 @@ const contents = [
             <p>Twinkle, twinkle, little star</p>
             <p>How I wonder what you are!</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"Twinkle Twinkle Litte Star"</p>
     </div>,
     <div>
         <p>Now, sing as <b>NORMAL</b>.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
+        <p className="text-center text-sm mt-2 text-muted-foreground">"Twinkle, Twinkle, Little Star"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Twinkle, twinkle, little star</p>
             <p>How I wonder what you are!</p>
             <p>Up above the world so high</p>
@@ -63,11 +64,11 @@ const contents = [
             <p>Twinkle, twinkle, little star</p>
             <p>How I wonder what you are!</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"Twinkle Twinkle Litte Star"</p>
     </div>,
     <div>
         <p>Now, as <b>HIGH</b> as you can.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
+        <p className="text-center text-sm mt-2 text-muted-foreground">"Twinkle, Twinkle, Little Star"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
             <p>Twinkle, twinkle, little star</p>
             <p>How I wonder what you are!</p>
             <p>Up above the world so high</p>
@@ -75,43 +76,36 @@ const contents = [
             <p>Twinkle, twinkle, little star</p>
             <p>How I wonder what you are!</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"Twinkle Twinkle Litte Star"</p>
     </div>,
     <div>
         <p>Sing as <b>LOW</b> as you can.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
-            <p>ABCDEFG</p>
-            <p>HIJKLMNOP</p>
-            <p>QRS, TUV</p>
-            <p>WX, Y and Z</p>
-            <p>Now I know my ABCs</p>
-            <p>Next time won't you sing with me</p>
+        <p className="text-center text-sm mt-2 text-muted-foreground">"Row, Row, Row Your Boat"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
+            <p>Row, row, row your boat</p>
+            <p>Gently down the stream</p>
+            <p>Merrily merrily, merrily, merrily</p>
+            <p>Life is but a dream</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"The Alphabet Song"</p>
     </div>,
     <div>
         <p>Now, sing as <b>NORMAL</b>.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
-            <p>ABCDEFG</p>
-            <p>HIJKLMNOP</p>
-            <p>QRS, TUV</p>
-            <p>WX, Y and Z</p>
-            <p>Now I know my ABCs</p>
-            <p>Next time won't you sing with me</p>
+        <p className="text-center text-sm mt-2 text-muted-foreground">"Row, Row, Row Your Boat"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
+            <p>Row, row, row your boat</p>
+            <p>Gently down the stream</p>
+            <p>Merrily merrily, merrily, merrily</p>
+            <p>Life is but a dream</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"The Alphabet Song"</p>
     </div>,
     <div>
         <p>Now, as <b>HIGH</b> as you can.</p>
-        <div className="text-center italic my-4 text-base md:text-xl">
-            <p>ABCDEFG</p>
-            <p>HIJKLMNOP</p>
-            <p>QRS, TUV</p>
-            <p>WX, Y and Z</p>
-            <p>Now I know my ABCs</p>
-            <p>Next time won't you sing with me</p>
+        <p className="text-center text-sm mt-2 text-muted-foreground">"Row, Row, Row Your Boat"</p>
+        <div className="text-center italic mt-2 text-base md:text-xl">
+            <p>Row, row, row your boat</p>
+            <p>Gently down the stream</p>
+            <p>Merrily merrily, merrily, merrily</p>
+            <p>Life is but a dream</p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">"The Alphabet Song"</p>
     </div>,
 ];
 
@@ -146,9 +140,15 @@ const CloningStep2Slides = ({ jobId }) => {
                     <div>
                         {contents[step]}
                     </div>
-                    <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
-                        Do not stop recording.
-                    </div>
+                    {step !== contents.length - 1 ?
+                        <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
+                            Do not stop recording.
+                        </div>
+                        :
+                        <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
+                            Stop recording here.
+                        </div>
+                    }
                 </CardContent>
             </Card>
         </div>

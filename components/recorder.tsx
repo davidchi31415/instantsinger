@@ -199,7 +199,7 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                                 : ""
                         :
                             <div className="flex flex-col items-center">
-                                <div className="text-base">Press to Begin</div>
+                                <div className="text-base text-primary">Press to Begin</div>
                                 <Button variant="ghost" onClick={() => { setDuration(0); startRecording(); }}
                                     className="h-fit"
                                 >
