@@ -79,7 +79,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                         <div className="text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
                                 <div><b>Step 1</b></div>
-                                <Link href="/clone/step-1-preview" passHref={true}>
+                                <Link href="/dashboard/clone/step-1-preview" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
                                     </Button>
@@ -98,7 +98,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                         <div className="mt-8 text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
                                 <div><b>Step 2</b></div>
-                                <Link href="/clone/step-2-preview" passHref={true}>
+                                <Link href="/dashboard/clone/step-2-preview" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
                                     </Button>

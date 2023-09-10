@@ -124,6 +124,9 @@ const CloningStep1Slides = ({ jobId }) => {
                     <div>
                         {contents[step]}
                     </div>
+                    <div className="text-center text-md text-primary border-t-2 mt-2 pt-2">
+                        Do not stop recording.
+                    </div>
                 </CardContent>
             </Card>
         </div>

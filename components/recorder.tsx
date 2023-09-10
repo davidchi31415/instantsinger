@@ -18,6 +18,8 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
     const {
         startRecording,
         stopRecording,
+        isPaused,
+        togglePauseResume,
         recordingBlob,
         isRecording,
         recordingTime,
@@ -34,10 +36,10 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
     const onSubmit = async () => {
         try {
             setError("");
-            if (duration >= maxDuration * 60) {
+            if (duration > maxDuration * 60) {
                 setError(`Time limit is ${maxDuration} min.`);
                 return;
-            } else if (duration <= minDuration * 60) {
+            } else if (duration < minDuration * 60) {
                 setError(`Need at least ${minDuration} min.`);
                 return;
             }
@@ -94,14 +96,9 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                             <div className="flex flex-col items-center gap-2">
                                 <div className="flex flex-col items-center">
                                     {!uploadComplete ?
-                                        <div className="text-3xl">Uploading...</div>
+                                        <div className="text-xl">Uploading...</div>
                                         :
-                                        <div className="w-fit h-fit p-2 rounded-full ">
-                                            <CheckIcon 
-                                                size={50}
-                                                color="darkgreen"
-                                            />
-                                        </div>
+                                        <div className="text-xl">Uploading complete!</div>
                                     }
                                     <div className="p-4 w-[20rem] md:w-[30rem]">
                                         <Progress value={uploadProgress} className="w-full" />
@@ -153,27 +150,56 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration 
                     :
                         isRecording ?
                             (mediaRecorder) ?
-                                <div className="flex items-center mb-6 md:mb-0">
-                                    <Button variant="ghost" onClick={() => { setDuration(recordingTime); stopRecording(); setFinished(true); }}
-                                        className="h-fit pl-0"
-                                    >
-                                        <StopCircleIcon fill="red" 
-                                            size={75}
-                                        />
-                                    </Button>
-                                    <div className="w-[175px] my-[-50px] md:my-0 scale-y-50 overflow-x-hidden">
-                                        <LiveAudioVisualizer
-                                            mediaRecorder={mediaRecorder}
-                                            width={350}
-                                            height={200}
-                                            barWidth={5}
-                                            gap={1}
-                                            barColor='#f76565'
-                                        />
+                                !isPaused ?
+                                    <div className="flex items-center mb-4 md:mb-0">
+                                        <Button variant="ghost" onClick={() => togglePauseResume()}
+                                            className="h-fit pl-0"
+                                        >
+                                            <PauseCircleIcon fill="red" 
+                                                size={75}
+                                            />
+                                        </Button>
+                                        <div className="w-[175px] my-[-50px] md:my-0 overflow-x-hidden relative">
+                                            <div className={cn("absolute top-10 left-[70px] text-xl", 
+                                                (recordingTime > maxDuration * 60) || (recordingTime < minDuration * 60) ? "text-[red]" : "")
+                                            }>
+                                                {Math.floor(recordingTime/60)}
+                                                :
+                                                {String(recordingTime % 60).padStart(2, "0")}
+                                            </div>
+                                            <div className="scale-y-50">
+                                                <LiveAudioVisualizer
+                                                    mediaRecorder={mediaRecorder}
+                                                    width={350}
+                                                    height={200}
+                                                    barWidth={5}
+                                                    gap={1}
+                                                    barColor='#f76565'
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div> : ""
+                                    :
+                                    <div className="flex items-center mb-6 md:mb-0">
+                                        <Button variant="ghost" onClick={ () => { setDuration(recordingTime); stopRecording(); setFinished(true); }}
+                                            className="h-fit pl-0"
+                                        >
+                                            <StopCircleIcon fill="red" 
+                                                size={75}
+                                            />
+                                        </Button>
+                                        <Button variant="ghost" onClick={() => togglePauseResume()}
+                                            className="h-fit pl-0"
+                                        >
+                                            <PlayCircleIcon fill="red" 
+                                                size={75}
+                                            />
+                                        </Button>
+                                    </div>
+                                : ""
                         :
                             <div className="flex flex-col items-center">
+                                <div className="text-base">Press to Begin</div>
                                 <Button variant="ghost" onClick={() => { setDuration(0); startRecording(); }}
                                     className="h-fit"
                                 >

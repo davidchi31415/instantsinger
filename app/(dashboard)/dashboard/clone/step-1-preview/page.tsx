@@ -21,6 +21,7 @@ const CloningStepPreview = () => {
             <p>
               In this step, you will read a series of (non-sensical) sentences <b>out loud</b>, while recording yourself.
             </p>
+            <p>Try to finish it within <b>2</b> to <b>6</b> minutes.</p>
             <p>
               <b>It is okay if you mess up</b>. The point is to hear how you sound.
             </p>
