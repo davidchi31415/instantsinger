@@ -189,7 +189,7 @@ const ConvertDashboard = ({ userData }) => {
         <HistoryModal userData={userData} />
         <SettingsModal userData={userData} />
         <div className="p-4 lg:px-8">
-          <div>
+          <div className="mb-12">
             <div className="w-fit mx-auto text-center flex gap-2 text-xl items-center
                 px-4 pt-2 rounded-t-sm bg-primary/25 border-2 border-b-0 pb-1 border-primary"
             >
