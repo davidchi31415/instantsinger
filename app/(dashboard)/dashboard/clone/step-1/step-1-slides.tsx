@@ -13,84 +13,79 @@ import { RecorderComponent } from "@/components/recorder";
 const contents = [
     `The birch canoe slid on the smooth planks.
     Glue the sheet to the dark blue background.
-    It's easy to tell the depth of a well.
-    These days a chicken leg is a rare dish.`,
+    It's easy to tell the depth of a well.`,
     `Rice is often served in round bowls.
     The juice of lemons makes fine punch.
-    The box was thrown beside the parked truck.
-    The hogs were fed chopped corn.`,
+    The box was thrown beside the parked truck.`,
     `Four hours of steady work faced us.
     A large size in stockings is hard to sell.
-    The boy was there when the sun rose.
-    A rod is used to catch pink salmon.`,
+    The boy was there when the sun rose.`,
     `The source of the huge river is the clear spring.
     Kick the ball straight and follow through.
-    Help the woman get back to her feet.
-    A pot of tea helps to pass the evening.`,
+    Help the woman get back to her feet.`,
     `Smoky fires lack flame and heat.
     The soft cushion broke the man's fall.
-    The salt breeze came across from the sea.
-    The girl at the booth sold fifty bonds.`,
+    The salt breeze came across from the sea.`,
     `The small pup gnawed a hole in the sock.
     The fish twisted and turned on the bent hook.
-    Press the pants and sew a button on the vest.
-    The swan dive was perfect.`,
+    Press the pants and sew a button on the vest.`,
     `The beauty of the view stunned the young boy.
     Two blue fish swam in the tank.
-    Her purse was full of useless trash.
-    The colt reared and threw the tall rider.`,
+    Her purse was full of useless trash.`,
     `It snowed, rained, and hailed the same morning.
     Read verse out loud for pleasure.
-    Hoist the load to your left shoulder.
-    Take the winding path to reach the lake.`,
+    Hoist the load to your left shoulder.`,
     `Note closely the size of the gas tank.
     Wipe the grease off his dirty face.
-    Mend the coat before you go out.
-    The wrist was badly strained and hung limp.`,
+    Mend the coat before you go out.`,
     `The stray cat gave birth to kittens.
     The young girl gave no clear response.
-    The meal was cooked before the bell rang.
-    What joy there is in living.`,
+    The meal was cooked before the bell rang.`,
     `A king ruled the state in the early days.
     The ship was torn apart on the sharp reef.
-    Sickness kept him home the third week.
-    The wide road shimmered in the hot sun.`,
+    Sickness kept him home the third week.`,
     `The lazy cow lay in the cool grass.
     Lift the square stone over the fence.
-    The rope will bind the seven books at once.
-    Hop over the fence and plunge in.`,
+    The rope will bind the seven books at once.`,
     `The friendly gang left the drug store.
     Mesh wire keeps chicks inside.
-    The frosty air passed through the coat.
-    The crooked maze failed to fool the mouse.`,
+    The frosty air passed through the coat.`,
     `Adding fast leads to wrong sums.
     The show was a flop from the very start.
-    A saw is a tool used for making boards.
-    The wagon moved on well oiled wheels.`,
+    A saw is a tool used for making boards.`,
     `The ink stain dried on the finished page.
     The walled town was seized without a fight.
-    The lease ran out in sixteen weeks.
-    A tame squirrel makes a nice pet.`,
+    The lease ran out in sixteen weeks.`,
     `There are more than two factors here.
     The hat brim was wide and too droopy.
-    The lawyer tried to lose his case.
-    The grass curled around the fence post.`,
+    The lawyer tried to lose his case.`,
     `Oak is strong and also gives shade.
     Cats and dogs each hate the other.
-    The pipe began to rust while new.
-    Open the crate but don't break the glass.`,
+    The pipe began to rust while new.`,
     `Add the sum to the product of these three.
     Thieves who rob friends deserve jail.
-    The ripe taste of cheese improves with age.
-    Act on these orders with great speed.`,
+    The ripe taste of cheese improves with age.`,
     `The hog crawled under the high fence.
     Move the vat over the hot fire.
-    The bark of the pine tree was shiny and dark.
-    Leaves turn brown and yellow in the fall.`,
+    The bark of the pine tree was shiny and dark.`,
     `The pennant waved when the wind blew.
     Split the log with a quick, sharp blow.
-    Burn peat after the logs give out.
-    He ordered peach pie with ice cream.`
+    Burn peat after the logs give out.`,
+    `The empty flask stood on the tin tray.
+    A speedy man can beat this track mark.
+    He broke a new shoelace that day.`,
+    `The coffee stand is too high for the couch.
+    The urge to write short stories is rare.
+    The pencils have all been used.`,
+    `The pirates seized the crew of the lost ship.
+    We tried to replace the coin but failed.
+    She sewed the torn coat quite neatly.`,
+    `The sofa cushion is red and of light weight.
+    The jacket hung on the back of the wide chair.
+    At that high level the air is pure.`,
+    `Drop the two when you add the figures.
+    A filing case is now hard to buy.
+    An abrupt start does not win the prize.`
 ];
 
 const CloningStep1Slides = ({ jobId }) => {
@@ -139,7 +134,7 @@ const CloningStep1Slides = ({ jobId }) => {
                 </CardContent>
             </Card>
         </div>
-        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={3} maxDuration={7} onRecordChange={setRecording} />
+        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={3} maxDuration={8} onRecordChange={setRecording} />
     </>
   )
 }
