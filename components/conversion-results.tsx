@@ -2,7 +2,7 @@
 
 import { Button } from "./ui/button";
 import { cn, downloadFromURL, getFileName } from "@/lib/utils";
-import { ArrowRightIcon, CopyIcon, DownloadIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowUpIcon, CopyIcon, DownloadIcon } from "lucide-react";
 import { AudioCard } from "./audio-card";
 import { AlertCard } from "./alert-card";
 import { Switch } from "@/components/ui/switch";
@@ -10,8 +10,10 @@ import { useState } from "react";
 import { SocialIcon } from 'react-social-icons';
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { SignUpButton, useAuth } from "@clerk/nextjs";
 
 export const ConversionResultsComponent = ({ results }) => {
+    const { isSignedIn } = useAuth();
     const [isPublic, setPublic] = useState(results.public);
 
     const togglePublicity = async () => {
@@ -42,47 +44,74 @@ export const ConversionResultsComponent = ({ results }) => {
 
     if (results?.urls) {
         return (
-            <div className="p-4 rounded-md border">
-                {results.owner ?
-                    <div className="flex items-center gap-2 h-[4rem] flex-wrap w-fit mb-10 md:md-4">
-                        <div className="flex items-center gap-2">
-                            <div className="text-xl">Public</div>
-                            <Switch checked={isPublic} onCheckedChange={togglePublicity} 
-                                className=""
-                            />
-                        </div>
-                        <div className={cn("flex items-center gap-2", isPublic ? "" : "hidden")}>
-                            <div className="text-xl flex items-center gap-2">Share it! <ArrowRightIcon /></div>
-                            <Button variant="outline" className="border-2 py-6"
-                                onClick={copyToClipboard}
-                            >
-                                <CopyIcon />
-                            </Button>
-                        </div>
-                    </div> : ""}
-                {results?.urls?.length ? 
-                    <>
-                        {results?.urls?.map((url, i) => {
-                            return (
-                                <div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="font-medium mb-2">
-                                            <i>{ results?.songName }</i>
-                                        </div>
-                                        <Button variant="ghost" size="icon" 
-                                            onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
-                                        >
-                                            <DownloadIcon />
-                                        </Button>
-                                    </div>
+            <div>
+                <div className="p-4">
+                    {results.owner ?
+                        <div className="flex items-center gap-2 h-[4rem] flex-wrap w-fit mb-10 md:md-4">
+                            <div className="flex items-center gap-2">
+                                <div className="text-xl">Public</div>
+                                <Switch checked={isPublic} onCheckedChange={togglePublicity} 
+                                    className=""
+                                />
+                            </div>
+                            <div className={cn("flex items-center gap-2", isPublic ? "" : "hidden")}>
+                                <div className="text-xl flex items-center gap-2">Share it! <ArrowRightIcon /></div>
+                                <Button variant="outline" className="border-2 py-6"
+                                    onClick={copyToClipboard}
+                                >
+                                    <CopyIcon />
+                                </Button>
+                            </div>
+                        </div> : ""}
+                    {results?.urls?.length ? 
+                        <>
+                            {results?.urls?.map((url, i) => {
+                                return (
                                     <div>
-                                        <AudioCard url={url} />
-                                    </div>
-                                </div>  
-                            )
-                        })}
-                    </>
-                    : ""}
+                                        <div className="flex items-center justify-between">
+                                            <div className="mb-2">
+                                                {results.owner ? <b>{ results?.songName }</b>
+                                                    : <div>Here's "<b>{ results?.songName }</b>" converted into my voice!</div>}
+                                            </div>
+                                            <Button variant="ghost" size="icon" 
+                                                onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
+                                            >
+                                                <DownloadIcon />
+                                            </Button>
+                                        </div>
+                                        <div>
+                                            <AudioCard url={url} />
+                                        </div>
+                                    </div>  
+                                )
+                            })}
+                        </>
+                        : ""}
+                </div>
+                <div className="mt-6 w-full md:max-w-lg mx-auto">
+                    {isSignedIn ? ""
+                        : 
+                        <div className="flex flex-col items-center gap-4">
+                            <div className="text-2xl text-center">Wanna try it yourself?</div>
+                            <SignUpButton mode="modal">
+                                <Button 
+                                    variant="default"
+                                    className="text-xl md:text-3xl p-8 w-full
+                                    rounded-sm font-normal border-2 border-black/100
+                                    hover:scale-105 transition shadow-xl"
+                                >
+                                    Get Started for FREE
+                                </Button>
+                            </SignUpButton>
+                            <div className="flex justify-center gap-2">
+                                <ArrowUpIcon fill="black" />
+                                <ArrowUpIcon fill="black" />
+                                <ArrowUpIcon fill="black" />
+                                <ArrowUpIcon fill="black" />
+                                <ArrowUpIcon fill="black" />
+                            </div>
+                        </div>}
+                </div>
             </div>
         )
     } else {
