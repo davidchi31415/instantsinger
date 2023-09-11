@@ -19,7 +19,7 @@ export const ConversionResultsComponent = ({ results }) => {
         try {
             setPublic(newPublic);
             const res = await axios.post("/api/convert/public", 
-                { conversionId: results.id, newPublic }
+                { conversionId: results.id, isPublic: newPublic }
             );
 
             if (res.status === 200) {
