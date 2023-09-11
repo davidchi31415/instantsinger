@@ -18,6 +18,7 @@ export async function POST(
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
+        console.log(isPublic);
 
         const conversion = await getConversion({ userId, conversionId });
         if (!conversion) return new NextResponse("Could not find conversion", { status: 400 });
@@ -26,7 +27,7 @@ export async function POST(
         
         return new NextResponse("Updated publicity", { status: 200 });
     } catch (error) {
-        console.log("[CONVERT SUBMIT ERROR]", error);
+        console.log("[PUBLICITY UPDATE ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }
