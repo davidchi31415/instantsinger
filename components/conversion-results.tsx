@@ -2,7 +2,7 @@
 
 import { Button } from "./ui/button";
 import { cn, downloadFromURL, getFileName } from "@/lib/utils";
-import { CopyIcon, DownloadIcon } from "lucide-react";
+import { ArrowRightIcon, CopyIcon, DownloadIcon } from "lucide-react";
 import { AudioCard } from "./audio-card";
 import { AlertCard } from "./alert-card";
 import { Switch } from "@/components/ui/switch";
@@ -43,31 +43,28 @@ export const ConversionResultsComponent = ({ results }) => {
     if (results?.urls) {
         return (
             <div className="p-4 rounded-md border">
-                <div className="flex items-center gap-4 flex-wrap">
-                    <div className="flex items-center gap-4 h-[4rem] flex-wrap w-fit">
+                {results.owner ?
+                    <div className="flex items-center gap-2 h-[4rem] flex-wrap w-fit mb-10 md:md-4">
                         <div className="flex items-center gap-2">
                             <div className="text-xl">Public</div>
                             <Switch checked={isPublic} onCheckedChange={togglePublicity} 
                                 className=""
                             />
                         </div>
-                        <div className={cn("flex items-center gap-1", isPublic ? "" : "hidden")}>
+                        <div className={cn("flex items-center gap-2", isPublic ? "" : "hidden")}>
+                            <div className="text-xl flex items-center gap-2">Share it! <ArrowRightIcon /></div>
                             <Button variant="outline" className="border-2 py-6"
                                 onClick={copyToClipboard}
                             >
                                 <CopyIcon />
                             </Button>
-                            {/* <SocialIcon target="_blank" url={`https://www.facebook.com/sharer/sharer.php?u=https://www.instantsinger.com/result?id=${results.id}`}/>
-                            <SocialIcon target="_blank"url={`https://twitter.com/intent/tweet?text=Wanna%20hear%20me%20sing%20"${results.songName}"%20using%20AI%20%F0%9F%98%82?%20Check%20it%20out%20at&url=
-                                    https://www.instantsinger.com/result?id=${results.id}`}/> */}
                         </div>
-                    </div>
-                </div>
+                    </div> : ""}
                 {results?.urls?.length ? 
                     <>
                         {results?.urls?.map((url, i) => {
                             return (
-                                <div className="mt-4">
+                                <div>
                                     <div className="flex items-center justify-between">
                                         <div className="font-medium mb-2">
                                             <i>{ results?.songName }</i>

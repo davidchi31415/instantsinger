@@ -11,10 +11,12 @@ const getResults = async ({ conversionId }: { conversionId: string }) => {
     const conversion = await _getConversionPublic({ conversionId });
     if (!conversion) return;
 
-    const permitted = conversion.public || conversion.userId === userId;
+    const owner = conversion.userId === userId;
+    const permitted = conversion.public || owner;
     if (!permitted) return;
 
     const res = await getConversionResults({ convertJob: conversion });
+    res["owner"] = owner;
     return res;
 }
 
