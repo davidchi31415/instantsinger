@@ -24,7 +24,12 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration,
         isRecording,
         recordingTime,
         mediaRecorder
-    } = useAudioRecorder();
+    } = useAudioRecorder({
+        audioTrackConstraints: {
+            noiseSuppression: false,
+            echoCancellation: false,
+        }
+    });
 
     const [duration, setDuration] = useState(0);
     const [finished, setFinished] = useState(false);
