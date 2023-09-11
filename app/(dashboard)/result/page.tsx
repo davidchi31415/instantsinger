@@ -1,15 +1,18 @@
 import { ConversionResultsComponent } from "@/components/conversion-results";
 import { Empty } from "@/components/empty";
-import { getConversion, getConversionResults } from "@/lib/runpod";
+import { _getConversionPublic, getConversionResults } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 
 
 const getResults = async ({ conversionId }: { conversionId: string }) => {
     const { userId } = auth();
-    if (userId === null) return;
+    // if (userId === null) return;
 
-    const conversion = await getConversion({ userId, conversionId });
+    const conversion = await _getConversionPublic({ conversionId });
     if (!conversion) return;
+
+    const permitted = conversion.public || conversion.userId === userId;
+    if (!permitted) return;
 
     const res = await getConversionResults({ convertJob: conversion });
     return res;
@@ -32,7 +35,7 @@ const ConversionResultPage = async ({
     if (!results) {
         return (
             <div className="px-4 lg:px-8">
-                <Empty label="Either the results does not exist, or they are not ready. :("/> 
+                <Empty label="Either the conversion does not exist, or the results are not ready. :("/> 
             </div>
         )
     } else {

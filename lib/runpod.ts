@@ -159,6 +159,16 @@ export const _getConversion = async ({ userId, conversionId }: GetConversionProp
     return convertJob;
 };
 
+export const _getConversionPublic = async ({ conversionId }) => {
+    const convertJob = await prismadb.convertJob.findUnique({
+        where: {
+            id: conversionId
+        }
+    });
+
+    return convertJob;
+};
+
 //////////////////////////////////////////////
 // For User Data - mask out sensitive IDs
 //////////////////////////////////////////////
@@ -278,7 +288,7 @@ export const getConversionResults = async ({ convertJob }: GetConvertResultProps
         )
     );
 
-    return { fileNames, urls, songName: convertJob.songName };
+    return { fileNames, urls, songName: convertJob.songName, public: convertJob.public, id: convertJob.id };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
