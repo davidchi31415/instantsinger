@@ -28,6 +28,7 @@ model ConvertJob {
   status String @default("NOT_SUBMITTED") // IN_PROGRESS, COMPLETED, FAILED
   message String? // Only if FAILED
   userMessage String? // only if FAILED and message needed to relay to user
+  public Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

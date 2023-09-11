@@ -39,14 +39,16 @@ export async function POST(req: NextRequest) {
             await updateCredits({ userId: cloneJob.userId, cloneDelta: 1 });
         } else {
             const prevClone = await prismadb.clone.findUnique({ where: { userId: cloneJob.userId }});
-            if (!prevClone) {
-                await prismadb.clone.create({
-                    data: {
-                        id: jobId,
-                        userId: cloneJob.userId
-                    }
-                })
+            if (prevClone) {
+                await prismadb.clone.delete({ where: { userId: cloneJob.userId } });
             }
+
+            await prismadb.clone.create({
+                data: {
+                    id: jobId,
+                    userId: cloneJob.userId
+                }
+            });
         
             // TO-DO - Delete all training data / also configure Google Cloud to do this        
         }
