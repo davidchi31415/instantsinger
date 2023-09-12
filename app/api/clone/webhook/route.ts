@@ -19,11 +19,6 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { status, output, error } = body;
-
-    if (!status) {
-        console.log("[CLONE WEBHOOK ERROR]: No status found.");
-        return new NextResponse("Need status parameter", { status: 400 });
-    }
             
     if (output?.statusCode === 400) { // Failed from our error return
         await prismadb.cloneJob.update(
@@ -37,6 +32,10 @@ export async function POST(req: NextRequest) {
 
             // REFUND the user
             await updateCredits({ userId: cloneJob.userId, cloneDelta: 1 });
+
+            await prismadb.cloneJob.update(
+                { where: { id: jobId }, data: { status: "FAILED", message: output?.body ? output.body : "" } }
+            );
         } else {
             const prevClone = await prismadb.clone.findUnique({ where: { userId: cloneJob.userId }});
             if (prevClone) {
@@ -49,13 +48,9 @@ export async function POST(req: NextRequest) {
                     userId: cloneJob.userId
                 }
             });
-        
+            await prismadb.cloneJob.update({ where: { id: jobId },  data: { status: "COMPLETED" } });
             // TO-DO - Delete all training data / also configure Google Cloud to do this        
         }
-
-        const finalStatus = (status === "COMPLETED") ? "COMPLETED"
-            : "FAILED";
-        await prismadb.cloneJob.update({ where: { id: jobId },  data: { status: finalStatus, message: error ? error : "" } });
     }
     
     return new NextResponse(null, { status: 200 }); // IMPORTANT feedback

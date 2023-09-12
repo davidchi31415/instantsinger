@@ -20,10 +20,6 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { status, output, error } = body;
-    if (!status) {
-        console.log("[CONVERT WEBHOOK ERROR]: No status found.");
-        return new NextResponse("Need status parameter", { status: 400 });
-    }
             
     if (output?.statusCode === 400) { // Failed from our error return
         await prismadb.convertJob.update(
@@ -43,11 +39,16 @@ export async function POST(req: NextRequest) {
     } else {
         if (status === "FAILED" || status === "CANCELLED" || status === "TIMED_OUT") { // Failed from RunPod exception
             await updateCredits({ userId: job.userId, convertDelta: 1 });
+            await prismadb.convertJob.update(
+                { where: { id: jobId },  
+                data: { status: "FAILED", message: error ? error : "" } 
+            });
+        } else {
+            await prismadb.convertJob.update(
+                { where: { id: jobId },  
+                data: { status: "COMPLETED" } 
+            });
         }
-
-        const finalStatus = (status === "COMPLETED") ? "COMPLETED"
-            : "FAILED";
-        await prismadb.convertJob.update({ where: { id: jobId },  data: { status: finalStatus, message: error ? error : "" } });
     }
 
     // TO-DO - Delete input data / also configure Google Cloud to do this
