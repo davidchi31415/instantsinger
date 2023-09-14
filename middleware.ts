@@ -4,7 +4,7 @@ import { authMiddleware } from "@clerk/nextjs";
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/nextjs/middleware for more information about configuring your middleware
 export default authMiddleware({
-  publicRoutes: ["/", "/api/convert/download/", "/result", "/pricing", "/contact", "/privacy", "/refund", "/tos", "/api/stripe/webhook", "/api/clone/webhook", "/api/convert/webhook"]
+  publicRoutes: ["/", "/api/convert/download-song", "/result", "/pricing", "/contact", "/privacy", "/refund", "/tos", "/api/stripe/webhook", "/api/clone/webhook", "/api/convert/webhook"]
 });
 
 export const config = {
