@@ -127,17 +127,25 @@ const ConvertDashboard = ({ userData }) => {
       if (inputChoice === "upload" && !fileUploaded) return;
       if (inputChoice === "youtube" && (youtubeError !== "" || youtubeLink === "" || !youtubeId)) return;
         
-      const params = { 
+      const convertParams = { 
         hasInstrumentals,
         hasBackingVocals,
         convertBackingVocals,
       };
       if (inputChoice === "youtube") {
-        params["youtubeId"] = youtubeId;
-        params["youtubeName"] = youtubeName;
+        const songDownloadResponse = await axios.post(
+          "https://us-central1-cosmic-axe-393519.cloudfunctions.net/song-downloader", { youtubeId }
+        );
+        if (songDownloadResponse.status !== 200) {
+          toast("Couldn't download song from Youtube", { position: "bottom-center" });
+          return;
+        }
+
+        convertParams["youtubeId"] = youtubeId;
+        convertParams["youtubeName"] = youtubeName;
       }
 
-      await axios.post("/api/convert", params)
+      await axios.post("/api/convert", convertParams)
         .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })
         .catch((error) => {
           console.log("Error in submitting job");
