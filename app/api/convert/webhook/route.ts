@@ -3,10 +3,10 @@ import { convertWebhookQueue } from "@/lib/bullmq";
 
 export async function POST(req: NextRequest) {
     const jobId = req.nextUrl.searchParams.get("id");
-    const jobName:string = jobId ? jobId : (new Date()).toString();
     
     const body = await req.json();
-    await convertWebhookQueue.add(jobName, body);
+    body["jobId"] = jobId;
+    await convertWebhookQueue.add(`convert_${jobId}`, body);
 
     return new NextResponse("Thanks", { status: 200 });
 }
