@@ -133,14 +133,6 @@ const ConvertDashboard = ({ userData }) => {
         convertBackingVocals,
       };
       if (inputChoice === "youtube") {
-        const songDownloadResponse = await axios.post(
-          "https://us-central1-cosmic-axe-393519.cloudfunctions.net/song-downloader", { youtubeId }
-        );
-        if (songDownloadResponse.status !== 200) {
-          toast("Couldn't download song from Youtube", { position: "bottom-center" });
-          return;
-        }
-
         convertParams["youtubeId"] = youtubeId;
         convertParams["youtubeName"] = youtubeName;
       }
