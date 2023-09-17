@@ -57,9 +57,13 @@ export async function POST(
 
         // Charge the customer
         await updateCredits({ userId, convertDelta: -1 });
+        await prismadb.convertJob.update({
+            where: { id: currentJob.id },
+            data: { status: "IN_QUEUE" } 
+        })
 
         return new NextResponse(
-            JSON.stringify({ conversionId: currentJob.id, status: "QUEUED" }),
+            JSON.stringify({ conversionId: currentJob.id, status: "IN_QUEUE" }),
             { status: 200 }
         );
     } catch (error) {
