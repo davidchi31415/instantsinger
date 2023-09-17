@@ -11,7 +11,7 @@ export const convertWebhookQueue = globalThis.convertWebhookQueue || new Queue("
             host: process.env.UPSTASH_REDIS_HOST,
             port: parseInt(process.env.UPSTASH_REDIS_PORT as string),
             password: process.env.UPSTASH_REDIS_PASSWORD,
-            tls: {}
+            // tls: {}
         }
     }
 );
@@ -22,7 +22,7 @@ export const cloneWebhookQueue = globalThis.cloneWebhookQueue || new Queue("clon
             host: process.env.UPSTASH_REDIS_HOST,
             port: parseInt(process.env.UPSTASH_REDIS_PORT as string),
             password: process.env.UPSTASH_REDIS_PASSWORD,
-            tls: {}
+            // tls: {}
         }
     }
 );
