@@ -137,14 +137,14 @@ const ConvertDashboard = ({ userData }) => {
         convertParams["youtubeName"] = youtubeName;
       }
 
-      await axios.post("/api/convert", convertParams)
+      await axios.post('/api/convert', convertParams)
         .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })
         .catch((error) => {
           console.log("Error in submitting job");
           if (error?.response?.status === 403) {
               proModal.onOpen();
           } else {
-              toast.error("Something went wrong.");
+              toast.error("Something went wrong.", { position: "bottom-center" });
               setError("Internal job submission failed.");
           }
         })

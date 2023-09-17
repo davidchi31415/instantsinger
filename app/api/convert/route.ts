@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { getCredits, updateCredits } from "@/lib/credits";
 import { _getClone, _submitConvertJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
+import axios from "axios";
 
 export async function POST(
     req: Request
@@ -12,9 +13,6 @@ export async function POST(
         const { userId } = auth();
         const body = await req.json();
         const { 
-            hasInstrumentals,
-            hasBackingVocals,
-            convertBackingVocals,
             youtubeId,
             youtubeName
         } = body;
@@ -48,39 +46,22 @@ export async function POST(
 
         const params = {
             modelId: clone.id,
-            hasInstrumentals,
-            hasBackingVocals,
-            convertBackingVocals,
             jobId: currentJob.id
         };
         if (youtubeId) params["youtubeId"] = youtubeId;
 
-        const runpodResponse = await _submitConvertJob(params);
-        const runpodJobId = runpodResponse.data.id;
-        const status = "IN_PROGRESS";
-        
-        if (runpodResponse.status == 200) {
-            await prismadb.convertJob.update({
-                where: { id: currentJob.id },
-                data: { 
-                    runpodJobId, 
-                    status, 
-                    hasInstrumentals,
-                    hasBackingVocals,
-                    convertBackingVocals
-                }
-            });
-
-            // Charge the customer
-            await updateCredits({ userId, convertDelta: -1 });
-
-            return new NextResponse(
-                JSON.stringify({ conversionId: currentJob.id, status }),
-                { status: 200 }
-            );
-        } else {
-            return new NextResponse("Error communicating with GPU for converting", { status: 500});
+        const railwayResponse = await axios.post(`${process.env.RAILWAY_URL}/api/convert`, params);
+        if (railwayResponse.status !== 200) {
+            return new NextResponse("Failed to submit convert job", { status: 500 });
         }
+
+        // Charge the customer
+        await updateCredits({ userId, convertDelta: -1 });
+
+        return new NextResponse(
+            JSON.stringify({ conversionId: currentJob.id, status: "QUEUED" }),
+            { status: 200 }
+        );
     } catch (error) {
         console.log("[CONVERT SUBMIT ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
