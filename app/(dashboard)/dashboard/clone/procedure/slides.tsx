@@ -5,9 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { MicIcon, MoveLeftIcon, MoveRightIcon, UploadCloudIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { CloningStepBar } from "@/components/cloning-step-bar";
-import Link from "next/link";
-import { FileUploader } from "@/components/file-uploader";
 import { RecorderComponent } from "@/components/recorder";
 
 const contents = [
@@ -109,7 +106,7 @@ const contents = [
     </div>,
 ];
 
-const CloningStep2Slides = ({ jobId }) => {
+const CloningSlides = ({ jobId }) => {
     const [step, setStep] = useState(0);
     const [isRecording, setRecording] = useState(false);
 
@@ -155,10 +152,10 @@ const CloningStep2Slides = ({ jobId }) => {
                 </CardContent>
             </Card>
         </div>
-        <RecorderComponent jobId={jobId} stepNumber={2} minDuration={2} maxDuration={5} onRecordChange={setRecording} />
+        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={2} maxDuration={5} onRecordChange={setRecording} />
     </>
   )
 }
 
 
-export default CloningStep2Slides;
+export default CloningSlides;

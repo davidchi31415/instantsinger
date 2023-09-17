@@ -67,7 +67,7 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
                             </div>
                             <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center flex items-center justify-center gap-2", font.className)}>Clone your voice</h3>
                             <p className="mt-2 text-lg">
-                                Complete a guided procedure to clone your voice in less than 10 minutes.
+                                Complete a guided procedure to clone your voice in less than <b>3 minutes</b>.
                                 We will give you <b>samples</b> to hear how it sounds.
                             </p>
                         </div>
@@ -92,7 +92,7 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
                 Let's get your voice cloned!
             </div>
             <div className="w-full mt-4 pb-8 flex items-center justify-center">
-                <Link href="/dashboard/clone/step-1-preview">
+                <Link href="/dashboard/clone/preview">
                     <Button className="text-3xl gap-2 p-8 border-2 border-black hover:scale-105">
                         Begin<MoveRightIcon />
                     </Button>

@@ -51,7 +51,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                     if (error?.response?.status === 402) {
                         console.log("Missing files:", error.response?.data.missingFiles);
                         setMissingFiles(error.response?.data.missingFiles);
-                        toast("Missing files");
+                        toast("Please finish the cloning procedure first.");
                     } else if(error?.response?.status === 403) {
                         console.log("Need more credits");
                         cloneModal.onOpen();
@@ -78,8 +78,8 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                     <div className="p-4 lg:px-8">
                         <div className="text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
-                                <div><b>Step 1</b></div>
-                                <Link href="/dashboard/clone/step-1-preview" passHref={true}>
+                                <div><b>Cloning Procedure</b></div>
+                                <Link href="/dashboard/clone/preview" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
                                     </Button>
@@ -94,30 +94,11 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                                     <div className="text-lg">Missing</div> <AlertCircleIcon />
                                 </Badge>}
                         </div>
-
-                        <div className="mt-8 text-xl flex justify-between lg:max-w-md mx-auto">
-                            <div className="flex gap-2 items-center">
-                                <div><b>Step 2</b></div>
-                                <Link href="/dashboard/clone/step-2-preview" passHref={true}>
-                                    <Button size="icon" variant="ghost" className="text-primary">
-                                        <CornerDownLeftIcon />
-                                    </Button>
-                                </Link>
-                            </div>
-                            {files.some(fileName => fileName === "2") ?
-                                <Badge className="h-fit gap-2 bg-[#33ff66] text-black">
-                                    <div className="text-lg">Complete</div> <CheckIcon />
-                                </Badge>
-                                :
-                                <Badge className="h-fit gap-2" variant="destructive">
-                                    <div className="text-lg">Missing</div> <AlertCircleIcon />
-                                </Badge>}
-                        </div>
                         
                         <div className="w-[250px] mx-auto mt-4">
                             {missingFiles?.length ? 
                                 <AlertCard variant="destructive" title="Missing Files" 
-                                    message={`Missing Steps ${missingFiles.toString()}`}
+                                    message="Cloning procedure not complete."
                                 /> : ""
                             }
                         </div>

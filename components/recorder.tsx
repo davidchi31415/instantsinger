@@ -109,17 +109,11 @@ export const RecorderComponent = ({ jobId, stepNumber, minDuration, maxDuration,
                                         <Progress value={uploadProgress} className="w-full" />
                                     </div>
                                     <Button
-                                        onClick={() => {
-                                            if (stepNumber === 2) {
-                                                router.push("/dashboard/clone/finish");
-                                            } else {
-                                                router.push("/dashboard/clone/step-2-preview");
-                                            }
-                                        }}
+                                        onClick={() => router.push("/dashboard/clone/finish")}
                                         disabled={!uploadComplete}
                                         className="text-xl p-8 gap-2 border-2 border-black hover:scale-105"
                                     >
-                                        {stepNumber === 1 ? "Continue" : "Finish"} <MoveRightIcon />
+                                        Finish <MoveRightIcon />
                                     </Button>
                                 </div>
                             </div>

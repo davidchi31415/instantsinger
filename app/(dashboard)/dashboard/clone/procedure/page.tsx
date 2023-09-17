@@ -1,8 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { getCurrentUnsubmittedCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
-import CloningStep2Slides from "./step-2-slides";
-import { RecorderComponent } from "@/components/recorder";
+import CloningSlides from "./slides";
 
 const getCloneJobId = async ({ userId }) => {
     let unsubmittedCloneJob = await getCurrentUnsubmittedCloneJob({ userId });
@@ -15,7 +14,7 @@ const getCloneJobId = async ({ userId }) => {
     return unsubmittedCloneJob.id;
 }
 
-const CloningStep2Page = async () => {
+const CloningProcedurePage = async () => {
     const { userId } = auth();
 
     if (!userId) return null;
@@ -23,10 +22,10 @@ const CloningStep2Page = async () => {
 
   return (
     <>
-      <CloningStep2Slides jobId={jobId} />
+      <CloningSlides jobId={jobId} />
     </>
   )
 }
 
 
-export default CloningStep2Page;
+export default CloningProcedurePage;

@@ -35,7 +35,7 @@ export async function POST(
         if (!currentCloneJob) return new NextResponse("Clone job not found", { status: 400 });
 
         const requiredFiles = [
-            '1', '2'
+            '1'
         ];
         const uploadedFiles = await getFileList({ directory: `training_data/${currentCloneJob.id}` });
 
