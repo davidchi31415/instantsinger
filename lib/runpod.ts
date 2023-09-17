@@ -278,17 +278,10 @@ export const getConversionResults = async ({ convertJob }: GetConvertResultProps
         return exclude(convertJob, ["userId"]);
     }
     
-    const fileNames = (convertJob.hasInstrumentals || convertJob.hasBackingVocals) ?
-        ["combined.wav"] // , "background.wav", "vocals.wav"] 
-        : ["vocals.wav"];
+    const fileName = "combined.wav";
+    const url = await getDownloadURL({ directory: `inference_outputs/${convertJob.id}`, fileName });
 
-    const urls = await Promise.all(
-        fileNames.map(
-            async (name) => await getDownloadURL({ directory: `inference_outputs/${convertJob.id}`, fileName: name })
-        )
-    );
-
-    return { fileNames, urls, songName: convertJob.songName, public: convertJob.public, id: convertJob.id };
+    return { fileNames: [fileName], urls: [url], songName: convertJob.songName, public: convertJob.public, id: convertJob.id };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
