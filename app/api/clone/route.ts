@@ -5,6 +5,7 @@ import { checkFileExists, getFileList, getUploadURL } from "@/lib/gcloud";
 import { _submitCloneJob } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 import { getCredits, updateCredits } from "@/lib/credits";
+import axios from "axios";
 
 
 export async function POST(
@@ -51,33 +52,27 @@ export async function POST(
             return new NextResponse(JSON.stringify({ missingFiles }), { status: 402 })
         }
 
-        // Create RunPod job and store it
-        const runpodResponse = await _submitCloneJob({
-            modelId: currentCloneJob.id,
+        const railwayResponse = await axios.post(`${process.env.RAILWAY_URL}/api/clone`, {
+            modelId: cloneId,
             jobId: currentCloneJob.id
         });
-        const runpodJobId = runpodResponse.data.id;
-        const status = "IN_PROGRESS";
-
-        if (runpodResponse.status == 200) {
-            await prismadb.cloneJob.update({
-                where: { id: currentCloneJob.id },
-                data: { runpodJobId, status }
-            });
-
-            // Charge the customer
-            await updateCredits({ userId, cloneDelta: -1 });
-
-            return new NextResponse(
-                JSON.stringify({ jobId: runpodJobId, status }),
-                { status: 200 }
-            );
+        if (railwayResponse.status !== 200) {
+            return new NextResponse("Failed to submit convert job", { status: 500 });
         }
-        else {
-            return new NextResponse("Error communicating with Runpod for cloning", { status: 500});
-        }
+
+        // Charge the customer
+        await updateCredits({ userId, cloneDelta: -1 });
+        await prismadb.cloneJob.update({
+            where: { id: currentCloneJob.id },
+            data: { status: "IN_QUEUE" } 
+        })
+
+        return new NextResponse(
+            JSON.stringify({ cloneId: currentCloneJob.id, status: "IN_QUEUE" }),
+            { status: 200 }
+        );
     } catch (error) {
-        console.log("[CONVERT UPLOAD ERROR]", error);
+        console.log("[CLONE UPLOAD ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }
