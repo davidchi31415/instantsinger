@@ -435,7 +435,7 @@ export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
 }
 
 export const getCloneResults = async ({ clone }) => {
-    const fileNames = [`${clone.id}_sample_1`, `${clone.id}_sample_2`];
+    const fileNames = [`${clone.id}/sample_1.wav`, `${clone.id}/sample_2.wav`, `${clone.id}/sample_3.wav`];
 
     const urls = await Promise.all(
         fileNames.map(
