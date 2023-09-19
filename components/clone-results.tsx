@@ -14,7 +14,7 @@ import { SignUpButton, useAuth } from "@clerk/nextjs";
 
 export const CloneResultsComponent = ({ results }) => {
     const { isSignedIn } = useAuth();
-    const [isPublic, setPublic] = useState(results);
+    const [isPublic, setPublic] = useState(results.public);
 
     const togglePublicity = async () => {
         const newPublic = !isPublic;
