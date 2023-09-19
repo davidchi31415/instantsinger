@@ -17,7 +17,7 @@ const getResults = async ({ cloneId }: { cloneId: string }) => {
     if (!cloneResults) return;
 
     const owner = clone.userId === userId;
-    const permitted = true; // conversion.public || owner;
+    const permitted = clone.public || owner;
     if (!permitted) return;
 
     cloneResults["owner"] = owner;
