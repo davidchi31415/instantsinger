@@ -31,7 +31,7 @@ export const HistoryTable = ({ userData, mini=false }: HistoryTableProps) => {
     const router = useRouter();
 
     const [pageIndex, setPageIndex] = useState(0);
-    const jobsPerPage = mini ? 1 : 5;
+    const jobsPerPage = mini ? 3 : 5;
 
     const [jobs, setJobs] = useState([...userData.convertJobs]);
     const numPages = Math.ceil(jobs.length / jobsPerPage);
@@ -55,7 +55,7 @@ export const HistoryTable = ({ userData, mini=false }: HistoryTableProps) => {
                                 className="cursor-pointer"
                                 onClick={() => { router.push(`/result?id=${job.id}`) }}
                             >
-                                <TableCell className={cn("font-medium", !mini ? "hidden md:visible" : "")}>
+                                <TableCell className={cn("font-medium", !mini ? "hidden md:visible" : "hidden")}>
                                     {format(job.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
                                 <TableCell>{getFileName(job.songName)}</TableCell>
@@ -78,7 +78,7 @@ export const HistoryTable = ({ userData, mini=false }: HistoryTableProps) => {
                             </TableRow>
                         } else {
                             return <TableRow>
-                                <TableCell className={cn("font-medium", !mini ? "hidden md:visible" : "")}>
+                                <TableCell className={cn("font-medium", !mini ? "hidden md:visible" : "hidden")}>
                                     {format(job.createdAt, 'MM/dd/yyyy')}
                                 </TableCell>
                                 <TableCell>{getFileName(job.songName)}</TableCell>

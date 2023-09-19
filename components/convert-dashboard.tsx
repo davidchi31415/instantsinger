@@ -48,7 +48,6 @@ const ConvertDashboard = ({ userData }) => {
   const router = useRouter();
   const proModal = useProModal();
   const settingsModal = useSettingsModal();
-  const historyModal = useHistoryModal();
 
   const [inputChoice, setInputChoice] = useState("youtube");
 
@@ -186,22 +185,26 @@ const ConvertDashboard = ({ userData }) => {
 
   return (
     <div>
-        <HistoryModal userData={userData} />
         <SettingsModal userData={userData} />
         <div className="p-4 lg:px-8">
           <div className="mb-12">
-            <div className="w-fit mx-auto text-center flex gap-2 text-xl items-center
+            <div className="w-[13rem] mx-auto text-center flex justify-center gap-2 text-xl items-center
                 px-4 pt-2 rounded-t-sm bg-primary/25 border-2 border-b-0 pb-1 border-primary"
             >
                 <ArrowDownIcon /> Your voice! <ArrowDownIcon />
             </div>
-            <div className="flex justify-center items-center mb-4 px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
+            <div className="flex justify-center items-center px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
               {players?.length ? players.map((player, i) => {
                 return (
                   <Player player={player} toggle={toggle(i)} />
                 )}) : ""}
+            </div>
+            <div className="w-[13rem] mx-auto text-center flex justify-between gap-2 text-xl items-center
+              px-4 py-2 rounded-b-sm bg-primary/25 border-2 border-t-0 border-primary"
+            >
+              <Link href={`/voice?id=${userData?.clone?.id}`}><Button className="text-lg">Share it!</Button></Link>
               <Button variant="ghost" onClick={() => settingsModal.onOpen()}>
-                <SettingsIcon />
+                <SettingsIcon fill="white" />
               </Button>
             </div>
           </div>
@@ -210,7 +213,7 @@ const ConvertDashboard = ({ userData }) => {
               className="w-full lg:max-w-2xl"
             >
               <div className="p-4 border-2 bg-[white] rounded-sm shadow-md">
-                <div className="mb-4 text-2xl">1. Song</div>
+                <div className="mb-4 text-2xl">Convert a Song</div>
                 <div className="my-4 flex items-center gap-4">
                   <div>Input Method:</div>
                   <div className="w-[10rem]">
@@ -246,7 +249,7 @@ const ConvertDashboard = ({ userData }) => {
                       </div>
                     </div>
                     {youtubeId ?
-                      <div className="my-4 flex justify-center">
+                      <div className="my-4 flex justify-center hidden">
                         <YouTube videoId={youtubeId}
                           key={youtubeKey}
                           opts={opts} onReady={onPlayerReady} 
@@ -270,49 +273,8 @@ const ConvertDashboard = ({ userData }) => {
                     durationLimit={10}
                   />
                 }
-              </div>
 
-              <div className="mt-2 p-4 border-2 bg-[white] rounded-sm shadow-md">
-                <div className="text-2xl">2. Settings</div>
-                <div className="my-4 flex items-center gap-2">
-                  <Checkbox
-                    id="has_instr"
-                    className="w-6 h-6" 
-                    checked={hasInstrumentals}
-                    onCheckedChange={() => setHasInstrumentals(val => !val)}
-                  />
-                  <div>
-                    <div className="font-medium">Does this song have instrumentals (background sounds)?</div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      id="has_instr"
-                      className="w-6 h-6" 
-                      checked={hasBackingVocals}
-                      onCheckedChange={() => setHasBackingVocals(val => !val)}
-                    />
-                    <div>
-                      <div className="font-medium">Does this song have multiple voices (backing vocals)?</div>
-                    </div>
-                  </div>
-                  {hasBackingVocals ?
-                    <div className="flex items-center gap-2 ml-4">
-                      <Checkbox
-                        id="has_instr"
-                        className="w-6 h-6" 
-                        checked={convertBackingVocals}
-                        onCheckedChange={() => setConvertBackingVocals(val => !val)}
-                      />
-                      <div>
-                        <div className="font-medium mt-3">Would you like to convert the backing vocals as well?</div>
-                        <div className="text-sm text-muted-foreground">This could get messy if there are many layers.</div>
-                      </div>
-                    </div> : ""}
-                </div>
-
-                <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
+              <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
                   !fileUploaded ? "" : "hover:scale-105 transition")}
                 >
                   <Button
@@ -344,44 +306,42 @@ const ConvertDashboard = ({ userData }) => {
             </div>
             
             <div id="output-recent" className="w-full lg:max-w-2xl">
+              {isConverting ?
+                <div className="mb-2 p-4 border-2 bg-[white] rounded-sm shadow-md">
+                  <AlertCard title="Note" variant="default" message={
+                      <div>We're working on it! You can view your results here and in the <Link href="/history">History</Link> page.</div>
+                  } />
+                  <div className="mt-4">
+                    {(isConverting || isFinished) && error === "" && conversionId !== "" ?
+                      <ProgressCard process="Conversion"
+                        initStatus="IN_PROGRESS"
+                        apiEndpoint="/api/convert/status" apiId={conversionId}
+                        onFinish={onFinish}
+                        onFail={onFail}
+                      />
+                    : ""}
+                  </div>
+                  <div className="mt-4">
+                    {error !== "" ?
+                      <AlertCard variant="destructive" title="Error" message={error} />
+                        : ""
+                    }
+                  </div>
+                  <div>
+                    {isFinished && isSuccess && error === "" ?
+                      (results === null ? "Retrieving results..."
+                      : <ConversionResultsComponent results={results} />)
+                      : ""}
+                  </div>
+                </div> : ""}
               <div className="p-4 border-2 bg-[white] rounded-sm shadow-md">
-                  <div className="font-normal text-2xl">3. Output</div>
-                    {isConverting ?
-                      <AlertCard title="Note" variant="default" message={
-                          <div>You can view your results here and in the <Link href="/history">History</Link> page.</div>
-                    } /> : ""}
-                    <div>
-                      {!isConverting && !isFinished ? <Empty label="Nothing to see here :)" /> : ""}
-                    </div>
-                    <div className="mt-4">
-                      {(isConverting || isFinished) && error === "" && conversionId !== "" ?
-                        <ProgressCard process="Conversion"
-                          initStatus="IN_PROGRESS"
-                          apiEndpoint="/api/convert/status" apiId={conversionId}
-                          onFinish={onFinish}
-                          onFail={onFail}
-                        />
-                          : ""}
-                      </div>
-                      <div className="mt-4">
-                        {error !== "" ?
-                          <AlertCard variant="destructive" title="Error" message={error} />
-                            : ""
-                        }
-                      </div>
-                      <div>
-                        {isFinished && isSuccess && error === "" ?
-                          (results === null ? "Retrieving results..."
-                          : <ConversionResultsComponent results={results} />)
-                          : ""}
-                      </div>
-                    </div>
-              <div className="mt-2 p-4 border-2 bg-[white] rounded-sm shadow-md">
                 <div className="flex items-center justify-between">
                   <div className="text-2xl flex items-center gap-2">History <HistoryIcon /></div>
-                  <Button className="text-xl" onClick={historyModal.onOpen}>
-                    See All
-                  </Button>
+                  <Link href="/dashboard/history">
+                    <Button className="text-xl">
+                      See All
+                    </Button>
+                  </Link>
                 </div>
                 {userData.convertJobs.length ? 
                   <div className="py-2">

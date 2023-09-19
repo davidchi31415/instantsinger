@@ -46,5 +46,6 @@ model CloneJob {
 model Clone {
   id String @id // provided by cloneJob.id
   userId String @unique
+  public Boolean @default(false)
   createdAt DateTime @default(now())
 }
