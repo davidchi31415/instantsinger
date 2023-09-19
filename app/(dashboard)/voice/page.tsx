@@ -22,6 +22,7 @@ const getResults = async ({ cloneId }: { cloneId: string }) => {
 
     cloneResults["owner"] = owner;
     cloneResults["id"] = cloneId;
+    cloneResults["public"] = clone.public;
     return cloneResults;
 }
 
