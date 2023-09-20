@@ -86,7 +86,7 @@ export const ProgressCard = (
         <div>
             <Card className="p-4 flex items-center justify-between">
                 <div className="text-md font-normal mt-1">
-                    {isFinished ? `${process} finished.` : `${process} in progress...`}
+                    {isFinished ? `${process} finished.` : `${process}...`}
                 </div>
                 <div className={
                     cn("text-sm text-muted-foreground rounded-full px-4 py-2 font-bold text-black", 

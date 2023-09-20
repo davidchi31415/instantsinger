@@ -12,7 +12,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { SignUpButton, useAuth } from "@clerk/nextjs";
 
-export const ConversionResultsComponent = ({ results }) => {
+export const ConversionResultsComponent = ({ results, mini=false }) => {
     const { isSignedIn } = useAuth();
     const [isPublic, setPublic] = useState(results.public);
 
@@ -43,6 +43,33 @@ export const ConversionResultsComponent = ({ results }) => {
     }
 
     if (results?.urls) {
+        if (mini) {
+            return (
+                <>
+                    {results?.urls?.map((url, i) => {
+                        return (
+                            <div>
+                                <div className="flex items-center justify-between">
+                                    <div className="mb-2">
+                                        {results.owner ? <b>{ results?.songName }</b>
+                                            : <div>Here's "<b>{ results?.songName }</b>" converted into my voice!</div>}
+                                    </div>
+                                    <Button variant="ghost" size="icon" 
+                                        onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
+                                    >
+                                        <DownloadIcon />
+                                    </Button>
+                                </div>
+                                <div>
+                                    <AudioCard url={url} />
+                                </div>
+                            </div>  
+                        )
+                    })}
+                </>
+            )    
+        }
+
         return (
             <div>
                 <div className="p-4">
