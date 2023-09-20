@@ -339,12 +339,12 @@ const ConvertDashboard = ({ userData }) => {
               <div className="hidden lg:block my-8">
                 <RecordPlayerComponent playing={recordPlaying || players.some(e => e.playing)} />
               </div>
-              {!isConverting || isFinished ? "" :
+              {isConverting || isFinished ? "" :
                   <div className="mt-16 max-w-sm text-center ml-32 text-muted-foreground text-sm">
                     "The human voice is the most beautiful instrument of all, yet the most difficult to play."
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
-                {!isConverting ?
+                {isConverting ?
                     <ProgressCard process={`Converting "${youtubeName ? youtubeName : "song"}"`}
                       initStatus="IN_PROGRESS"
                       apiEndpoint="/api/convert/status" apiId={conversionId}
