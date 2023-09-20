@@ -317,8 +317,12 @@ const ConvertDashboard = ({ userData }) => {
                     "You are the music, while the music lasts." - T.S. Elliot
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
-                {isConverting ?
-                  conversionId ?
+                {isConverting && !conversionId ?
+                    <ProgressCard process="Converting" songName={songName}
+                      initStatus="NOT_SUBMITTED" staticCard={true}
+                    />
+                  : ""}
+                {isConverting  && conversionId ?
                     <ProgressCard process="Converting" songName={songName}
                       initStatus={currentStatus}
                       apiEndpoint="/api/convert/status" apiId={conversionId}
@@ -327,10 +331,6 @@ const ConvertDashboard = ({ userData }) => {
                           setCurrentStatus(newStatus);
                         }
                       }}
-                    />
-                    :
-                    <ProgressCard process="Converting" songName={songName}
-                      initStatus="NOT_SUBMITTED" staticCard={true}
                     />
                   : ""}
                 {results ?
