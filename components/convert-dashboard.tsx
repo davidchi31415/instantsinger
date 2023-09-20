@@ -345,7 +345,7 @@ const ConvertDashboard = ({ userData }) => {
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
                 {isConverting && conversionId ?
-                    <ProgressCard process={`Converting song`}
+                    <ProgressCard process="Converting song"
                       initStatus="IN_PROGRESS"
                       apiEndpoint="/api/convert/status" apiId={conversionId}
                       onFinish={onFinish}
