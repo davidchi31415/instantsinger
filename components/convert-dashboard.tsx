@@ -4,14 +4,10 @@ import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Empty } from "@/components/empty";
-import { Checkbox } from "@/components/ui/checkbox";
 import { AlertCard } from "@/components/alert-card";
-import { SongInfoCard } from "@/components/song-info-card";
-import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProgressCard } from "@/components/progress-card";
@@ -19,24 +15,15 @@ import { ConversionResultsComponent } from "@/components/conversion-results";
 import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
-import { cn, parseYoutubeLink } from "@/lib/utils";
-import { useHistoryModal, useProModal, useSettingsModal } from "@/hooks/use-modal";
+import { cn, isJobDone, parseYoutubeLink } from "@/lib/utils";
+import { useProModal, useSettingsModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Badge } from "./ui/badge";
-import { ArrowDownIcon, CogIcon, HistoryIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
-import { HistoryModal } from "./history-modal";
+import { ArrowDownIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
 import { HistoryTable } from "./history-table";
 import { useMultiAudio } from "@/hooks/use-multi-audio";
 import { SettingsModal } from "./settings-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Label } from "./ui/label";
 import { RecordPlayerComponent } from "./record-player/record-player";
 
 const Player = ({ player, toggle }) => {
@@ -64,41 +51,20 @@ const ConvertDashboard = ({ userData }) => {
   const [fileKey, setFileKey] = useState(Date.now()); // For resetting file input
   const [fileUploaded, setFileUploaded] = useState(false);
 
-  const [error, setError] = useState("");
-
   const [currentStatus, setCurrentStatus] = useState(
     userData?.currentConvertJob ? userData.currentConvertJob.status : ""
   );
   const [isConverting, setConverting] = useState(
     userData?.currentConvertJob ? true : false
   );
-  const [isFinished, setFinished] = useState(false);
-  const [isSuccess, setSuccess] = useState(false);
 
   const [conversionId, setConversionId] = useState(
     userData?.currentConvertJob ? userData.currentConvertJob.id : ""
   );
   const [recordPlaying, setRecordPlaying] = useState(false); 
 
-  const onFinish = () => {
-    setFinished(true);
-    setSuccess(true);
-    setConverting(false);
-    router.refresh();
-  }
-
-  const onFail = () => {
-    setFinished(true);
-    setSuccess(false);
-    setConverting(false);
-    router.refresh();
-  }
-
   const reset = () => {
-    setError("");
     setConverting(false);
-    setFinished(false);
-    setSuccess(false);
     setConversionId("");
     setResults(null);
     setFileKey(Date.now());
@@ -121,10 +87,6 @@ const ConvertDashboard = ({ userData }) => {
   const opts: YouTubeProps['opts'] = {
     height: '200',
     width: '400',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      // autoplay: 1,
-    },
   };
 
   const onSubmit = async () => {
@@ -143,16 +105,15 @@ const ConvertDashboard = ({ userData }) => {
       await axios.post('/api/convert', convertParams)
         .then((response) => { 
           setConversionId(response.data.conversionId); 
+          setConverting(true);
           
           router.refresh();
         })
         .catch((error) => {
-          console.log("Error in submitting job");
           if (error?.response?.status === 403) {
               proModal.onOpen();
           } else {
               toast.error("Something went wrong.", { position: "bottom-center" });
-              setError("Internal job submission failed.");
           }
         })
         .finally(() => {
@@ -168,20 +129,18 @@ const ConvertDashboard = ({ userData }) => {
     const resultResponse = await axios.get("/api/convert/results", { params: { id: conversionId } });
 
     if (resultResponse.status === 200) {
-      console.log("Results retrieved");
-
       setResults(resultResponse.data);
     } else {
-      setError("Could not retrieve files.");
+      toast.error("Could not retrieve results.", { position: "bottom-center" });
     }
   }
 
   useEffect(() => {
-    if (isFinished && isSuccess && results === null && conversionId !== "") {
+    if (isJobDone({ status: currentStatus }) && results === null) {
       setConverting(false);
       retrieveResults();
     }
-  }, [isFinished, isSuccess, results, conversionId]);
+  }, [results, currentStatus]);
 
   const inputNotReady = ((inputChoice === "upload" && !fileUploaded) ||
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
@@ -349,7 +308,7 @@ const ConvertDashboard = ({ userData }) => {
               <div className="hidden lg:block my-8">
                 <RecordPlayerComponent playing={recordPlaying || players.some(e => e.playing)} />
               </div>
-              {isConverting || isFinished ? "" :
+                {isConverting || results ? "" :
                   <div className="mt-16 max-w-sm text-center ml-32 text-muted-foreground text-sm">
                     "You are the music, while the music lasts." - T.S. Elliot
                   </div>}
@@ -358,11 +317,14 @@ const ConvertDashboard = ({ userData }) => {
                     <ProgressCard process="Converting song"
                       initStatus={currentStatus}
                       apiEndpoint="/api/convert/status" apiId={conversionId}
-                      onFinish={onFinish}
-                      onFail={onFail}
+                      onStatusChange={(newStatus) => {
+                        if (isJobDone(newStatus)) {
+                          setCurrentStatus(newStatus);
+                        }
+                      }}
                     />
                   : ""}
-                {isFinished && results ?
+                {results ?
                   <ConversionResultsComponent results={results} mini={true} />
                   : ""
                 }
