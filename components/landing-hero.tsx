@@ -17,29 +17,27 @@ export const LandingHero = () => {
     const { isSignedIn } = useAuth();
 
     return (
-        <div className="px-4 md:px-8 pb-20 space-y-5 mx-auto">
-            <div className="flex justify-center items-center gap-12">
-                <div className="max-w-lg font-bold">
+        <div>
+            <div className="px-4 md:px-8 pb-20 flex justify-center items-center flex-wrap gap-4 md:gap-12 lg:gap-16">
+                <div className="max-w-md font-bold">
                     <div 
                         className={cn("text-5xl sm:text-6xl md:text-7xl \
                         font-extra-bold", font.className)}
                     >
-                        <h1>Unleash</h1>
-                        <h1>your voice</h1>
+                        <h1>Become</h1>
+                        <h1>a singer in</h1>
                         <h1>
-                            <span className="text-primary">with AI</span>.
+                            <span className="text-primary"> 2 minutes</span>.
                         </h1>
                     </div>
                     <div className="text-lg md:text-xl font-normal text-zinc-400 my-4">
-                        <p>
-                            Convert any song into your own voice, while keeping the same pitches and inflections of the original singer.
-                        </p>
+                        Clone your voice for free. Then convert any song into your own voice, with the click of a button.
                     </div>
                 </div>
+                <HeroDemo />
             </div>
-            <HeroDemo />
-            <div className="py-8 flex flex-col items-center gap-2 md:max-w-lg mx-auto">
-            <div className="text-2xl text-center">You could be a singer too, in 10 minutes*.</div>
+            <div className="px-4 md:px-8 py-8 flex flex-col items-center gap-2 md:max-w-lg mx-auto">
+            <div className="text-2xl text-center">Try it yourself - for free!</div>
             {isSignedIn ?
                 <Link href="/dashboard" className="w-full" passHref={true}>
                     <Button 
@@ -48,7 +46,7 @@ export const LandingHero = () => {
                         rounded-sm font-normal border-2 border-black/100
                         hover:scale-105 transition shadow-xl"
                     >
-                        Get Started for FREE
+                        Get Started
                     </Button>
                 </Link>
                 :
@@ -59,7 +57,7 @@ export const LandingHero = () => {
                         rounded-sm font-normal border-2 border-black/100
                         hover:scale-105 transition shadow-xl"
                     >
-                        Get Started for FREE
+                        Get Started
                     </Button>
                 </SignUpButton>}
                 <div className="flex justify-center gap-2">
@@ -69,7 +67,6 @@ export const LandingHero = () => {
                     <ArrowUpIcon fill="black" />
                     <ArrowUpIcon fill="black" />
                 </div>
-                <div className=" mt-2 text-sm text-muted-foreground">*Not including processing time.</div>
             </div>
         </div>
     )

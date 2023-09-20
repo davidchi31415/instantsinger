@@ -58,41 +58,26 @@ const SamplesCard = ({ inputEmoji, outputEmoji, players, toggle, sourceIndex, st
     )
 }
 
-const maleUrls = [
-    "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271820648548/I_Wanna_Be_Yours_cut.mp3",
-    "https://cdn.discordapp.com/attachments/1140119588424667197/1148059393183731842/Oliver_Anthony_-_Rich_Men_North_Of_Richmond.mp3",
-    "https://cdn.discordapp.com/attachments/1140119588424667197/1148059393183731842/Oliver_Anthony_-_Rich_Men_North_Of_Richmond.mp3",
+const originalUrls = [
+    "https://storage.googleapis.com/instantsinger-public/original/sample_1_original.mp3",
+    "https://storage.googleapis.com/instantsinger-public/original/sample_2_original.mp3",
+    "https://storage.googleapis.com/instantsinger-public/original/sample_3_original.mp3",
 ];
-const femaleUrls = [
-    "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271820648548/I_Wanna_Be_Yours_cut.mp3",
-    "https://cdn.discordapp.com/attachments/1140119588424667197/1148059393183731842/Oliver_Anthony_-_Rich_Men_North_Of_Richmond.mp3",
-    "https://cdn.discordapp.com/attachments/1140119588424667197/1148059393183731842/Oliver_Anthony_-_Rich_Men_North_Of_Richmond.mp3",
-]
 
 const people = [
     {
         emoji: "🧑🏻",
         sampleUrl: "https://cdn.discordapp.com/attachments/1140119588424667197/1143004134824476792/my_voice_sample_hero.m4a",
-        maleUrls: [
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148059484997042177/converted_Oliver_Anthony_-_Rich_Men_North_Of_Richmond.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-        ],
-        femaleUrls: [
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148059484997042177/converted_Oliver_Anthony_-_Rich_Men_North_Of_Richmond.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
+        urls: [
+            "https://storage.googleapis.com/instantsinger-public/male_converted/sample_1.wav",
+            "https://storage.googleapis.com/instantsinger-public/male_converted/sample_2.wav",
+            "https://storage.googleapis.com/instantsinger-public/male_converted/sample_3.wav",
         ]
     },
     {
         emoji: "👩🏻",
         sampleUrl: "https://cdn.discordapp.com/attachments/1140119588424667197/1143004134824476792/my_voice_sample_hero.m4a",
-        maleUrls: [
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148059484997042177/converted_Oliver_Anthony_-_Rich_Men_North_Of_Richmond.wav",
-            "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
-        ],
-        femaleUrls: [
+        urls: [
             "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
             "https://cdn.discordapp.com/attachments/1140119588424667197/1148059484997042177/converted_Oliver_Anthony_-_Rich_Men_North_Of_Richmond.wav",
             "https://cdn.discordapp.com/attachments/1140119588424667197/1148068271510278227/converted_I_Wanna_Be_Yours_cut.mp3",
@@ -106,12 +91,9 @@ export const HeroDemo = () => {
     const urls = [
         people[0].sampleUrl,
         people[1].sampleUrl,
-        ...maleUrls,
-        ...femaleUrls,
-        ...people[0].maleUrls,
-        ...people[0].femaleUrls,
-        ...people[1].maleUrls,
-        ...people[1].femaleUrls
+        ...originalUrls,
+        ...people[0].urls,
+        ...people[1].urls,
     ];
     const [players, toggle] = useMultiAudio({ urls });
 
@@ -123,11 +105,6 @@ export const HeroDemo = () => {
 
     return (
         <div>
-            <div className="w-fit mx-auto text-center text-2xl md:text-3xl flex gap-2 items-center
-                px-4 pt-2 rounded-t-sm bg-primary/25 border-2 border-b-0 pb-1 border-primary"
-            >
-                <ArrowDownIcon /> Give it a listen! <ArrowDownIcon />
-            </div>
             <div className="w-fit mx-auto py-4 px-2 sm:px-4 md:px-8 rounded-xl bg-[#FFF1E4] shadow-xl border-4 border-[#FFD7AF]/50">
                 <div className="w-fit mx-auto mb-2 border-2 shadow-md rounded-md bg-white flex items-center justify-center">
                     <div className="flex justify-center items-center gap-2 p-2">
@@ -147,11 +124,8 @@ export const HeroDemo = () => {
                     <Player player={players[emojiIndex]} toggle={toggle(emojiIndex)} />
                 </div>
                 <div className="flex justify-center items-center gap-4 flex-wrap">
-                    <SamplesCard inputEmoji="👨🏻" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={2} 
-                        startIndex={8 + 6 * emojiIndex} 
-                    />
-                    <SamplesCard inputEmoji="👩🏼" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={5} 
-                        startIndex={11 + 6 * emojiIndex} 
+                    <SamplesCard inputEmoji="👤" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={2} 
+                        startIndex={5 + 3 * emojiIndex} 
                     />
                 </div>
             </div>
