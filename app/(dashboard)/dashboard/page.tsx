@@ -2,6 +2,7 @@ import { getClone, getCloneResults, getConversions, getCurrentCloneJob, getCurre
 import { auth } from "@clerk/nextjs";
 import { getCredits } from "@/lib/credits";
 import { Dashboard } from "@/components/dashboard";
+import { isJobDone } from "@/lib/utils";
 
 interface UserData {
     clone: any;
@@ -10,6 +11,7 @@ interface UserData {
     convertJobs: any[];
     convertCredits: number;
     cloneCredits: number;
+    currentConvertJob: any;
 }
 
 const getUserData = async () => {
@@ -30,10 +32,12 @@ const getUserData = async () => {
         cloneJob = await getCurrentUnsubmittedCloneJob({ userId });
     }
     const convertJobs = await getSubmittedConversions({ userId });
+    const currentConvertJob = convertJobs.find(e => !isJobDone({ status: e.status }) ) || null;
     const { cloneCredits, convertCredits } = await getCredits();
     const res: UserData = { 
         clone, cloneJob, cloneResultUrls, convertJobs,
-        cloneCredits, convertCredits
+        cloneCredits, convertCredits,
+        currentConvertJob
     };
 
     return res;

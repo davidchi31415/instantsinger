@@ -66,11 +66,18 @@ const ConvertDashboard = ({ userData }) => {
 
   const [error, setError] = useState("");
 
-  const [isConverting, setConverting] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState(
+    userData?.currentConvertJob ? userData.currentConvertJob.status : ""
+  );
+  const [isConverting, setConverting] = useState(
+    userData?.currentConvertJob ? true : false
+  );
   const [isFinished, setFinished] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
 
-  const [conversionId, setConversionId] = useState("");
+  const [conversionId, setConversionId] = useState(
+    userData?.currentConvertJob ? userData.currentConvertJob.id : ""
+  );
   const [recordPlaying, setRecordPlaying] = useState(false); 
 
   const onFinish = () => {
@@ -134,7 +141,11 @@ const ConvertDashboard = ({ userData }) => {
       }
 
       await axios.post('/api/convert', convertParams)
-        .then((response) => { setConversionId(response.data.conversionId); router.refresh(); })
+        .then((response) => { 
+          setConversionId(response.data.conversionId); 
+          
+          router.refresh();
+        })
         .catch((error) => {
           console.log("Error in submitting job");
           if (error?.response?.status === 403) {
@@ -148,7 +159,6 @@ const ConvertDashboard = ({ userData }) => {
           setFileUploaded(false);
           setYoutubeLink("");
           setYoutubeLinkValid(false);
-          setYoutubeName("");
         });
   }
 
@@ -341,12 +351,12 @@ const ConvertDashboard = ({ userData }) => {
               </div>
               {isConverting || isFinished ? "" :
                   <div className="mt-16 max-w-sm text-center ml-32 text-muted-foreground text-sm">
-                    "You are the music while the music lasts." - T.S. Elliot
+                    "You are the music, while the music lasts." - T.S. Elliot
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
                 {isConverting && conversionId ?
                     <ProgressCard process="Converting song"
-                      initStatus="IN_PROGRESS"
+                      initStatus={currentStatus}
                       apiEndpoint="/api/convert/status" apiId={conversionId}
                       onFinish={onFinish}
                       onFail={onFail}

@@ -52,3 +52,32 @@ export function parseYoutubeLink(url: string) {
   var match = url.match(regExp);
   return (match&&match[7].length==11)? match[7] : false;
 }
+
+export function mapColor(status: string) {
+  let color = "";
+  switch (status) {
+    case "COMPLETED":
+      color = "bg-[#33ff66]/50 text-black";
+    case "FAILED":
+    case "TIMED_OUT":
+    case "CANCELLED":
+      color = "bg-destructive text-white";
+    case "SUBMITTED":
+    case "DOWNLOADING":
+    case "WAITING_FOR_GPU":
+    case "IN_PROGRESS":
+      color = "bg-primary/25";
+  }
+  return color;
+}
+
+export function mapStatus(status: string) {
+  let mappedStatus = status;
+  switch (status) {
+    case "WAITING_FOR_GPU":
+      mappedStatus = "WAITING FOR GPU"
+    case "IN_PROGRESS":
+      mappedStatus = "IN PROGRESS";
+  }
+  return mappedStatus;
+}
