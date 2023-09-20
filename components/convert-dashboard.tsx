@@ -151,7 +151,7 @@ const ConvertDashboard = ({ userData }) => {
     urls: userData.cloneResultUrls?.length ? userData.cloneResultUrls : []
   });
 
-  const songName = youtubeName ? youtubeName : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
+  const songName = youtubeName ? `"${youtubeName}"` : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
 
   return (
     <div>
