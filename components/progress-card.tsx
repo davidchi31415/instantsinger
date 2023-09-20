@@ -6,6 +6,8 @@ import { Card } from "./ui/card";
 import { cn, isJobDone } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 import { AlertCard } from "./alert-card";
+import { Progress } from "./ui/progress";
+import { InfiniteLoaderComponent } from "./loader/infinite-loader";
 
 interface ProgressCardProps {
     process: string;
@@ -30,6 +32,7 @@ export const ProgressCard = (
     const [currentStatus, setStatus] = useState<string>(initStatus ? initStatus : "");
     const [isFinished, setFinished] = useState(initStatus ? isJobDone({ status: initStatus }) : false);
     const [message, setMessage] = useState("");
+    const circulating = true;
 
     const intervalId = useRef<any>(null);
     
@@ -84,21 +87,24 @@ export const ProgressCard = (
 
     return (
         <div>
-            <Card className="p-4 flex items-center justify-between">
+            <Card className="p-4 flex items-center justify-between rounded-none bg-white">
                 <div className="text-md font-normal mt-1">
                     {isFinished ? `${process} finished.` : `${process}...`}
                 </div>
                 <div className={
-                    cn("text-sm text-muted-foreground rounded-full px-4 py-2 font-bold text-black", 
-                    currentStatus === "COMPLETED" ? "bg-[#33ff66]" : 
+                    cn("text-sm text-muted-foreground rounded-md px-4 py-2 font-bold text-black", 
+                    currentStatus === "COMPLETED" ? "bg-[#33ff66]/50" : 
                         (currentStatus === "FAILED" || currentStatus === "CANCELLED"
-                            ? "bg-destructive" : "bg-[#6699ff]")
+                            ? "bg-destructive" : "bg-primary/25")
                     )}
                 >
                     {currentStatus}
                 </div>
                 
             </Card>
+            {/* <Progress value={10} className="w-full rounded-none h-[0.5rem] bg-[#ccc]" /> */}
+            {circulating ? <InfiniteLoaderComponent />
+            : <Progress value={10} className="w-full rounded-none h-[0.5rem] bg-[#ccc]" />}
             {message !== "" ?
                 <AlertCard variant="destructive" title="Internal Error" message={message}/> : ""
             }
