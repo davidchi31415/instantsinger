@@ -344,8 +344,8 @@ const ConvertDashboard = ({ userData }) => {
                     "The human voice is the most beautiful instrument of all, yet the most difficult to play."
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
-                {isConverting ?
-                    <ProgressCard process={`Converting "${youtubeName ? youtubeName : "song"}"`}
+                {isConverting && conversionId ?
+                    <ProgressCard process={`Converting song`}
                       initStatus="IN_PROGRESS"
                       apiEndpoint="/api/convert/status" apiId={conversionId}
                       onFinish={onFinish}
