@@ -105,7 +105,7 @@ const ConvertDashboard = ({ userData }) => {
       await axios.post('/api/convert', convertParams)
         .then((response) => { 
           setConversionId(response.data.conversionId); 
-          setConverting(true);
+          setConverting(true); setCurrentStatus(response.data.status);
           
           router.refresh();
         })
@@ -318,7 +318,7 @@ const ConvertDashboard = ({ userData }) => {
                       initStatus={currentStatus}
                       apiEndpoint="/api/convert/status" apiId={conversionId}
                       onStatusChange={(newStatus) => {
-                        if (isJobDone(newStatus)) {
+                        if (isJobDone({ status: newStatus })) {
                           setCurrentStatus(newStatus);
                         }
                       }}
