@@ -59,7 +59,7 @@ export const Navbar = ({ convertCredits }) => {
             </div>
             {isSignedIn ?
                 <div className="md:hidden">
-                    <Link href="/dashbaord">
+                    <Link href="/dashboard">
                         <Button variant="default">
                             Dashboard
                         </Button>
