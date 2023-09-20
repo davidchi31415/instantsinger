@@ -7,6 +7,7 @@ import { ToasterProvider } from '@/components/toaster-provider';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { getCredits } from '@/lib/credits';
+import Head from 'next/head';
 
 const rubik = Rubik({ subsets: ['latin'] })
 
@@ -29,7 +30,10 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        {/* <CrispProvider /> */}
+        <Head>
+          <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+          <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+        </Head>
         <body className={rubik.className}>
           <ModalProvider />
           <ToasterProvider />

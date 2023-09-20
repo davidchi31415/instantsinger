@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Empty } from "@/components/empty";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AlertCard } from "@/components/alert-card";
@@ -35,6 +35,8 @@ import { HistoryModal } from "./history-modal";
 import { HistoryTable } from "./history-table";
 import { useMultiAudio } from "@/hooks/use-multi-audio";
 import { SettingsModal } from "./settings-modal";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Label } from "./ui/label";
 
 const Player = ({ player, toggle }) => {
   return (
@@ -60,9 +62,6 @@ const ConvertDashboard = ({ userData }) => {
 
   const [fileKey, setFileKey] = useState(Date.now()); // For resetting file input
   const [fileUploaded, setFileUploaded] = useState(false);
-  const [hasInstrumentals, setHasInstrumentals] = useState(true);
-  const [hasBackingVocals, setHasBackingVocals] = useState(false);
-  const [convertBackingVocals, setConvertBackingVocals] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -126,11 +125,7 @@ const ConvertDashboard = ({ userData }) => {
       if (inputChoice === "upload" && !fileUploaded) return;
       if (inputChoice === "youtube" && (youtubeError !== "" || youtubeLink === "" || !youtubeId)) return;
         
-      const convertParams = { 
-        hasInstrumentals,
-        hasBackingVocals,
-        convertBackingVocals,
-      };
+      const convertParams = {};
       if (inputChoice === "youtube") {
         convertParams["youtubeId"] = youtubeId;
         convertParams["youtubeName"] = youtubeName;
@@ -187,169 +182,171 @@ const ConvertDashboard = ({ userData }) => {
     <div>
         <SettingsModal userData={userData} />
         <div className="p-4 lg:px-8">
-          <div className="mb-12">
-            <div className="w-[13rem] mx-auto text-center flex justify-center gap-2 text-xl items-center
-                px-4 pt-2 rounded-t-sm bg-primary/25 border-2 border-b-0 pb-1 border-primary"
-            >
-                <ArrowDownIcon /> Your voice! <ArrowDownIcon />
-            </div>
-            <div className="flex justify-center items-center px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
-              {players?.length ? players.map((player, i) => {
-                return (
-                  <Player player={player} toggle={toggle(i)} />
-                )}) : ""}
-            </div>
-            <div className="w-[13rem] mx-auto text-center flex justify-between gap-2 text-xl items-center
-              px-4 py-2 rounded-b-sm bg-primary/25 border-2 border-t-0 border-primary"
-            >
-              <Link href={`/voice?id=${userData?.clone?.id}`}><Button className="text-lg">Share it!</Button></Link>
-              <Button variant="ghost" onClick={() => settingsModal.onOpen()}>
-                <SettingsIcon fill="white" />
-              </Button>
-            </div>
-          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-            <div id="upload-convert" 
-              className="w-full lg:max-w-2xl"
-            >
-              <div className="p-4 border-2 bg-[white] rounded-sm shadow-md">
-                <div className="mb-4 text-2xl">Convert a Song</div>
-                <div className="my-4 flex items-center gap-4">
-                  <div>Input Method:</div>
-                  <div className="w-[10rem]">
-                    <Select onValueChange={(val) => setInputChoice(val)}
-                      defaultValue={inputChoice}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Choose input method"/>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="youtube" className="cursor-pointer">YouTube</SelectItem>
-                          <SelectItem value="upload" className="cursor-pointer">Upload</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                {inputChoice === "youtube" ?
-                  <div>
-                    <div className="my-4 flex items-center gap-4">
-                      <div>Song URL:</div>
-                      <div className="w-[25rem]">
-                        <Input 
-                          placeholder="ex: https://youtube.com/watch?v=0yW7w8F2TVA"
-                          onChange={(e) => {
-                            setYoutubeLink(e.target.value);
-                            setYoutubeError("");
-                            setYoutubeLinkValid(false);
-                          }}
-                        />
-                      </div>
-                    </div>
-                    {youtubeId ?
-                      <div className="my-4 flex justify-center hidden">
-                        <YouTube videoId={youtubeId}
-                          key={youtubeKey}
-                          opts={opts} onReady={onPlayerReady} 
-                          onError={() => setYoutubeError("YouTube video not found")}
-                        />
-                      </div>
-                      : ""
-                    }
-                    {youtubeLink !== "" && (!youtubeId || youtubeError !== "") ?
-                      <AlertCard variant="destructive" title="Error" 
-                        message={youtubeError !== "" ? youtubeError : "YouTube video not found"} /> 
-                        : ""
-                    }
-                  </div>
-                  :
-                  <FileUploader 
-                    uploadEndpoint="/api/convert/upload" 
-                    onUpload={() => setFileUploaded(true)} 
-                    isConvertUpload={true}
-                    key={fileKey}
-                    durationLimit={10}
-                  />
-                }
-
-              <div className={cn("mx-auto flex items-center justify-center mt-6 w-fit shadow-xl",
-                  !fileUploaded ? "" : "hover:scale-105 transition")}
+            <div className="flex flex-col items-center">
+              <div className="mb-12">
+                <div className="w-[13rem] mx-auto text-center flex justify-center gap-2 text-xl items-center
+                    px-4 pt-2 rounded-t-sm bg-primary/25 border-2 border-b-0 pb-1 border-primary"
                 >
-                  <Button
-                    type="submit"
-                    size="lg" className="text-xl rounded-r-none border-2 border-black border-r-none"
-                    disabled={inputNotReady || isConverting}
-                    onClick={onSubmit}
-                  >
-                  Convert
+                    <ArrowDownIcon /> Your voice! <ArrowDownIcon />
+                </div>
+                <div className="flex justify-center items-center px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
+                  {players?.length ? players.map((player, i) => {
+                    return (
+                      <Player player={player} toggle={toggle(i)} />
+                    )}) : ""}
+                </div>
+                <div className="w-[13rem] mx-auto text-center flex justify-between gap-2 text-xl items-center
+                  px-4 py-2 rounded-b-sm bg-primary/25 border-2 border-t-0 border-primary"
+                >
+                  <Link href={`/voice?id=${userData?.clone?.id}`}><Button className="text-lg">Share it!</Button></Link>
+                  <Button variant="ghost" onClick={() => settingsModal.onOpen()}>
+                    <SettingsIcon fill="white" />
                   </Button>
-                  <span className="px-2 py-[0.45rem] rounded-r-md text-black flex items-center bg-primary/20
-                    border-2 border-black border-l-none font-bold
-                  ">
-                      1
-                      <IconContext.Provider
-                        value={{ size: "25px", color: "#E1B530" }}
-                    >
-                    <PiCoinVerticalFill />
-                    </IconContext.Provider>
-                  </span>
                 </div>
               </div>
-              <div className="mt-2">
-                <AlertCard variant="warning" title="Important!"
-                  message="Songs with layers of voices singing at once are more
-                  difficult for our AI to handle. Our AI performs better when
-                  there is a single voice." />
-              </div>
-            </div>
-            
-            <div id="output-recent" className="w-full lg:max-w-2xl">
-              {isConverting ?
-                <div className="mb-2 p-4 border-2 bg-[white] rounded-sm shadow-md">
-                  <AlertCard title="Note" variant="default" message={
-                      <div>We're working on it! You can view your results here and in the <Link href="/history">History</Link> page.</div>
-                  } />
-                  <div className="mt-4">
-                    {(isConverting || isFinished) && error === "" && conversionId !== "" ?
-                      <ProgressCard process="Conversion"
-                        initStatus="IN_PROGRESS"
-                        apiEndpoint="/api/convert/status" apiId={conversionId}
-                        onFinish={onFinish}
-                        onFail={onFail}
-                      />
-                    : ""}
-                  </div>
-                  <div className="mt-4">
-                    {error !== "" ?
-                      <AlertCard variant="destructive" title="Error" message={error} />
-                        : ""
-                    }
-                  </div>
-                  <div>
-                    {isFinished && isSuccess && error === "" ?
-                      (results === null ? "Retrieving results..."
-                      : <ConversionResultsComponent results={results} />)
-                      : ""}
-                  </div>
-                </div> : ""}
-              <div className="p-4 border-2 bg-[white] rounded-sm shadow-md">
-                <div className="flex items-center justify-between">
-                  <div className="text-2xl flex items-center gap-2">History <HistoryIcon /></div>
-                  <Link href="/dashboard/history">
-                    <Button className="text-xl">
-                      See All
-                    </Button>
-                  </Link>
-                </div>
-                {userData.convertJobs.length ? 
-                  <div className="py-2">
-                    <HistoryTable userData={userData} mini={true} />
-                  </div>
-                  : <div className="mt-2 text-muted-foreground">No songs converted yet.</div>
-                }
-              </div>
+              <Tabs defaultValue="convert" className="w-[300px] md:w-[400px] lg:w-[450px] xl:w-[500px]">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="convert">Convert a Song</TabsTrigger>
+                  <TabsTrigger value="history">History</TabsTrigger>
+                </TabsList>
+                <TabsContent value="convert">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Convert a Song</CardTitle>
+                      <CardDescription>
+                        Pick any song. Hear it in your voice.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {!(isConverting || isFinished) ?
+                        <>
+                          <div className="mb-4 flex items-center gap-4">
+                            <div>Input:</div>
+                            <div className="w-[10rem]">
+                              <Select onValueChange={(val) => setInputChoice(val)}
+                                defaultValue={inputChoice}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Choose input method"/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectItem value="youtube" className="cursor-pointer">YouTube</SelectItem>
+                                    <SelectItem value="upload" className="cursor-pointer">Upload</SelectItem>
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+                          {inputChoice === "youtube" ?
+                            <div>
+                              <div className="my-4 flex items-center gap-4">
+                                <div>URL:</div>
+                                <div className="w-[25rem]">
+                                  <Input 
+                                    placeholder="ex: https://youtube.com/watch?v=0yW7w8F2TVA"
+                                    onChange={(e) => {
+                                      setYoutubeLink(e.target.value);
+                                      setYoutubeError("");
+                                      setYoutubeLinkValid(false);
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                              {youtubeId ?
+                                <div className="my-4 flex justify-center hidden">
+                                  <YouTube videoId={youtubeId}
+                                    key={youtubeKey}
+                                    opts={opts} onReady={onPlayerReady} 
+                                    onError={() => setYoutubeError("YouTube video not found")}
+                                  />
+                                </div>
+                                : ""
+                              }
+                              {youtubeLink !== "" && (!youtubeId || youtubeError !== "") ?
+                                <AlertCard variant="destructive" title="Error" 
+                                  message={youtubeError !== "" ? youtubeError : "YouTube video not found"} /> 
+                                  : ""
+                              }
+                            </div>
+                            :
+                            <FileUploader 
+                              uploadEndpoint="/api/convert/upload" 
+                              onUpload={() => setFileUploaded(true)} 
+                              isConvertUpload={true}
+                              key={fileKey}
+                              durationLimit={10}
+                            />}
+                        </>
+                      : 
+                        <>
+                          <ProgressCard process="Conversion"
+                            initStatus="IN_PROGRESS"
+                            apiEndpoint="/api/convert/status" apiId={conversionId}
+                            onFinish={onFinish}
+                            onFail={onFail}
+                          />
+                        </>
+                      }
+                    </CardContent>
+                    <CardFooter>
+                      {!(isConverting || isFinished) ?
+                        <div className={cn("mx-auto flex items-center justify-center w-fit shadow-xl",
+                          !fileUploaded ? "" : "hover:scale-105 transition")}
+                        >
+                          <Button
+                            type="submit"
+                            size="lg" className="text-xl rounded-r-none border-2 border-black border-r-none"
+                            disabled={inputNotReady || isConverting}
+                            onClick={onSubmit}
+                          >
+                          Convert
+                          </Button>
+                          <span className="px-2 py-[0.45rem] rounded-r-md text-black flex items-center bg-primary/20
+                            border-2 border-black border-l-none font-bold
+                          ">
+                              1
+                              <IconContext.Provider
+                                value={{ size: "25px", color: "#E1B530" }}
+                            >
+                            <PiCoinVerticalFill />
+                            </IconContext.Provider>
+                          </span>
+                        </div>
+                        : ""}
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="history">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>History</CardTitle>
+                      <CardDescription>
+                        Here are all your past conversions.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {userData.convertJobs.length ? 
+                        <div className="py-2">
+                          <HistoryTable userData={userData} mini={true} />
+                        </div>
+                        : <div className="mt-2 text-muted-foreground">No songs converted yet.</div>
+                      }
+                    </CardContent>
+                    <CardFooter>
+                      <Link href="/dashboard/history"
+                        className={cn("mx-auto flex items-center justify-center w-fit shadow-xl",
+                          !userData.convertJobs.length ? "pointer-events-none" : "hover:scale-105 transition")}
+                      >
+                        <Button size="lg" className="text-xl border-2 border-black border-r-none" disabled={!userData.convertJobs.length}>
+                          See All
+                        </Button>
+                      </Link>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         </div>

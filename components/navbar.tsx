@@ -28,9 +28,15 @@ export const Navbar = ({ convertCredits }) => {
         >
             <Link
                 href="/"
-                className="flex items-center"
+                className="flex items-center gap-2"
             >
-                <h1 className={cn("text-2xl font-bold", font.className)}>
+                <Image
+                    priority
+                    src="/logo.svg"
+                    alt="InstantSinger Logo"
+                    width={40} height={40}
+                />
+                <h1 className={cn("text-2xl font-bold hidden md:block", font.className)}>
                     <span className="text-primary">instant</span>singer
                 </h1>
             </Link>
@@ -51,6 +57,23 @@ export const Navbar = ({ convertCredits }) => {
                     Contact
                 </Link>
             </div>
+            {isSignedIn ?
+                <div className="md:hidden">
+                    <Link href="/dashbaord">
+                        <Button variant="default">
+                            Dashboard
+                        </Button>
+                    </Link>
+                </div>
+                :
+                <div className="md:hidden">
+                    <SignUpButton mode="modal">
+                        <Button variant="outline" className="rounded-lg border border-primary">
+                            Sign Up
+                        </Button>
+                    </SignUpButton>
+                </div>
+            }
             {isSignedIn ?
                 <div className="hidden md:flex items-center gap-2">
                     <ConvertCreditCounter convertCredits={convertCredits} />
