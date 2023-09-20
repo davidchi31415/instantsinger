@@ -11,7 +11,7 @@ import { InfiniteLoaderComponent } from "./loader/infinite-loader";
 
 interface ProgressCardProps {
     process: string;
-    apiEndpoint: string;
+    apiEndpoint?: string;
     apiId?: string;
     initStatus?: string;
     onStatusChange?: Function;
@@ -19,13 +19,15 @@ interface ProgressCardProps {
     onFail?: Function;
     onCancel?: Function;
     badgeOnly?: boolean;
+    staticCard?: boolean;
+    songName?: string;
 }
 
 export const ProgressCard = (
     { 
         process, apiEndpoint, apiId,
         initStatus, onStatusChange, 
-        badgeOnly 
+        badgeOnly, staticCard, songName
     }: ProgressCardProps
 ) => {
     const [currentStatus, setStatus] = useState<string>(initStatus ? initStatus : "");
@@ -34,25 +36,27 @@ export const ProgressCard = (
 
     const intervalId = useRef<any>(null);
     
-    useEffect(() => {       
-        intervalId.current = setInterval(async () => {
-            await checkStatus();
-        }, 10000);
-            
-        return () => clearInterval(intervalId.current);
-    }, [currentStatus]);
+    if (!staticCard && apiEndpoint) {
+        useEffect(() => {       
+            intervalId.current = setInterval(async () => {
+                await checkStatus();
+            }, 10000);
+                
+            return () => clearInterval(intervalId.current);
+        }, [currentStatus]);
 
-    const checkStatus = async () => {
-        let response;
-        if (apiId) response = await axios.get(apiEndpoint, { params: { id: apiId } });
-        else response = await axios.get(apiEndpoint);
-
-        if (response.status === 200) {
-            const newStatus = response.data.status;
-            if (currentStatus !== newStatus && onStatusChange) onStatusChange(newStatus);
-
-            if (response.data?.message) setMessage(response.data?.message);
-            setStatus(newStatus);
+        const checkStatus = async () => {
+            let response;
+            if (apiId) response = await axios.get(apiEndpoint, { params: { id: apiId } });
+            else response = await axios.get(apiEndpoint);
+    
+            if (response.status === 200) {
+                const newStatus = response.data.status;
+                if (currentStatus !== newStatus && onStatusChange) onStatusChange(newStatus);
+    
+                if (response.data?.message) setMessage(response.data?.message);
+                setStatus(newStatus);
+            }
         }
     }
 
@@ -70,7 +74,7 @@ export const ProgressCard = (
         <div>
             <Card className="p-4 flex items-center justify-between rounded-none bg-white">
                 <div className="text-md font-normal mt-1">
-                    {`${process}...`}
+                    {`${process} ${songName}...`}
                 </div>
                 <div className={
                     cn("text-sm text-muted-foreground rounded-md px-4 py-2 font-bold text-black", 

@@ -102,10 +102,11 @@ const ConvertDashboard = ({ userData }) => {
         convertParams["youtubeName"] = youtubeName;
       }
 
+      setConverting(true); 
       await axios.post('/api/convert', convertParams)
         .then((response) => { 
           setConversionId(response.data.conversionId); 
-          setConverting(true); setCurrentStatus(response.data.status);
+          setCurrentStatus(response.data.status);
           
           router.refresh();
         })
@@ -115,6 +116,7 @@ const ConvertDashboard = ({ userData }) => {
           } else {
               toast.error("Something went wrong.", { position: "bottom-center" });
           }
+          setConverting(false);
         })
         .finally(() => {
           setFileUploaded(false);
@@ -148,6 +150,8 @@ const ConvertDashboard = ({ userData }) => {
   const [players, toggle] = useMultiAudio({
     urls: userData.cloneResultUrls?.length ? userData.cloneResultUrls : []
   });
+
+  const songName = youtubeName ? youtubeName : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
 
   return (
     <div>
@@ -313,8 +317,9 @@ const ConvertDashboard = ({ userData }) => {
                     "You are the music, while the music lasts." - T.S. Elliot
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
-                {isConverting && conversionId ?
-                    <ProgressCard process="Converting song"
+                {isConverting ?
+                  conversionId ?
+                    <ProgressCard process="Converting" songName={songName}
                       initStatus={currentStatus}
                       apiEndpoint="/api/convert/status" apiId={conversionId}
                       onStatusChange={(newStatus) => {
@@ -322,6 +327,10 @@ const ConvertDashboard = ({ userData }) => {
                           setCurrentStatus(newStatus);
                         }
                       }}
+                    />
+                    :
+                    <ProgressCard process="Converting" songName={songName}
+                      initStatus="NOT_SUBMITTED" staticCard={true}
                     />
                   : ""}
                 {results ?

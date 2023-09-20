@@ -58,14 +58,13 @@ export function mapColor(status: string) {
   switch (status) {
     case "COMPLETED":
       color = "bg-[#33ff66]/50 text-black";
+      break;
     case "FAILED":
     case "TIMED_OUT":
     case "CANCELLED":
       color = "bg-destructive text-white";
-    case "SUBMITTED":
-    case "DOWNLOADING":
-    case "WAITING_FOR_GPU":
-    case "IN_PROGRESS":
+      break;
+    default:
       color = "bg-primary/25";
   }
   return color;
@@ -74,10 +73,15 @@ export function mapColor(status: string) {
 export function mapStatus(status: string) {
   let mappedStatus = status;
   switch (status) {
+    case "NOT_SUBMITTED":
+      mappedStatus = "SUBMITTING";
+      break;
     case "WAITING_FOR_GPU":
-      mappedStatus = "WAITING FOR GPU"
+      mappedStatus = "WAITING FOR GPU";
+      break;
     case "IN_PROGRESS":
       mappedStatus = "IN PROGRESS";
+      break;
   }
   return mappedStatus;
 }
