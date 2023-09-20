@@ -341,7 +341,7 @@ const ConvertDashboard = ({ userData }) => {
               </div>
               {isConverting || isFinished ? "" :
                   <div className="mt-16 max-w-sm text-center ml-32 text-muted-foreground text-sm">
-                    "The human voice is the most beautiful instrument of all, yet the most difficult to play."
+                    "You are the music while the music lasts." - T.S. Elliot
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
                 {isConverting && conversionId ?
