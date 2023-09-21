@@ -102,24 +102,31 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                         <div className="mb-2">
                             Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
                         </div>
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-2">
-                                Publicity:
-                                <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
-                                    <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
-                                        <TabsTrigger value="private">Private</TabsTrigger>
-                                        <TabsTrigger value="public">Public</TabsTrigger>
-                                    </TabsList>
-                                </Tabs>
-                            </div>
-                            <div className={cn("flex items-center gap-2", !isPublic ? "invisible" : "")}>
-                                Share it:
-                                <Button variant="outline" className="border-2 py-6"
-                                    onClick={copyToClipboard}
-                                >
-                                    <CopyIcon />
-                                </Button>
-                            </div>
+                        <div className="flex justify-between items-center gap-4">
+                            {results.owner ?
+                                <div className="flex items-center justify-center gap-2">
+                                    <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
+                                        <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
+                                            <TabsTrigger value="private">Private</TabsTrigger>
+                                            <TabsTrigger value="public">Public</TabsTrigger>
+                                        </TabsList>
+                                    </Tabs>
+                                    <div className={cn("flex items-center", !isPublic ? "invisible" : "")}>
+                                        <Button variant="outline" className="border-2"
+                                            onClick={copyToClipboard}
+                                        >
+                                            <ExternalLinkIcon />
+                                        </Button>
+                                    </div>
+                                </div>
+                                :
+                                <div className={cn("flex items-center")}>
+                                    <Button variant="outline" className="border-2"
+                                        onClick={copyToClipboard}
+                                    >
+                                        <ExternalLinkIcon />
+                                    </Button>
+                                </div>}
                             <Button variant="ghost" size="icon" 
                                 onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
                             >
