@@ -162,9 +162,9 @@ const ConvertDashboard = ({ userData }) => {
     <div>
         <SettingsModal userData={userData} />
         <div className="p-4 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto">
             <div className="flex flex-col items-center">
-              <div className="mb-12">
+              <div className="mb-12 mx-auto w-fit">
                 <div className="w-[13rem] mx-auto text-center flex justify-center gap-2 text-xl items-center
                     px-4 pt-2 rounded-t-sm bg-primary/25 border-2 border-b-0 pb-1 border-primary"
                 >
@@ -310,13 +310,13 @@ const ConvertDashboard = ({ userData }) => {
               </Tabs>
             </div>
             <div>
-              <div className="hidden lg:block my-8">
+              <div className="hidden lg:block my-8 w-fit mx-auto">
                 <RecordPlayerComponent playing={recordPlaying || players.some(e => e.playing)} />
               </div>
-                {isConverting || results || retrievingResults ? "" :
-                  <div className="mt-16 max-w-sm text-center mx-auto lg:ml-32 text-muted-foreground text-md">
-                    "He who sings scares away his woes."
-                  </div>}
+              {isConverting || results || retrievingResults ? "" :
+                <div className="mt-16 max-w-sm text-center mx-auto text-muted-foreground text-md">
+                  "He who sings scares away his woes."
+                </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
                 {isConverting && !conversionId ?
                     <ProgressCard process="Converting" songName={songName}
