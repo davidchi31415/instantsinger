@@ -17,8 +17,8 @@ import 'react-h5-audio-player/lib/styles.css';
 interface ConversionResultsComponentProps {
     results: any;
     mini?: boolean;
-    onPlay?: Function;
-    onStop?: Function;
+    onPlay?: any;
+    onStop?: any;
 }
 
 export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop }: ConversionResultsComponentProps) => {
@@ -86,9 +86,9 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                     <AudioPlayer
                         src={results.url}
                         autoPlay={false}
-                        onPlay={onPlay}
-                        onPause={onStop}
-                        onEnded={onStop}
+                        onPlay={onPlay ? onPlay : () => {}}
+                        onPause={onStop ? onStop : () => {}}
+                        onEnded={onStop ? onStop : () => {}}
                         style={{ border: "none", boxShadow: "none" }}
                     />
                 </div>  
