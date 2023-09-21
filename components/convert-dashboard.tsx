@@ -144,11 +144,11 @@ const ConvertDashboard = ({ userData }) => {
   }
 
   useEffect(() => {
-    if (isJobDone({ status: currentStatus }) && results === null) {
+    if (isJobDone({ status: currentStatus }) && isConverting) {
       setConverting(false);
       retrieveResults();
     }
-  }, [results, currentStatus]);
+  }, [isConverting, currentStatus]);
 
   const inputNotReady = ((inputChoice === "upload" && !fileUploaded) ||
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
@@ -320,11 +320,14 @@ const ConvertDashboard = ({ userData }) => {
                 </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
                 {isConverting && !conversionId ?
+                  <div className="mb-4">
                     <ProgressCard process="Converting" songName={songName}
                       initStatus="NOT_SUBMITTED" staticCard={true}
                     />
+                  </div>
                   : ""}
                 {isConverting  && conversionId ?
+                  <div className="mb-4">
                     <ProgressCard process="Converting" songName={songName}
                       initStatus={currentStatus}
                       apiEndpoint="/api/convert/status" apiId={conversionId}
@@ -334,13 +337,14 @@ const ConvertDashboard = ({ userData }) => {
                         }
                       }}
                     />
+                  </div>
                   : ""}
                 {retrievingResults ?
                   <ProgressCard process="Retrieving results"
                     noStatus={true} staticCard={true}
                   />
                   : ""}
-                {!retrievingResults && results ?
+                {results ?
                   <ConversionResultsComponent results={results} mini={true} 
                     onPlay={() => setRecordPlaying(true)}
                     onStop={() => setRecordPlaying(false)}
