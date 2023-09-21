@@ -332,7 +332,10 @@ const ConvertDashboard = ({ userData }) => {
                     />
                   : ""}
                 {results ?
-                  <ConversionResultsComponent results={results} mini={true} />
+                  <ConversionResultsComponent results={results} mini={true} 
+                    onPlay={() => setRecordPlaying(true)}
+                    onStop={() => setRecordPlaying(false)}
+                  />
                   : ""
                 }
               </div>

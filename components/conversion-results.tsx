@@ -11,8 +11,10 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { SignUpButton, useAuth } from "@clerk/nextjs";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
-export const ConversionResultsComponent = ({ results, mini=false }) => {
+export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop }) => {
     const { isSignedIn } = useAuth();
     const [isPublic, setPublic] = useState(results.public);
 
@@ -74,7 +76,14 @@ export const ConversionResultsComponent = ({ results, mini=false }) => {
                             </Button>
                         </div>
                     </div>
-                    <AudioCard url={results.url} />
+                    <AudioPlayer
+                        src={results.url}
+                        autoPlay={false}
+                        onPlay={onPlay}
+                        onPause={onStop}
+                        onEnded={onStop}
+                        style={{ border: "none", boxShadow: "none" }}
+                    />
                 </div>  
             )    
         }
