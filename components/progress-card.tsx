@@ -21,13 +21,15 @@ interface ProgressCardProps {
     badgeOnly?: boolean;
     staticCard?: boolean;
     songName?: string;
+    noStatus?: boolean;
 }
 
 export const ProgressCard = (
     { 
         process, apiEndpoint, apiId,
         initStatus, onStatusChange, 
-        badgeOnly, staticCard, songName
+        badgeOnly, staticCard, songName,
+        noStatus
     }: ProgressCardProps
 ) => {
     const [currentStatus, setStatus] = useState<string>(initStatus ? initStatus : "");
@@ -74,15 +76,16 @@ export const ProgressCard = (
         <div>
             <Card className="p-4 flex items-center justify-between rounded-none bg-white">
                 <div className="text-md font-normal mt-1">
-                    {`${process} ${songName}...`}
+                    {songName ? `${process} ${songName}...` : `${process}...`}
                 </div>
-                <div className={
-                    cn("text-sm text-muted-foreground rounded-md px-4 py-2 font-bold text-black", 
-                        mapColor(currentStatus)
-                    )}
-                >
-                    {mapStatus(currentStatus)}
-                </div>
+                {noStatus ? ""
+                    : <div className={
+                        cn("text-sm text-muted-foreground rounded-md px-4 py-2 font-bold text-black", 
+                            mapColor(currentStatus)
+                        )}
+                    >
+                        {mapStatus(currentStatus)}
+                    </div>}
                 
             </Card>
             {circulating ? <InfiniteLoaderComponent />

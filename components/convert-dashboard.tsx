@@ -125,11 +125,13 @@ const ConvertDashboard = ({ userData }) => {
         });
   }
 
+  const [retrievingResults, setRetrieving] = useState(false);
   const [results, setResults] = useState<any>(null);
   // const [results, setResults] = useState({ public: true, owner: true, urls: ["https://storage.googleapis.com/instantsinger-public/male_converted/sample_1.wav"], songName: "Can't Tell Me Nothing" });
 
   const retrieveResults = async (job?) => {
     let id = job ? job.id : conversionId;
+    setRetrieving(true);
     const resultResponse = await axios.get("/api/convert/results", { params: { id } });
 
     if (resultResponse.status === 200) {
@@ -137,6 +139,7 @@ const ConvertDashboard = ({ userData }) => {
     } else {
       toast.error("Could not retrieve results.", { position: "bottom-center" });
     }
+    setRetrieving(false);
   }
 
   useEffect(() => {
@@ -310,7 +313,7 @@ const ConvertDashboard = ({ userData }) => {
               <div className="hidden lg:block my-8">
                 <RecordPlayerComponent playing={recordPlaying || players.some(e => e.playing)} />
               </div>
-                {isConverting || results ? "" :
+                {isConverting || results || retrievingResults ? "" :
                   <div className="mt-16 max-w-sm text-center mx-auto lg:ml-32 text-muted-foreground text-md">
                     "He who sings scares away his woes."
                   </div>}
@@ -330,6 +333,11 @@ const ConvertDashboard = ({ userData }) => {
                         }
                       }}
                     />
+                  : ""}
+                {retrievingResults ?
+                  <ProgressCard process="Retrieving results"
+                    noStatus={true} staticCard={true}
+                  />
                   : ""}
                 {results ?
                   <ConversionResultsComponent results={results} mini={true} 
