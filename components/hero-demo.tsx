@@ -1,7 +1,6 @@
 import { ArrowDownIcon, ArrowRightIcon, PauseIcon, PlayIcon, Volume2Icon } from "lucide-react"
 import { Button } from "./ui/button"
 import { useMultiAudio } from "@/hooks/use-multi-audio"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -13,44 +12,39 @@ const Player = ({ player, toggle }) => {
     )
 }
 
-const SamplesCard = ({ inputEmoji, outputEmoji, players, toggle, sourceIndex, startIndex }) => {
+const SamplesCard = ({ outputEmoji, players, toggle, sourceIndex, startIndex }) => {
     return (
-        <div className="flex flex-col items-center justify-center">
-            <div className="w-full text-center p-2 bg-[white] rounded-md
-                border-2 text-3xl flex items-center gap-2 justify-center"
-            >
-                {inputEmoji} <ArrowRightIcon /> {outputEmoji}
-            </div>
-            <div className="border border-black/10 shadow-md rounded-md bg-[#f9f9f9] flex items-center justify-center">
-                <div className="flex flex-col items-center justify-center mr-2 rounded-md bg-white border-2">
-                    <div className="w-full py-2 bg-primary/25 text-center">
-                        Original
+        <div className="flex flex-col items-center justify-center shadow-xl">
+            <div className="border-2 border-black/10 shadow-md rounded-md bg-[#f9f9f9] flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                        👨🏼 <Player player={players[sourceIndex]} toggle={toggle(sourceIndex)} />
                     </div>
-                    <div className="p-4 flex items-center justify-center">
-                        <Player player={players[sourceIndex]} toggle={toggle(sourceIndex)} />
+                    <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                        👩🏼 <Player player={players[sourceIndex + 1]} toggle={toggle(sourceIndex + 1)} />
                     </div>
-                    <div className="p-4 flex items-center justify-center">
-                        <Player player={players[sourceIndex + 1]} toggle={toggle(sourceIndex + 1)} />
-                    </div>
-                    <div className="p-4 flex items-center justify-center">
-                        <Player player={players[sourceIndex + 2]} toggle={toggle(sourceIndex + 2)} />
+                    <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                        👨🏽 <Player player={players[sourceIndex + 2]} toggle={toggle(sourceIndex + 2)} />
                     </div>
                 </div>
                 <div className="text-primary">
                     <ArrowRightIcon />
+                    <div className="invisible"><ArrowRightIcon /></div>
+                    <div className="invisible"><ArrowRightIcon /></div>
+                    <ArrowRightIcon />
+                    <div className="invisible"><ArrowRightIcon /></div>
+                    <div className="invisible"><ArrowRightIcon /></div>
+                    <ArrowRightIcon />
                 </div>
                 <div className="flex flex-col items-center justify-center ml-2 rounded-md bg-white border-2 border-primary shadow-xl">
-                    <div className="w-full py-2 bg-[green]/25 text-center font-bold">
-                        Converted
+                    <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                        {outputEmoji} <Player player={players[startIndex]} toggle={toggle(startIndex)} />
                     </div>
-                    <div className="p-4 flex items-center justify-center">
-                        <Player player={players[startIndex]} toggle={toggle(startIndex)} />
+                    <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                        {outputEmoji} <Player player={players[startIndex + 1]} toggle={toggle(startIndex + 1)} />
                     </div>
-                    <div className="p-4 flex items-center justify-center">
-                        <Player player={players[startIndex + 1]} toggle={toggle(startIndex + 1)} />
-                    </div>
-                    <div className="p-4 flex items-center justify-center">
-                        <Player player={players[startIndex + 2]} toggle={toggle(startIndex + 2)} />
+                    <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                        {outputEmoji} <Player player={players[startIndex + 2]} toggle={toggle(startIndex + 2)} />
                     </div>
                 </div>
             </div>
@@ -105,7 +99,10 @@ export const HeroDemo = () => {
 
     return (
         <div>
-            <div className="w-fit mx-auto py-4 px-2 sm:px-4 md:px-8 rounded-xl bg-[#FFF1E4] shadow-xl border-4 border-[#FFD7AF]/50">
+            <div className="flex flex-col items-center">
+                <div className="px-4 py-2 border-2 border-b-0 border-primary rounded-t-md bg-primary/25 font-medium text-xl">
+                    Choose a Voice
+                </div>
                 <div className="w-fit mx-auto mb-2 border-2 shadow-md rounded-md bg-white flex items-center justify-center">
                     <div className="flex justify-center items-center gap-2 p-2">
                         <Button variant="outline"
@@ -123,10 +120,20 @@ export const HeroDemo = () => {
                     </div>
                     <Player player={players[emojiIndex]} toggle={toggle(emojiIndex)} />
                 </div>
-                <div className="flex justify-center items-center gap-4 flex-wrap">
-                    <SamplesCard inputEmoji="👤" outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={2} 
-                        startIndex={5 + 3 * emojiIndex} 
-                    />
+            </div>
+            <div className="flex justify-center items-center">
+                <div className="transform rotate-180 px-2 border-2 border-l-0 border-primary rounded-r-md bg-primary/25 font-medium h-[8rem] text-center text-xl"
+                    style={{ "writingMode": "vertical-rl" }}
+                >
+                    Original
+                </div>
+                <SamplesCard outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={2} 
+                    startIndex={5 + 3 * emojiIndex} 
+                />
+                <div className="px-2 border-2 border-l-0 border-primary rounded-r-md bg-[#33ff66]/25 font-medium h-[8rem] text-center text-xl"
+                    style={{ "writingMode": "vertical-rl" }}
+                >
+                    Converted
                 </div>
             </div>
         </div>
