@@ -21,7 +21,7 @@ interface ConversionResultsComponentProps {
     onStop?: Function;
 }
 
-export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop }) => {
+export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop }: ConversionResultsComponentProps) => {
     const { isSignedIn } = useAuth();
     const [isPublic, setPublic] = useState(results.public);
 
