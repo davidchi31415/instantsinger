@@ -67,6 +67,7 @@ const ConvertDashboard = ({ userData }) => {
     setConverting(false);
     setConversionId("");
     setResults(null);
+    setCurrentStatus("");
     setFileKey(Date.now());
     setYoutubeKey(Date.now());
   }

@@ -76,7 +76,7 @@ export const ProgressCard = (
         <div>
             <Card className="p-4 flex items-center justify-between rounded-none bg-white">
                 <div className="text-md font-normal mt-1">
-                    {songName ? `${process} ${getFileName(songName)}` : process}
+                    {songName ? `${process} "${getFileName(songName)}"` : process}
                 </div>
                 {noStatus ? ""
                     : <div className={
@@ -86,7 +86,6 @@ export const ProgressCard = (
                     >
                         {mapStatus(currentStatus)}
                     </div>}
-                
             </Card>
             {circulating ? <InfiniteLoaderComponent />
             : <Progress value={10} className="w-full rounded-none h-[0.5rem] bg-[#ccc]" />}
