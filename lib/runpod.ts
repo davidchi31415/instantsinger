@@ -281,7 +281,7 @@ export const getConversionResults = async ({ convertJob }: GetConvertResultProps
     const fileName = "combined.wav";
     const url = await getDownloadURL({ directory: `inference_outputs/${convertJob.id}`, fileName });
 
-    return { fileNames: [fileName], urls: [url], songName: convertJob.songName, public: convertJob.public, id: convertJob.id };
+    return { fileName, url, songName: convertJob.songName, public: convertJob.public, id: convertJob.id };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

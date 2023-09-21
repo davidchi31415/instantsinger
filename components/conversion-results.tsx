@@ -2,7 +2,7 @@
 
 import { Button } from "./ui/button";
 import { cn, downloadFromURL } from "@/lib/utils";
-import { ArrowRightIcon, ArrowUpIcon, CopyIcon, DownloadIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowUpIcon, CopyIcon, DownloadIcon, ExternalLinkIcon } from "lucide-react";
 import { AudioCard } from "./audio-card";
 import { AlertCard } from "./alert-card";
 import { Switch } from "@/components/ui/switch";
@@ -43,95 +43,76 @@ export const ConversionResultsComponent = ({ results, mini=false }) => {
         navigator.clipboard.writeText(`https://www.instantsinger.com/result?id=${results.id}`);
     }
 
-    if (results?.urls) {
+    if (results?.url) {
         if (mini) {
             return (
-                <>
-                    {results?.urls?.map((url, i) => {
-                        return (
-                            <div className="p-4 border rounded-sm shadow-xl">
-                                <div className="mb-2 w-full">
-                                    <div className="mb-2">
-                                        Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex items-center gap-2">
-                                            Publicity:
-                                            <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
-                                                <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
-                                                    <TabsTrigger value="private">Private</TabsTrigger>
-                                                    <TabsTrigger value="public">Public</TabsTrigger>
-                                                </TabsList>
-                                            </Tabs>
-                                        </div>
-                                        <div className={cn("flex items-center gap-2", !isPublic ? "invisible" : "")}>
-                                            Share it:
-                                            <Button variant="outline" className="border-2 py-6"
-                                                onClick={copyToClipboard}
-                                            >
-                                                <CopyIcon />
-                                            </Button>
-                                        </div>
-                                        <Button variant="ghost" size="icon" 
-                                            onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
-                                        >
-                                            <DownloadIcon />
-                                        </Button>
-                                    </div>
+                <div className="p-4 border rounded-sm shadow-xl">
+                    <div className="mb-2 w-full">
+                        <div className="mb-2">
+                            Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
+                        </div>
+                        <div className="flex justify-between items-center gap-4">
+                            <div className="flex items-center justify-center gap-2">
+                                <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
+                                    <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
+                                        <TabsTrigger value="private">Private</TabsTrigger>
+                                        <TabsTrigger value="public">Public</TabsTrigger>
+                                    </TabsList>
+                                </Tabs>
+                                <div className={cn("flex items-center", !isPublic ? "invisible" : "")}>
+                                    <Button variant="outline" className="border-2"
+                                        onClick={copyToClipboard}
+                                    >
+                                        <ExternalLinkIcon />
+                                    </Button>
                                 </div>
-                                <AudioCard url={url} />
-                            </div>  
-                        )
-                    })}
-                </>
+                            </div>
+                            <Button variant="ghost" size="icon" 
+                                onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
+                            >
+                                <DownloadIcon />
+                            </Button>
+                        </div>
+                    </div>
+                    <AudioCard url={results.url} />
+                </div>  
             )    
         }
 
         return (
             <div>
-                <div className="p-4">
-                    {results.owner ?
-                        <div className="flex items-center gap-2 h-[4rem] flex-wrap w-fit mb-10 md:md-4">
+                <div className="p-4 border rounded-sm shadow-xl">
+                    <div className="mb-2 w-full">
+                        <div className="mb-2">
+                            Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
+                        </div>
+                        <div className="flex justify-between items-center">
                             <div className="flex items-center gap-2">
-                                <div className="text-xl">Public</div>
-                                <Switch checked={isPublic} onCheckedChange={togglePublicity} 
-                                    className=""
-                                />
+                                Publicity:
+                                <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
+                                    <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
+                                        <TabsTrigger value="private">Private</TabsTrigger>
+                                        <TabsTrigger value="public">Public</TabsTrigger>
+                                    </TabsList>
+                                </Tabs>
                             </div>
-                            <div className={cn("flex items-center gap-2", isPublic ? "" : "hidden")}>
-                                <div className="text-xl flex items-center gap-2">Share it! <ArrowRightIcon /></div>
+                            <div className={cn("flex items-center gap-2", !isPublic ? "invisible" : "")}>
+                                Share it:
                                 <Button variant="outline" className="border-2 py-6"
                                     onClick={copyToClipboard}
                                 >
                                     <CopyIcon />
                                 </Button>
                             </div>
-                        </div> : ""}
-                    {results?.urls?.length ? 
-                        <>
-                            {results?.urls?.map((url, i) => {
-                                return (
-                                    <div>
-                                        <div className="flex items-center justify-between">
-                                            <div className="mb-2">
-                                                {results.owner ? <b>{ results?.songName }</b>
-                                                    : <div>Here's "<b>{ results?.songName }</b>" converted into my voice!</div>}
-                                            </div>
-                                            <Button variant="ghost" size="icon" 
-                                                onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
-                                            >
-                                                <DownloadIcon />
-                                            </Button>
-                                        </div>
-                                        <div>
-                                            <AudioCard url={url} />
-                                        </div>
-                                    </div>  
-                                )
-                            })}
-                        </>
-                        : ""}
-                </div>
+                            <Button variant="ghost" size="icon" 
+                                onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
+                            >
+                                <DownloadIcon />
+                            </Button>
+                        </div>
+                    </div>
+                    <AudioCard url={results.url} />
+                </div>  
                 <div className="mt-6 w-full md:max-w-lg mx-auto">
                     {isSignedIn ? ""
                         : 

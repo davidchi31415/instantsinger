@@ -64,15 +64,15 @@ export async function POST(
         await updateCredits({ userId, cloneDelta: -1 });
         await prismadb.cloneJob.update({
             where: { id: currentCloneJob.id },
-            data: { status: "IN_QUEUE" } 
+            data: { status: "SUBMITTED" } 
         })
 
         return new NextResponse(
-            JSON.stringify({ cloneId: currentCloneJob.id, status: "IN_QUEUE" }),
+            JSON.stringify({ cloneId: currentCloneJob.id, status: "SUBMITTED" }),
             { status: 200 }
         );
     } catch (error) {
-        console.log("[CLONE UPLOAD ERROR]", error);
+        console.log("[CLONE SUBMIT ERROR]", error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }

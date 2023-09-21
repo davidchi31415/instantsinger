@@ -125,11 +125,12 @@ const ConvertDashboard = ({ userData }) => {
         });
   }
 
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState<any>(null);
   // const [results, setResults] = useState({ public: true, owner: true, urls: ["https://storage.googleapis.com/instantsinger-public/male_converted/sample_1.wav"], songName: "Can't Tell Me Nothing" });
 
-  const retrieveResults = async () => {
-    const resultResponse = await axios.get("/api/convert/results", { params: { id: conversionId } });
+  const retrieveResults = async (job?) => {
+    let id = job ? job.id : conversionId;
+    const resultResponse = await axios.get("/api/convert/results", { params: { id } });
 
     if (resultResponse.status === 200) {
       setResults({...resultResponse.data, owner: true});
@@ -166,7 +167,7 @@ const ConvertDashboard = ({ userData }) => {
                 >
                     <ArrowDownIcon /> Your voice! <ArrowDownIcon />
                 </div>
-                <div className="flex justify-center items-center px-4 p-2 gap-2 border-2 border-primary w-fit mx-auto rounded-sm shadow-md">
+                <div className="flex justify-center items-center px-4 p-2 gap-2 border-2 border-primary bg-white w-fit mx-auto rounded-sm shadow-md">
                   {players?.length ? players.map((player, i) => {
                     return (
                       <Player player={player} toggle={toggle(i)} />
@@ -182,12 +183,12 @@ const ConvertDashboard = ({ userData }) => {
                 </div>
               </div>
               <Tabs defaultValue="convert" className="w-[300px] md:w-[400px] lg:w-[450px] xl:w-[500px]">
-                <TabsList className="grid w-full grid-cols-2">
+                <TabsList className="grid w-full grid-cols-2 border">
                   <TabsTrigger value="convert">Convert a Song</TabsTrigger>
                   <TabsTrigger value="history">History</TabsTrigger>
                 </TabsList>
                 <TabsContent value="convert">
-                  <Card>
+                  <Card className="shadow-xl">
                     <CardHeader>
                       <CardTitle>Convert a Song</CardTitle>
                       <CardDescription>
@@ -280,31 +281,27 @@ const ConvertDashboard = ({ userData }) => {
                   </Card>
                 </TabsContent>
                 <TabsContent value="history">
-                  <Card>
+                  <Card className="shadow-xl">
                     <CardHeader>
-                      <CardTitle>History</CardTitle>
+                      <CardTitle>History{" "}
+                        <Link href="/dashboard/history" className="ml-4 text-sm font-normal">(see all)</Link>
+                      </CardTitle>
                       <CardDescription>
                         Here are all your past conversions.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
                       {userData.convertJobs.length ? 
-                        <div className="py-2">
-                          <HistoryTable userData={userData} mini={true} />
-                        </div>
+                        <HistoryTable userData={userData} mini={true} 
+                          onSelect={async (job) => {
+                            if (job.id !== results?.id) {
+                              await retrieveResults(job);
+                            }
+                          }}
+                        />
                         : <div className="mt-2 text-muted-foreground">No songs converted yet.</div>
                       }
                     </CardContent>
-                    <CardFooter>
-                      <Link href="/dashboard/history"
-                        className={cn("mx-auto flex items-center justify-center w-fit shadow-xl",
-                          !userData.convertJobs.length ? "pointer-events-none" : "hover:scale-105 transition")}
-                      >
-                        <Button size="lg" className="text-xl border-2 border-black border-r-none" disabled={!userData.convertJobs.length}>
-                          See All
-                        </Button>
-                      </Link>
-                    </CardFooter>
                   </Card>
                 </TabsContent>
               </Tabs>
@@ -314,8 +311,8 @@ const ConvertDashboard = ({ userData }) => {
                 <RecordPlayerComponent playing={recordPlaying || players.some(e => e.playing)} />
               </div>
                 {isConverting || results ? "" :
-                  <div className="mt-16 max-w-sm text-center ml-32 text-muted-foreground text-sm">
-                    "You are the music, while the music lasts." - T.S. Elliot
+                  <div className="mt-16 max-w-sm text-center mx-auto lg:ml-32 text-muted-foreground text-md">
+                    "He who sings scares away his woes."
                   </div>}
               <div className="max-w-md lg:max-w-2xl mx-auto mt-2 lg:mt-12">
                 {isConverting && !conversionId ?
