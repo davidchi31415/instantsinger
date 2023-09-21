@@ -14,6 +14,13 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
+interface ConversionResultsComponentProps {
+    results: any;
+    mini?: boolean;
+    onPlay?: Function;
+    onStop?: Function;
+}
+
 export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop }) => {
     const { isSignedIn } = useAuth();
     const [isPublic, setPublic] = useState(results.public);
