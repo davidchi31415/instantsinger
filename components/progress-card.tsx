@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Card } from "./ui/card";
-import { cn, isJobDone, mapColor, mapStatus } from "@/lib/utils";
+import { cn, getFileName, isJobDone, mapColor, mapStatus } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 import { AlertCard } from "./alert-card";
 import { Progress } from "./ui/progress";
@@ -76,7 +76,7 @@ export const ProgressCard = (
         <div>
             <Card className="p-4 flex items-center justify-between rounded-none bg-white">
                 <div className="text-md font-normal mt-1">
-                    {songName ? `${process} ${songName}...` : `${process}...`}
+                    {songName ? `${process} ${getFileName(songName)}` : process}
                 </div>
                 {noStatus ? ""
                     : <div className={

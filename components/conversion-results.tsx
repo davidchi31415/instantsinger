@@ -100,10 +100,10 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                 <div className="p-4 border rounded-sm shadow-xl">
                     <div className="mb-2 w-full">
                         <div className="mb-2">
-                            Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
+                            Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice 🔥!
                         </div>
-                        <div className="flex justify-between items-center gap-4">
-                            {results.owner ?
+                        {results.owner ?
+                            <div className="flex justify-between items-center gap-4">
                                 <div className="flex items-center justify-center gap-2">
                                     <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
                                         <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
@@ -119,22 +119,24 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                                         </Button>
                                     </div>
                                 </div>
-                                :
-                                <div className={cn("flex items-center")}>
-                                    <Button variant="outline" className="border-2"
-                                        onClick={copyToClipboard}
-                                    >
-                                        <ExternalLinkIcon />
-                                    </Button>
-                                </div>}
-                            <Button variant="ghost" size="icon" 
-                                onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
-                            >
-                                <DownloadIcon />
-                            </Button>
-                        </div>
-                    </div>
+                                <Button variant="ghost" size="icon" 
+                                    onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
+                                >
+                                    <DownloadIcon />
+                                </Button>
+                            </div>
+                         :
+                            <div className="flex items-center gap-4 mb-2">
+                                Share it!
+                                <Button variant="outline" className="border-2"
+                                    onClick={copyToClipboard}
+                                >
+                                    <ExternalLinkIcon />
+                                </Button>
+                            </div>
+                        }
                     <AudioCard url={results.url} />
+                    </div>
                 </div>  
                 <div className="mt-6 w-full md:max-w-lg mx-auto">
                     {isSignedIn ? ""
