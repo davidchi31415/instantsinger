@@ -132,6 +132,7 @@ const ConvertDashboard = ({ userData }) => {
   const retrieveResults = async (job?) => {
     let id = job ? job.id : conversionId;
     setRetrieving(true);
+    setResults(null);
     const resultResponse = await axios.get("/api/convert/results", { params: { id } });
 
     if (resultResponse.status === 200) {
