@@ -339,7 +339,7 @@ const ConvertDashboard = ({ userData }) => {
                     noStatus={true} staticCard={true}
                   />
                   : ""}
-                {results ?
+                {!retrievingResults && results ?
                   <ConversionResultsComponent results={results} mini={true} 
                     onPlay={() => setRecordPlaying(true)}
                     onStop={() => setRecordPlaying(false)}
