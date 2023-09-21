@@ -31,12 +31,12 @@ export const LandingHero = () => {
                         </h1>
                     </div>
                     <div className="text-lg md:text-xl font-normal text-zinc-400 my-4">
-                        Clone your voice for free. Then convert any song into your own voice, with the click of a button.
+                        Clone your own voice for free. Then convert any song into your voice with the click of a button.
                     </div>
                 </div>
                 <HeroDemo />
             </div>
-            <div className="px-4 md:px-8 py-8 flex flex-col items-center gap-2 md:max-w-lg mx-auto">
+            <div className="px-4 md:px-8 pt-4 pb-8 flex flex-col items-center gap-2 md:max-w-lg mx-auto">
             <div className="text-2xl text-center">Try it yourself - for free!</div>
             {isSignedIn ?
                 <Link href="/dashboard" className="w-full" passHref={true}>

@@ -12,6 +12,7 @@ import { ArrowDownIcon, Check, MicIcon } from "lucide-react";
 import { Roboto_Slab } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { HeroDemo } from "./hero-demo";
+import { PhoneComponent } from "./phone/phone";
 
 const font = Roboto_Slab({
     weight: "600",
@@ -21,6 +22,24 @@ const font = Roboto_Slab({
 export const LandingContent = () => {
     return (
         <>
+            <div className="px-4 md:px-8 py-16">
+                <div className="flex justify-between max-w-4xl mx-auto items-center flex-wrap">
+                    <div className="flex flex-col max-w-md mx-auto">
+                        <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
+                            <span className="underline--fancy">
+                                Clone your voice
+                            </span>, straight from the browser
+                        </h3>
+                        <p className="mt-2 text-lg">
+                            We provide a guided procedure to clone your voice in just <b className="text-primary">2 minutes</b>.
+                            Afterwards, you will receive 3 sample songs to hear how it sounds.
+                        </p>
+                    </div>
+                    <div className="w-fit mx-auto mt-8 md:mt-0">
+                        <PhoneComponent />
+                    </div>
+                </div>
+            </div>
             <div className="py-10 md:py-24 px-6 md:px-12 bg-primary/50">
                 <div className="pb-8">
                     <PricingTable />

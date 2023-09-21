@@ -100,7 +100,7 @@ export const HeroDemo = () => {
     return (
         <div>
             <div className="flex flex-col items-center">
-                <div className="px-4 py-2 border-2 border-b-0 border-primary rounded-t-md bg-primary/25 font-medium text-xl">
+                <div className="px-4 py-1 border-2 border-b-0 border-primary rounded-t-md bg-primary/25 font-medium text-xl">
                     Choose a Voice
                 </div>
                 <div className="w-fit mx-auto mb-2 border-2 shadow-md rounded-md bg-white flex items-center justify-center">
@@ -122,7 +122,7 @@ export const HeroDemo = () => {
                 </div>
             </div>
             <div className="flex justify-center items-center">
-                <div className="transform rotate-180 px-2 border-2 border-l-0 border-primary rounded-r-md bg-primary/25 font-medium h-[8rem] text-center text-xl"
+                <div className="transform rotate-180 px-1 border-2 border-l-0 border-primary rounded-r-md bg-primary/25 font-medium h-[8rem] text-center text-xl"
                     style={{ "writingMode": "vertical-rl" }}
                 >
                     Original
@@ -130,7 +130,7 @@ export const HeroDemo = () => {
                 <SamplesCard outputEmoji={people[emojiIndex].emoji} players={players} toggle={toggle} sourceIndex={2} 
                     startIndex={5 + 3 * emojiIndex} 
                 />
-                <div className="px-2 border-2 border-l-0 border-primary rounded-r-md bg-[#33ff66]/25 font-medium h-[8rem] text-center text-xl"
+                <div className="px-1 border-2 border-l-0 border-primary rounded-r-md bg-[#33ff66]/25 font-medium h-[8rem] text-center text-xl"
                     style={{ "writingMode": "vertical-rl" }}
                 >
                     Converted
