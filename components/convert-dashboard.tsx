@@ -126,12 +126,13 @@ const ConvertDashboard = ({ userData }) => {
   }
 
   const [results, setResults] = useState(null);
+  // const [results, setResults] = useState({ public: true, owner: true, urls: ["https://storage.googleapis.com/instantsinger-public/male_converted/sample_1.wav"], songName: "Can't Tell Me Nothing" });
 
   const retrieveResults = async () => {
     const resultResponse = await axios.get("/api/convert/results", { params: { id: conversionId } });
 
     if (resultResponse.status === 200) {
-      setResults(resultResponse.data);
+      setResults({...resultResponse.data, owner: true});
     } else {
       toast.error("Could not retrieve results.", { position: "bottom-center" });
     }

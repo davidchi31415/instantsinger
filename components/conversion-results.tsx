@@ -1,22 +1,23 @@
 "use client";
 
 import { Button } from "./ui/button";
-import { cn, downloadFromURL, getFileName } from "@/lib/utils";
+import { cn, downloadFromURL } from "@/lib/utils";
 import { ArrowRightIcon, ArrowUpIcon, CopyIcon, DownloadIcon } from "lucide-react";
 import { AudioCard } from "./audio-card";
 import { AlertCard } from "./alert-card";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
-import { SocialIcon } from 'react-social-icons';
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { SignUpButton, useAuth } from "@clerk/nextjs";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 export const ConversionResultsComponent = ({ results, mini=false }) => {
     const { isSignedIn } = useAuth();
     const [isPublic, setPublic] = useState(results.public);
 
     const togglePublicity = async () => {
+        console.log("Toggling");
         const newPublic = !isPublic;
         try {
             setPublic(newPublic);
@@ -48,21 +49,37 @@ export const ConversionResultsComponent = ({ results, mini=false }) => {
                 <>
                     {results?.urls?.map((url, i) => {
                         return (
-                            <div>
-                                <div className="flex items-center justify-between">
+                            <div className="p-4 border rounded-sm shadow-xl">
+                                <div className="mb-2 w-full">
                                     <div className="mb-2">
-                                        {results.owner ? <b>{ results?.songName }</b>
-                                            : <div>Here's "<b>{ results?.songName }</b>" converted into my voice!</div>}
+                                        Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
                                     </div>
-                                    <Button variant="ghost" size="icon" 
-                                        onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
-                                    >
-                                        <DownloadIcon />
-                                    </Button>
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex items-center gap-2">
+                                            Publicity:
+                                            <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
+                                                <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
+                                                    <TabsTrigger value="private">Private</TabsTrigger>
+                                                    <TabsTrigger value="public">Public</TabsTrigger>
+                                                </TabsList>
+                                            </Tabs>
+                                        </div>
+                                        <div className={cn("flex items-center gap-2", !isPublic ? "invisible" : "")}>
+                                            Share it:
+                                            <Button variant="outline" className="border-2 py-6"
+                                                onClick={copyToClipboard}
+                                            >
+                                                <CopyIcon />
+                                            </Button>
+                                        </div>
+                                        <Button variant="ghost" size="icon" 
+                                            onClick={() => downloadFromURL(url, `converted_${results.songName}.wav`)}
+                                        >
+                                            <DownloadIcon />
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div>
-                                    <AudioCard url={url} />
-                                </div>
+                                <AudioCard url={url} />
                             </div>  
                         )
                     })}
