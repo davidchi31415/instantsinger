@@ -57,17 +57,16 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
             return (
                 <div className="p-4 border rounded-sm shadow-xl">
                     <div className="mb-2 w-full">
-                        <div className="mb-2">
-                            Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
-                        </div>
-                        <div className="flex justify-between items-center gap-4">
+                        Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
+                        <div className="mt-2 flex justify-between items-center gap-4">
                             <div className="flex items-center justify-center gap-2">
-                                <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
-                                    <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
-                                        <TabsTrigger value="private">Private</TabsTrigger>
-                                        <TabsTrigger value="public">Public</TabsTrigger>
-                                    </TabsList>
-                                </Tabs>
+                                {results.owner ?
+                                    <Tabs defaultValue={isPublic ? "public" : "private"} onValueChange={togglePublicity}>
+                                        <TabsList className="grid w-full grid-cols-2 border bg-primary/25">
+                                            <TabsTrigger value="private">Private</TabsTrigger>
+                                            <TabsTrigger value="public">Public</TabsTrigger>
+                                        </TabsList>
+                                    </Tabs> : ""}
                                 <div className={cn("flex items-center", !isPublic ? "invisible" : "")}>
                                     <Button variant="outline" className="border-2"
                                         onClick={copyToClipboard}
@@ -76,11 +75,12 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                                     </Button>
                                 </div>
                             </div>
-                            <Button variant="ghost" size="icon" 
-                                onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
-                            >
-                                <DownloadIcon />
-                            </Button>
+                            {results.owner ?
+                                <Button variant="ghost" size="icon" 
+                                    onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
+                                >
+                                    <DownloadIcon />
+                                </Button> : ""}
                         </div>
                     </div>
                     <AudioPlayer
