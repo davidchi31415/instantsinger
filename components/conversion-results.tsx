@@ -55,7 +55,7 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
     if (results?.url) {
         if (mini) {
             return (
-                <div className="p-4 border rounded-sm shadow-xl">
+                <div className="p-4 bg-white border rounded-sm shadow-xl">
                     <div className="mb-2 w-full">
                         Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
                         <div className="mt-2 flex justify-between items-center gap-4">

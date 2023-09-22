@@ -2,8 +2,8 @@ import { Footer } from "@/components/footer";
 
 const LandingLayout = ({children}: {children: React.ReactNode}) => {
     return (
-        <div className="mt-8 md:pt-28">
-            <div className="h-full">{children}</div>
+        <div>
+            {children}
             <Footer />
         </div>
     )

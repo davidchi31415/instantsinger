@@ -2,9 +2,7 @@ import { CircleIcon, MoveLeftIcon, MoveRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { FakeRecorderComponent } from "./fake-recorder";
 import "./styles.css";
-import { Card } from "../ui/card";
-import { useInViewport } from "react-in-viewport";
-import { useRef } from "react";
+import { Card } from "../../ui/card";
 
 export const PhoneComponent = () => {
     return (

@@ -19,9 +19,9 @@ export const LandingHero = () => {
     return (
         <div>
             <div className="px-4 md:px-8 pb-20 flex justify-center items-center flex-wrap gap-4 md:gap-12 lg:gap-16">
-                <div className="max-w-md font-bold">
+                <div className="max-w-md lg:max-w-xl font-bold">
                     <div 
-                        className={cn("text-5xl sm:text-6xl md:text-7xl \
+                        className={cn("text-5xl sm:text-6xl md:text-7xl lg:text-8xl \
                         font-extra-bold", font.className)}
                     >
                         <h1>Become</h1>

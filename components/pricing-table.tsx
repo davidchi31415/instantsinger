@@ -17,7 +17,12 @@ const font = Roboto_Slab({
     subsets: ["latin"]
 });
 
-const PricingTable = () => {
+interface PricingTableProps {
+    freeOnly?: boolean;
+    paidOnly?: boolean;
+}
+
+const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
     const { isSignedIn } = useAuth(); // useAuth for client-side
     const [isLoading, setLoading] = useState(false);
 
@@ -39,6 +44,7 @@ const PricingTable = () => {
 
     return (
         <div className="flex justify-center gap-4 flex-wrap">
+            {!paidOnly &&
             <Card
                 className="w-[22rem] py-8 flex flex-col items-center justify-center \
                     gap-2 rounded-xl bg-white text-black shadow-2xl"
@@ -88,8 +94,8 @@ const PricingTable = () => {
                             </Button>
                         </SignUpButton>}
                 </CardContent>
-            </Card>
-                {packages.map((pack, i) => {
+            </Card>}
+                {!freeOnly && packages.map((pack, i) => {
                     return (
                         <Card key={pack.packKey} 
                             className={cn("w-[22rem] py-8 flex flex-col items-center justify-center \

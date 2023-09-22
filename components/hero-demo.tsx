@@ -99,7 +99,7 @@ export const HeroDemo = () => {
 
     return (
         <div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center lg:scale-125">
                 <div className="px-4 py-1 border-2 border-b-0 border-primary rounded-t-md bg-primary/25 font-medium text-xl">
                     Choose a Voice
                 </div>
@@ -121,7 +121,7 @@ export const HeroDemo = () => {
                     <Player player={players[emojiIndex]} toggle={toggle(emojiIndex)} />
                 </div>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center lg:mt-10 lg:scale-125">
                 <div className="transform rotate-180 px-1 border-2 border-l-0 border-primary rounded-r-md bg-primary/25 font-medium h-[8rem] text-center text-xl"
                     style={{ "writingMode": "vertical-rl" }}
                 >

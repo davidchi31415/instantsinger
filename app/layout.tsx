@@ -5,9 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { ModalProvider } from '@/components/modal-provider';
 import { ToasterProvider } from '@/components/toaster-provider';
 import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
 import { getCredits } from '@/lib/credits';
-import Head from 'next/head';
 
 const rubik = Rubik({ subsets: ['latin'] })
 
@@ -33,12 +31,10 @@ export default async function RootLayout({
         <body className={rubik.className}>
           <ModalProvider />
           <ToasterProvider />
-          <main className="w-full h-full bg-[white] overflow-x-scroll">
+          <div className="w-full h-full pt-12 md:pt-0">
             <Navbar convertCredits={convertCredits} />
-            <div className="w-full h-full pt-12 md:pt-0">
-              {children}
-            </div>
-          </main>
+            {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>

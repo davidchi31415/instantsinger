@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { FakeConverterComponent } from "./converter";
-import { ProgressCard } from "../progress-card";
-import { ConversionResultsComponent } from "../conversion-results";
+import { ProgressCard } from "../../progress-card";
+import { ConversionResultsComponent } from "../../conversion-results";
 import { cn } from "@/lib/utils";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
