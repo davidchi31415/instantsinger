@@ -99,7 +99,7 @@ export const MobileLandingContentPricing = () => {
                     delay: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
                 }}
-                className="w-fit mx-auto mt-8 lg:mt-0"
+                className="w-full mx-auto mt-8 lg:mt-0"
             >
                 <PricingTable freeOnly={true} />
             </motion.div>
