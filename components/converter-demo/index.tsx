@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRef } from 'react';
 import { FakeConverterComponent } from "./converter";
 import { ProgressCard } from "../progress-card";
 import { ConversionResultsComponent } from "../conversion-results";

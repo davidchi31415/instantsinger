@@ -1,19 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { AudioCard } from "./audio-card";
 import PricingTable from "./pricing-table";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { BsDiscord } from "react-icons/bs";
-import Image from "next/image";
-import { Badge } from "./ui/badge";
-import { ArrowDownIcon, Check, MicIcon } from "lucide-react";
 import { Roboto_Slab } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { HeroDemo } from "./hero-demo";
 import { PhoneComponent } from "./phone/phone";
-import { FakeConverterComponent } from "./converter-demo/converter";
 import { ConverterDemoComponent } from "./converter-demo";
 
 const font = Roboto_Slab({
