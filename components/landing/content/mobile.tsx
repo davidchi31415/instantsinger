@@ -22,7 +22,7 @@ export const MobileLandingContentClone = () => {
                 </h3>
                 <p className="mt-2 text-lg">
                     Follow our procedure to clone yourself in <b className="text-primary">2 minutes</b>.
-                    You'll get 3 samples to hear how it sounds.
+                    That's gotta be some kind of record!
                 </p>
             </div>
             <motion.div 

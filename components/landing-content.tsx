@@ -56,7 +56,7 @@ export const LandingContent = () => {
                         </h3>
                         <p className="mt-2 text-lg">
                             Follow our procedure to clone yourself in <b className="text-primary">2 minutes</b>.
-                            We'll give you 3 sample songs to hear how it sounds.
+                            That's gotta be some kind of record!
                         </p>
                     </div>
                     <div className="flex flex-col">
