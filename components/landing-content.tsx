@@ -82,7 +82,7 @@ export const LandingContent = () => {
                         </p>
                     </div>
                 </div>
-                <div className="w-full h-[39rem] sticky top-[18vh]">
+                <div className="w-full h-[39rem] sticky top-[12vh] lg:top-[18vh]">
                     <AnimatePresence>
                         {!changing && currentIndex === 0 &&
                         <motion.div
@@ -130,7 +130,7 @@ export const LandingContent = () => {
                     </AnimatePresence>
                 </div>
             </div>
-            <div className="md:hidden w-full">
+            <div className="md:hidden">
                 <MobileLandingContentClone />
                 <MobileLandingContentConvert />
                 <MobileLandingContentPricing />

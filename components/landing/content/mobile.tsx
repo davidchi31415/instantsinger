@@ -13,7 +13,7 @@ const font = Roboto_Slab({
 
 export const MobileLandingContentClone = () => {
     return (
-        <div className="flex justify-between w-fit mx-auto items-center flex-wrap">
+        <div className="flex justify-between mx-auto items-center flex-wrap">
             <div className="flex flex-col max-w-md mx-auto">
                 <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Clone <span className="underline--fancy">
@@ -22,7 +22,7 @@ export const MobileLandingContentClone = () => {
                 </h3>
                 <p className="mt-2 text-lg">
                     Follow our procedure to clone yourself in <b className="text-primary">2 minutes</b>.
-                    We'll give you 3 sample songs to hear how it sounds.
+                    You'll get 3 samples to hear how it sounds.
                 </p>
             </div>
             <motion.div 
