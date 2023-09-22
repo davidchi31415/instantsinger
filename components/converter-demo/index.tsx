@@ -23,7 +23,7 @@ const views = [
     />
 ];
 
-export const ConverterDemoComponent = () => {
+export const ConverterDemoComponent = ({ active }) => {
     const [animating, setAnimating] = useState(false);
     const [currentIndex, setIndex] = useState(0);
     const [visible, setVisible] = useState(true);
@@ -35,21 +35,21 @@ export const ConverterDemoComponent = () => {
             else await sleep(6000);
 
             setVisible(false);
-            await sleep(500);
+            await sleep(100);
             setIndex(e => (e + 1) % 3);
             setVisible(true);
 
             setAnimating(false);
         };
-        if (!animating) {
+        if (active && !animating) {
             animate();
         }
-    }, [animating]);
+    }, [active, animating]);
 
     return (
         <div 
             className={cn("h-[20rem] w-[18rem] md:w-[22rem] flex items-center \
-            pointer-events-none cursor-default transition-opacity delay-[250]", visible ? "" : "opacity-0")}
+            pointer-events-none cursor-default transition-opacity delay-[100] duration-[1000]", visible ? "" : "opacity-0")}
         >
             {views[currentIndex]}
         </div>

@@ -3,52 +3,19 @@
 import PricingTable from "./pricing-table";
 import { Button } from "./ui/button";
 import { BsDiscord } from "react-icons/bs";
-import { Roboto_Slab } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { PhoneComponent } from "./phone/phone";
-import { ConverterDemoComponent } from "./converter-demo";
+import { LandingContentClone } from "./landing-content-clone";
+import { LandingContentConvert } from "./landing-content-convert";
+import handleViewport from "react-in-viewport";
 
-const font = Roboto_Slab({
-    weight: "600",
-    subsets: ["latin"]
-});
+const ViewportClone = handleViewport(LandingContentClone, { threshold: 0.2 });
+const ViewportConvert = handleViewport(LandingContentConvert, { threshold: 0.5 });
 
 export const LandingContent = () => {
     return (
         <>
             <div className="px-4 md:px-8 py-16">
-                <div className="flex justify-between max-w-4xl mx-auto items-center flex-wrap">
-                    <div className="flex flex-col max-w-md mx-auto">
-                        <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
-                            Clone <span className="underline--fancy">
-                                your voice
-                            </span>, straight from the browser.
-                        </h3>
-                        <p className="mt-2 text-lg">
-                            Follow our procedure to clone yourself in <b className="text-primary">2 minutes</b>.
-                            We'll give you 3 sample songs to hear how it sounds.
-                        </p>
-                    </div>
-                    <div className="w-fit mx-auto mt-8 lg:mt-0">
-                        <PhoneComponent />
-                    </div>
-                </div>
-                <div className="mt-36 flex justify-between max-w-4xl mx-auto items-center flex-wrap-reverse">
-                    <div className="w-fit mx-auto h-fit">
-                        <ConverterDemoComponent />
-                    </div>
-                    <div className="flex flex-col max-w-md mx-auto lg:mr-0">
-                        <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
-                            Convert <span className="underline--fancy">
-                                any song
-                            </span>. Just paste a link.
-                        </h3>
-                        <p className="mt-2 text-lg">
-                            With your voice cloned, convert any song into your voice
-                            by simply pasting a YouTube link.
-                        </p>
-                    </div>
-                </div>
+                <ViewportClone />
+                <ViewportConvert />
             </div>
             <div className="py-10 md:py-24 px-6 md:px-12 bg-primary/50">
                 <div className="pb-8">
