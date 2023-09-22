@@ -43,11 +43,14 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
     }
 
     return (
-        <div className="flex justify-center gap-4 flex-wrap">
+        <div className="flex justify-center gap-8 flex-wrap">
             {!paidOnly &&
             <Card
                 className="w-[22rem] py-8 flex flex-col items-center justify-center \
-                    gap-2 rounded-xl bg-white text-black shadow-2xl"
+                    gap-2 rounded-xl bg-white text-black"
+                style={{
+                    boxShadow: "#3b82f6 0px 8px 50px"
+                }}
             >
                 <CardTitle 
                     className="px-4 py-2 text-2xl rounded-lg border-2 border-black/25 text-white bg-primary/75"
@@ -58,10 +61,15 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                     <div 
                         className={cn("text-5xl md:text-7xl text-center mt-4 mb-8", font.className)}
                     >
-                        FREE
+                        <ul className="glowing">
+                            <li>F</li>
+                            <li>R</li>
+                            <li>E</li>
+                            <li>E</li>
+                        </ul>
                     </div>
                     <div className="text-sm md:text-md text-center my-8">
-                        Clone your voice and get 2 samples.
+                        Clone your voice and get 3 samples.
                     </div>
                     <div className="text-md md:text-lg mt-4 mb-8">
                         <div className="flex gap-2">
@@ -73,7 +81,7 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                         <div className="flex gap-2">
                             <Check color="#0c0"/>
                             <div>
-                                <b>2</b> Song Samples
+                                <b>3</b> Song Samples (~4.5 min)
                             </div>
                         </div>
                     </div>
@@ -98,11 +106,12 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                 {!freeOnly && packages.map((pack, i) => {
                     return (
                         <Card key={pack.packKey} 
-                            className={cn("w-[22rem] py-8 flex flex-col items-center justify-center \
-                            gap-2 rounded-xl bg-white border-primary text-black shadow-2xl",
-                            pack.packKey === "pro" ? 
-                            "border-2" 
-                            : "border-0")}
+                            className="w-[22rem] py-8 flex flex-col items-center justify-center
+                            gap-2 rounded-xl bg-white border-primary text-black shadow-2xl"
+                            style={
+                                pack.packKey === "pro" ?
+                                { boxShadow: "#E1B530 0px 8px 50px" } : {}
+                            } 
                         >
                             <CardTitle 
                                 className={cn("px-4 py-2 text-2xl rounded-lg border-2",
