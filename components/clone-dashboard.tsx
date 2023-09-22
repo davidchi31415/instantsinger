@@ -57,46 +57,27 @@ export const CloneDashboard = ({ userData }: ClonesDashboardProps) => {
     }
 
     return (
-        <div>
-            <div className="pt-6 flex justify-center items-center gap-6 flex-wrap">
-                <div>
-                    <div className="rounded-3xl relative flow-root max-w-sm h-[15rem] px-6 lg:pb-6 mx-auto border-4 border-primary/25 bg-white">
-                        <div className="-mt-5">
-                            <div className="w-fit mx-auto">
-                                <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-white bg-primary rounded-full shadow">1</span>
-                            </div>
-                            <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center flex items-center justify-center gap-2", font.className)}>Clone your voice</h3>
-                            <p className="mt-2 text-lg">
-                                Complete a guided procedure to clone your voice in less than <b>3 minutes</b>.
-                                We will give you <b>samples</b> to hear how it sounds.
-                            </p>
-                        </div>
-                    </div>
+        <div className="px-4 lg:px-8 flex justify-center">
+            <div className="pt-8 flex flex-col items-center justify-center">
+                <div className="text-2xl text-center w-full mb-2">Voice Cloning Procedure</div>
+                <Card className="w-full lg:max-w-3xl mb-4 p-4 text-xl
+                flex flex-col gap-2
+                ">
+                <p>
+                    To clone your voice, we ask you to sing some easy nursery songs (such as "Happy Birthday") while recording yourself.
+                </p>
+                <p>Please take your time, and finish within <b>2</b> to <b>5</b> minutes.</p>
+                <p>
+                    <b>It is okay if you mess up</b>. The point is to hear how you sound.
+                </p>
+                </Card>
+                <div className="w-fit mx-auto mt-4">
+                    <Link href="/dashboard/clone">
+                        <Button className="text-3xl gap-2 p-8 border-2 border-black hover:scale-105">
+                            Begin<MoveRightIcon />
+                        </Button>
+                    </Link>
                 </div>
-                <div>
-                    <div className="rounded-3xl relative flow-root max-w-sm h-[15rem] px-6 lg:pb-6 mx-auto border-4 bg-white">
-                        <div className="-mt-5">
-                            <div className="w-fit mx-auto">
-                                <span className="inline-flex items-center justify-center w-12 h-12 p-2 text-lg font-black text-muted-foreground bg-[white] border-2 rounded-full shadow">2</span>
-                            </div>
-                            <h3 className={cn("mt-4 text-2xl font-bold leading-tight tracking-tight text-gray-700 text-center", font.className)}>Convert any song</h3>
-                            <p className="mt-2 text-lg">
-                                Once your voice is cloned, you can convert any song into your voice
-                                by pasting a YouTube link or uploading an audio file.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="w-fit mx-auto mt-8 text-center text-xl md:text-3xl">
-                Let's get your voice cloned!
-            </div>
-            <div className="w-full mt-4 pb-8 flex items-center justify-center">
-                <Link href="/dashboard/clone/preview">
-                    <Button className="text-3xl gap-2 p-8 border-2 border-black hover:scale-105">
-                        Begin<MoveRightIcon />
-                    </Button>
-                </Link>
             </div>
         </div>
     )

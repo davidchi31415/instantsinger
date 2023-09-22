@@ -49,20 +49,16 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                 .then(() => setSubmitted(true))
                 .catch((error) => {
                     if (error?.response?.status === 402) {
-                        console.log("Missing files:", error.response?.data.missingFiles);
                         setMissingFiles(error.response?.data.missingFiles);
-                        toast("Please finish the cloning procedure first.");
+                        toast.error("Please finish the cloning procedure first.", { position: "bottom-center" });
                     } else if(error?.response?.status === 403) {
-                        console.log("Need more credits");
                         cloneModal.onOpen();
                     } else {
-                        console.log("Error:", error.response);
-                        toast("Something went wrong");
+                        toast.error("Something went wrong", { position: "bottom-center" });
                     }
                 });
         } catch (err) {
-            console.log("Submission Error");
-            toast("Something went wrong");
+            toast.error("Something went wrong", { position: "bottom-center" });
         } finally {
             setLoading(false);
         }
@@ -79,7 +75,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                         <div className="text-xl flex justify-between lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
                                 <div><b>Cloning Procedure</b></div>
-                                <Link href="/dashboard/clone/preview" passHref={true}>
+                                <Link href="/dashboard/clone" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
                                     </Button>

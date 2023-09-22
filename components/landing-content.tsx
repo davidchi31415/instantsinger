@@ -130,7 +130,7 @@ export const LandingContent = () => {
                     </AnimatePresence>
                 </div>
             </div>
-            <div className="md:hidden px-2">
+            <div className="md:hidden w-full">
                 <MobileLandingContentClone />
                 <MobileLandingContentConvert />
                 <MobileLandingContentPricing />

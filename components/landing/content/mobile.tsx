@@ -13,9 +13,9 @@ const font = Roboto_Slab({
 
 export const MobileLandingContentClone = () => {
     return (
-        <div className="flex justify-between max-w-4xl mx-auto items-center flex-wrap">
+        <div className="flex justify-between w-fit mx-auto items-center flex-wrap">
             <div className="flex flex-col max-w-md mx-auto">
-                <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
+                <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Clone <span className="underline--fancy">
                         your voice
                     </span>, straight from the browser.
@@ -34,7 +34,7 @@ export const MobileLandingContentClone = () => {
                     delay: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
                 }}
-                className="w-fit mx-auto mt-8 lg:mt-0"
+                className="w-fit mx-auto mt-2 lg:mt-0 scale-90"
             >
                 <PhoneComponent />
             </motion.div>
@@ -46,7 +46,7 @@ export const MobileLandingContentConvert = () => {
     const [visible, setVisible] = useState(false);
 
     return (
-        <div className="mt-20 flex justify-between max-w-4xl mx-auto items-center flex-wrap-reverse">
+        <div className="mt-12 flex justify-between w-full items-center flex-wrap-reverse">
             <motion.div 
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -62,7 +62,7 @@ export const MobileLandingContentConvert = () => {
                 <ConverterDemoComponent active={visible} />
             </motion.div>
             <div className="flex flex-col max-w-md mx-auto lg:mr-0]">
-                <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
+                <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Convert <span className="underline--fancy">
                         any song
                     </span>. Just paste a link.
@@ -78,9 +78,9 @@ export const MobileLandingContentConvert = () => {
 
 export const MobileLandingContentPricing = () => {
     return (
-        <div className="flex justify-between max-w-4xl mx-auto items-center flex-wrap">
+        <div className="flex justify-between w-full items-center flex-wrap">
             <div className="flex flex-col max-w-md mx-auto">
-                <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
+                <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Get started <span className="underline--fancy">
                         for free
                     </span>. No strings attached.
