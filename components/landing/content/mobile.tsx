@@ -34,7 +34,7 @@ export const MobileLandingContentClone = () => {
                     delay: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
                 }}
-                className="w-fit mx-auto mt-2 lg:mt-0 scale-90"
+                className="w-fit mx-auto mt-2 scale-90"
             >
                 <PhoneComponent />
             </motion.div>

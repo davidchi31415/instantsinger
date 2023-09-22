@@ -31,7 +31,7 @@ export default async function RootLayout({
         <body className={rubik.className}>
           <ModalProvider />
           <ToasterProvider />
-          <div className="w-full h-full pt-12 md:pt-0">
+          <div className="w-full h-full pt-12 md:pt-0 overflow-x-hidden">
             <Navbar convertCredits={convertCredits} />
             {children}
           </div>
