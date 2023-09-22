@@ -1,5 +1,4 @@
 import { CircleIcon, MoveLeftIcon, MoveRightIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { FakeRecorderComponent } from "./fake-recorder";
 import "./styles.css";
 import { Card } from "../../ui/card";

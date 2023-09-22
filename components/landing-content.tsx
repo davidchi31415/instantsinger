@@ -33,7 +33,7 @@ export const LandingContent = () => {
             else if (latest >= 0.6   && latest < 0.9 && currentIndex !== 1) newIndex = 1;
             else if (latest >= 0.9 && currentIndex !== 2) newIndex = 2;
             if (newIndex !== -1) {
-                setChanging(true); await sleep(1000);
+                setChanging(true); await sleep(500);
                 setIndex(newIndex);
                 setChanging(false);
             }
@@ -82,7 +82,7 @@ export const LandingContent = () => {
                         </p>
                     </div>
                 </div>
-                <div className="w-full h-[39rem] sticky top-[10vh]">
+                <div className="w-full h-[39rem] sticky top-[18vh]">
                     <AnimatePresence>
                         {!changing && currentIndex === 0 &&
                         <motion.div
@@ -92,7 +92,7 @@ export const LandingContent = () => {
                             viewport={{ amount: 0.25 }}
                             exit={{ opacity: 0, scale: 0.8 }}
                             transition={{
-                                duration: 0.75,
+                                duration: 0.4,
                                 ease: [0, 0.71, 0.2, 1.01]
                             }}
                             className="w-fit mx-auto mt-8 lg:mt-0"
@@ -106,7 +106,7 @@ export const LandingContent = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8 }}
                             transition={{
-                                duration: 0.75,
+                                duration: 0.4,
                                 ease: [0, 0.71, 0.2, 1.01]
                             }}
                             className="w-fit mx-auto mt-8 lg:mt-0"
@@ -120,7 +120,7 @@ export const LandingContent = () => {
                             whileInView={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{
-                                duration: 0.75,
+                                duration: 0.4,
                                 ease: [0, 0.71, 0.2, 1.01]
                             }}
                             className="w-fit mx-auto mt-8 lg:mt-0"
