@@ -44,7 +44,6 @@
     "dropzone": "^6.0.0-beta.2",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
-    "framer-motion": "^10.16.4",
     "lucide-react": "^0.263.1",
     "next": "13.4.12",
     "nprogress": "^0.2.0",
