@@ -19,7 +19,7 @@ export const LandingContentConvert = ({ inViewport, forwardedRef }) => {
     console.log(inViewport);
 
     return (
-        <div className={cn("mt-36 flex justify-between opacity-0 max-w-4xl mx-auto items-center flex-wrap-reverse transition-opacity duration-[1000]", 
+        <div className={cn("mt-20 flex justify-between opacity-0 max-w-4xl mx-auto items-center flex-wrap-reverse transition-opacity duration-[1000]", 
             visible ? "opacity-1" : "")
         }
             ref={forwardedRef}
