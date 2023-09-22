@@ -14,9 +14,9 @@ export const FakeConverterComponent = () => {
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-                <div className="my-4 flex items-center gap-4">
+                <div className="mb-4 flex items-center gap-4">
                     <div>URL:</div>
-                    <div className="w-[16rem]">
+                    <div className="w-[12rem] md:w-[16rem]">
                         <Input 
                             placeholder="ex: https://youtube.com/..."
                             value="https://www.youtube.com/watch?v=pbNs7tAUFkk&pp=ygULa2VzaGkgZHJ1bms%3D"
