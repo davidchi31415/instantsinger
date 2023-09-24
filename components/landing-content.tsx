@@ -38,7 +38,7 @@ export const LandingContent = () => {
     return (
         <div className="bg-primary/5 px-4 md:px-8 py-16">
             <div className="hidden md:grid grid-cols-2 max-w-4xl mx-auto h-[120rem]">
-                <div className="flex flex-col justify-between max-w-md mx-auto pt-36 pb-72">
+                <div className="flex flex-col justify-between max-w-md mx-auto pt-36 pb-80">
                     <div className="flex flex-col">
                         <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                             Clone <span className="underline--fancy">
@@ -75,7 +75,7 @@ export const LandingContent = () => {
                         </p>
                     </div>
                 </div>
-                <div className={cn("w-full h-[39rem] sticky overflow-x-clip", currentIndex === 2 ? "top-[calc(50%-250px)]" : "top-[calc(50%-307.5px)]")}>
+                <div className={cn("w-full h-[39rem] sticky overflow-x-clip", currentIndex === 2 ? "top-[calc(50%-235.2px)]" : "top-[calc(50%-307.5px)]")}>
                     {(currentIndex === 0 || currentIndex === 1) &&
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
@@ -111,6 +111,10 @@ export const LandingContent = () => {
                 <MobileLandingContentConvert />
                 <MobileLandingContentPricing />
             </div>
+            <div className="mb-20 text-center text-3xl w-fit mx-auto">
+                And if you need more, we have you covered :)
+            </div>
+            <PricingTable paidOnly={true} />
         </div>
     )
 }

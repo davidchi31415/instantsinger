@@ -4,15 +4,9 @@ import { BsDiscord } from "react-icons/bs";
 import PricingTable from "./pricing-table";
 import { Button } from "./ui/button";
 
-export const LandingPricing = () => {
+export const LandingContact = () => {
     return (
-        <div className="py-10 md:pt-12 md:pb-20 px-6 md:px-12 bg-primary/50">
-            <div className="pb-8">
-                <div className="mb-16 text-center text-3xl w-fit mx-auto font-medium">
-                    And if you need more, we have you covered :)
-                </div>
-                <PricingTable paidOnly={true} />
-            </div>
+        <div className="py-10 md:py-20 px-6 md:px-12 bg-primary/50">
             <div 
                 className="w-fit py-16 md:py-32 md:px-16 lg:px-32 xl:px-64 rounded-xl mx-auto text-white 
                 border-4 border-primary bg-primary shadow-xl
