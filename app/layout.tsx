@@ -21,12 +21,12 @@ export const metadata: Metadata = {
     apple: "/static/apple-touch-icon.png",
     other: [
       {
-        rel: "android-chrome",
+        rel: "icon",
         url: "/static/android-chrome-192x192.png",
         sizes: "192x192"
       },
       {
-        rel: "android-chrome",
+        rel: "icon",
         url: "/static/android-chrome-512x512.png",
         sizes: "512x512"
       }
