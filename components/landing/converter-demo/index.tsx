@@ -12,11 +12,11 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const views = [
     <FakeConverterComponent />,
     <ProgressCard initStatus="IN_PROGRESS" process="Converting" staticCard={true} 
-        noStatus={true} songName="keshi - drunk"
+        noStatus={true} songName="keshi - drunk (live acoustic)"
     />,
     <ConversionResultsComponent
         results={{
-            songName: "keshi - drunk",
+            songName: "keshi - drunk (live acoustic)",
             url : "url",
             owner: false,
         }}
