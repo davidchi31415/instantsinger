@@ -3,10 +3,10 @@
 import { SignUpButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { HeroDemo } from "./hero-demo";
+import { HeroDemo } from "./landing/hero/hero-demo";
 import { Roboto_Slab } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { ArrowDown, ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import { ArrowUpIcon } from "lucide-react";
 
 const font = Roboto_Slab({
     weight: "600",
@@ -31,7 +31,7 @@ export const LandingHero = () => {
                         </h1>
                     </div>
                     <div className="text-lg md:text-xl font-normal text-zinc-400 my-4">
-                        Clone your own voice for free. Then convert any song into your voice with the click of a button.
+                        Clone your voice for free. Then swap out any singer's voice with your own - with the click of a button.
                     </div>
                 </div>
                 <HeroDemo />

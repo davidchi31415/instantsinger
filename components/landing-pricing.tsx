@@ -6,10 +6,10 @@ import { Button } from "./ui/button";
 
 export const LandingPricing = () => {
     return (
-        <div className="py-10 md:py-20 px-6 md:px-12 bg-primary/50">
+        <div className="py-10 md:pt-12 md:pb-20 px-6 md:px-12 bg-primary/50">
             <div className="pb-8">
-                <div className="mb-10 text-center text-3xl w-fit mx-auto">
-                    And if you want more, we got you covered :)
+                <div className="mb-16 text-center text-3xl w-fit mx-auto font-medium">
+                    And if you need more, we have you covered :)
                 </div>
                 <PricingTable paidOnly={true} />
             </div>

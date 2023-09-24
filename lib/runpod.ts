@@ -383,7 +383,8 @@ export const getCurrentCloneJob = async ({ userId }: PrismadbProps) => {
             userId,
             OR: [
                 { status: "IN_QUEUE" },
-                { status: "IN_PROGRESS" }
+                { status: "IN_PROGRESS" },
+                { status: "SUBMITTED" }
             ]
         },
         orderBy: {

@@ -110,13 +110,13 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                             gap-2 rounded-xl bg-white border-primary text-black shadow-2xl"
                             style={
                                 pack.packKey === "pro" ?
-                                { boxShadow: "#E1B530 0px 8px 50px" } : {}
+                                { boxShadow: "#E1B530 0px 5px 72px", border: "solid 4px #EBCD73" } : {}
                             } 
                         >
                             <CardTitle 
                                 className={cn("px-4 py-2 text-2xl rounded-lg border-2",
                                 pack.packKey === "pro" ? 
-                                "border-primary/50 bg-white bg-[#FFF1E4] text-primary" 
+                                "border-primary/50 bg-white bg-[#EBCD73]/25 text-primary" 
                                 : "border-black/25 text-white bg-primary/75")}
                             >
                                 {pack.contents.label}
