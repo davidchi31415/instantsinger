@@ -112,7 +112,7 @@ export const LandingContent = () => {
                 <MobileLandingContentPricing />
             </div>
             <div className="mt-20 mb-6 md:mt-0 md:mb-20 text-center text-3xl w-fit mx-auto">
-                And if you need more, we have you covered :)
+                And if you want more, we have you covered :)
             </div>
             <PricingTable paidOnly={true} />
         </div>
