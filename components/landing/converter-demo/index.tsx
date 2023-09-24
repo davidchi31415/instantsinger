@@ -39,8 +39,8 @@ export const ConverterDemoComponent = ({ active, mini, playOnce }: ConverterDemo
     useEffect(() => {
         const animate = async () => {
             setAnimating(true);
-            if (currentIndex === 0) await sleep(2000);
-            else await sleep(3000);
+            if (currentIndex === 0) await sleep(1000);
+            else await sleep(2000);
 
             setVisible(false);
             await sleep(100);
