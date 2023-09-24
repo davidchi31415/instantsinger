@@ -59,8 +59,8 @@ export const LandingContent = () => {
                             </span>. Just paste a link.
                         </h3>
                         <p className="mt-2 text-lg">
-                            With your voice cloned, convert any song into your voice
-                            by simply pasting a YouTube link.
+                            Convert any song into your voice by simply pasting a YouTube link. We'll take care of
+                            the magic for you.
                         </p>
                     </motion.div>
                     <div className="flex flex-col">
