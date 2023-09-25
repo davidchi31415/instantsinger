@@ -7,6 +7,7 @@ import { isJobDone } from "@/lib/utils";
 interface UserData {
     clone: any;
     cloneJob: any;
+    cloneResultUrls: any[];
     convertJobs: any[];
     convertCredits: number;
     cloneCredits: number;
@@ -16,11 +17,12 @@ interface UserData {
 const getUserData = async () => {
     const { userId } = auth();
     if (userId === null) return {
-        clone: null, cloneJob: null, convertJobs: [],
+        clone: null, cloneJob: null, cloneResultUrls: [], convertJobs: [],
         cloneCredits: 0, convertCredits: 0
     };
 
     const clone = await getClone({ userId });
+    let cloneResultUrls:any[] = [];
     let cloneJob = await getCurrentCloneJob({ userId });
     if (!cloneJob) {
         cloneJob = await getCurrentUnsubmittedCloneJob({ userId });
@@ -29,7 +31,7 @@ const getUserData = async () => {
     const currentConvertJob = convertJobs.find(e => !isJobDone({ status: e.status })) || null;
     const { cloneCredits, convertCredits } = await getCredits();
     const res: UserData = { 
-        clone, cloneJob, convertJobs,
+        clone, cloneJob, cloneResultUrls, convertJobs,
         cloneCredits, convertCredits,
         currentConvertJob
     };

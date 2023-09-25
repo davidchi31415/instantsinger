@@ -69,16 +69,9 @@ export const Dashboard = ({ userData }) => {
   const needsCloneModal = useNeedsCloneModal();
 
   const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
-  const [cloneResultsUrls, setCloneResults] = useState<any>(null);
   useEffect(() => {
-    const fetchResults = async ({ clone }) => {
-      const { urls } = await getCloneResults({ clone });
-      setCloneResults(urls);
-    }
     if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
       needsCloneModal.onOpen();
-    } else if (userData.clone) {
-      fetchResults({ clone: userData.clone });
     }
   }, [userData]);
 
@@ -202,7 +195,7 @@ export const Dashboard = ({ userData }) => {
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
 
   const [players, toggle] = useMultiAudio({
-    urls: cloneResultsUrls ? cloneResultsUrls : []
+    urls: userData?.cloneResultsUrls ? userData.cloneResultsUrls : []
   });
 
   const songName = youtubeName ? `"${youtubeName}"` : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
