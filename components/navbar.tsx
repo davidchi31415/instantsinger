@@ -32,7 +32,7 @@ export const Navbar = ({ convertCredits }) => {
             >
                 <Image
                     priority
-                    src="/logo.svg"
+                    src="/label.svg"
                     alt="InstantSinger Logo"
                     width={40} height={40}
                 />

@@ -9,9 +9,9 @@ export const Empty = ({label} : EmptyProps) => {
     <div className="h-full flex flex-col items-center justify-center">
         <div className="relative h-60 w-60">
             <Image 
-                alt="Empty"
+                alt="Logo Placeholder"
                 fill
-                src="/empty.png"
+                src="/label.svg"
             />
         </div>
         <p className="text-muted-foreground text-md text-center">
