@@ -69,7 +69,7 @@ export const Dashboard = ({ userData }) => {
 
   const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
   useEffect(() => {
-    if (!userData.clone && !(cloningInProgress)) {
+    if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
       needsCloneModal.onOpen();
     }
   }, []);
@@ -213,7 +213,7 @@ export const Dashboard = ({ userData }) => {
                   <div className="mb-12 w-[18rem] md:w-[25rem]">
                       <ProgressCard 
                           process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
-                          onStatusChange={() => router.refresh()}
+                          onStatusChange={() => window.location.reload()}
                           initStatus={userData.cloneJob.status}
                       />
                   </div>
