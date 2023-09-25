@@ -68,7 +68,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
         <div>
             <CloneModal />
             {submitted ?
-                redirect("/dashboard")
+                window.location.href = "/dashboard"
                 :
                 <>
                     <div className="p-4 lg:px-8">

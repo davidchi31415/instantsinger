@@ -431,8 +431,10 @@ export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
             status: "NOT_SUBMITTED"
         }
     });
+    
+    if (!unsubmittedCloneJob) return null;
 
-    return unsubmittedCloneJob;
+    return exclude(unsubmittedCloneJob, ["userId"]);
 }
 
 export const getCloneResults = async ({ clone }) => {
