@@ -26,6 +26,7 @@ import { SettingsModal } from "./settings-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { RecordPlayerComponent } from "./record-player/record-player";
 import { NeedsCloneModal } from "./needs-clone-modal";
+import { getCloneResults } from "@/lib/runpod";
 
 const Player = ({ player, toggle }) => {
   return (
@@ -68,11 +69,18 @@ export const Dashboard = ({ userData }) => {
   const needsCloneModal = useNeedsCloneModal();
 
   const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
+  const [cloneResultsUrls, setCloneResults] = useState<any>(null);
   useEffect(() => {
+    const fetchResults = async ({ clone }) => {
+      const { urls } = await getCloneResults({ clone });
+      setCloneResults(urls);
+    }
     if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
       needsCloneModal.onOpen();
+    } else if (userData.clone) {
+      fetchResults({ clone: userData.clone });
     }
-  }, []);
+  }, [userData]);
 
   const [inputChoice, setInputChoice] = useState("youtube");
 
@@ -194,7 +202,7 @@ export const Dashboard = ({ userData }) => {
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
 
   const [players, toggle] = useMultiAudio({
-    urls: userData.cloneResultUrls?.length ? userData.cloneResultUrls : []
+    urls: cloneResultsUrls ? cloneResultsUrls : []
   });
 
   const songName = youtubeName ? `"${youtubeName}"` : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
