@@ -195,7 +195,7 @@ export const Dashboard = ({ userData }) => {
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
 
   const [players, toggle] = useMultiAudio({
-    urls: userData?.cloneResultsUrls ? userData.cloneResultsUrls : []
+    urls: userData?.cloneResultUrls ? userData.cloneResultUrls : []
   });
 
   const songName = youtubeName ? `"${youtubeName}"` : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
