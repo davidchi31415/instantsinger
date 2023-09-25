@@ -23,6 +23,10 @@ const getUserData = async () => {
 
     const clone = await getClone({ userId });
     let cloneResultUrls:any[] = [];
+    if (clone) {
+        const { urls } = await getCloneResults({ clone });
+        cloneResultUrls = urls;
+    }
     let cloneJob = await getCurrentCloneJob({ userId });
     if (!cloneJob) {
         cloneJob = await getCurrentUnsubmittedCloneJob({ userId });
