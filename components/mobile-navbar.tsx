@@ -33,7 +33,7 @@ export const MobileNavbar = ({ convertCredits=0 }: NavbarProps) => {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side='right' className='p-4 pt-36 z-[9999]'>
+      <SheetContent side='top' className='p-4 z-[9999]'>
         {isSignedIn ?
           <div className="w-fit mx-auto">
             <ConvertCreditCounter convertCredits={convertCredits} />

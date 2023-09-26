@@ -8,6 +8,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-
 import { AnimatedPhoneComponent, PhoneComponent } from "./landing/phone/phone";
 import { ConverterDemoComponent } from "./landing/converter-demo";
 import PricingTable from "./pricing-table";
+import { AnimatedConverterComponent, FakeConverterComponent } from "./landing/converter-demo/converter";
 
 const font = Roboto_Slab({
     weight: "600",
@@ -75,8 +76,12 @@ export const LandingContent = () => {
                         </p>
                     </div>
                 </div>
-                <div className={cn("w-full h-[39rem] sticky overflow-x-clip", currentIndex === 2 ? "top-[calc(50%-235.2px)]" : "top-[calc(50%-307.5px)]")}>
-                    {(currentIndex === 0 || currentIndex === 1) &&
+                <div className={cn("w-full h-[39rem] sticky overflow-x-clip", 
+                    currentIndex === 0 ? "top-[calc(50%-307.5px)]"
+                        : currentIndex === 1 ? "top-[calc(50%-256px)]"
+                            : "top-[calc(50%-235.2px)]")
+                }>
+                    {currentIndex === 0 &&
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
@@ -88,7 +93,21 @@ export const LandingContent = () => {
                             }}
                             className="w-fit mx-auto mt-8 lg:mt-0"
                         >  
-                            <AnimatedPhoneComponent index={currentIndex} />
+                            <PhoneComponent />
+                        </motion.div>}
+                        {currentIndex === 1 &&
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ amount: 0.25 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{
+                                duration: 0.5,
+                                ease: [0, 0.71, 0.2, 1.01]
+                            }}
+                            className="w-fit mx-auto mt-8 lg:mt-0"
+                        >  
+                            <AnimatedConverterComponent />
                         </motion.div>}
                         {currentIndex === 2 &&
                             <motion.div

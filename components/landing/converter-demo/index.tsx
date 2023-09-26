@@ -32,18 +32,14 @@ interface ConverterDemoComponentProps {
 
 export const ConverterDemoComponent = ({ active, mini, playOnce }: ConverterDemoComponentProps) => {
     const [animating, setAnimating] = useState(false);
-    const [currentIndex, setIndex] = useState(1);
+    const [currentIndex, setIndex] = useState(0);
     const [visible, setVisible] = useState(true);
     const [done, setDone] = useState(false);
 
     useEffect(() => {
         const animate = async () => {
             setAnimating(true);
-            if (currentIndex === 0) {
-                if (mini) await sleep(1000);
-                else await sleep(2000);
-            }
-            else await sleep(3000);
+            await sleep(3000);
 
             setVisible(false);
             await sleep(100);

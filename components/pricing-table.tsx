@@ -47,10 +47,10 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
             {!paidOnly &&
             <Card
                 className="w-[22rem] py-8 flex flex-col items-center justify-center \
-                    gap-2 rounded-xl bg-white text-black"
-                style={{
-                    boxShadow: "#3b82f6 0px 8px 50px"
-                }}
+                    gap-2 rounded-xl bg-white text-black shadow-2xl"
+                // style={{
+                //     boxShadow: "#3b82f6 0px 8px 50px"
+                // }}
             >
                 <CardTitle 
                     className="px-4 py-2 text-2xl rounded-lg border-2 border-black/25 text-white bg-primary/75"
@@ -107,10 +107,10 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                     return (
                         <Card key={pack.packKey} 
                             className="w-[22rem] py-8 flex flex-col items-center justify-center
-                            gap-2 rounded-xl bg-white border-primary text-black shadow-2xl"
+                            gap-2 rounded-xl bg-white text-black shadow-2xl"
                             style={
                                 pack.packKey === "pro" ?
-                                { boxShadow: "#E1B530 0px 5px 36px", border: "solid 4px #EBCD73" } : {}
+                                { boxShadow: "#E1B530 0px 5px 20px", border: "solid 4px #EBCD73" } : {}
                             } 
                         >
                             <CardTitle 
