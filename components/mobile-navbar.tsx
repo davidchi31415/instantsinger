@@ -3,7 +3,7 @@
 import { SignInButton, SignOutButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
 import { ConvertCreditCounter } from "./convert-credit-counter";
 import { CloneCreditCounter } from "./clone-credit-counter";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -33,49 +33,63 @@ export const MobileNavbar = ({ convertCredits=0 }: NavbarProps) => {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side='top' className='p-4 z-[9999]'>
+      <SheetContent side='right' className='p-4 pt-36 z-[9999]'>
         {isSignedIn ?
-          <div className="w-fit mx-auto">
-            <ConvertCreditCounter convertCredits={convertCredits} />
-          </div>
+          <SheetClose asChild>
+            <div className="w-fit mx-auto">
+              <ConvertCreditCounter convertCredits={convertCredits} />
+            </div>
+          </SheetClose>
           : ""
         }
         <div className="mt-8 flex flex-col text-xl gap-4 text-center">
-          <Link href="/dashboard" className={pathname.startsWith("/dashboard") ? 
-              "text-primary" : ""
-          }>
-              Dashboard
-          </Link>
-          <Link href="/pricing" className={pathname === "/pricing" ? 
-              "text-primary" : ""
-          }>
-              Pricing
-          </Link>
-          <Link href="/contact" className={pathname === "/contact" ? 
-              "text-primary" : ""
-          }>
-              Contact
-          </Link>
+          <SheetClose asChild>
+            <Link href="/dashboard" className={pathname.startsWith("/dashboard") ? 
+                "text-primary" : ""
+            }>
+                Dashboard
+            </Link>
+          </SheetClose>
+          <SheetClose asChild>
+            <Link href="/pricing" className={pathname === "/pricing" ? 
+                "text-primary" : ""
+            }>
+                Pricing
+            </Link>
+          </SheetClose>
+          <SheetClose asChild>
+            <Link href="/contact" className={pathname === "/contact" ? 
+                "text-primary" : ""
+            }>
+                Contact
+            </Link>
+          </SheetClose>
         </div>
         {isSignedIn ?
           <div className="flex justify-center mt-6">
             <SignOutButton>
+              <SheetClose asChild>
                 <Button variant="outline" className="rounded-lg border border-primary text-xl">
-                    Sign Out
+                  Sign Out
                 </Button>
+              </SheetClose>
             </SignOutButton>
           </div>
           :
           <div className="flex justify-center items-center gap-2 mt-6">
               <SignUpButton>
+                <SheetClose asChild>
                   <Button variant="default" className="rounded-lg text-xl">
-                      Sign Up
+                    Sign Up
                   </Button>
+                </SheetClose>
               </SignUpButton>
               <SignInButton>
+                <SheetClose asChild>
                   <Button variant="outline" className="rounded-lg border border-primary text-xl">
-                      Login
+                    Login
                   </Button>
+                </SheetClose>
               </SignInButton>
           </div>
         }
