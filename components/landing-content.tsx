@@ -38,7 +38,7 @@ export const LandingContent = () => {
 
     return (
         <div className="bg-primary/5 px-4 md:px-8 py-16">
-            <div className="hidden md:grid grid-cols-2 max-w-4xl mx-auto h-[120rem]">
+            {/* <div className="hidden md:grid grid-cols-2 max-w-4xl mx-auto h-[120rem]">
                 <div className="flex flex-col justify-between max-w-md mx-auto pt-36 pb-80">
                     <div className="flex flex-col">
                         <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
@@ -81,20 +81,6 @@ export const LandingContent = () => {
                         : currentIndex === 1 ? "top-[calc(50%-256px)]"
                             : "top-[calc(50%-235.2px)]")
                 }>
-                    {currentIndex === 0 &&
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ amount: 0.25 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{
-                                duration: 0.5,
-                                ease: [0, 0.71, 0.2, 1.01]
-                            }}
-                            className="w-fit mx-auto mt-8 lg:mt-0"
-                        >  
-                            <PhoneComponent />
-                        </motion.div>}
                         {currentIndex === 1 &&
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
@@ -124,8 +110,8 @@ export const LandingContent = () => {
                                 <PricingTable freeOnly />
                             </motion.div>}
                 </div>
-            </div>
-            <div className="md:hidden">
+            </div> */}
+            <div className="max-w-4xl mx-auto flex flex-col items-center gap-8 md:gap-16 pb-8 md:pb-36">
                 <MobileLandingContentClone />
                 <MobileLandingContentConvert />
                 <MobileLandingContentPricing />

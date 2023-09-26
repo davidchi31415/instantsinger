@@ -7,7 +7,6 @@ import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { BsDiscord } from "react-icons/bs";
 import { usePathname } from "next/navigation";
 import { ConvertCreditCounter } from "./convert-credit-counter";
 import { MobileNavbar } from "./mobile-navbar";

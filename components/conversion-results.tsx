@@ -57,7 +57,7 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
             return (
                 <div className="p-4 bg-white border rounded-sm shadow-xl">
                     <div className="mb-2 w-full">
-                        Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice!
+                        Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice 🔥!
                         <div className="mt-2 flex justify-between items-center gap-4">
                             <div className="flex items-center justify-center gap-2">
                                 {results.owner ?

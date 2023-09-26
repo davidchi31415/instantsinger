@@ -13,7 +13,7 @@ const font = Roboto_Slab({
 
 export const MobileLandingContentClone = () => {
     return (
-        <div className="flex justify-between mx-auto items-center flex-wrap">
+        <div className="flex justify-between w-full items-center flex-wrap md:mb-20">
             <div className="flex flex-col max-w-md mx-auto">
                 <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Clone <span className="underline--fancy">
@@ -21,20 +21,19 @@ export const MobileLandingContentClone = () => {
                     </span>, straight from the browser.
                 </h3>
                 <p className="mt-2 text-lg">
-                    Follow our procedure to clone yourself in <b className="text-primary">2 minutes</b>.
+                    Following our procedure takes just <b className="text-primary">2 minutes</b>.
                     That's gotta be some kind of record!
                 </p>
             </div>
             <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, amount: 0.25 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 0.9 }}
+                viewport={{ once: true, amount: 0.5 }}
                 transition={{
-                    duration: 2,
-                    delay: 0.5,
+                    duration: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
                 }}
-                className="w-fit mx-auto mt-2 scale-90"
+                className="w-fit mx-auto mt-2 scale-90 md:scale-100 md:mt-10"
             >
                 <PhoneComponent />
             </motion.div>
@@ -46,21 +45,7 @@ export const MobileLandingContentConvert = () => {
     const [visible, setVisible] = useState(false);
 
     return (
-        <div className="mt-12 flex justify-between w-full items-center flex-wrap-reverse">
-            <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, amount: 0.25 }}
-                onViewportEnter={() => setVisible(true)}
-                transition={{
-                    duration: 2,
-                    delay: 0.5,
-                    ease: [0, 0.71, 0.2, 1.01]
-                }}
-                className="w-fit mx-auto h-fit"
-            >
-                <ConverterDemoComponent active={visible} />
-            </motion.div>
+        <div className="flex justify-between w-full items-center flex-wrap">
             <div className="flex flex-col max-w-md mx-auto lg:mr-0]">
                 <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Convert <span className="underline--fancy">
@@ -68,17 +53,30 @@ export const MobileLandingContentConvert = () => {
                     </span>. Just paste a link.
                 </h3>
                 <p className="mt-2 text-lg">
-                    With your voice cloned, convert any song into your voice
-                    by simply pasting a YouTube link.
+                    Convert any song into your voice by simply pasting a YouTube link. We'll do
+                    the magic for you.
                 </p>
             </div>
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.75 }}
+                onViewportEnter={() => setVisible(true)}
+                transition={{
+                    duration: 0.5,
+                    ease: [0, 0.71, 0.2, 1.01]
+                }}
+                className="w-fit mx-auto h-fit"
+            >
+                <ConverterDemoComponent active={visible} playOnce={true} />
+            </motion.div>
         </div>
     )
 }
 
 export const MobileLandingContentPricing = () => {
     return (
-        <div className="flex justify-between w-full items-center flex-wrap">
+        <div className="lg:mt-20 flex justify-between w-full items-center flex-wrap">
             <div className="flex flex-col max-w-md mx-auto">
                 <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Get started <span className="underline--fancy">
@@ -91,15 +89,14 @@ export const MobileLandingContentPricing = () => {
                 </p>
             </div>
             <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, amount: 0.25 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.75 }}
                 transition={{
-                    duration: 2,
-                    delay: 0.5,
+                    duration: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
                 }}
-                className="w-full mx-auto mt-8 lg:mt-0"
+                className="w-full md:w-fit mx-auto mt-8 lg:mt-0"
             >
                 <PricingTable freeOnly={true} />
             </motion.div>

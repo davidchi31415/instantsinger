@@ -17,7 +17,7 @@ const views = [
     <ConversionResultsComponent
         results={{
             songName: "keshi - drunk (live acoustic)",
-            url : "url",
+            url : "https://storage.googleapis.com/instantsinger-public/landing_keshi.mp3",
             owner: false,
         }}
         mini={true}
@@ -58,7 +58,7 @@ export const ConverterDemoComponent = ({ active, mini, playOnce }: ConverterDemo
     if (mini) {
         return (
             <div 
-                className="h-[36rem] w-[22rem] flex flex-col items-center pointer-events-none cursor-default"
+                className="h-[36rem] w-[22rem] flex flex-col items-center"
             >
                 <div className="scale-[75%] w-[22rem] flex-start mt-12">{views[0]}</div>
                 <AnimatePresence mode="wait">
@@ -83,7 +83,7 @@ export const ConverterDemoComponent = ({ active, mini, playOnce }: ConverterDemo
     return (
         <div 
             className={cn("h-[20rem] w-[18rem] md:w-[22rem] flex items-center \
-            pointer-events-none cursor-default transition-opacity delay-[100] duration-[1000]", visible ? "" : "opacity-0")}
+            transition-opacity delay-[100] duration-[1000]", visible ? "" : "opacity-0")}
         >
             {views[currentIndex]}
         </div>
