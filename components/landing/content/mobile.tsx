@@ -27,13 +27,25 @@ export const MobileLandingContentClone = () => {
             </div>
             <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{
+                    duration: 0.5,
+                    ease: [0, 0.71, 0.2, 1.01]
+                }}
+                className="hidden md:block w-fit mx-auto mt-10"
+            >
+                <PhoneComponent />
+            </motion.div>
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 0.9 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{
                     duration: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
                 }}
-                className="w-fit mx-auto mt-2 scale-90 md:scale-100 md:mt-10"
+                className="md:hidden w-fit mx-auto mt-2 scale-90"
             >
                 <PhoneComponent />
             </motion.div>

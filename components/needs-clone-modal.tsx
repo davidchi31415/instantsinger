@@ -59,7 +59,7 @@ const views = [
                 <i>Row, Row, Row Your Boat</i>
             </div>
             <div className="mt-4">
-                The lyrics will be provided for you. Please take at least <b>2</b> minutes and at most <b>5</b> to finish.
+                The lyrics will be provided for you. Please take at least <b>2</b> minutes and at most <b>4</b> to finish.
             </div>
             <div className="text-center mt-2">
                 <b>It is okay if you mess up</b>.

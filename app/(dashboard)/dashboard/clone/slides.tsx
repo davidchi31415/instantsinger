@@ -152,7 +152,7 @@ const CloningSlides = ({ jobId }) => {
                 </CardContent>
             </Card>
         </div>
-        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={2} maxDuration={5} onRecordChange={setRecording} />
+        <RecorderComponent jobId={jobId} stepNumber={1} minDuration={2} maxDuration={4} onRecordChange={setRecording} />
     </>
   )
 }
