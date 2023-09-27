@@ -90,6 +90,7 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                         onPause={onStop ? onStop : () => {}}
                         onEnded={onStop ? onStop : () => {}}
                         style={{ border: "none", boxShadow: "none" }}
+                        preload="metadata"
                     />
                 </div>  
             )    
