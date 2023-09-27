@@ -53,7 +53,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const views = [
     <PhoneScreenContent />,
     <div className="flex justify-center items-start h-full">
-        <ConverterDemoComponent active={true} mini={true} playOnce={true} />
+        <ConverterDemoComponent active={true} mini={true} />
     </div>
 ];
 

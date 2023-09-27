@@ -50,7 +50,7 @@ export const MobileLandingContentConvert = () => {
                 </p>
             </div>
             <div className="w-fit mx-auto h-fit">
-                <ConverterDemoComponent active={true} playOnce={true} />
+                <ConverterDemoComponent active={true} />
             </div>
         </div>
     )

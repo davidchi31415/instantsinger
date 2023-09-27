@@ -27,34 +27,25 @@ const views = [
 interface ConverterDemoComponentProps {
     active: boolean;
     mini?: boolean;
-    playOnce?: boolean;
 }
 
-export const ConverterDemoComponent = ({ mini, playOnce }: ConverterDemoComponentProps) => {
+export const ConverterDemoComponent = ({ mini }: ConverterDemoComponentProps) => {
     const [animating, setAnimating] = useState(false);
     const [currentIndex, setIndex] = useState(0);
-    const [visible, setVisible] = useState(true);
     const [done, setDone] = useState(false);
-    const [active, setActive] = useState(false);
 
     useEffect(() => {
         const animate = async () => {
             setAnimating(true);
-
-            setVisible(false);
-            await sleep(100);
-            const newIndex = (currentIndex + 1) % 3;
-            setIndex(e => (e + 1) % 3);
-            setVisible(true);
-
-            if (newIndex === 2 && playOnce) setDone(true);
             await sleep(3000);
+            setIndex(2);
+            setDone(true);
             setAnimating(false);
         };
-        if ((active && !done) && !animating) {
+        if (!done && !animating && currentIndex === 1) {
             animate();
         }
-    }, [active, animating, done, playOnce]);
+    }, [animating, currentIndex, done]);
 
     if (mini) {
         return (
@@ -84,10 +75,10 @@ export const ConverterDemoComponent = ({ mini, playOnce }: ConverterDemoComponen
     return (
         <div 
             className={cn("h-[20rem] w-[18rem] md:w-[22rem] flex items-center \
-            transition-opacity delay-[100] duration-[1000]", visible ? "" : "opacity-0")}
+            transition-opacity delay-[100] duration-[1000]")}
         >
             {currentIndex === 0 ? 
-                <FakeConverterComponent onPlay={() => setActive(true)} />
+                <FakeConverterComponent onPlay={() => setIndex(1)} />
                 : views[currentIndex]
             }
         </div>
