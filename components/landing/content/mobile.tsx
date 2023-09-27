@@ -40,7 +40,7 @@ export const MobileLandingContentClone = () => {
             <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 0.9 }}
-                viewport={{ once: true, amount: 0.5 }}
+                viewport={{ once: true, amount: 0.25 }}
                 transition={{
                     duration: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
@@ -72,7 +72,7 @@ export const MobileLandingContentConvert = () => {
             <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.75 }}
+                viewport={{ once: true, amount: 0.25 }}
                 onViewportEnter={() => setVisible(true)}
                 transition={{
                     duration: 0.5,
@@ -103,7 +103,7 @@ export const MobileLandingContentPricing = () => {
             <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.75 }}
+                viewport={{ once: true, amount: 0.25 }}
                 transition={{
                     duration: 0.5,
                     ease: [0, 0.71, 0.2, 1.01]
