@@ -2,10 +2,9 @@
 
 import { Button } from "./ui/button";
 import { cn, downloadFromURL } from "@/lib/utils";
-import { ArrowRightIcon, ArrowUpIcon, CopyIcon, DownloadIcon, ExternalLinkIcon } from "lucide-react";
+import { ArrowUpIcon, DownloadIcon, ExternalLinkIcon } from "lucide-react";
 import { AudioCard } from "./audio-card";
 import { AlertCard } from "./alert-card";
-import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
