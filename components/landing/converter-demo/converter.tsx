@@ -9,7 +9,7 @@ import { ConversionResultsComponent } from "@/components/conversion-results";
 import { useEffect, useState } from "react";
 import { ConverterDemoComponent } from ".";
 
-export const FakeConverterComponent = () => {
+export const FakeConverterComponent = ({ onPlay }) => {
     return (
         <Card className="shadow-xl border-2">
             <CardHeader>
@@ -34,7 +34,7 @@ export const FakeConverterComponent = () => {
                     className="mx-auto w-fit shadow-xl"
                 >
                 <Button
-                    type="submit"
+                    onClick={onPlay}
                     size="lg" className="text-xl border-2 border-black"
                 >
                     Convert

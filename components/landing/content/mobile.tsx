@@ -3,7 +3,7 @@ import { PhoneComponent } from "../phone/phone";
 import { Roboto_Slab } from "next/font/google";
 import { motion } from "framer-motion";
 import { ConverterDemoComponent } from "../converter-demo";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import PricingTable from "@/components/pricing-table";
 
 const font = Roboto_Slab({
@@ -25,37 +25,17 @@ export const MobileLandingContentClone = () => {
                     That's gotta be some kind of record!
                 </p>
             </div>
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{
-                    duration: 0.5,
-                    ease: [0, 0.71, 0.2, 1.01]
-                }}
-                className="hidden md:block w-fit mx-auto mt-10"
-            >
+            <div className="hidden md:block w-fit mx-auto mt-10">
                 <PhoneComponent />
-            </motion.div>
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 0.9 }}
-                viewport={{ once: true }}
-                transition={{
-                    duration: 0.5,
-                    ease: [0, 0.71, 0.2, 1.01]
-                }}
-                className="md:hidden w-fit mx-auto mt-2 scale-90"
-            >
+            </div>
+            <div className="md:hidden w-fit mx-auto mt-2 scale-90">
                 <PhoneComponent />
-            </motion.div>
+            </div>
         </div>
     )
 }
 
 export const MobileLandingContentConvert = () => {
-    const [visible, setVisible] = useState(false);
-
     return (
         <div className="flex justify-between w-full items-center flex-wrap">
             <div className="flex flex-col max-w-md mx-auto lg:mr-0]">
@@ -69,19 +49,9 @@ export const MobileLandingContentConvert = () => {
                     the magic for you.
                 </p>
             </div>
-            <motion.div 
-                // initial={{ opacity: 0, scale: 0.8 }}
-                // whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                onViewportEnter={() => setVisible(true)}
-                transition={{
-                    duration: 0.5,
-                    ease: [0, 0.71, 0.2, 1.01]
-                }}
-                className="w-fit mx-auto h-fit"
-            >
-                <ConverterDemoComponent active={visible} playOnce={true} />
-            </motion.div>
+            <div className="w-fit mx-auto h-fit">
+                <ConverterDemoComponent active={true} playOnce={true} />
+            </div>
         </div>
     )
 }
@@ -100,18 +70,9 @@ export const MobileLandingContentPricing = () => {
                     to decide if you like it or not.
                 </p>
             </div>
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{
-                    duration: 0.5,
-                    ease: [0, 0.71, 0.2, 1.01]
-                }}
-                className="w-full md:w-fit mx-auto mt-8 lg:mt-0"
-            >
+            <div className="w-full md:w-fit mx-auto mt-8 lg:mt-0">
                 <PricingTable freeOnly={true} />
-            </motion.div>
+            </div>
         </div>
     )
 }

@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const views = [
-    <FakeConverterComponent />,
+    "",
     <ProgressCard initStatus="IN_PROGRESS" process="Converting" staticCard={true} 
         noStatus={true} songName="keshi - drunk (live acoustic)"
     />,
@@ -30,16 +30,16 @@ interface ConverterDemoComponentProps {
     playOnce?: boolean;
 }
 
-export const ConverterDemoComponent = ({ active, mini, playOnce }: ConverterDemoComponentProps) => {
+export const ConverterDemoComponent = ({ mini, playOnce }: ConverterDemoComponentProps) => {
     const [animating, setAnimating] = useState(false);
     const [currentIndex, setIndex] = useState(0);
     const [visible, setVisible] = useState(true);
     const [done, setDone] = useState(false);
+    const [active, setActive] = useState(false);
 
     useEffect(() => {
         const animate = async () => {
             setAnimating(true);
-            await sleep(3000);
 
             setVisible(false);
             await sleep(100);
@@ -48,6 +48,7 @@ export const ConverterDemoComponent = ({ active, mini, playOnce }: ConverterDemo
             setVisible(true);
 
             if (newIndex === 2 && playOnce) setDone(true);
+            await sleep(3000);
             setAnimating(false);
         };
         if ((active && !done) && !animating) {
@@ -85,7 +86,10 @@ export const ConverterDemoComponent = ({ active, mini, playOnce }: ConverterDemo
             className={cn("h-[20rem] w-[18rem] md:w-[22rem] flex items-center \
             transition-opacity delay-[100] duration-[1000]", visible ? "" : "opacity-0")}
         >
-            {views[currentIndex]}
+            {currentIndex === 0 ? 
+                <FakeConverterComponent onPlay={() => setActive(true)} />
+                : views[currentIndex]
+            }
         </div>
     );
 }
