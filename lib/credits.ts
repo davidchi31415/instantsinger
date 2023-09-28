@@ -60,9 +60,5 @@ export const getCredits = async () => {
     const cloneCredits = user.cloneCredits;
     const convertCredits = user.convertCredits;
 
-    if (!user) {
-        return { cloneCredits: 0, convertCredits: 0};
-    } else {
-        return { cloneCredits, convertCredits };
-    }
+    return { cloneCredits, convertCredits };
 }

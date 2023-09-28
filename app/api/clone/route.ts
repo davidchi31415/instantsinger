@@ -34,22 +34,27 @@ export async function POST(
         });
         if (!currentCloneJob) return new NextResponse("Clone job not found", { status: 400 });
 
-        const requiredFiles = [
-            '1'
-        ];
-        const uploadedFiles = await getFileList({ directory: `training_data/${currentCloneJob.id}` });
+        // const requiredFiles = [
+        //     '1'
+        // ];
+        // const uploadedFiles = await getFileList({ directory: `training_data/${currentCloneJob.id}` });
 
-        // Make sure necessary files are present
-        const missingFiles: string[] = [];
-        for (let i = 0; i < requiredFiles.length; i++) {
-            const fileExists = uploadedFiles.fileNames.some((fileName) => fileName === requiredFiles[i]);
+        // // Make sure necessary files are present
+        // const missingFiles: string[] = [];
+        // for (let i = 0; i < requiredFiles.length; i++) {
+        //     const fileExists = uploadedFiles.fileNames.some((fileName) => fileName === requiredFiles[i]);
 
-            if (!fileExists) {
-                missingFiles.push(requiredFiles[i]);
-            }
-        }
-        if (missingFiles.length) {
-            return new NextResponse(JSON.stringify({ missingFiles }), { status: 402 })
+        //     if (!fileExists) {
+        //         missingFiles.push(requiredFiles[i]);
+        //     }
+        // }
+        // if (missingFiles.length) {
+        //     return new NextResponse(JSON.stringify({ missingFiles }), { status: 402 })
+        // }
+
+        const fileUploaded = await checkFileExists({ directory: `training_data/${currentCloneJob.id}`, fileName: "1" });
+        if (!fileUploaded) {
+            return new NextResponse("Missing file for cloning voice", { status: 400 });
         }
 
         const railwayResponse = await axios.post(`${process.env.RAILWAY_URL}/api/clone`, {
