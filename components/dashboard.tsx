@@ -16,7 +16,7 @@ import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn, isJobDone, parseYoutubeLink } from "@/lib/utils";
-import { useNeedsCloneModal, useProModal, useSettingsModal } from "@/hooks/use-modal";
+import { useErrorModal, useNeedsCloneModal, useProModal, useSettingsModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { ArrowDownIcon, HelpCircleIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
@@ -26,7 +26,7 @@ import { SettingsModal } from "./settings-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { RecordPlayerComponent } from "./record-player/record-player";
 import { NeedsCloneModal } from "./needs-clone-modal";
-import { Slider } from "./ui/slider";
+import { ErrorModal } from "./error-modal";
 
 const Player = ({ player, toggle }) => {
   return (
@@ -67,13 +67,19 @@ export const Dashboard = ({ userData }) => {
   const proModal = useProModal();
   const settingsModal = useSettingsModal();
   const needsCloneModal = useNeedsCloneModal();
+  const errorModal = useErrorModal();
 
   const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
-  // useEffect(() => {
-  //   if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
-  //     needsCloneModal.onOpen();
-  //   }
-  // }, [userData]);
+  useEffect(() => {
+    if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
+      needsCloneModal.onOpen();
+    } else if (!userData.currentConvertJob 
+      && userData.convertJobs?.length
+      && userData.convertJobs[0]?.status === "FAILED"
+    ) {
+      errorModal.onOpen();
+    }
+  }, [userData]);
 
   const [inputChoice, setInputChoice] = useState("youtube");
   const [pitchMethodChoice, setPitchMethod] = useState("auto");
@@ -211,6 +217,7 @@ export const Dashboard = ({ userData }) => {
     <div>
         <NeedsCloneModal />
         <SettingsModal userData={userData} />
+        <ErrorModal message="Convert job failed" />
         <div className="p-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto">
             <div className="flex flex-col items-center">

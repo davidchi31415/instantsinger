@@ -35,3 +35,9 @@ export const useHistoryModal = create<useProModalStore>((set) => ({
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false })
 }));
+
+export const useErrorModal = create<useProModalStore>((set) => ({
+    isOpen: false,
+    onOpen: () => set({ isOpen: true }),
+    onClose: () => set({ isOpen: false })
+}));
