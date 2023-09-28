@@ -73,7 +73,7 @@ export const Dashboard = ({ userData }) => {
   useEffect(() => {
     if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
       needsCloneModal.onOpen();
-    } else if (!userData.currentConvertJob 
+    } else if (!(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED") && !userData.currentConvertJob 
       && userData.convertJobs?.length
       && userData.convertJobs[0]?.status === "FAILED"
     ) {

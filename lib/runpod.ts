@@ -446,14 +446,5 @@ export const getCloneResults = async ({ clone }) => {
         )
     );
 
-    if (!urls?.length) {
-        fileNames = [`${clone.id}/sample_1.wav`, `${clone.id}/sample_2.wav`, `${clone.id}/sample_3.wav`];
-        urls = await Promise.all(
-            fileNames.map(
-                async (name) => await getDownloadURL({ directory: "inference_outputs", fileName: name })
-            )
-        );
-    }
-
     return { fileNames, urls };
 }
