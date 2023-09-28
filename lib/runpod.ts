@@ -438,13 +438,22 @@ export const getCurrentUnsubmittedCloneJob = async ({ userId }) => {
 }
 
 export const getCloneResults = async ({ clone }) => {
-    const fileNames = [`${clone.id}/sample_1.wav`, `${clone.id}/sample_2.wav`, `${clone.id}/sample_3.wav`];
+    let fileNames = [`${clone.id}/sample_1.mp3`, `${clone.id}/sample_2.mp3`, `${clone.id}/sample_3.mp3`];
 
-    const urls = await Promise.all(
+    let urls = await Promise.all(
         fileNames.map(
             async (name) => await getDownloadURL({ directory: "inference_outputs", fileName: name })
         )
     );
+
+    if (!urls?.length) {
+        fileNames = [`${clone.id}/sample_1.wav`, `${clone.id}/sample_2.wav`, `${clone.id}/sample_3.wav`];
+        urls = await Promise.all(
+            fileNames.map(
+                async (name) => await getDownloadURL({ directory: "inference_outputs", fileName: name })
+            )
+        );
+    }
 
     return { fileNames, urls };
 }

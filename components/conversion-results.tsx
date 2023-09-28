@@ -76,7 +76,7 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                             </div>
                             {results.owner ?
                                 <Button variant="ghost" size="icon" 
-                                    onClick={() => downloadFromURL(results.url, `converted_${results.songName}.wav`)}
+                                    onClick={() => downloadFromURL(results.url, `converted_${results.songName}.mp3`)}
                                 >
                                     <DownloadIcon />
                                 </Button> : ""}
