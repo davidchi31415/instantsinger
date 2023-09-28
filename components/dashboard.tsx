@@ -217,7 +217,7 @@ export const Dashboard = ({ userData }) => {
     <div>
         <NeedsCloneModal />
         <SettingsModal userData={userData} />
-        <ErrorModal message="Convert job failed" />
+        <ErrorModal message={userData?.convertJobs?.length ? userData.convertJobs[0]?.message : ""} />
         <div className="p-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto">
             <div className="flex flex-col items-center">
