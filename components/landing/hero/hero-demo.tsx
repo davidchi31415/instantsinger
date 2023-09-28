@@ -2,7 +2,7 @@
 
 import { ArrowRightIcon, PauseIcon, PlayIcon } from "lucide-react";
 import { Button } from "../../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Select,
     SelectContent,
@@ -47,6 +47,10 @@ export const HeroDemo = () => {
             setActivePlayer(name);
         }
     }
+
+    useEffect(() => {
+        return () => globalAudio.pause();
+    }, []);
 
     return (
         <div>
