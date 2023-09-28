@@ -19,14 +19,14 @@ import { cn, isJobDone, parseYoutubeLink } from "@/lib/utils";
 import { useNeedsCloneModal, useProModal, useSettingsModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
-import { ArrowDownIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
+import { ArrowDownIcon, HelpCircleIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
 import { HistoryTable } from "./history-table";
 import { useMultiAudio } from "@/hooks/use-multi-audio";
 import { SettingsModal } from "./settings-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { RecordPlayerComponent } from "./record-player/record-player";
 import { NeedsCloneModal } from "./needs-clone-modal";
-import { getCloneResults } from "@/lib/runpod";
+import { Slider } from "./ui/slider";
 
 const Player = ({ player, toggle }) => {
   return (
@@ -69,13 +69,15 @@ export const Dashboard = ({ userData }) => {
   const needsCloneModal = useNeedsCloneModal();
 
   const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
-  useEffect(() => {
-    if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
-      needsCloneModal.onOpen();
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (!userData.clone && !(userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED")) {
+  //     needsCloneModal.onOpen();
+  //   }
+  // }, [userData]);
 
   const [inputChoice, setInputChoice] = useState("youtube");
+  const [pitchMethodChoice, setPitchMethod] = useState("auto");
+  const [pitchShift, setPitchShift] = useState("down");
 
   const [youtubeKey, setYoutubeKey] = useState(Date.now()); // For resetting component
   const [youtubeLink, setYoutubeLink] = useState("");
@@ -143,6 +145,10 @@ export const Dashboard = ({ userData }) => {
         convertParams["youtubeName"] = youtubeName;
       }
 
+      if (pitchMethodChoice === "manual") {
+        convertParams["pitchShift"] = pitchShift;
+      }
+
       setConverting(true); 
       await axios.post('/api/convert', convertParams)
         .then((response) => { 
@@ -190,6 +196,7 @@ export const Dashboard = ({ userData }) => {
       retrieveResults();
     }
   }, [isConverting, currentStatus]);
+
 
   const inputNotReady = ((inputChoice === "upload" && !fileUploaded) ||
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
@@ -300,6 +307,54 @@ export const Dashboard = ({ userData }) => {
                           key={fileKey}
                           durationLimit={10}
                         />}
+                      <div className="mb-4 flex items-center">
+                        <div>Pitch Shift:</div>
+                        <div className="ml-2 md:ml-4 w-[7rem]">
+                          <Select onValueChange={(val) => setPitchMethod(val)}
+                            defaultValue={pitchMethodChoice}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose pitch shift"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectItem value="auto" className="cursor-pointer">Auto</SelectItem>
+                                <SelectItem value="manual" className="cursor-pointer">Manual</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <Button variant="ghost" className="w-fit h-fit p-2">
+                          <HelpCircleIcon />
+                        </Button>
+                      </div>
+                      {pitchMethodChoice === "auto" ? ""
+                        :
+                        <div className="pt-4 w-full flex flex-col items-center">
+                          <div className="text-md w-full flex justify-center items-center gap-2">
+                            Shift{" "}
+                            <div className="w-[5rem]">
+                              <Select onValueChange={(val) => setPitchShift(val)}
+                                defaultValue={pitchShift}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectItem value="up" className="cursor-pointer">up</SelectItem>
+                                    <SelectItem value="down" className="cursor-pointer">down</SelectItem>
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            by an octave
+                          </div>
+                          <div className="pt-4 max-w-sm">
+                            <AlertCard title="Caution" message="If you shift the song outside your vocal range, it could affect conversion quality." />
+                          </div>
+                        </div>
+                      }
                     </CardContent>
                     <CardFooter>
                       {userData.clone ?
@@ -327,9 +382,9 @@ export const Dashboard = ({ userData }) => {
                         </div>
                         :
                           cloningInProgress ?
-                          <div className="text-center w-fit mx-auto">Please wait for your clone to be ready.</div>
+                          <div className="text-center w-fit mx-auto text-primary">Please wait for your clone to be ready.</div>
                           : 
-                          <div className="text-center w-fit mx-auto">You need a voice clone first.</div>}
+                          <div className="text-center w-fit mx-auto text-primary">You need a voice clone first.</div>}
                     </CardFooter>
                   </Card>
                 </TabsContent>
