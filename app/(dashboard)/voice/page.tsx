@@ -1,8 +1,7 @@
 import { CloneResultsComponent } from "@/components/clone-results";
-import { ConversionResultsComponent } from "@/components/conversion-results";
 import { Empty } from "@/components/empty";
 import prismadb from "@/lib/prismadb";
-import { _getConversionPublic, getCloneResults, getConversionResults } from "@/lib/runpod";
+import { _getConversionPublic, getCloneResults } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
 
 

@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import { getCredits, updateCredits } from "@/lib/credits";
 import { _getClone, _submitConvertJob, getConversion } from "@/lib/runpod";
 import prismadb from "@/lib/prismadb";
 
@@ -18,7 +17,6 @@ export async function POST(
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
-        console.log(isPublic);
 
         const conversion = await getConversion({ userId, conversionId });
         if (!conversion) return new NextResponse("Could not find conversion", { status: 400 });
