@@ -147,7 +147,7 @@ export const Dashboard = ({ userData }) => {
         
       const convertParams = {};
       if (inputChoice === "youtube") {
-        convertParams["youtubeId"] = "weiofh";
+        convertParams["youtubeId"] = youtubeId;
         convertParams["youtubeName"] = youtubeName;
       }
 
