@@ -135,7 +135,15 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                                 </Button>
                             </div>
                         }
-                    <AudioCard url={results.url} />
+                    <AudioPlayer
+                        src={results.url}
+                        autoPlay={false}
+                        onPlay={onPlay ? onPlay : () => {}}
+                        onPause={onStop ? onStop : () => {}}
+                        onEnded={onStop ? onStop : () => {}}
+                        style={{ border: "none", boxShadow: "none" }}
+                        preload="metadata"
+                    />
                     </div>
                 </div>  
                 <div className="mt-6 w-full md:max-w-lg mx-auto">

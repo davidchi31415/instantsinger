@@ -2,6 +2,7 @@ import { ConversionResultsComponent } from "@/components/conversion-results";
 import { Empty } from "@/components/empty";
 import { _getConversionPublic, getConversionResults } from "@/lib/runpod";
 import { auth } from "@clerk/nextjs";
+import ConversionResultUI from "./results-ui";
 
 
 const getResults = async ({ conversionId }: { conversionId: string }) => {
@@ -42,9 +43,7 @@ const ConversionResultPage = async ({
         )
     } else {
         return (
-            <div className="px-4 lg:px-8">
-                <ConversionResultsComponent results={results} />
-            </div>
+            <ConversionResultUI results={results} />
         )
     }
 }
