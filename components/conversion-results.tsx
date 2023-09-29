@@ -147,7 +147,7 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
                     </div>
                 </div>  
                 <div className="mt-12 pb-12 w-full md:max-w-lg mx-auto">
-                    {!isSignedIn ? ""
+                    {isSignedIn ? ""
                         : 
                         <div className="flex flex-col items-center gap-4">
                             <div className="text-2xl text-center">Wanna try it yourself?</div>
