@@ -79,7 +79,7 @@ export const CloneResultsComponent = ({ results }) => {
                                                     Sample {i+1}
                                                 </div>
                                                 <Button variant="ghost" size="icon" 
-                                                    onClick={() => downloadFromURL(url, results.fileNames ? results.fileNames[i] : `sample_${i+1}.mp3`)}
+                                                    onClick={() => downloadFromURL(url, results.fileNames ? results.fileNames[i] : `sample_${i+1}.wav`)}
                                                 >
                                                     <DownloadIcon />
                                                 </Button>
