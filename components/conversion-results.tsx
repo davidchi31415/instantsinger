@@ -99,9 +99,9 @@ export const ConversionResultsComponent = ({ results, mini=false, onPlay, onStop
             <div>
                 <div className="p-4 max-w-2xl mx-auto border rounded-sm shadow-xl">
                     <div className="mb-2 w-full">
-                        {results.owner ?     
-                            <div className="mb-2">Here's "<b>{ results?.songName }</b>" converted into your voice!</div>
-                            : <div className="mb-2">Here's me singing "<b>{ results?.songName }</b>" 🔥!</div>}
+                        <div className="mb-2">
+                            Here's "<b>{ results?.songName }</b>" converted into { results.owner ? "your" : "my" } voice 🔥!
+                        </div>
                         {results.owner ?
                             <div className="flex justify-between items-center gap-4">
                                 <div className="flex items-center justify-center gap-2">
