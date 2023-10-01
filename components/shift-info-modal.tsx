@@ -1,14 +1,13 @@
 "use client";
 
-import { useErrorModal } from "@/hooks/use-modal";
+import { useShiftInfoModal } from "@/hooks/use-modal";
 import { Dialog, DialogHeader, DialogContent, DialogTitle, DialogDescription, DialogFooter } from "./ui/dialog";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { AlertCard } from "./alert-card";
 
-export const ErrorModal = ({ message }) => {
-    const modal = useErrorModal();
 
+export const PitchShiftModal = () => {
+    const modal = useShiftInfoModal();
     const [isMounted, setMounted] = useState(false);
     useEffect(() => {
         setMounted(true);
@@ -19,27 +18,24 @@ export const ErrorModal = ({ message }) => {
     return (
         <Dialog open={modal.isOpen} onOpenChange={modal.onClose}>
             <DialogContent className="max-w-[300px] md:max-w-md rounded-xl shadow-xl">
-                <DialogHeader className="overflow-x-clip">
+                <DialogHeader className="overflow-x-clip h-[270px]">
                     <DialogTitle 
                         className="flex justify-center items-center
-                        flex-col gap-y-4"
+                        flex-col gap-y-4 pb-2"
                     >
                         <div className="text-2xl flex items-center gap-x-2 p-2">
-                            Conversion Error
+                            Pitch Shift
                         </div>
                     </DialogTitle>
+                    <DialogDescription
+                        className="pt-2 text-zinc-900 font-medium flex flex-col gap-2 text-lg"
+                    >
+                        <p>This setting shifts the vocals of the song to better match your vocal range.</p>
+                        <p><span className="font-medium text-primary">Auto</span> = shift only if needed.</p>
+                        <p><span className="font-medium text-primary">Manual</span> = force it to shift.</p>
+                        <p><span className="font-medium text-primary">Off</span> = do not shift the song.</p>
+                    </DialogDescription>    
                 </DialogHeader>
-                <DialogDescription>
-                    <div className="text-lg">
-                        An error occurred while processing your last song conversion.
-                    </div>
-                    <div className="py-4 max-w-sm mx-auto">
-                        <AlertCard variant="destructive" title="Details" message={message} /> 
-                    </div>
-                    <div className="text-lg">
-                        We will look into this. You have been refunded your credit.
-                    </div>
-                </DialogDescription>
                 <DialogFooter>
                     <Button className="w-fit p-4 text-xl mx-auto font-normal" onClick={() => modal.onClose()}>
                         Got It

@@ -16,7 +16,7 @@ import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn, isJobDone, parseYoutubeLink } from "@/lib/utils";
-import { useErrorModal, useNeedsCloneModal, useProModal, useSettingsModal } from "@/hooks/use-modal";
+import { useErrorModal, useNeedsCloneModal, useProModal, useSettingsModal, useShiftInfoModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { ArrowDownIcon, HelpCircleIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
@@ -27,6 +27,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { RecordPlayerComponent } from "./record-player/record-player";
 import { NeedsCloneModal } from "./needs-clone-modal";
 import { ErrorModal } from "./error-modal";
+import { PitchShiftModal } from "./shift-info-modal";
 
 const Player = ({ player, toggle }) => {
   return (
@@ -68,6 +69,7 @@ export const Dashboard = ({ userData }) => {
   const settingsModal = useSettingsModal();
   const needsCloneModal = useNeedsCloneModal();
   const errorModal = useErrorModal();
+  const pitchShiftModal = useShiftInfoModal();
 
   const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
   useEffect(() => {
@@ -222,6 +224,7 @@ export const Dashboard = ({ userData }) => {
         <NeedsCloneModal />
         <SettingsModal userData={userData} />
         <ErrorModal message={userData?.convertJobs?.length ? userData.convertJobs[0]?.message : ""} />
+        <PitchShiftModal />
         <div className="p-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto">
             <div className="flex flex-col items-center">
@@ -336,7 +339,7 @@ export const Dashboard = ({ userData }) => {
                             </SelectContent>
                           </Select>
                         </div>
-                        <Button variant="ghost" className="w-fit h-fit p-2">
+                        <Button variant="ghost" className="w-fit h-fit p-2" onClick={() => pitchShiftModal.onOpen()}>
                           <HelpCircleIcon />
                         </Button>
                       </div>
