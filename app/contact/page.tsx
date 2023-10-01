@@ -5,7 +5,7 @@ import { BsDiscord } from "react-icons/bs";
 
 const ContactPage = async () => {
     return (
-        <div className="h-full pt-40 md:pt-20 px-12 bg-primary/50" >
+        <div className="h-full pt-40 md:pt-20 px-12 bg-[#163B8D]" >
             <div 
                 className="w-fit py-16 md:py-32 md:px-16 lg:px-32 xl:px-64 rounded-xl mx-auto text-white 
                 border-4 border-primary bg-primary shadow-xl
