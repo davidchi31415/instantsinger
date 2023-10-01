@@ -153,6 +153,10 @@ export const Dashboard = ({ userData }) => {
 
       if (pitchMethodChoice === "manual") {
         convertParams["pitchShift"] = pitchShift;
+      } else if (pitchMethodChoice === "off") {
+        convertParams["pitchShift"] = "off";
+      } else {
+        convertParams["pitchShift"] = "auto";
       }
 
       setConverting(true); 
@@ -327,6 +331,7 @@ export const Dashboard = ({ userData }) => {
                               <SelectGroup>
                                 <SelectItem value="auto" className="cursor-pointer">Auto</SelectItem>
                                 <SelectItem value="manual" className="cursor-pointer">Manual</SelectItem>
+                                <SelectItem value="off" className="cursor-pointer">Off</SelectItem>
                               </SelectGroup>
                             </SelectContent>
                           </Select>
@@ -335,7 +340,7 @@ export const Dashboard = ({ userData }) => {
                           <HelpCircleIcon />
                         </Button>
                       </div>
-                      {pitchMethodChoice === "auto" ? ""
+                      {pitchMethodChoice === "auto" || pitchMethodChoice === "off" ? ""
                         :
                         <div className="pt-4 w-full flex flex-col items-center">
                           <div className="text-md w-full flex justify-center items-center gap-2">
@@ -358,7 +363,7 @@ export const Dashboard = ({ userData }) => {
                             by an octave
                           </div>
                           <div className="pt-4 max-w-sm">
-                            <AlertCard title="Caution" message="If you shift the song outside your vocal range, it could affect conversion quality." />
+                            <AlertCard title="Caution" variant="warning" message="If you shift the song outside your vocal range, it could affect conversion quality." />
                           </div>
                         </div>
                       }

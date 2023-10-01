@@ -50,10 +50,7 @@ export async function POST(
             jobId: currentJob.id
         };
         if (youtubeId) params["youtubeId"] = youtubeId;
-        if (pitchShift) {
-            if (pitchShift !== "down" && pitchShift !== "up") return new NextResponse("Invalid pitch shift", { status: 400 });
-            params["pitchShift"] = pitchShift;
-        }
+        if (pitchShift) params["pitchShift"] = pitchShift;
 
         const railwayResponse = await axios.post(`${process.env.RAILWAY_URL}/api/convert`, params);
         if (railwayResponse.status !== 200) {
