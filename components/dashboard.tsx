@@ -4,7 +4,7 @@ import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCard } from "@/components/alert-card";
@@ -21,7 +21,6 @@ import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { ArrowDownIcon, HelpCircleIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
 import { HistoryTable } from "./history-table";
-import { useMultiAudio } from "@/hooks/use-multi-audio";
 import { SettingsModal } from "./settings-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { RecordPlayerComponent } from "./record-player/record-player";
@@ -29,15 +28,58 @@ import { NeedsCloneModal } from "./needs-clone-modal";
 import { ErrorModal } from "./error-modal";
 import { PitchShiftModal } from "./shift-info-modal";
 
-const Player = ({ player, toggle }) => {
+const Player = ({ isPlaying, toggle }) => {
   return (
       <Button variant="ghost" className="text-primary" onClick={toggle}>
-          {player.playing ? <PauseIcon size={32} /> : <PlayIcon size={32} />}
+          {isPlaying ? <PauseIcon size={32} /> : <PlayIcon size={32} />}
       </Button>
   )
 }
 
-const CloneDemo = ({ userData, players, toggle, settingsModal }) => {
+const CloneDemo = ({ userData, settingsModal, onPlay, onStop }) => {
+  const demoAudios = useRef<any>(null);
+  const [activeDemoPlayer, setActiveDemo] = useState(-1);
+
+  const playDemo = (index) => {
+      if (!demoAudios.current?.length) return;
+      if (activeDemoPlayer !== -1) {
+        demoAudios.current[activeDemoPlayer].pause();
+        demoAudios.current[index].removeEventListener('ended', () => { setActiveDemo(-1); onStop(); });
+      }
+      demoAudios.current[index].play();
+      demoAudios.current[index].addEventListener('ended', () => { setActiveDemo(-1); onStop(); });
+      setActiveDemo(index);
+      onPlay();
+  };
+  
+  const pauseDemo = (index?) => {
+    if (!demoAudios.current?.length) return;
+    setActiveDemo(-1);
+    if (index) {
+      demoAudios.current[index].pause();
+    } else {
+      demoAudios.current.map(audio => audio.pause());
+    }
+    onStop();
+  };
+
+  const toggle = (index) => {
+    if (!demoAudios.current?.length) return;
+    if (activeDemoPlayer === index) {
+      pauseDemo(index);
+    } else {
+      playDemo(index);
+    }
+  }
+
+  useEffect(() => {
+    const audioElements = userData.cloneResultUrls?.length ? 
+      userData.cloneResultUrls.map((url) => new Audio(url)) : []
+    demoAudios.current = audioElements;
+
+    return () => pauseDemo();
+  }, [userData]);
+
   return (
     <div className="mb-12 mx-auto w-fit">
       <div className="w-[13rem] mx-auto text-center flex justify-center gap-2 text-xl items-center
@@ -46,9 +88,9 @@ const CloneDemo = ({ userData, players, toggle, settingsModal }) => {
           <ArrowDownIcon /> Your voice! <ArrowDownIcon />
       </div>
       <div className="flex justify-center items-center px-4 p-2 gap-2 border-2 border-primary bg-white w-fit mx-auto rounded-sm shadow-md">
-        {players?.length ? players.map((player, i) => {
+        {demoAudios.current?.length ? demoAudios.current.map((_, i) => {
           return (
-            <Player player={player} toggle={toggle(i)} />
+            <Player isPlaying={activeDemoPlayer === i} toggle={() => toggle(i)} />
           )}) : ""}
       </div>
       <div className="w-[13rem] mx-auto text-center flex justify-between gap-2 text-xl items-center
@@ -107,7 +149,8 @@ export const Dashboard = ({ userData }) => {
   const [conversionId, setConversionId] = useState(
     userData?.currentConvertJob ? userData.currentConvertJob.id : ""
   );
-  const [recordPlaying, setRecordPlaying] = useState(false); 
+  const [songPlaying, setSongPlaying] = useState(false);
+  const [demoPlaying, setDemoPlaying] = useState(false);
 
   const reset = () => {
     setConverting(false);
@@ -213,10 +256,6 @@ export const Dashboard = ({ userData }) => {
   const inputNotReady = ((inputChoice === "upload" && !fileUploaded) ||
   (inputChoice === "youtube" && (!youtubeLinkValid || !youtubeId || youtubeError !== ""))) as boolean;
 
-  const [players, toggle] = useMultiAudio({
-    urls: userData?.cloneResultUrls ? userData.cloneResultUrls : []
-  });
-
   const songName = youtubeName ? `"${youtubeName}"` : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
 
   return (
@@ -229,7 +268,7 @@ export const Dashboard = ({ userData }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto">
             <div className="flex flex-col items-center">
               {userData.clone ?
-                <CloneDemo userData={userData} players={players} toggle={toggle} settingsModal={settingsModal} />
+                <CloneDemo userData={userData} settingsModal={settingsModal} onPlay={() => setDemoPlaying(true)} onStop={() => setDemoPlaying(false)} />
                 :
                 cloningInProgress ?
                   <div className="mb-12 w-[18rem] md:w-[25rem]">
@@ -431,7 +470,7 @@ export const Dashboard = ({ userData }) => {
             </div>
             <div>
               <div className="hidden lg:block my-8 w-fit mx-auto">
-                <RecordPlayerComponent playing={recordPlaying || players.some(e => e.playing)} />
+                <RecordPlayerComponent playing={songPlaying || demoPlaying }/>
               </div>
               {isConverting || results || retrievingResults ? "" :
                 <div className="mt-16 max-w-sm text-center mx-auto text-muted-foreground text-md">
@@ -465,8 +504,8 @@ export const Dashboard = ({ userData }) => {
                   : ""}
                 {results ?
                   <ConversionResultsComponent results={results} mini={true} 
-                    onPlay={() => setRecordPlaying(true)}
-                    onStop={() => setRecordPlaying(false)}
+                    onPlay={() => setSongPlaying(true)}
+                    onStop={() => setSongPlaying(false)}
                   />
                   : ""
                 }
