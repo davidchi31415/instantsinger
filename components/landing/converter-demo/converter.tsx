@@ -20,6 +20,7 @@ export const FakeConverterComponent = ({ onPlay }) => {
                         <Input
                             placeholder="ex: https://youtube.com/..."
                             value="https://www.youtube.com/watch?v=pbNs7tAUFkk&pp=ygULa2VzaGkgZHJ1bms%3D"
+                            readOnly
                         />
                     </div>
                 </div>

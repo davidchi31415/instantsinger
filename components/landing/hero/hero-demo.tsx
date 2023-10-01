@@ -2,7 +2,7 @@
 
 import { ArrowRightIcon, PauseIcon, PlayIcon } from "lucide-react";
 import { Button } from "../../ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     Select,
     SelectContent,
@@ -11,7 +11,33 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select";
-import globalAudio from "./globalAudio";
+
+const urls = {
+    "sample1": "https://storage.googleapis.com/instantsinger-public/original/sample1_original.mp3",
+    "sample2": "https://storage.googleapis.com/instantsinger-public/original/sample2_original.mp3",
+    "sample3": "https://storage.googleapis.com/instantsinger-public/original/sample3_original.mp3",
+    // "sample4": "https://storage.googleapis.com/instantsinger-public/original/sample4_original.mp3",
+    'boy1': "https://storage.googleapis.com/instantsinger-public/original/boy1.mp3",
+    'boy2': "https://storage.googleapis.com/instantsinger-public/original/boy2.mp3",
+    'girl1': "https://storage.googleapis.com/instantsinger-public/original/girl1.mp3",
+    'girl2': "https://storage.googleapis.com/instantsinger-public/original/girl2.mp3",
+    "boy1_sample1": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample1.mp3",
+    "boy1_sample2": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample2.mp3",
+    "boy1_sample3": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample3.mp3",
+    // "boy1_sample4": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample4.mp3",
+    "boy2_sample1": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample1.mp3",
+    "boy2_sample2": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample2.mp3",
+    "boy2_sample3": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample3.mp3",
+    // "boy2_sample4": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample4.mp3",
+    "girl1_sample1": "https://storage.googleapis.com/instantsinger-public/original/girl1_sample1.mp3",
+    "girl1_sample2": "https://storage.googleapis.com/instantsinger-public/original/girl1_sample2.mp3",
+    "girl1_sample3": "https://storage.googleapis.com/instantsinger-public/original/girl1_sample3.mp3",
+    // "girl1_sample4":"https://storage.googleapis.com/instantsinger-public/original/girl1_sample4.mp3",
+    "girl2_sample1": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample1.mp3",
+    "girl2_sample2": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample2.mp3",
+    "girl2_sample3": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample3.mp3",
+    // "girl2_sample4": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample4.mp3"
+}
 
 const Player = ({ toggle, active }) => {
     return (
@@ -30,26 +56,59 @@ const people = {
 
 export const HeroDemo = () => {
     const [person, setPerson] = useState("boy1");
+    const audios = useRef<any>(null);
     const [activePlayer, setActivePlayer] = useState("");
 
-    const switchPerson = (newPerson) => {
-        globalAudio.pause();
-        setPerson(newPerson);
+    const play = (name) => {
+        if (!audios.current) return;
+        if (activePlayer) {
+            audios.current[activePlayer].pause();
+            audios.current[name].removeEventListener('ended', () => setActivePlayer(""));
+        }
+        audios.current[name].play();
+        audios.current[name].addEventListener('ended', () => setActivePlayer(""));
+        setActivePlayer(name);
+    };
+    
+    const pause = (name?) => {
+        if (!audios.current) return;
         setActivePlayer("");
+        if (name) {
+            audios.current[name].pause();
+        } else {
+            for (let audioName in audios.current) {
+                if (audios.current.hasOwnProperty(audioName)) {
+                    audios.current[audioName].pause();
+                }
+            }
+        }
+    };
+
+    const switchPerson = (newPerson) => {
+        if (!audios.current) return;
+        setPerson(newPerson);
+        pause();
     }
 
     const toggle = (name) => {
+        if (!audios.current) return;
         if (activePlayer === name) {
-            globalAudio.pause();
-            setActivePlayer("");
+            pause();
         } else {
-            globalAudio.play(name, () => { console.log("ended"); setActivePlayer(""); });
-            setActivePlayer(name);
+            play(name);
         }
     }
 
     useEffect(() => {
-        return () => globalAudio.pause();
+        const audioElements = {};
+        for (let audioName in urls) {
+            if (urls.hasOwnProperty(audioName)) {
+                audioElements[audioName] = new Audio(urls[audioName]);
+              }
+        }
+        audios.current = audioElements;
+
+        return () => pause();
     }, []);
 
     return (
@@ -97,9 +156,9 @@ export const HeroDemo = () => {
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
                                 👨🏿 <Player toggle={() => toggle("sample3")} active={activePlayer === "sample3"} />
                             </div>
-                            <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                            {/* <div className="p-4 pr-0 flex items-center justify-center text-3xl">
                                 👩 <Player toggle={() => toggle("sample4")} active={activePlayer === "sample4"} />
-                            </div>
+                            </div> */}
                         </div>
                         <div className="text-primary">
                             <ArrowRightIcon />
@@ -109,9 +168,9 @@ export const HeroDemo = () => {
                             <div className="invisible"><ArrowRightIcon /></div>
                             <div className="invisible"><ArrowRightIcon /></div>
                             <ArrowRightIcon />
+                            {/* <div className="invisible"><ArrowRightIcon /></div>
                             <div className="invisible"><ArrowRightIcon /></div>
-                            <div className="invisible"><ArrowRightIcon /></div>
-                            <ArrowRightIcon />
+                            <ArrowRightIcon /> */}
                         </div>
                         <div className="flex flex-col items-center justify-center ml-2 rounded-md bg-white border-2 border-primary shadow-xl">
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
@@ -123,9 +182,9 @@ export const HeroDemo = () => {
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
                                 {people[person]} <Player toggle={() => toggle(`${person}_sample3`)} active={activePlayer === `${person}_sample3`} />
                             </div>
-                            <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                            {/* <div className="p-4 pr-0 flex items-center justify-center text-3xl">
                                 {people[person]} <Player toggle={() => toggle(`${person}_sample4`)} active={activePlayer === `${person}_sample4`} />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
