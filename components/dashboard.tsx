@@ -88,7 +88,7 @@ const CloneDemo = ({ userData, settingsModal, onPlay, onStop }) => {
           <ArrowDownIcon /> Your voice! <ArrowDownIcon />
       </div>
       <div className="flex justify-center items-center px-4 p-2 gap-2 border-2 border-primary bg-white w-fit mx-auto rounded-sm shadow-md">
-        {demoAudios.current?.length ? demoAudios.current.map((_, i) => {
+        {userData.cloneResultUrls?.length ? userData.cloneResultUrls?.map((_, i) => {
           return (
             <Player isPlaying={activeDemoPlayer === i} toggle={() => toggle(i)} />
           )}) : ""}
