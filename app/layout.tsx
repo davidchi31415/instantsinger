@@ -6,6 +6,7 @@ import { ModalProvider } from '@/components/modal-provider';
 import { ToasterProvider } from '@/components/toaster-provider';
 import { Navbar } from '@/components/navbar';
 import { getCredits } from '@/lib/credits';
+import NextTopLoader from 'nextjs-toploader';
 
 const rubik = Rubik({ subsets: ['latin'] })
 
@@ -50,6 +51,9 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={rubik.className}>
+          <div className="z-[9999]">
+            <NextTopLoader color="#3b82f6" height={5}/>
+          </div>
           <ModalProvider />
           <ToasterProvider />
           <div className="w-full h-full pt-12 md:pt-0 overflow-x-clip">
