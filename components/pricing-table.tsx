@@ -69,7 +69,7 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                         </ul>
                     </div>
                     <div className="text-sm md:text-md text-center my-8">
-                        Clone your voice and get 3 samples.
+                        Clone your voice and get 4 free samples.
                     </div>
                     <div className="text-md md:text-lg mt-4 mb-8">
                         <div className="flex gap-2">
@@ -81,7 +81,7 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                         <div className="flex gap-2">
                             <Check color="#0c0"/>
                             <div>
-                                <b>3</b> Song Samples (~4.5 min)
+                                <b>4</b> Song Samples (6 min)
                             </div>
                         </div>
                     </div>

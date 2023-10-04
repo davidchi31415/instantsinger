@@ -66,7 +66,7 @@ export const MobileLandingContentPricing = () => {
                     </span>. No strings attached.
                 </h3>
                 <p className="mt-2 text-lg">
-                    Just sign up and try it out! You'll get <b className="text-primary">~4.5 minutes</b> of free converted samples
+                    Just sign up and try it out! You'll get <b className="text-primary">6 minutes</b> of free converted samples
                     to decide if you like it or not.
                 </p>
             </div>
