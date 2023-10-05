@@ -13,29 +13,29 @@ import {
   } from "@/components/ui/select";
 
 const urls = {
-    "sample1": "https://storage.googleapis.com/instantsinger-public/original/sample1_original.mp3",
-    "sample2": "https://storage.googleapis.com/instantsinger-public/original/sample2_original.mp3",
-    "sample3": "https://storage.googleapis.com/instantsinger-public/original/sample3_original.mp3",
-    // "sample4": "https://storage.googleapis.com/instantsinger-public/original/sample4_original.mp3",
-    'boy1': "https://storage.googleapis.com/instantsinger-public/original/boy1.mp3",
-    'boy2': "https://storage.googleapis.com/instantsinger-public/original/boy2.mp3",
-    'girl1': "https://storage.googleapis.com/instantsinger-public/original/girl1.mp3",
-    'girl2': "https://storage.googleapis.com/instantsinger-public/original/girl2.mp3",
-    "boy1_sample1": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample1.mp3",
-    "boy1_sample2": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample2.mp3",
-    "boy1_sample3": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample3.mp3",
-    // "boy1_sample4": "https://storage.googleapis.com/instantsinger-public/original/boy1_sample4.mp3",
-    "boy2_sample1": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample1.mp3",
-    "boy2_sample2": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample2.mp3",
-    "boy2_sample3": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample3.mp3",
-    // "boy2_sample4": "https://storage.googleapis.com/instantsinger-public/original/boy2_sample4.mp3",
-    "girl1_sample1": "https://storage.googleapis.com/instantsinger-public/original/girl1_sample1.mp3",
-    "girl1_sample2": "https://storage.googleapis.com/instantsinger-public/original/girl1_sample2.mp3",
-    "girl1_sample3": "https://storage.googleapis.com/instantsinger-public/original/girl1_sample3.mp3",
-    // "girl1_sample4":"https://storage.googleapis.com/instantsinger-public/original/girl1_sample4.mp3",
-    "girl2_sample1": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample1.mp3",
-    "girl2_sample2": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample2.mp3",
-    "girl2_sample3": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample3.mp3",
+    "sample1": "https://storage.googleapis.com/instantsinger-public/demo/demo1_original.mp3",
+    "sample2": "https://storage.googleapis.com/instantsinger-public/demo/demo2_original.mp3",
+    "sample3": "https://storage.googleapis.com/instantsinger-public/demo/demo3_original.mp3",
+    "sample4": "https://storage.googleapis.com/instantsinger-public/demo/demo4_original.mp3",
+    'boy1': "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_speaking.mp3",
+    'boy2': "https://storage.googleapis.com/instantsinger-public/demo/boy2/demo_speaking.mp3",
+    'girl1': "https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_speaking.mp3",
+    // 'girl2': "https://storage.googleapis.com/instantsinger-public/original/girl2.mp3",
+    "boy1_sample1": "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_1.mp3",
+    "boy1_sample2": "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_2.mp3",
+    "boy1_sample3": "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_3.mp3",
+    "boy1_sample4": "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_4.mp3",
+    "boy2_sample1": "https://storage.googleapis.com/instantsinger-public/demo/boy2/demo_1.mp3",
+    "boy2_sample2": "https://storage.googleapis.com/instantsinger-public/demo/boy2/demo_2.mp3",
+    "boy2_sample3": "https://storage.googleapis.com/instantsinger-public/demo/boy2/demo_3.mp3",
+    "boy2_sample4": "https://storage.googleapis.com/instantsinger-public/demo/boy2/demo_4.mp3",
+    "girl1_sample1": "https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_1.mp3",
+    "girl1_sample2": "https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_2.mp3",
+    "girl1_sample3": "https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_3.mp3",
+    "girl1_sample4":"https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_4.mp3",
+    // "girl2_sample1": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample1.mp3",
+    // "girl2_sample2": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample2.mp3",
+    // "girl2_sample3": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample3.mp3",
     // "girl2_sample4": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample4.mp3"
 }
 
@@ -50,8 +50,8 @@ const Player = ({ toggle, active }) => {
 const people = {
     "boy1": "👨🏻", 
     "boy2": "👨🏽", 
-    "girl1": "👩🏽", 
-    "girl2": "👩🏼"
+    "girl1": "👩🏻", 
+    // "girl2": "👩🏼"
 };
 
 export const HeroDemo = () => {
@@ -130,7 +130,7 @@ export const HeroDemo = () => {
                                     <SelectItem value="boy1" className="text-xl">{people["boy1"]} Guy 1</SelectItem>
                                     <SelectItem value="boy2" className="text-xl">{people["boy2"]} Guy 2</SelectItem>
                                     <SelectItem value="girl1" className="text-xl">{people["girl1"]} Girl 1</SelectItem>
-                                    <SelectItem value="girl2" className="text-xl">{people["girl2"]} Girl 2</SelectItem>
+                                    {/* <SelectItem value="girl2" className="text-xl">{people["girl2"]} Girl 2</SelectItem> */}
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -148,17 +148,17 @@ export const HeroDemo = () => {
                     <div className="border-2 border-black/10 shadow-md rounded-md bg-[#f9f9f9] flex items-center justify-center">
                         <div className="flex flex-col items-center justify-center">
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
-                                👨🏼 <Player toggle={() => toggle("sample1")} active={activePlayer === "sample1"} />
+                                👨 <Player toggle={() => toggle("sample1")} active={activePlayer === "sample1"} />
                             </div>
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
-                                👩🏻 <Player toggle={() => toggle("sample2")} active={activePlayer === "sample2"} />
+                                👩 <Player toggle={() => toggle("sample2")} active={activePlayer === "sample2"} />
                             </div>
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
-                                👨🏿 <Player toggle={() => toggle("sample3")} active={activePlayer === "sample3"} />
+                                👨 <Player toggle={() => toggle("sample3")} active={activePlayer === "sample3"} />
                             </div>
-                            {/* <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                            <div className="p-4 pr-0 flex items-center justify-center text-3xl">
                                 👩 <Player toggle={() => toggle("sample4")} active={activePlayer === "sample4"} />
-                            </div> */}
+                            </div>
                         </div>
                         <div className="text-primary">
                             <ArrowRightIcon />
@@ -168,9 +168,9 @@ export const HeroDemo = () => {
                             <div className="invisible"><ArrowRightIcon /></div>
                             <div className="invisible"><ArrowRightIcon /></div>
                             <ArrowRightIcon />
-                            {/* <div className="invisible"><ArrowRightIcon /></div>
                             <div className="invisible"><ArrowRightIcon /></div>
-                            <ArrowRightIcon /> */}
+                            <div className="invisible"><ArrowRightIcon /></div>
+                            <ArrowRightIcon />
                         </div>
                         <div className="flex flex-col items-center justify-center ml-2 rounded-md bg-white border-2 border-primary shadow-xl">
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
@@ -182,9 +182,9 @@ export const HeroDemo = () => {
                             <div className="p-4 pr-0 flex items-center justify-center text-3xl">
                                 {people[person]} <Player toggle={() => toggle(`${person}_sample3`)} active={activePlayer === `${person}_sample3`} />
                             </div>
-                            {/* <div className="p-4 pr-0 flex items-center justify-center text-3xl">
+                            <div className="p-4 pr-0 flex items-center justify-center text-3xl">
                                 {people[person]} <Player toggle={() => toggle(`${person}_sample4`)} active={activePlayer === `${person}_sample4`} />
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                 </div>

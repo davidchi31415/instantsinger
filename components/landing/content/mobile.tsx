@@ -37,8 +37,11 @@ export const MobileLandingContentClone = () => {
 
 export const MobileLandingContentConvert = () => {
     return (
-        <div className="flex justify-between w-full items-center flex-wrap">
-            <div className="flex flex-col max-w-md mx-auto lg:mr-0]">
+        <div className="flex justify-between w-full items-center flex-wrap-reverse">
+            <div className="w-fit mx-auto h-fit">
+                <ConverterDemoComponent active={true} />
+            </div>
+            <div className="flex flex-col max-w-md mx-auto lg:mr-[0]">
                 <h3 className={cn("text-3xl md:text-5xl font-bold leading-tight tracking-tight", font.className)}>
                     Convert <span className="underline--fancy">
                         any song
@@ -48,9 +51,6 @@ export const MobileLandingContentConvert = () => {
                     Convert any song into your voice by simply pasting a YouTube link. We'll do
                     the magic for you.
                 </p>
-            </div>
-            <div className="w-fit mx-auto h-fit">
-                <ConverterDemoComponent active={true} />
             </div>
         </div>
     )
