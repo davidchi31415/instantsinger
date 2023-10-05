@@ -1,5 +1,12 @@
+import { Roboto_Slab } from "next/font/google";
 import { MobileLandingContentClone, MobileLandingContentConvert, MobileLandingContentPricing } from "./landing/content/mobile";
 import PricingTable from "./pricing-table";
+import { cn } from "@/lib/utils";
+
+const font = Roboto_Slab({
+    weight: "400",
+    subsets: ["latin"]
+});
 
 export const LandingContent = () => {
     return (
@@ -9,7 +16,7 @@ export const LandingContent = () => {
                 <MobileLandingContentConvert />
                 <MobileLandingContentPricing />
             </div>
-            <div className="mt-20 mb-6 md:mt-0 md:mb-20 text-center text-3xl w-fit mx-auto">
+            <div className={cn("mt-20 mb-6 md:mt-0 md:mb-10 text-center text-3xl w-fit mx-auto", font.className)}>
                 And if you want more, we have you covered :)
             </div>
             <PricingTable paidOnly={true} />
