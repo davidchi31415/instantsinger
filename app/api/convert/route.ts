@@ -52,7 +52,7 @@ export async function POST(
         if (youtubeId) params["youtubeId"] = youtubeId;
         if (pitchShift) params["pitchShift"] = pitchShift;
 
-        const railwayResponse = await axios.post(`${process.env.RAILWAY_URL}/api/convert`, params);
+        const railwayResponse = await axios.post(`${process.env.RAILWAY_URL}/api/convert`, params, { headers: { 'Authorization': process.env.RAILWAY_API_KEY }});
         if (railwayResponse.status !== 200) {
             return new NextResponse("Failed to submit convert job", { status: 500 });
         }

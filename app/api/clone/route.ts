@@ -60,7 +60,7 @@ export async function POST(
         const railwayResponse = await axios.post(`${process.env.RAILWAY_URL}/api/clone`, {
             modelId: cloneId,
             jobId: currentCloneJob.id
-        });
+        }, { headers: { 'Authorization': process.env.RAILWAY_API_KEY }});
         if (railwayResponse.status !== 200) {
             return new NextResponse("Failed to submit convert job", { status: 500 });
         }
