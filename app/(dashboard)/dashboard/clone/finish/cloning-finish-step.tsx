@@ -93,7 +93,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                         </div>
                     </div>
                     <div className="text-center px-4 w-fit mx-auto text-wrap text-sm text-muted-foreground">
-                        By cloning your voice, you agree to our <Link href="/tos" className="text-primary">Terms of Service</Link>.
+                        By cloning your voice, you agree to our <Link href="/terms" className="text-primary">Terms and Conditions</Link>.
                     </div>
                     <div className="w-fit h-fit mx-auto flex justify-center items-center mt-8 mb-16"
                     >

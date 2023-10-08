@@ -259,7 +259,7 @@ export const Dashboard = ({ userData }) => {
   const songName = youtubeName ? `"${youtubeName}"` : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
 
   return (
-    <div>
+    <div className="bg-white">
         <NeedsCloneModal />
         <SettingsModal userData={userData} />
         <ErrorModal message={userData?.convertJobs?.length ? userData.convertJobs[0]?.message : ""} />
@@ -412,27 +412,32 @@ export const Dashboard = ({ userData }) => {
                     </CardContent>
                     <CardFooter>
                       {userData.clone ?
-                        <div className={cn("mx-auto flex items-center justify-center w-fit shadow-xl",
-                          !fileUploaded ? "" : "hover:scale-105 transition")}
-                        >
-                          <Button
-                            type="submit"
-                            size="lg" className="text-xl rounded-r-none border-2 border-black border-r-none"
-                            disabled={inputNotReady || isConverting}
-                            onClick={onSubmit}
+                        <div className="flex flex-col">
+                          <div className="mb-4 text-center w-fit mx-auto text-sm text-muted-foreground text-wrap">
+                            By using this service, you agree to our <Link href="/terms" className="text-primary">Terms and Conditions</Link>.
+                          </div>
+                          <div className={cn("mx-auto flex items-center justify-center w-fit shadow-xl",
+                            !fileUploaded ? "" : "hover:scale-105 transition")}
                           >
-                          Convert
-                          </Button>
-                          <span className="px-2 py-[0.45rem] rounded-r-md text-black flex items-center bg-primary/20
-                            border-2 border-black border-l-none font-bold
-                          ">
-                              1
-                              <IconContext.Provider
-                                value={{ size: "25px", color: "#E1B530" }}
+                            <Button
+                              type="submit"
+                              size="lg" className="text-xl rounded-r-none border-2 border-black border-r-none"
+                              disabled={inputNotReady || isConverting}
+                              onClick={onSubmit}
                             >
-                            <PiCoinVerticalFill />
-                            </IconContext.Provider>
-                          </span>
+                            Convert
+                            </Button>
+                            <span className="px-2 py-[0.45rem] rounded-r-md text-black flex items-center bg-primary/20
+                              border-2 border-black border-l-none font-bold
+                            ">
+                                1
+                                <IconContext.Provider
+                                  value={{ size: "25px", color: "#E1B530" }}
+                              >
+                              <PiCoinVerticalFill />
+                              </IconContext.Provider>
+                            </span>
+                          </div>
                         </div>
                         :
                           cloningInProgress ?
