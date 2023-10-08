@@ -1,21 +1,14 @@
 "use client";
 
-import { FileUploader } from "@/components/file-uploader";
-import { Heading } from "@/components/heading";
-import { AlertCircleIcon, CheckIcon, CornerDownLeft, CornerDownLeftIcon, MicIcon, XIcon } from "lucide-react";
+import { AlertCircleIcon, CheckIcon, CornerDownLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
 import { AlertCard } from "@/components/alert-card";
-import { Congrats } from "@/components/congrats";
 import { toast } from "react-hot-toast";
-import { useCloneModal, useProModal } from "@/hooks/use-modal";
+import { useCloneModal } from "@/hooks/use-modal";
 import { Badge } from "@/components/ui/badge";
-import { IconContext } from "react-icons";
-import { PiCoinVerticalFill } from "react-icons/pi";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { CloneModal } from "@/components/clone-modal";
 
 interface CloningFinishStepProps {
@@ -72,9 +65,9 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                 :
                 <>
                     <div className="p-4 lg:px-8">
-                        <div className="text-xl flex justify-between lg:max-w-md mx-auto">
+                        <div className="text-xl flex justify-between md:max-w-sm lg:max-w-md mx-auto">
                             <div className="flex gap-2 items-center">
-                                <div><b>Cloning Procedure</b></div>
+                                <div><b>Procedure</b></div>
                                 <Link href="/dashboard/clone" passHref={true}>
                                     <Button size="icon" variant="ghost" className="text-primary">
                                         <CornerDownLeftIcon />
@@ -87,7 +80,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                                 </Badge>
                                 :
                                 <Badge className="h-fit gap-2" variant="destructive">
-                                    <div className="text-lg">Missing</div> <AlertCircleIcon />
+                                    <div className="text-lg">Unfinished</div> <AlertCircleIcon />
                                 </Badge>}
                         </div>
                         
@@ -98,6 +91,9 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
                                 /> : ""
                             }
                         </div>
+                    </div>
+                    <div className="text-center px-4 w-fit mx-auto text-wrap text-sm text-muted-foreground">
+                        By cloning your voice, you agree to our <Link href="/tos" className="text-primary">Terms of Service</Link>.
                     </div>
                     <div className="w-fit h-fit mx-auto flex justify-center items-center mt-8 mb-16"
                     >
