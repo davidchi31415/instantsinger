@@ -19,7 +19,7 @@ import { cn, isJobDone, parseYoutubeLink } from "@/lib/utils";
 import { useErrorModal, useNeedsCloneModal, useProModal, useSettingsModal, useShiftInfoModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
-import { ArrowDownIcon, HelpCircleIcon, PauseIcon, PlayIcon, SettingsIcon } from "lucide-react";
+import { ArrowDownIcon, HelpCircleIcon, PauseIcon, PlayIcon, Trash2Icon } from "lucide-react";
 import { HistoryTable } from "./history-table";
 import { SettingsModal } from "./settings-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -98,7 +98,7 @@ const CloneDemo = ({ userData, settingsModal, onPlay, onStop }) => {
       >
         <Link href={`/voice?id=${userData?.clone?.id}`}><Button className="text-lg">Share it!</Button></Link>
         <Button variant="ghost" onClick={() => settingsModal.onOpen()}>
-          <SettingsIcon fill="white" />
+          <Trash2Icon fill="white" />
         </Button>
       </div>
     </div>

@@ -48,8 +48,8 @@ export const MobileLandingContentConvert = () => {
                     </span>. Just paste a link.
                 </h3>
                 <p className="mt-2 text-lg">
-                    Convert any song into your voice by simply pasting a YouTube link. We'll do
-                    the magic for you.
+                    Simply paste a YouTube link, then click a button, and we'll do
+                    the magic for you. 
                 </p>
             </div>
         </div>
@@ -66,8 +66,8 @@ export const MobileLandingContentPricing = () => {
                     </span>. No strings attached.
                 </h3>
                 <p className="mt-2 text-lg">
-                    Just sign up and try it out! You'll get <b className="text-primary">6 minutes</b> of free converted samples
-                    to decide if you like it or not.
+                    Try it out for free! You'll get <b className="text-primary">4</b> free converted samples
+                    to hear it out - and we know you'll like it!
                 </p>
             </div>
             <div className="w-full md:w-fit mx-auto mt-8 lg:mt-0">

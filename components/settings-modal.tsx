@@ -72,7 +72,7 @@ export const SettingsModal = ({ userData }) => {
                             </Button>
                             :
                             <div className="flex flex-col items-center gap-6">
-                                <div className="text-lg text-center">Are you sure you want to delete your voice clone? This is irreversible. Re-cloning will cost $0.99.</div>
+                                <div className="text-lg text-center">Are you sure you want to delete your voice clone? This is irreversible. To convert more songs, you will have to re-clone your voice.</div>
                                 <div className="flex justify-center gap-2">
                                     <Button className="w-fit text-xl mx-auto" variant="outline"
                                         onClick={() => setFirstClick(false)}

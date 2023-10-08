@@ -11,6 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select";
+import Link from "next/link";
 
 const urls = {
     "sample1": "https://storage.googleapis.com/instantsinger-public/demo/demo1_original.mp3",
@@ -20,7 +21,7 @@ const urls = {
     'boy1': "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_speaking.mp3",
     'boy2': "https://storage.googleapis.com/instantsinger-public/demo/boy2/demo_speaking.mp3",
     'girl1': "https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_speaking.mp3",
-    // 'girl2': "https://storage.googleapis.com/instantsinger-public/original/girl2.mp3",
+    'girl2': "https://storage.googleapis.com/instantsinger-public/demo/girl2/demo_speaking.mp3",
     "boy1_sample1": "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_1.mp3",
     "boy1_sample2": "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_2.mp3",
     "boy1_sample3": "https://storage.googleapis.com/instantsinger-public/demo/boy1/demo_3.mp3",
@@ -33,10 +34,10 @@ const urls = {
     "girl1_sample2": "https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_2.mp3",
     "girl1_sample3": "https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_3.mp3",
     "girl1_sample4":"https://storage.googleapis.com/instantsinger-public/demo/girl1/demo_4.mp3",
-    // "girl2_sample1": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample1.mp3",
-    // "girl2_sample2": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample2.mp3",
-    // "girl2_sample3": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample3.mp3",
-    // "girl2_sample4": "https://storage.googleapis.com/instantsinger-public/original/girl2_sample4.mp3"
+    "girl2_sample1": "https://storage.googleapis.com/instantsinger-public/demo/girl2/demo_1.mp3",
+    "girl2_sample2": "https://storage.googleapis.com/instantsinger-public/demo/girl2/demo_2.mp3",
+    "girl2_sample3": "https://storage.googleapis.com/instantsinger-public/demo/girl2/demo_3.mp3",
+    "girl2_sample4": "https://storage.googleapis.com/instantsinger-public/demo/girl2/demo_4.mp3"
 }
 
 const Player = ({ toggle, active }) => {
@@ -51,7 +52,7 @@ const people = {
     "boy1": "👨🏻", 
     "boy2": "👨🏽", 
     "girl1": "👩🏻", 
-    // "girl2": "👩🏼"
+    "girl2": "👩🏼"
 };
 
 export const HeroDemo = () => {
@@ -130,7 +131,7 @@ export const HeroDemo = () => {
                                     <SelectItem value="boy1" className="text-xl">{people["boy1"]} Guy 1</SelectItem>
                                     <SelectItem value="boy2" className="text-xl">{people["boy2"]} Guy 2</SelectItem>
                                     <SelectItem value="girl1" className="text-xl">{people["girl1"]} Girl 1</SelectItem>
-                                    {/* <SelectItem value="girl2" className="text-xl">{people["girl2"]} Girl 2</SelectItem> */}
+                                    <SelectItem value="girl2" className="text-xl">{people["girl2"]} Girl 2</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -194,6 +195,9 @@ export const HeroDemo = () => {
                     Voice Swapped
                 </div>
             </div>
+            {/* <div className="mt-2 md:mt-4 lg:mt-12 w-fit mx-auto text-sm text-muted-foreground">
+                <Link href="/sources" className="text-primary">Click here</Link> for song sources.
+            </div> */}
         </div>
     )
 }
