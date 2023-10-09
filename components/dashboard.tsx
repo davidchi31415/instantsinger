@@ -385,6 +385,9 @@ export const Dashboard = ({ userData }) => {
                           <HelpCircleIcon />
                         </Button>
                       </div>
+                      <div className="text-sm text-primary">
+                        NOTE: If the song is higher/deeper than your range, manually shifting the pitch down/up may be a good idea.
+                      </div>
                       {pitchMethodChoice === "auto" || pitchMethodChoice === "off" ? ""
                         :
                         <div className="pt-4 w-full flex flex-col items-center">
