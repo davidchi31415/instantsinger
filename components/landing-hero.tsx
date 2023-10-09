@@ -67,6 +67,9 @@ export const LandingHero = () => {
                     <ArrowUpIcon fill="black" />
                     <ArrowUpIcon fill="black" />
                 </div>
+                <div className="pt-16">
+                    <a href="https://www.producthunt.com/posts/instant-singer?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-instant&#0045;singer" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=418996&theme=light" alt="Instant&#0032;Singer - Convert&#0032;any&#0032;song&#0032;into&#0032;your&#0032;own&#0032;voice&#0032;with&#0032;the&#0032;power&#0032;of&#0032;AI | Product Hunt" style={{"width": "250px", "height": "54px"}} width="250" height="54" /></a>
+                </div>
             </div>
         </div>
     )
