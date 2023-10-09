@@ -70,7 +70,7 @@ export const ProModal = () => {
                                         <div className="text-lg md:text-xl font-bold">
                                             {pack.contents.label.split(" ")[0]}
                                         </div>
-                                        <div className="md:text-xl">${pack.contents.pricePerSong}/song</div>
+                                        <div className="md:text-xl">${pack.contents.pricePerSong}/credit</div>
                                         <Button className="w-fit border-2 border-black hover:scale-105 md:text-xl" onClick={() => onPurchase({ packKey: pack.packKey, quantity: quantities[i] })}>
                                             Buy
                                         </Button>
@@ -78,7 +78,7 @@ export const ProModal = () => {
                                     <div className="flex items-center justify-between gap-2">
                                         <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
                                         <div className="text-center text-xl w-[6rem] text-wrap">
-                                            {quantities[i] * pack.contents.songs} songs
+                                            {quantities[i] * pack.contents.songs} credits
                                         </div>
                                         <Button onClick={() => setQuantities(e => { let h = [...e]; h[i] += 1; return h; })}>+</Button>
                                     </div>
