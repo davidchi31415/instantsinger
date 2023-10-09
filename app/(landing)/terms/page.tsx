@@ -19,7 +19,7 @@ const TermsPage = () => {
                 <li className="list-decimal list-inside mt-4">
                     <b>Intellectual Property</b>
                     <p>
-                        Everything on the Platform, from features to content, belongs solely to Instant Singer and those who've licensed it. Our Platform is protected by U.S. and international intellectual property laws. 
+                        Our Platform is protected by U.S. and international intellectual property laws. 
                         You can't use our branding or trademark for any product or service without our explicit written consent. We do not claim rights to the specific songs processed by our AI models.
                     </p>
                 </li>
