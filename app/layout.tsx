@@ -7,7 +7,6 @@ import { ToasterProvider } from '@/components/toaster-provider';
 import { Navbar } from '@/components/navbar';
 import { getCredits } from '@/lib/credits';
 import NextTopLoader from 'nextjs-toploader';
-import useAmplitudeInit from '@/hooks/use-amplitude';
 
 const rubik = Rubik({ subsets: ['latin'] })
 

@@ -81,7 +81,7 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                         <div className="flex gap-2">
                             <Check color="#0c0"/>
                             <div>
-                                <b>4</b> Song Samples
+                                <b>4</b> Samples (in your voice)
                             </div>
                         </div>
                     </div>
@@ -128,12 +128,12 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                                     >
                                         ${pack.contents.pricePerSong}
                                     </span>
-                                    <span className="text-2xl">/song</span>
+                                    <span className="text-2xl">/credit</span>
                                 </div>
                                 <div className="flex items-center justify-center gap-4">
                                     <Button disabled={quantities[i] <= 1} onClick={() => setQuantities(e => { let h = [...e]; h[i] -= 1; return h; })}>-</Button>
                                     <div className="text-center text-xl w-[6rem]">
-                                        {quantities[i] * pack.contents.songs} songs
+                                        {quantities[i] * pack.contents.songs} credits
                                     </div>
                                     <Button onClick={() => setQuantities(e => { let h = [...e]; h[i] += 1; return h; })}>+</Button>
                                 </div>
@@ -141,7 +141,7 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                                     <div className="flex gap-2">
                                         <Check color="#0c0"/>
                                         <div>
-                                            Convert <b>any</b> song
+                                            Convert <b>any song</b>, per credit
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
