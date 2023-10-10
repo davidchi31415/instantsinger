@@ -35,6 +35,3 @@ gcloud_key.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Sentry Auth Token
-.sentryclirc
