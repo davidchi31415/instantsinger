@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { BsDiscord } from "react-icons/bs";
 
 const ContactPage = async () => {
+    const openDiscord = () => {
+        if (typeof window !== "undefined") {
+            window.open("https://discord.com/invite/Z7RvN6JWky");
+        }
+    }
+
     return (
         <div className="h-full pt-40 md:pt-20 px-12 bg-[#163B8D]" >
             <div 
@@ -23,7 +29,7 @@ const ContactPage = async () => {
                 <Button
                     className="text-xl md:text-2xl py-8 px-4 text-primary gap-2" 
                     variant="outline"
-                    onClick={() => window.open("https://discord.com/invite/Z7RvN6JWky")}
+                    onClick={openDiscord}
                 >
                     Join our Discord <BsDiscord />
                 </Button>

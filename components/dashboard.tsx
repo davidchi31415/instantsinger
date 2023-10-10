@@ -260,6 +260,12 @@ export const Dashboard = ({ userData }) => {
 
   const songName = youtubeName ? `"${youtubeName}"` : (userData?.currentConvertJob ? userData?.currentConvertJob.songName : "");
 
+  const reloadPage = () => {
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
+  }
+
   return (
     <div className="bg-white">
         <NeedsCloneModal />
@@ -277,7 +283,7 @@ export const Dashboard = ({ userData }) => {
                   <div className="mb-12 w-[18rem] md:w-[25rem]">
                       <ProgressCard 
                           process="Cloning" apiEndpoint="/api/clone/status" apiId={userData.cloneJob.id}
-                          onStatusChange={() => window.location.reload()}
+                          onStatusChange={reloadPage}
                           initStatus={userData.cloneJob.status}
                       />
                   </div>

@@ -18,7 +18,7 @@ export const SubscriptionButton = ({isPro = false}: SubscriptionButtonProps) => 
             setLoading(true);
             const response = await axios.get("/api/stripe");
             
-            window.location.href = response.data.url; 
+            if (typeof window !== "undefined") window.location.href = response.data.url; 
         } catch (error) {
             toast("Something went wrong.");
             console.log("[BILLING_ERROR]", error);

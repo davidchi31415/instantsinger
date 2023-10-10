@@ -33,7 +33,7 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
             setLoading(true);
             const response = await axios.get("/api/stripe", { params: { packKey, quantity } });
 
-            window.location.href = response.data.url;
+            if (typeof window !== "undefined") window.location.href = response.data.url;
         } catch (error) {
             toast("Something went wrong.");
             console.log(error, "STRIPE_CLIENT_ERROR");

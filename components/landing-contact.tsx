@@ -4,6 +4,12 @@ import { BsDiscord } from "react-icons/bs";
 import { Button } from "./ui/button";
 
 export const LandingContact = () => {
+    const openDiscord = () => {
+        if (typeof window !== "undefined") {
+            window.open("https://discord.com/invite/Z7RvN6JWky");
+        }
+    }
+    
     return (
         <div className="py-10 md:py-20 px-6 md:px-12 bg-[#163B8D]">
             <div 
@@ -23,7 +29,7 @@ export const LandingContact = () => {
                 <Button
                     className="text-xl md:text-2xl py-8 px-4 text-primary gap-2" 
                     variant="outline"
-                    onClick={() => window.open("https://discord.com/invite/Z7RvN6JWky")}
+                    onClick={openDiscord}
                 >
                     Join our Discord <BsDiscord />
                 </Button>
