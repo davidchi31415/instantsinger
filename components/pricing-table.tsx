@@ -42,6 +42,8 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
         }
     }
 
+    const redirectUrl = (typeof window !== "undefined") ? `${window.location.href}/#pricing-table` : "";
+
     return (
         <div className="flex justify-center gap-8 flex-wrap">
             {!paidOnly &&
@@ -161,7 +163,7 @@ const PricingTable = ({ freeOnly, paidOnly }: PricingTableProps) => {
                                     </Button>
                                     : 
                                     <SignUpButton mode="modal"
-                                        redirectUrl={`${window.location.href}/#pricing-table`}
+                                        redirectUrl={redirectUrl}
                                     >
                                         <Button 
                                             className="w-full text-2xl rounded-sm border-2 border-black py-6 hover:scale-105 transition"
