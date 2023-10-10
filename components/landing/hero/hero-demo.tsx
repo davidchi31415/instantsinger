@@ -123,7 +123,7 @@ export const HeroDemo = () => {
                         <Select onValueChange={(val) => switchPerson(val)}
                             defaultValue={person}
                         >
-                            <SelectTrigger className="w-[160px] text-xl">
+                            <SelectTrigger className="w-[160px] text-xl" aria-controls="radix-:R36ar5mkcq:">
                                 <SelectValue placeholder="Select a voice" />
                             </SelectTrigger>
                             <SelectContent className="text-3xl">
