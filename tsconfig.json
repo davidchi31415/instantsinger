@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2018",
     "downlevelIteration": true,
     "noImplicitAny": false,
     "lib": ["dom", "dom.iterable", "esnext"],
