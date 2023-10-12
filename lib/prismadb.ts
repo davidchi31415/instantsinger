@@ -6,7 +6,7 @@ declare global {
 
 const prismadb = (typeof globalThis !== "undefined") ? (globalThis.prisma || new PrismaClient())
     : (global.prisma || new PrismaClient());
-if (process.env.VERCEL_ENV !== "production") {
+if (process.env.VERCEL_ENV !== "production" && process.env.VERCEL_ENV != "preview") {
     if (typeof globalThis !== "undefined") {
         globalThis.prisma = prismadb;
     } else {
