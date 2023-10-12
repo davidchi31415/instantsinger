@@ -10,6 +10,7 @@ import { useCloneModal } from "@/hooks/use-modal";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { CloneModal } from "@/components/clone-modal";
+import { amplitude } from "@/hooks/use-amplitude";
 
 interface CloningFinishStepProps {
     jobId: string;
@@ -30,6 +31,7 @@ const CloningFinishStep = ({ jobId, uploadedFilenames, isManual=false }: Cloning
 
     useEffect(() => {
         if (submitted) {
+            amplitude?.track("Clone Finish");
             window.location.href = "/dashboard";
         }
     }, [submitted]);

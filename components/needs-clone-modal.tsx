@@ -10,6 +10,7 @@ import { Empty } from "./empty";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { amplitude } from "@/hooks/use-amplitude";
 
 
 const views = [
@@ -110,7 +111,9 @@ export const NeedsCloneModal = () => {
                         </Button>}
                     {index === 1 &&
                         <Link href="/dashboard/clone" className="w-fit mx-auto">
-                            <Button className="mt-8 p-6 text-xl font-normal">
+                            <Button className="mt-8 p-6 text-xl font-normal"
+                                onClick={() => amplitude?.track("Clone Start")}
+                            >
                                 Begin
                             </Button>
                         </Link>
