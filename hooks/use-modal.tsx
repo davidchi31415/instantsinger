@@ -48,7 +48,13 @@ export const useShiftInfoModal = create<useProModalStore>((set) => ({
     onClose: () => set({ isOpen: false })
 }));
 
-export const useFeedbackModal = create<useProModalStore>((set) => ({
+export const useConvertFeedbackModal = create<useProModalStore>((set) => ({
+    isOpen: false,
+    onOpen: () => set({ isOpen: true }),
+    onClose: () => set({ isOpen: false })
+}));
+
+export const useCloneFeedbackModal = create<useProModalStore>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false })

@@ -2,11 +2,13 @@ import { getClone, getCloneResults, getCurrentCloneJob, getCurrentUnsubmittedClo
 import { auth } from "@clerk/nextjs";
 import { Dashboard } from "@/components/dashboard";
 import { isJobDone } from "@/lib/utils";
+import prismadb from "@/lib/prismadb";
 
 interface UserData {
     clone: any;
     cloneJob: any;
     cloneResultUrls: any[];
+    cloneFeedback: any;
     convertJobs: any[];
     currentConvertJob: any;
 }
@@ -19,9 +21,16 @@ const getUserData = async () => {
 
     const clone = await getClone({ userId });
     let cloneResultUrls:any[] = [];
+    let cloneFeedback;
     if (clone) {
         const { urls } = await getCloneResults({ clone });
         cloneResultUrls = urls;
+
+        try {
+            cloneFeedback = await prismadb.feedback.findUnique({ where: { type_jobId: { type: "CLONE", jobId: clone.id } }});
+        } catch (err) {
+            console.log("Failed to fetch clone feedback");
+        }
     }
     let cloneJob = await getCurrentCloneJob({ userId });
     if (!cloneJob) {
@@ -30,7 +39,7 @@ const getUserData = async () => {
     const convertJobs = await getSubmittedConversions({ userId });
     const currentConvertJob = convertJobs.find(e => !isJobDone({ status: e.status })) || null;
     const res: UserData = { 
-        clone, cloneJob, cloneResultUrls, convertJobs, currentConvertJob
+        clone, cloneJob, cloneResultUrls, cloneFeedback, convertJobs, currentConvertJob
     };
 
     return res;

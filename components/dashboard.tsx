@@ -16,7 +16,7 @@ import { FileUploader } from "@/components/file-uploader";
 import { IconContext } from "react-icons";
 import { PiCoinVerticalFill } from "react-icons/pi";
 import { cn, isJobDone, parseYoutubeLink } from "@/lib/utils";
-import { useErrorModal, useFeedbackModal, useNeedsCloneModal, useProModal, useSettingsModal, useShiftInfoModal } from "@/hooks/use-modal";
+import { useErrorModal, useCloneFeedbackModal, useConvertFeedbackModal, useNeedsCloneModal, useProModal, useSettingsModal, useShiftInfoModal } from "@/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { ArrowDownIcon, HelpCircleIcon, PauseIcon, PlayIcon, Trash2Icon } from "lucide-react";
@@ -27,7 +27,7 @@ import { RecordPlayerComponent } from "./record-player/record-player";
 import { NeedsCloneModal } from "./needs-clone-modal";
 import { ErrorModal } from "./error-modal";
 import { PitchShiftModal } from "./shift-info-modal";
-import { FeedbackModal } from "./feedback-modal";
+import { CloneFeedbackModal, ConvertFeedbackModal } from "./feedback-modal";
 
 const Player = ({ isPlaying, toggle }) => {
   return (
@@ -37,7 +37,7 @@ const Player = ({ isPlaying, toggle }) => {
   )
 }
 
-const CloneDemo = ({ userData, settingsModal, onPlay, onStop }) => {
+const CloneDemo = ({ userData, settingsModal, feedbackModal, onPlay, onStop }) => {
   const demoAudios = useRef<any>(null);
   const [activeDemoPlayer, setActiveDemo] = useState(-1);
 
@@ -102,6 +102,10 @@ const CloneDemo = ({ userData, settingsModal, onPlay, onStop }) => {
           <Trash2Icon fill="white" />
         </Button>
       </div>
+      {!userData?.cloneFeedback &&
+      <div className="mt-4 text-center w-fit mx-auto text-wrap">
+        Does this sound like you? <span className="p-0 text-primary cursor-pointer" onClick={feedbackModal.onOpen}>Let us know!</span>
+      </div>}
     </div>
   )
 }
@@ -113,7 +117,8 @@ export const Dashboard = ({ userData }) => {
   const needsCloneModal = useNeedsCloneModal();
   const errorModal = useErrorModal();
   const pitchShiftModal = useShiftInfoModal();
-  // const feedbackModal = useFeedbackModal();
+  const convertFeedbackModal = useConvertFeedbackModal();
+  const cloneFeedbackModal = useCloneFeedbackModal();
 
   const cloningInProgress = (userData.cloneJob && userData.cloneJob?.status !== "NOT_SUBMITTED");
   useEffect(() => {
@@ -272,12 +277,13 @@ export const Dashboard = ({ userData }) => {
         <SettingsModal userData={userData} />
         <ErrorModal message={userData?.convertJobs?.length ? userData.convertJobs[0]?.message : ""} />
         <PitchShiftModal />
-        <FeedbackModal results={results} />
+        <ConvertFeedbackModal results={results} key={results?.id} />
+        <CloneFeedbackModal clone={userData.clone} />
         <div className="p-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto">
             <div className="flex flex-col items-center">
               {userData.clone ?
-                <CloneDemo userData={userData} settingsModal={settingsModal} onPlay={() => setDemoPlaying(true)} onStop={() => setDemoPlaying(false)} />
+                <CloneDemo userData={userData} settingsModal={settingsModal} onPlay={() => setDemoPlaying(true)} onStop={() => setDemoPlaying(false)} feedbackModal={cloneFeedbackModal} />
                 :
                 cloningInProgress ?
                   <div className="mb-12 w-[18rem] md:w-[25rem]">
@@ -520,17 +526,17 @@ export const Dashboard = ({ userData }) => {
                   />
                   : ""}
                 {results ?
-                  // <div className="flex flex-col">
+                  <div className="flex flex-col">
                     <ConversionResultsComponent results={results} mini={true} 
                       onPlay={() => setSongPlaying(true)}
                       onStop={() => setSongPlaying(false)}
                     />
-                    // {/* {results?.url &&
-                    //   <div className="mt-4 text-center w-fit mx-auto text-wrap">
-                    //     Does this sound like you? If not, <span className="p-0 text-primary cursor-pointer" onClick={feedbackModal.onOpen}>click here</span>
-                    //   </div>
-                    // } */}
-                  // </div>
+                    {results?.url && !results?.feedback &&
+                      <div className="mt-4 text-center w-fit mx-auto text-wrap">
+                        Does this sound like you? <span className="p-0 text-primary cursor-pointer" onClick={convertFeedbackModal.onOpen}>Let us know!</span>
+                      </div>
+                    }
+                  </div>
                   : ""
                 }
               </div>

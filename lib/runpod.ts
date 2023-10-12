@@ -281,7 +281,9 @@ export const getConversionResults = async ({ convertJob }: GetConvertResultProps
     const fileName = "combined.wav";
     const url = await getDownloadURL({ directory: `inference_outputs/${convertJob.id}`, fileName });
 
-    return { fileName, url, songName: convertJob.songName, public: convertJob.public, id: convertJob.id };
+    const feedback = await prismadb.feedback.findUnique({ where: { type_jobId: { type: "CONVERT", jobId: convertJob.id }}});
+
+    return { fileName, url, songName: convertJob.songName, public: convertJob.public, id: convertJob.id, feedback };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
