@@ -43,7 +43,8 @@ export async function GET(
             customerId = customer.id;
             await prismadb.userAccount.update({ where: { userId }, data: { stripeId: customer.id }});
         } else {
-            customerId = await stripe.customers.retrieve(account.stripeId);
+            let customer = await stripe.customers.retrieve(account.stripeId);
+            customerId = customer.id;
         }
 
         let stripeSession;
