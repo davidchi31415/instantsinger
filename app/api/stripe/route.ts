@@ -35,14 +35,15 @@ export async function GET(
         if (!account) {
             return new NextResponse("Error finding user account", { status: 400 });
         }
-        let customer;
+        let customerId;
         if (!account.stripeId) {
-            customer = await stripe.customers.create({
+            let customer = await stripe.customers.create({
                 email
             });
+            customerId = customer.id;
             await prismadb.userAccount.update({ where: { userId }, data: { stripeId: customer.id }});
         } else {
-            customer = await stripe.customers.retrieve(account.stripeId);
+            customerId = await stripe.customers.retrieve(account.stripeId);
         }
 
         let stripeSession;
@@ -53,7 +54,7 @@ export async function GET(
                 payment_method_types: ["card"],
                 mode: "payment",
                 billing_address_collection: "auto",
-                customer: customer,
+                customer: customerId,
                 line_items: [
                     {
                         price_data: {
@@ -88,7 +89,7 @@ export async function GET(
                 payment_method_types: ["card"],
                 mode: "payment",
                 billing_address_collection: "auto",
-                customer: customer,
+                customer: customerId,
                 line_items: [
                     {
                         price_data: {
