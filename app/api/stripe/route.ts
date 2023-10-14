@@ -4,6 +4,7 @@ import { stripe } from "@/lib/stripe";
 
 import { absoluteUrl } from "@/lib/utils";
 import { packages } from "@/lib/packages";
+import prismadb from "@/lib/prismadb";
 
 const pricingUrl = absoluteUrl("/pricing");
 const cloningFinishUrl = absoluteUrl("/dashboard/clone/finish");
@@ -28,6 +29,19 @@ export async function GET(
             return new NextResponse("Need valid quantity", { status: 400 });
         }
         
+        const email = user.emailAddresses[0].emailAddress;
+
+        let account = await prismadb.userAccount.findUnique({ where: { userId }});
+        if (!account) {
+            return new NextResponse("Error finding user account", { status: 400 });
+        }
+        if (!account.stripeId) {
+            let customer = await stripe.customers.create({
+                email
+            });
+            await prismadb.userAccount.update({ where: { userId }, data: { stripeId: customer.id }});
+        }
+
         let stripeSession;
         if (packKey === "clone") {
             stripeSession = await stripe.checkout.sessions.create({

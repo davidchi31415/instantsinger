@@ -11,6 +11,7 @@ datasource db {
 model UserAccount {
   id String @id @default(cuid())
   userId String @unique
+  stripeId String?
   cloneCredits Int @default(2)
   convertCredits Int @default(0)
   createdAt DateTime @default(now())
