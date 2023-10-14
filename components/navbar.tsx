@@ -35,7 +35,7 @@ export const Navbar = ({ convertCredits }) => {
                     alt="InstantSinger Logo"
                     width={40} height={40}
                 />
-                <h1 className={cn("text-2xl font-bold hidden md:block", font.className)}>
+                <h1 className={cn("text-2xl font-bold hidden lg:block", font.className)}>
                     <span className="text-primary">instant</span>singer
                 </h1>
             </Link>
@@ -54,6 +54,9 @@ export const Navbar = ({ convertCredits }) => {
                     "text-primary" : ""
                 }>
                     Contact
+                </Link>
+                <Link href="https://instant-singer.getrewardful.com/signup">
+                    Affiliate
                 </Link>
             </div>
             {isSignedIn ?

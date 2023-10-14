@@ -64,6 +64,9 @@ export const MobileNavbar = ({ convertCredits=0 }: NavbarProps) => {
                 Contact
             </Link>
           </SheetClose>
+          <Link href="https://instant-singer.getrewardful.com/signup">
+              Affiliate
+          </Link>
         </div>
         {isSignedIn ?
           <div className="flex justify-center mt-6">
