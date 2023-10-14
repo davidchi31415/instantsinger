@@ -7,6 +7,7 @@ import { ToasterProvider } from '@/components/toaster-provider';
 import { Navbar } from '@/components/navbar';
 import { getCredits } from '@/lib/credits';
 import NextTopLoader from 'nextjs-toploader';
+import { RewardfulProvider } from '@/components/rewardful-provider';
 
 const rubik = Rubik({ subsets: ['latin'] })
 
@@ -55,6 +56,7 @@ export default async function RootLayout({
           </div>
           <ModalProvider />
           <ToasterProvider />
+          <RewardfulProvider />
           <div className="w-full h-full pt-12 md:pt-0 overflow-x-clip">
             <Navbar convertCredits={convertCredits} />
             {children}

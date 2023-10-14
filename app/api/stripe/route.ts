@@ -1,6 +1,5 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 
 import { absoluteUrl } from "@/lib/utils";
@@ -8,7 +7,7 @@ import { packages } from "@/lib/packages";
 
 const pricingUrl = absoluteUrl("/pricing");
 const cloningFinishUrl = absoluteUrl("/dashboard/clone/finish");
-const dashboardUrl = absoluteUrl("/dashboard");
+const dashboardUrl = absoluteUrl("/thank-you");
 
 export async function GET(
     req: NextRequest
