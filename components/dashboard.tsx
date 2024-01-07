@@ -133,7 +133,7 @@ export const Dashboard = ({ userData }) => {
   }, [userData]);
 
   const [inputChoice, setInputChoice] = useState("youtube");
-  const [pitchMethodChoice, setPitchMethod] = useState("auto");
+  const [pitchMethodChoice, setPitchMethod] = useState("off");
   const [pitchShift, setPitchShift] = useState("down");
 
   const [youtubeKey, setYoutubeKey] = useState(Date.now()); // For resetting component
@@ -398,7 +398,7 @@ export const Dashboard = ({ userData }) => {
                         </Button>
                       </div>
                       <div className="text-sm text-primary">
-                        NOTE: If the song is higher/deeper than your range, manually shifting the pitch down/up may be a good idea.
+                        NOTE: If the song is higher/deeper than your range, shifting the pitch down/up may be a good idea.
                       </div>
                       {pitchMethodChoice === "auto" || pitchMethodChoice === "off" ? ""
                         :
